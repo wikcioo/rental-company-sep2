@@ -11,6 +11,7 @@ import javafx.stage.WindowEvent;
 public class ViewHandler {
     public static final String DUMMY_VIEW = "dummy_view";
     public static final String ADD_VIEW = "add_equipment_view";
+    public static final String SHOW_VIEW = "show_equipment_view";
 
     private Stage primaryStage;
     private final Scene currentScene;
@@ -23,13 +24,14 @@ public class ViewHandler {
 
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
-        openView(ADD_VIEW);
+        openView(SHOW_VIEW);
     }
 
     public void openView(String id) {
         Region root = switch(id) {
             case DUMMY_VIEW -> viewFactory.loadDummyView();
             case ADD_VIEW -> viewFactory.loadAddEquipmentView();
+            case SHOW_VIEW -> viewFactory.loadShowEquipmentView();
             default -> throw new IllegalArgumentException("Unknown id: " + id);
         };
 

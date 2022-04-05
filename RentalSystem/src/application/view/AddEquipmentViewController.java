@@ -33,5 +33,6 @@ public class AddEquipmentViewController {
 
     public void onAddEquipment() {
         viewModel.addEquipment();
+        viewHandler.openView(ViewHandler.SHOW_VIEW);
     }
 }

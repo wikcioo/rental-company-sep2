@@ -4,9 +4,9 @@ import application.viewmodel.DummyViewModel;
 import javafx.scene.layout.Region;
 
 public class DummyViewController {
-    ViewHandler viewHandler;
-    DummyViewModel dummyViewModel;
-    Region root;
+    private ViewHandler viewHandler;
+    private DummyViewModel dummyViewModel;
+    private Region root;
 
     public void init(ViewHandler viewHandler, DummyViewModel dummyViewModel, Region root) {
         this.viewHandler = viewHandler;

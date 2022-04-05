@@ -11,11 +11,13 @@ public class ViewFactory {
     private final ViewModelFactory viewModelFactory;
     private DummyViewController dummyViewController;
     private AddEquipmentViewController addEquipmentViewController;
+    private ShowEquipmentViewController showEquipmentViewController;
 
     public ViewFactory(ViewHandler viewHandler, ViewModelFactory viewModelFactory) {
         this.viewHandler = viewHandler;
         this.viewModelFactory = viewModelFactory;
         this.addEquipmentViewController = null;
+        this.showEquipmentViewController = null;
     }
 
     public Region loadDummyView() {
@@ -49,5 +51,21 @@ public class ViewFactory {
 
         addEquipmentViewController.reset();
         return addEquipmentViewController.getRoot();
+    }
+    public Region loadShowEquipmentView() {
+        if (showEquipmentViewController == null) {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("gui/ShowEquipmentView.fxml"));
+            try {
+                Region root = loader.load();
+                showEquipmentViewController = loader.getController();
+                showEquipmentViewController.init(viewHandler, viewModelFactory.getShowEquipmentViewModel(), root);
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
+        showEquipmentViewController.reset();
+        return showEquipmentViewController.getRoot();
     }
 }

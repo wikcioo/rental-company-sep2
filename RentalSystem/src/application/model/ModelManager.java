@@ -2,14 +2,17 @@ package application.model;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.util.ArrayList;
 
 public class ModelManager implements Model {
     private final EquipmentList equipmentList;
+    private final ArrayList<Reservation> reservations;
     private final PropertyChangeSupport pcs;
     public static final String EQUIPMENT_LIST_PROPERTY_NAME = "equipment_list_property_name";
 
     public ModelManager() {
         equipmentList = new EquipmentList();
+        reservations = new ArrayList<>();
         pcs = new PropertyChangeSupport(this);
     }
 
@@ -18,6 +21,11 @@ public class ModelManager implements Model {
         equipmentList.addEquipment(equipment);
         System.out.println(equipmentList.getAllEquipments().toString());
         pcs.firePropertyChange(EQUIPMENT_LIST_PROPERTY_NAME,null,equipmentList.getAllEquipments());
+    }
+
+    @Override
+    public void addReservation(User user, Equipment equipment) {
+        reservations.add(new Reservation(user,equipment));
     }
 
     @Override public void addListener(String propertyName,

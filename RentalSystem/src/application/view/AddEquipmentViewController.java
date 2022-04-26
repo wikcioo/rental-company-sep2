@@ -1,14 +1,15 @@
 package application.view;
 
 import application.viewmodel.AddEquipmentViewModel;
+import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Region;
 
 public class AddEquipmentViewController {
-    public TextField name;
-    public TextField equipmentModel;
-    public TextField category;
-    public TextField price;
+    @FXML public TextField name;
+    @FXML public TextField equipmentModel;
+    @FXML public TextField category;
+    @FXML public TextField price;
     ViewHandler viewHandler;
     AddEquipmentViewModel viewModel;
     Region root;

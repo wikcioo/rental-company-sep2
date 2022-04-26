@@ -24,6 +24,11 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public ArrayList<Equipment> getAllEquipment() {
+        return equipmentList.getAllEquipment();
+    }
+
+    @Override
     public void addReservation(User user, Equipment equipment) {
         reservations.add(new Reservation(user,equipment));
     }

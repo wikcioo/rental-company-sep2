@@ -12,6 +12,7 @@ public class ViewHandler {
     public static final String DUMMY_VIEW = "dummy_view";
     public static final String ADD_VIEW = "add_equipment_view";
     public static final String SHOW_VIEW = "show_equipment_view";
+    public static final String LOG_IN = "log_in_view";
 
     private Stage primaryStage;
     private final Scene currentScene;
@@ -24,7 +25,7 @@ public class ViewHandler {
 
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
-        openView(SHOW_VIEW);
+        openView(LOG_IN);
     }
 
     public void openView(String id) {
@@ -32,6 +33,7 @@ public class ViewHandler {
             case DUMMY_VIEW -> viewFactory.loadDummyView();
             case ADD_VIEW -> viewFactory.loadAddEquipmentView();
             case SHOW_VIEW -> viewFactory.loadShowEquipmentView();
+            case LOG_IN -> viewFactory.loadLogInView();
             default -> throw new IllegalArgumentException("Unknown id: " + id);
         };
 

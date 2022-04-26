@@ -2,8 +2,6 @@ package application.viewmodel;
 
 import application.model.Equipment;
 import application.model.Model;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 

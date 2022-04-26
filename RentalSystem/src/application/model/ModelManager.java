@@ -44,4 +44,11 @@ public class ModelManager implements Model {
     {
         pcs.removePropertyChangeListener(propertyName, listener);
     }
+
+    public boolean logIn(String name, String password){
+       if(name.equals("") && password.equals("")){
+           return true;
+       }
+       return false;
+    }
 }

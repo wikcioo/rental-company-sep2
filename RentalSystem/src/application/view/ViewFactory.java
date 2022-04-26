@@ -12,12 +12,14 @@ public class ViewFactory {
     private DummyViewController dummyViewController;
     private AddEquipmentViewController addEquipmentViewController;
     private ShowEquipmentViewController showEquipmentViewController;
+    private LogInViewController logInViewController;
 
     public ViewFactory(ViewHandler viewHandler, ViewModelFactory viewModelFactory) {
         this.viewHandler = viewHandler;
         this.viewModelFactory = viewModelFactory;
         this.addEquipmentViewController = null;
         this.showEquipmentViewController = null;
+        this.logInViewController = null;
     }
 
     public Region loadDummyView() {
@@ -36,6 +38,7 @@ public class ViewFactory {
         dummyViewController.reset();
         return dummyViewController.getRoot();
     }
+
     public Region loadAddEquipmentView() {
         if (addEquipmentViewController == null) {
             FXMLLoader loader = new FXMLLoader();
@@ -52,6 +55,7 @@ public class ViewFactory {
         addEquipmentViewController.reset();
         return addEquipmentViewController.getRoot();
     }
+
     public Region loadShowEquipmentView() {
         if (showEquipmentViewController == null) {
             FXMLLoader loader = new FXMLLoader();
@@ -67,5 +71,22 @@ public class ViewFactory {
 
         showEquipmentViewController.reset();
         return showEquipmentViewController.getRoot();
+    }
+
+    public Region loadLogInView() {
+        if (logInViewController == null) {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("gui/LogInView.fxml"));
+            try {
+                Region root = loader.load();
+                logInViewController = loader.getController();
+                logInViewController.init(viewHandler, viewModelFactory.getLogInViewModel(), root);
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
+        logInViewController.reset();
+        return logInViewController.getRoot();
     }
 }

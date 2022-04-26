@@ -3,35 +3,36 @@ package test.model;
 import application.model.Equipment;
 import application.model.Reservation;
 import application.model.User;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ReservationTest
-{
+class ReservationTest {
 
-  @org.junit.jupiter.api.BeforeAll void setUp()
-  {
-    Reservation reservation = new Reservation(new User("Selina","Ceban"),new Equipment("Vacuum cleaner","Arizona","Vacuum Clenaer",50));
-  }
+    @BeforeAll
+    void setUp() {
+        Reservation reservation = new Reservation(new User("Selina", "Ceban"), new Equipment("Vacuum cleaner", "Arizona", "Vacuum Clenaer", 50));
+    }
 
-  @org.junit.jupiter.api.Test void isApproved()
-  {
+    @Test
+    void isApproved() {
 
-  }
+    }
 
-  @org.junit.jupiter.api.Test void getApprovedBy()
-  {
-  }
+    @Test
+    void getApprovedBy() {
+    }
 
-  @org.junit.jupiter.api.Test void getRentee()
-  {
-  }
+    @Test
+    void getRentee() {
+    }
 
-  @org.junit.jupiter.api.Test void getReservationDate()
-  {
-  }
+    @Test
+    void getReservationDate() {
+    }
 
-  @org.junit.jupiter.api.Test void getEquipment()
-  {
-  }
+    @Test
+    void getEquipment() {
+    }
 }

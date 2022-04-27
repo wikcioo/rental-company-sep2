@@ -11,14 +11,14 @@ public class ViewFactory {
     private final ViewModelFactory viewModelFactory;
     private DummyViewController dummyViewController;
     private AddEquipmentViewController addEquipmentViewController;
-    private ShowEquipmentViewController showEquipmentViewController;
+    private EquipmentViewController equipmentViewController;
     private LogInViewController logInViewController;
 
     public ViewFactory(ViewHandler viewHandler, ViewModelFactory viewModelFactory) {
         this.viewHandler = viewHandler;
         this.viewModelFactory = viewModelFactory;
         this.addEquipmentViewController = null;
-        this.showEquipmentViewController = null;
+        this.equipmentViewController = null;
         this.logInViewController = null;
     }
 
@@ -57,20 +57,20 @@ public class ViewFactory {
     }
 
     public Region loadShowEquipmentView() {
-        if (showEquipmentViewController == null) {
+        if (equipmentViewController == null) {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("gui/ShowEquipmentView.fxml"));
+            loader.setLocation(getClass().getResource("gui/EquipmentView.fxml"));
             try {
                 Region root = loader.load();
-                showEquipmentViewController = loader.getController();
-                showEquipmentViewController.init(viewHandler, viewModelFactory.getShowEquipmentViewModel(), root);
+                equipmentViewController = loader.getController();
+                equipmentViewController.init(viewHandler, viewModelFactory.getShowEquipmentViewModel(), root);
             } catch (IOException e) {
                 System.out.println(e.getMessage());
             }
         }
 
-        showEquipmentViewController.reset();
-        return showEquipmentViewController.getRoot();
+        equipmentViewController.reset();
+        return equipmentViewController.getRoot();
     }
 
     public Region loadLogInView() {

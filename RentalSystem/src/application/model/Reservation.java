@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 public class Reservation
 {
-  private User approvedBy;
+  private boolean approved;
   private User rentee;
   private LocalDateTime reservationDate;
   private Equipment equipment;
@@ -14,16 +14,15 @@ public class Reservation
     this.rentee = rentee;
     this.equipment = equipment;
     reservationDate = LocalDateTime.now();
-    approvedBy = null;
+    approved = false;
   }
 
   public boolean isApproved() {
-    return approvedBy != null;
+    return approved;
   }
 
-  public User getApprovedBy()
-  {
-    return approvedBy;
+  public void approve() {
+    approved = true;
   }
 
   public User getRentee()

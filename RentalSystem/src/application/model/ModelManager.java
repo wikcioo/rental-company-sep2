@@ -19,7 +19,6 @@ public class ModelManager implements Model {
     @Override
     public void addEquipment(Equipment equipment) {
         equipmentList.addEquipment(equipment);
-        System.out.println(equipmentList.getAllEquipments().toString());
         pcs.firePropertyChange(EQUIPMENT_LIST_PROPERTY_NAME,null,equipmentList.getAllEquipments());
     }
 

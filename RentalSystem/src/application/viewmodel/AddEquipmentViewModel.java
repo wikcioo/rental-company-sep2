@@ -6,7 +6,6 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class AddEquipmentViewModel {
-    private final StringProperty name;
     private final StringProperty equipmentModel;
     private final StringProperty category;
     private final StringProperty price;
@@ -14,14 +13,9 @@ public class AddEquipmentViewModel {
 
     public AddEquipmentViewModel(Model model) {
         this.model = model;
-        name = new SimpleStringProperty("");
         category = new SimpleStringProperty("");
         equipmentModel = new SimpleStringProperty("");
         price = new SimpleStringProperty("");
-    }
-
-    public void bindName(StringProperty property) {
-        name.bind(property);
     }
 
     public void bindEquipmentModel(StringProperty property) {

@@ -2,41 +2,48 @@ package application.model;
 
 import java.time.LocalDateTime;
 
-public class Reservation
-{
-  private boolean approved;
-  private User rentee;
-  private LocalDateTime reservationDate;
-  private Equipment equipment;
+public class Reservation {
+    private boolean approved;
+    private User rentee;
+    private LocalDateTime reservationStartDate;
+    private LocalDateTime reservationEndDate;
+    private Equipment equipment;
 
-  public Reservation(User rentee, Equipment equipment)
-  {
-    this.rentee = rentee;
-    this.equipment = equipment;
-    reservationDate = LocalDateTime.now();
-    approved = false;
-  }
+    @Override
+    public String toString() {
+        return "Reservation{" +
+                "approved=" + approved +
+                ", rentee=" + rentee +
+                ", reservationDate=" + reservationStartDate +
+                ", equipment=" + equipment +
+                '}';
+    }
 
-  public boolean isApproved() {
-    return approved;
-  }
+    public Reservation(User rentee, Equipment equipment,LocalDateTime reservationEndDate) {
+        this.rentee = rentee;
+        this.equipment = equipment;
+        reservationStartDate = LocalDateTime.now();
+        this.reservationEndDate = reservationEndDate;
+        approved = false;
+    }
 
-  public void approve() {
-    approved = true;
-  }
+    public boolean isApproved() {
+        return approved;
+    }
 
-  public User getRentee()
-  {
-    return rentee;
-  }
+    public void approve() {
+        approved = true;
+    }
 
-  public LocalDateTime getReservationDate()
-  {
-    return reservationDate;
-  }
+    public User getRentee() {
+        return rentee;
+    }
 
-  public Equipment getEquipment()
-  {
-    return equipment;
-  }
+    public LocalDateTime getReservationDate() {
+        return reservationStartDate;
+    }
+
+    public Equipment getEquipment() {
+        return equipment;
+    }
 }

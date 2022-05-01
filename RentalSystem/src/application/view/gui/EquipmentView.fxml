@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.EquipmentViewController">
+<AnchorPane prefHeight="406.0" prefWidth="988.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.EquipmentViewController">
    <children>
       <Button fx:id="addButton" layoutX="446.0" layoutY="352.0" mnemonicParsing="false" onAction="#addButtonPressed" text="Add" />
       <Button fx:id="closeButton" layoutX="507.0" layoutY="352.0" mnemonicParsing="false" onAction="#closeButtonPressed" text="Close" />
       <Label layoutX="81.0" layoutY="14.0" text="Equipment for rental">
          <font>
-            <Font size="22.0" />
+            <Font name="System Bold" size="25.0" />
          </font>
       </Label>
       <TableView fx:id="equipmentTable" layoutX="43.0" layoutY="62.0" prefHeight="268.0" prefWidth="509.0">
@@ -23,5 +25,20 @@
             <TableColumn fx:id="reserveColumn" prefWidth="95.0" text="Reserve" />
          </columns>
       </TableView>
+      <Label layoutX="674.0" layoutY="94.0" text="Model" />
+      <Label layoutX="675.0" layoutY="136.0" text="Category" />
+      <Label layoutX="675.0" layoutY="179.0" text="Price" />
+      <Label layoutX="675.0" layoutY="225.0" text="Pick date until which to reserve" />
+      <Label layoutX="598.0" layoutY="36.0" text="Select equipment to reserve">
+      <font>
+         <Font name="System Bold" size="25.0" />
+      </font>
+      </Label>
+      <DatePicker fx:id="datePicker" layoutX="676.0" layoutY="242.0" />
+      <TextField fx:id="model" disable="true" layoutX="675.0" layoutY="111.0" prefHeight="25.0" prefWidth="174.0" />
+      <TextField fx:id="category" disable="true" layoutX="675.0" layoutY="154.0" prefHeight="25.0" prefWidth="174.0" />
+      <TextField fx:id="price" disable="true" layoutX="676.0" layoutY="200.0" prefHeight="25.0" prefWidth="174.0" />
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" />
+      <Button layoutX="723.0" layoutY="318.0" mnemonicParsing="false" onAction="#OnReserve" text="Reserve" />
    </children>
 </AnchorPane>

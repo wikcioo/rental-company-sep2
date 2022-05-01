@@ -2,25 +2,15 @@ package application.model;
 //30.03.2022 _ for now, all that is included in the Equipment class is a list of
 //setters ans getters, the constructor and toString
 public class Equipment {
-private String name;
 private String model;
 private String category;
 private double price;
 
-  public Equipment(String name, String model, String category, double price) {
-    this.name = name;
+  public Equipment(String model, String category, double price) {
     this.model = model;
     this.category = category;
     this.price = price;
 }
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
 
   public String getModel() {
     return model;
@@ -51,7 +41,7 @@ private double price;
 //  }
 
   public String toString() {
-  return name + " " + model + " \nCategory:" + category + " \nPrice:" + price;
+  return "Model: " + model + " Category: " + category + " Price: " + price;
   }
 
 }

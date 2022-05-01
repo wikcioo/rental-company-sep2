@@ -6,7 +6,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Region;
 
 public class AddEquipmentViewController {
-    @FXML public TextField name;
     @FXML public TextField equipmentModel;
     @FXML public TextField category;
     @FXML public TextField price;
@@ -18,7 +17,6 @@ public class AddEquipmentViewController {
         this.viewHandler = viewHandler;
         this.viewModel = addEquipmentViewModel;
         this.root = root;
-        viewModel.bindName(name.textProperty());
         viewModel.bindEquipmentModel(equipmentModel.textProperty());
         viewModel.bindCategory(category.textProperty());
         viewModel.bindPrice(price.textProperty());

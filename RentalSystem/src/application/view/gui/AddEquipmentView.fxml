@@ -21,23 +21,6 @@
       </Label>
       <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0">
          <children>
-            <Label prefWidth="75.0" text="Name">
-               <HBox.margin>
-                  <Insets />
-               </HBox.margin>
-            </Label>
-            <TextField fx:id="name">
-               <HBox.margin>
-                  <Insets left="25.0" />
-               </HBox.margin>
-            </TextField>
-         </children>
-         <VBox.margin>
-            <Insets />
-         </VBox.margin>
-      </HBox>
-      <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0">
-         <children>
             <Label prefWidth="75.0" text="Model">
                <HBox.margin>
                   <Insets />

@@ -38,6 +38,6 @@ public class AddEquipmentViewModel {
 
     public void addEquipment() {
         double priceValue = Double.parseDouble(price.get());
-        model.addEquipment(new Equipment(name.get(), equipmentModel.get(), category.get(), priceValue));
+        model.addEquipment(new Equipment(equipmentModel.get(), category.get(), priceValue));
     }
 }

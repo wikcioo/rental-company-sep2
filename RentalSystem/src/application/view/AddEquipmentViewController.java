@@ -1,14 +1,18 @@
 package application.view;
 
 import application.viewmodel.AddEquipmentViewModel;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Region;
 
 public class AddEquipmentViewController {
-    @FXML public TextField equipmentModel;
-    @FXML public TextField category;
-    @FXML public TextField price;
+    @FXML
+    public TextField equipmentModel;
+    @FXML
+    public TextField category;
+    @FXML
+    public TextField price;
     ViewHandler viewHandler;
     AddEquipmentViewModel viewModel;
     Region root;
@@ -32,6 +36,10 @@ public class AddEquipmentViewController {
 
     public void onAddEquipment() {
         viewModel.addEquipment();
-        viewHandler.openView(ViewHandler.SHOW_VIEW);
+        viewHandler.openView(ViewHandler.EQUIPMENT_LIST_VIEW);
+    }
+
+    public void onCancel() {
+        viewHandler.openView(ViewHandler.EQUIPMENT_LIST_VIEW);
     }
 }

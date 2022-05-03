@@ -1,5 +1,4 @@
 package application.view;
-
 import application.viewmodel.ViewModelFactory;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -10,8 +9,9 @@ import javafx.stage.WindowEvent;
 
 public class ViewHandler {
     public static final String DUMMY_VIEW = "dummy_view";
-    public static final String ADD_VIEW = "add_equipment_view";
-    public static final String SHOW_VIEW = "show_equipment_view";
+    public static final String ADD_EQUIPMENT_VIEW = "add_equipment_view";
+    public static final String EQUIPMENT_LIST_VIEW = "equipment_list_view";
+    public static final String RESERVATION_LIST_VIEW = "reservation_list_view";
     public static final String LOG_IN = "log_in_view";
 
     private Stage primaryStage;
@@ -31,9 +31,10 @@ public class ViewHandler {
     public void openView(String id) {
         Region root = switch(id) {
             case DUMMY_VIEW -> viewFactory.loadDummyView();
-            case ADD_VIEW -> viewFactory.loadAddEquipmentView();
-            case SHOW_VIEW -> viewFactory.loadShowEquipmentView();
+            case ADD_EQUIPMENT_VIEW -> viewFactory.loadAddEquipmentView();
+            case EQUIPMENT_LIST_VIEW -> viewFactory.loadShowEquipmentView();
             case LOG_IN -> viewFactory.loadLogInView();
+            case RESERVATION_LIST_VIEW -> viewFactory.loadReservationListView();
             default -> throw new IllegalArgumentException("Unknown id: " + id);
         };
 

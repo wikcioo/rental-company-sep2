@@ -1,9 +1,10 @@
 package application.model;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Reservation {
-    private boolean approved;
+    private Boolean approved;
     private User rentee;
     private LocalDateTime reservationStartDate;
     private LocalDateTime reservationEndDate;
@@ -19,7 +20,7 @@ public class Reservation {
                 '}';
     }
 
-    public Reservation(User rentee, Equipment equipment,LocalDateTime reservationEndDate) {
+    public Reservation(User rentee, Equipment equipment, LocalDateTime reservationEndDate) {
         this.rentee = rentee;
         this.equipment = equipment;
         reservationStartDate = LocalDateTime.now();
@@ -27,7 +28,7 @@ public class Reservation {
         approved = false;
     }
 
-    public boolean isApproved() {
+    public Boolean isApproved() {
         return approved;
     }
 
@@ -39,8 +40,12 @@ public class Reservation {
         return rentee;
     }
 
-    public LocalDateTime getReservationDate() {
+    public LocalDateTime getReservationStartDate() {
         return reservationStartDate;
+    }
+
+    public LocalDateTime getReservationEndDate() {
+        return reservationEndDate;
     }
 
     public Equipment getEquipment() {

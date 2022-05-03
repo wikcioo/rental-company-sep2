@@ -13,13 +13,11 @@ public class ViewFactory {
     private AddEquipmentViewController addEquipmentViewController;
     private EquipmentViewController equipmentViewController;
     private LogInViewController logInViewController;
+    private ReservationViewController reservationViewController;
 
     public ViewFactory(ViewHandler viewHandler, ViewModelFactory viewModelFactory) {
         this.viewHandler = viewHandler;
         this.viewModelFactory = viewModelFactory;
-        this.addEquipmentViewController = null;
-        this.equipmentViewController = null;
-        this.logInViewController = null;
     }
 
     public Region loadDummyView() {
@@ -34,7 +32,6 @@ public class ViewFactory {
                 System.out.println(e.getMessage());
             }
         }
-
         dummyViewController.reset();
         return dummyViewController.getRoot();
     }
@@ -51,7 +48,6 @@ public class ViewFactory {
                 System.out.println(e.getMessage());
             }
         }
-
         addEquipmentViewController.reset();
         return addEquipmentViewController.getRoot();
     }
@@ -68,7 +64,6 @@ public class ViewFactory {
                 System.out.println(e.getMessage());
             }
         }
-
         equipmentViewController.reset();
         return equipmentViewController.getRoot();
     }
@@ -85,8 +80,23 @@ public class ViewFactory {
                 System.out.println(e.getMessage());
             }
         }
-
         logInViewController.reset();
         return logInViewController.getRoot();
+    }
+
+    public Region loadReservationListView() {
+        if (reservationViewController == null) {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("gui/ReservationView.fxml"));
+            try {
+                Region root = loader.load();
+                reservationViewController = loader.getController();
+                reservationViewController.init(viewHandler, viewModelFactory.getReservationViewModel(), root);
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        reservationViewController.reset();
+        return reservationViewController.getRoot();
     }
 }

@@ -26,10 +26,6 @@ public class EquipmentViewController {
     private EquipmentViewModel viewModel;
     private Region root;
     @FXML
-    private Button addButton;
-    @FXML
-    private Button closeButton;
-    @FXML
     private TableView<Equipment> equipmentTable;
     @FXML
     private TableColumn<Equipment, String> modelColumn;
@@ -105,16 +101,20 @@ public class EquipmentViewController {
     }
 
     public void addButtonPressed() {
-        viewHandler.openView(ViewHandler.ADD_VIEW);
-        System.out.println(equipmentTable.itemsProperty().toString());
+        viewHandler.openView(ViewHandler.ADD_EQUIPMENT_VIEW);
+    }
+
+    public void onViewReservations() {
+        viewHandler.openView(ViewHandler.RESERVATION_LIST_VIEW);
     }
 
     public void closeButtonPressed() {
         viewHandler.closeView();
     }
 
-    public void OnReserve(ActionEvent actionEvent) {
-        viewModel.bindReservationEndDate(new SimpleObjectProperty<>(datePicker.getValue().atTime(14,0)));
+    public void OnReserve() {
+        viewModel.bindReservationEndDate(new SimpleObjectProperty<>(datePicker.getValue().atTime(14, 0)));
         viewModel.reserveEquipment();
     }
+
 }

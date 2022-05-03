@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="406.0" prefWidth="977.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.ReservationViewController">
+   <children>
+      <Button layoutX="466.0" layoutY="355.0" mnemonicParsing="false" onAction="#backButtonPressed" text="Back" />
+      <Label layoutX="365.0" layoutY="14.0" text="Reserved equipment">
+         <font>
+            <Font name="System Bold" size="25.0" />
+         </font>
+      </Label>
+      <TableView fx:id="reservationTable" layoutX="38.0" layoutY="63.0" prefHeight="268.0" prefWidth="896.0">
+         <columns>
+            <TableColumn fx:id="renteeColumn" prefWidth="170.0" text="Rentee" />
+            <TableColumn fx:id="equipmentColumn" prefWidth="198.0" text="Equipment" />
+            <TableColumn fx:id="startDateColumn" prefWidth="153.0" text="Start date" />
+            <TableColumn fx:id="endDateColumn" prefWidth="150.0" text="End date" />
+            <TableColumn fx:id="approvalColumn" prefWidth="101.0" text="Approval" />
+            <TableColumn fx:id="approveButtonColumn" prefWidth="121.0" text="Approve" />
+         </columns>
+      </TableView>
+   </children>
+</AnchorPane>

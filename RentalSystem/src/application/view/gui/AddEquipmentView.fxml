@@ -8,7 +8,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.AddEquipmentViewController">
    <children>
       <Label text="Add New Equipment">
@@ -61,10 +60,17 @@
             </TextField>
          </children>
       </HBox>
-      <Button mnemonicParsing="false" text="Add Equipment" onAction="#onAddEquipment">
-         <VBox.margin>
-            <Insets top="25.0" />
-         </VBox.margin>
-      </Button>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <Button mnemonicParsing="false" onAction="#onAddEquipment" text="Add Equipment">
+               <HBox.margin>
+                  <Insets right="25.0" />
+               </HBox.margin></Button>
+            <Button mnemonicParsing="false" onAction="#onCancel" text="Cancel">
+               <HBox.margin>
+                  <Insets left="25.0" />
+               </HBox.margin></Button>
+         </children>
+      </HBox>
    </children>
 </VBox>

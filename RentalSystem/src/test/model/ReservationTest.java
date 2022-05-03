@@ -3,36 +3,35 @@ package test.model;
 import application.model.Equipment;
 import application.model.Reservation;
 import application.model.User;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.time.LocalDateTime;
-import java.util.Objects;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class ReservationTest {
   private final User rentee = new User("Selina","Ceban");
   private final Equipment equipment = new Equipment("Arizona","Vacuum Clenaer",50);
-  private Reservation sut = new Reservation(rentee,equipment,LocalDateTime.now().plusDays(14));
+  private Reservation reservation = new Reservation(rentee,equipment,LocalDateTime.now().plusDays(14));
 
   @Test void canBeApproved()
   {
-    sut.approve();
-    assertTrue(sut.isApproved());
+    reservation.approve();
+    assertTrue(reservation.isApproved());
 
   }
 
   @Test void getRentee()
   {
-    assertEquals(rentee,sut.getRentee());
+    assertEquals(rentee, reservation.getRentee());
   }
 
   @Test void getReservationDate()
   {
-    assertTrue(sut.getReservationDate() instanceof LocalDateTime);
+    assertTrue(reservation.getReservationStartDate() instanceof LocalDateTime);
   }
 
   @Test void getEquipment()
   {
-    assertEquals(sut.getEquipment(),equipment);
+    assertEquals(reservation.getEquipment(),equipment);
   }
 }

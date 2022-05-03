@@ -6,8 +6,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Region;
 
 public class LogInViewController {
-    @FXML public TextField name;
-    @FXML public TextField password;
+    @FXML
+    public TextField name;
+    @FXML
+    public TextField password;
     private ViewHandler viewHandler;
     private LogInViewModel viewModel;
     private Region root;
@@ -27,9 +29,10 @@ public class LogInViewController {
     public Region getRoot() {
         return root;
     }
+
     public void onLogIn() {
-        if(viewModel.logIn()){
-            viewHandler.openView(ViewHandler.SHOW_VIEW);
+        if (viewModel.logIn()) {
+            viewHandler.openView(ViewHandler.EQUIPMENT_LIST_VIEW);
         }
     }
 }

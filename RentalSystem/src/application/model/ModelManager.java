@@ -7,20 +7,21 @@ import java.util.ArrayList;
 
 public class ModelManager implements Model {
     private final EquipmentList equipmentList;
-    private final ArrayList<Reservation> reservations;
-    private final PropertyChangeSupport pcs;
-    public static final String EQUIPMENT_LIST_PROPERTY_NAME = "equipment_list_property_name";
+    private final ArrayList<Reservation> reservationList;
+    private final PropertyChangeSupport support;
+    public static final String EQUIPMENT_LIST_CHANGED = "equipment_list_changed";
+    public static final String RESERVATION_LIST_CHANGED = "reservation_list_changed";
 
     public ModelManager() {
         equipmentList = new EquipmentList();
-        reservations = new ArrayList<>();
-        pcs = new PropertyChangeSupport(this);
+        reservationList = new ArrayList<>();
+        support = new PropertyChangeSupport(this);
     }
 
     @Override
     public void addEquipment(Equipment equipment) {
         equipmentList.addEquipment(equipment);
-        pcs.firePropertyChange(EQUIPMENT_LIST_PROPERTY_NAME, null, equipmentList.getAllEquipments());
+        support.firePropertyChange(EQUIPMENT_LIST_CHANGED, null, equipmentList.getAllEquipments());
     }
 
     @Override
@@ -28,25 +29,32 @@ public class ModelManager implements Model {
         return equipmentList.getAllEquipment();
     }
 
-    public ArrayList<Reservation> getReservations() {
-        return reservations;
+    public ArrayList<Reservation> getReservationList() {
+        return reservationList;
+    }
+
+    @Override
+    public void approveReservation(Reservation reservation) {
+        reservation.approve();
+        support.firePropertyChange(RESERVATION_LIST_CHANGED, null, reservationList);
     }
 
     @Override
     public void addReservation(User user, Equipment equipment, LocalDateTime reservationEndDate) {
-        reservations.add(new Reservation(user, equipment, reservationEndDate));
+        reservationList.add(new Reservation(user, equipment, reservationEndDate));
+        support.firePropertyChange(RESERVATION_LIST_CHANGED, null, reservationList);
     }
 
     @Override
     public void addListener(String propertyName,
                             PropertyChangeListener listener) {
-        pcs.addPropertyChangeListener(propertyName, listener);
+        support.addPropertyChangeListener(propertyName, listener);
     }
 
     @Override
     public void removeListener(String propertyName,
                                PropertyChangeListener listener) {
-        pcs.removePropertyChangeListener(propertyName, listener);
+        support.removePropertyChangeListener(propertyName, listener);
     }
 
     public boolean logIn(String name, String password) {

@@ -11,7 +11,7 @@
 
 <AnchorPane prefHeight="406.0" prefWidth="988.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.EquipmentViewController">
    <children>
-      <Button fx:id="addButton" layoutX="446.0" layoutY="352.0" mnemonicParsing="false" onAction="#addButtonPressed" text="Add" />
+      <Button fx:id="addButton" layoutX="435.0" layoutY="352.0" mnemonicParsing="false" onAction="#addButtonPressed" text="Add" />
       <Button fx:id="closeButton" layoutX="507.0" layoutY="352.0" mnemonicParsing="false" onAction="#closeButtonPressed" text="Close" />
       <Label layoutX="81.0" layoutY="14.0" text="Equipment for rental">
          <font>
@@ -39,6 +39,7 @@
       <TextField fx:id="category" disable="true" layoutX="675.0" layoutY="154.0" prefHeight="25.0" prefWidth="174.0" />
       <TextField fx:id="price" disable="true" layoutX="676.0" layoutY="200.0" prefHeight="25.0" prefWidth="174.0" />
       <AnchorPane prefHeight="200.0" prefWidth="200.0" />
-      <Button layoutX="723.0" layoutY="318.0" mnemonicParsing="false" onAction="#OnReserve" text="Reserve" />
+      <Button layoutX="729.0" layoutY="288.0" mnemonicParsing="false" onAction="#OnReserve" text="Reserve" />
+      <Button layoutX="315.0" layoutY="352.0" mnemonicParsing="false" onAction="#onViewReservations" text="Reservations" />
    </children>
 </AnchorPane>

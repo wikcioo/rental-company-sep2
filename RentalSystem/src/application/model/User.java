@@ -15,6 +15,11 @@ public class User {
         this.password = password;
     }
 
+    @Override
+    public String toString() {
+        return "Rentee: " + firstName + " " + lastName;
+    }
+
     public String getFirstName() {
         return firstName;
     }

@@ -2,19 +2,20 @@ package application.model;
 
 import application.util.NamedPropertyChangeSubject;
 
+import java.rmi.RemoteException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public interface Model extends NamedPropertyChangeSubject {
-    void addEquipment(Equipment equipment);
+    void addEquipment(Equipment equipment) throws RemoteException;
 
-    ArrayList<Equipment> getAllEquipment();
+    ArrayList<Equipment> getAllEquipment() throws RemoteException;
 
-    void addReservation(User rentee, Equipment equipment, LocalDateTime reservationEndDate);
+    void addReservation(User rentee, Equipment equipment, LocalDateTime reservationEndDate) throws RemoteException;
 
-    boolean logIn(String name, String password);
+    boolean logIn(String name, String password) throws RemoteException;
 
-    ArrayList<Reservation> getReservationList();
+    ArrayList<Reservation> getReservationList() throws RemoteException;
 
-    void approveReservation(Reservation reservation);
+    void approveReservation(Reservation reservation) throws RemoteException;
 }

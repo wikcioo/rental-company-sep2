@@ -4,6 +4,8 @@ import application.model.Model;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+import java.rmi.RemoteException;
+
 public class LogInViewModel {
     private final StringProperty name;
     private final StringProperty password;
@@ -24,6 +26,10 @@ public class LogInViewModel {
     }
 
     public boolean logIn(){
-        return model.logIn(name.get(), password.get());
+        try {
+            return model.logIn(name.get(), password.get());
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

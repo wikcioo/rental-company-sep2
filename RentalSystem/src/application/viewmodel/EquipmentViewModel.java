@@ -11,6 +11,7 @@ import javafx.collections.ObservableList;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.rmi.RemoteException;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
@@ -55,6 +56,10 @@ public class EquipmentViewModel
     }
 
     public void reserveEquipment(){
-        model.addReservation(new User("a","b"),selectedEquipmentProperty.get(),reservationEndDate.get());
+        try {
+            model.addReservation(new User("a","b"),selectedEquipmentProperty.get(),reservationEndDate.get());
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

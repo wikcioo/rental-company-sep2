@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.rmi.RemoteException;
 import java.util.List;
 
 public class ReservationViewModel implements PropertyChangeListener {
@@ -26,7 +27,11 @@ public class ReservationViewModel implements PropertyChangeListener {
     }
 
     public void approveReservation(Reservation reservation) {
-        model.approveReservation(reservation);
+        try {
+            model.approveReservation(reservation);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

@@ -5,6 +5,8 @@ import application.model.Model;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+import java.rmi.RemoteException;
+
 public class AddEquipmentViewModel {
     private final StringProperty equipmentModel;
     private final StringProperty category;
@@ -32,6 +34,10 @@ public class AddEquipmentViewModel {
 
     public void addEquipment() {
         double priceValue = Double.parseDouble(price.get());
-        model.addEquipment(new Equipment(equipmentModel.get(), category.get(), priceValue));
+        try {
+            model.addEquipment(new Equipment(equipmentModel.get(), category.get(), priceValue));
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

@@ -1,8 +1,10 @@
 package application.model;
 
+import java.io.Serializable;
+
 //30.03.2022 _ for now, all that is included in the Equipment class is a list of
 //setters ans getters, the constructor and toString
-public class Equipment {
+public class Equipment implements Serializable {
     private String model;
     private String category;
     private double price;

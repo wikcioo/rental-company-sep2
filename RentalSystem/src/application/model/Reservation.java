@@ -1,9 +1,10 @@
 package application.model;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class Reservation {
+public class Reservation implements Serializable {
     private Boolean approved;
     private User rentee;
     private LocalDateTime reservationStartDate;

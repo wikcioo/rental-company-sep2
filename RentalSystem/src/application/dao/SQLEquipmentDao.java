@@ -31,11 +31,12 @@ public class SQLEquipmentDao implements EquipmentDao {
     public void add(Equipment equipment) throws SQLException {
         try (
             Connection connection = getConnection();
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO Equipment VALUES (?, ?, ?)")
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO rentalsystemdbs.equipment VALUES (?, ?, ?, ?)")
         ) {
             statement.setString(1, equipment.getModel());
             statement.setString(2, equipment.getCategory());
-            statement.setString(3, String.valueOf(equipment.getPrice()));
+            statement.setBoolean(3, true);
+            statement.setDouble(4, equipment.getPrice());
             statement.executeUpdate();
         }
     }

@@ -19,7 +19,7 @@ public class SQLUserDao implements UserDao {
         return DriverManager.getConnection("jdbc:postgresql://abul.db.elephantsql.com/yzwsewzj", "yzwsewzj", "pb2tFI2SZ3_msyeJyrqmf35pRjUtyotU");
     }
 
-    public UserDao getInstance() {
+    public static UserDao getInstance() {
         return instance;
     }
 

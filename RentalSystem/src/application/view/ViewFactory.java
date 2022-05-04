@@ -10,11 +10,14 @@ public class ViewFactory {
     private final ViewHandler viewHandler;
     private final ViewModelFactory viewModelFactory;
     private DummyViewController dummyViewController;
+    private AddEquipmentViewController addEquipmentViewController;
+    private EquipmentViewController equipmentViewController;
+    private LogInViewController logInViewController;
+    private ReservationViewController reservationViewController;
 
     public ViewFactory(ViewHandler viewHandler, ViewModelFactory viewModelFactory) {
         this.viewHandler = viewHandler;
         this.viewModelFactory = viewModelFactory;
-        this.dummyViewController = null;
     }
 
     public Region loadDummyView() {
@@ -29,8 +32,71 @@ public class ViewFactory {
                 System.out.println(e.getMessage());
             }
         }
-
         dummyViewController.reset();
         return dummyViewController.getRoot();
+    }
+
+    public Region loadAddEquipmentView() {
+        if (addEquipmentViewController == null) {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("gui/AddEquipmentView.fxml"));
+            try {
+                Region root = loader.load();
+                addEquipmentViewController = loader.getController();
+                addEquipmentViewController.init(viewHandler, viewModelFactory.getAddEquipmentViewModel(), root);
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        addEquipmentViewController.reset();
+        return addEquipmentViewController.getRoot();
+    }
+
+    public Region loadShowEquipmentView() {
+        if (equipmentViewController == null) {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("gui/EquipmentView.fxml"));
+            try {
+                Region root = loader.load();
+                equipmentViewController = loader.getController();
+                equipmentViewController.init(viewHandler, viewModelFactory.getShowEquipmentViewModel(), root);
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        equipmentViewController.reset();
+        return equipmentViewController.getRoot();
+    }
+
+    public Region loadLogInView() {
+        if (logInViewController == null) {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("gui/LogInView.fxml"));
+            try {
+                Region root = loader.load();
+                logInViewController = loader.getController();
+                logInViewController.init(viewHandler, viewModelFactory.getLogInViewModel(), root);
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        logInViewController.reset();
+        return logInViewController.getRoot();
+    }
+
+    public Region loadReservationListView() {
+        if (reservationViewController == null) {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("gui/ReservationView.fxml"));
+            try {
+                Region root = loader.load();
+                reservationViewController = loader.getController();
+                reservationViewController.init(viewHandler, viewModelFactory.getReservationViewModel(), root);
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        reservationViewController.reset();
+        return reservationViewController.getRoot();
     }
 }

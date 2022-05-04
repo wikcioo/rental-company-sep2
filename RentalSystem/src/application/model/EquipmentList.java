@@ -17,6 +17,10 @@ public class EquipmentList
     equipmentList.add(equipment);
   }
 
+  public ArrayList<Equipment> getAllEquipment() {
+    return equipmentList;
+  }
+
   public void removeEquipment(Equipment equipment) {
     equipmentList.remove(equipment);
   }

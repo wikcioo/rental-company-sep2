@@ -1,5 +1,20 @@
 package application.model;
 
-public interface Model {
+import application.util.NamedPropertyChangeSubject;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+
+public interface Model extends NamedPropertyChangeSubject {
+    void addEquipment(Equipment equipment);
+
+    ArrayList<Equipment> getAllEquipment();
+
+    void addReservation(User rentee, Equipment equipment, LocalDateTime reservationEndDate);
+
+    boolean logIn(String name, String password);
+
+    ArrayList<Reservation> getReservationList();
+
+    void approveReservation(Reservation reservation);
 }

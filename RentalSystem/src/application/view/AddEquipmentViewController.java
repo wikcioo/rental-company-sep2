@@ -11,11 +11,9 @@ public class AddEquipmentViewController {
     public TextField equipmentModel;
     @FXML
     public TextField category;
-    @FXML
-    public TextField price;
-    ViewHandler viewHandler;
-    AddEquipmentViewModel viewModel;
-    Region root;
+    private ViewHandler viewHandler;
+    private AddEquipmentViewModel viewModel;
+    private Region root;
 
     public void init(ViewHandler viewHandler, AddEquipmentViewModel addEquipmentViewModel, Region root) {
         this.viewHandler = viewHandler;
@@ -23,7 +21,6 @@ public class AddEquipmentViewController {
         this.root = root;
         viewModel.bindEquipmentModel(equipmentModel.textProperty());
         viewModel.bindCategory(category.textProperty());
-        viewModel.bindPrice(price.textProperty());
     }
 
     public void reset() {

@@ -97,7 +97,6 @@ public class ReservationViewController {
                     {
                         btn.setOnAction((ActionEvent event) -> {
                             Reservation data = getTableView().getItems().get(getIndex());
-                            System.out.println(data.isApproved());
                             viewModel.approveReservation(data);
                             reservationTable.refresh();
                         });

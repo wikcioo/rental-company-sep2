@@ -31,8 +31,9 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public ArrayList<Equipment> getAllEquipment() throws RemoteException {
-        return equipmentList.getAllEquipment();
+    public void retrieveAllEquipment() throws RemoteException {
+        equipmentList.addEquipmentList(client.getAllEquipment());
+        support.firePropertyChange(EQUIPMENT_LIST_CHANGED, null, equipmentList.getAllEquipments());
     }
 
     @Override

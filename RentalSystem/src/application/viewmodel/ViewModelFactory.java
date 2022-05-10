@@ -16,7 +16,7 @@ public class ViewModelFactory {
         this.equipmentViewModel = new EquipmentViewModel(model);
         this.logInViewModel = new LogInViewModel(model);
         this.reservationViewModel = new ReservationViewModel(model);
-        managerEquipmentViewModel = new ManagerEquipmentViewModel(model);
+        this.managerEquipmentViewModel = new ManagerEquipmentViewModel(model);
     }
 
     public DummyViewModel getDummyViewModel() {

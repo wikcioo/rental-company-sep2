@@ -2,17 +2,15 @@ package application.model;
 
 import java.io.Serializable;
 
-//30.03.2022 _ for now, all that is included in the Equipment class is a list of
-//setters ans getters, the constructor and toString
 public class Equipment implements Serializable {
     private String model;
     private String category;
-    private double price;
+    private boolean isAvailable;
 
-    public Equipment(String model, String category, double price) {
+    public Equipment(String model, String category, boolean isAvailable) {
         this.model = model;
         this.category = category;
-        this.price = price;
+        this.isAvailable = isAvailable;
     }
 
     public String getModel() {
@@ -31,17 +29,17 @@ public class Equipment implements Serializable {
         this.category = category;
     }
 
-    public double getPrice() {
-        return price;
+    public boolean isAvailable() {
+        return isAvailable;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
+    public void setAvailable(boolean available) {
+        isAvailable = available;
     }
 
-//  public boolean isAvailable() {
-//  ///for this we need to be able to reserve and rent
-//  }
+    public void toggleAvailability(){
+        isAvailable = !isAvailable;
+    }
 
     public String toString() {
         return model + "-" + category;

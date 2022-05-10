@@ -33,7 +33,7 @@ public class SQLEquipmentDao implements EquipmentDao {
             statement.setString(1, equipment.getModel());
             statement.setString(2, equipment.getCategory());
             statement.setBoolean(3, true);
-            statement.setDouble(4, equipment.getPrice());
+            statement.setDouble(4, 10);
             statement.executeUpdate();
         }
     }
@@ -51,7 +51,7 @@ public class SQLEquipmentDao implements EquipmentDao {
                 String type = rs.getString("type");
                 boolean available = rs.getBoolean("availability");
                 double price = rs.getDouble("price");
-                equipmentList.add(new Equipment(name, type, price));
+                equipmentList.add(new Equipment(name, type,available ));
             }
         }
 

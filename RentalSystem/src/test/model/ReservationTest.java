@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ReservationTest {
   private final User rentee = new User("Selina","Ceban");
-  private final Equipment equipment = new Equipment("Arizona","Vacuum Clenaer",50);
+  private final Equipment equipment = new Equipment("Arizona","Vacuum Cleaner",true);
   private Reservation reservation = new Reservation(rentee,equipment,LocalDateTime.now().plusDays(14));
 
   @Test void canBeApproved()

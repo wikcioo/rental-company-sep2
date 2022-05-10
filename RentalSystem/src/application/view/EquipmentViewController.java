@@ -20,8 +20,6 @@ public class EquipmentViewController {
     public TextField model;
     @FXML
     public TextField category;
-    @FXML
-    public TextField price;
     private ViewHandler viewHandler;
     private EquipmentViewModel viewModel;
     private Region root;
@@ -73,7 +71,6 @@ public class EquipmentViewController {
                             Equipment data = getTableView().getItems().get(getIndex());
                             model.setText(data.getModel());
                             category.setText(data.getCategory());
-                            price.setText(Double.toString(data.getPrice()));
                             viewModel.bindSelectedEquipment(new SimpleObjectProperty<>(data));
                         });
                     }
@@ -120,6 +117,12 @@ public class EquipmentViewController {
     public void OnReserve() {
         viewModel.bindReservationEndDate(new SimpleObjectProperty<>(datePicker.getValue().atTime(14, 0)));
         viewModel.reserveEquipment();
+        model.clear();
+        category.clear();
+        datePicker.setValue(null);
     }
 
+  public void onViewManagerEquipment() {
+        viewHandler.openView(ViewHandler.MANAGER_EQUIPMENT_LIST_VIEW);
+  }
 }

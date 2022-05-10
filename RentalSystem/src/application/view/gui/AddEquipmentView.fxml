@@ -46,20 +46,6 @@
             </TextField>
          </children>
       </HBox>
-      <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0">
-         <children>
-            <Label prefWidth="75.0" text="Price">
-               <HBox.margin>
-                  <Insets />
-               </HBox.margin>
-            </Label>
-            <TextField fx:id="price">
-               <HBox.margin>
-                  <Insets left="25.0" />
-               </HBox.margin>
-            </TextField>
-         </children>
-      </HBox>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
          <children>
             <Button mnemonicParsing="false" onAction="#onAddEquipment" text="Add Equipment">

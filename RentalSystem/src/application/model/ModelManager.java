@@ -47,6 +47,19 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public void toggleAvailability(Equipment equipment) throws RemoteException  {
+        equipment.toggleAvailability();
+        support.firePropertyChange(EQUIPMENT_LIST_CHANGED, null, equipmentList);
+    }
+
+    @Override
+    public void editEquipment(Equipment oldEquipment, Equipment newEquipment) throws RemoteException {
+        int index = equipmentList.getAllEquipment().indexOf(oldEquipment);
+        equipmentList.getAllEquipment().set(index, newEquipment);
+        support.firePropertyChange(EQUIPMENT_LIST_CHANGED, null, equipmentList);
+    }
+
+    @Override
     public void addReservation(User user, Equipment equipment, LocalDateTime reservationEndDate) throws RemoteException  {
         reservationList.add(new Reservation(user, equipment, reservationEndDate));
         support.firePropertyChange(RESERVATION_LIST_CHANGED, null, reservationList);

@@ -37,6 +37,10 @@ public class Equipment implements Serializable {
         isAvailable = available;
     }
 
+    public void toggleAvailability(){
+        isAvailable = !isAvailable;
+    }
+
     public String toString() {
         return model + "-" + category;
     }

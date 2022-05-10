@@ -13,136 +13,146 @@ import javafx.scene.layout.Region;
 import javafx.util.Callback;
 
 public class ManagerEquipmentViewController {
-  @FXML public TextField model;
-  @FXML public TextField category;
-  private ViewHandler viewHandler;
-  private ManagerEquipmentViewModel viewModel;
-  private Region root;
-  @FXML private TableView<Equipment> equipmentTable;
-  @FXML private TableColumn<Equipment, String> modelColumn;
-  @FXML private TableColumn<Equipment, String> categoryColumn;
-  @FXML private TableColumn<Equipment, String> availabilityColumn;
-  @FXML private TableColumn<Equipment, String> changeAvailabilityColumn;
-  @FXML private TableColumn<Equipment, String> editColumn;
+    @FXML
+    public TextField model;
+    @FXML
+    public TextField category;
+    private ViewHandler viewHandler;
+    private ManagerEquipmentViewModel viewModel;
+    private Region root;
+    @FXML
+    private TableView<Equipment> equipmentTable;
+    @FXML
+    private TableColumn<Equipment, String> modelColumn;
+    @FXML
+    private TableColumn<Equipment, String> categoryColumn;
+    @FXML
+    private TableColumn<Equipment, String> availabilityColumn;
+    @FXML
+    private TableColumn<Equipment, String> changeAvailabilityColumn;
+    @FXML
+    private TableColumn<Equipment, String> editColumn;
 
-  public void init(ViewHandler viewHandler,
-      ManagerEquipmentViewModel managerEquipmentViewModel, Region root) {
-    this.viewHandler = viewHandler;
-    this.viewModel = managerEquipmentViewModel;
-    this.root = root;
-    modelColumn.setCellValueFactory(new Callback<>() {
-      @Override public ObservableValue<String> call(
-          TableColumn.CellDataFeatures<Equipment, String> p) {
-        if (p.getValue() != null) {
-          return new SimpleStringProperty(p.getValue().getModel());
-        }
-        else {
-          return new SimpleStringProperty("<no model>");
-        }
-      }
-    });
-
-    categoryColumn.setCellValueFactory(new Callback<>() {
-      @Override public ObservableValue<String> call(
-          TableColumn.CellDataFeatures<Equipment, String> p) {
-        if (p.getValue() != null) {
-          return new SimpleStringProperty(p.getValue().getCategory());
-        }
-        else {
-          return new SimpleStringProperty("<no category>");
-        }
-      }
-    });
-    availabilityColumn.setCellValueFactory(new Callback<>() {
-      @Override public ObservableValue<String> call(
-          TableColumn.CellDataFeatures<Equipment, String> p) {
-        if (p.getValue() != null) {
-          return new SimpleStringProperty(
-              Boolean.toString(p.getValue().isAvailable()));
-        }
-        else {
-          return new SimpleStringProperty("<no category>");
-        }
-      }
-    });
-    changeAvailabilityColumn.setCellFactory(new Callback<>() {
-      @Override public TableCell<Equipment, String> call(
-          final TableColumn<Equipment, String> param) {
-        final TableCell<Equipment, String> cell = new TableCell<>() {
-          private final Button btn = new Button("Change");
-
-          {
-            btn.setOnAction((ActionEvent event) -> {
-              Equipment data = getTableView().getItems().get(getIndex());
-              viewModel.bindSelectedEquipment(new SimpleObjectProperty<>(data));
-              viewModel.toggleAvailability();
-              equipmentTable.refresh();
-            });
-          }
-
-          @Override public void updateItem(String item, boolean empty) {
-            super.updateItem(item, empty);
-            if (empty) {
-              setGraphic(null);
+    public void init(ViewHandler viewHandler,
+                     ManagerEquipmentViewModel managerEquipmentViewModel, Region root) {
+        this.viewHandler = viewHandler;
+        this.viewModel = managerEquipmentViewModel;
+        this.root = root;
+        modelColumn.setCellValueFactory(new Callback<>() {
+            @Override
+            public ObservableValue<String> call(
+                    TableColumn.CellDataFeatures<Equipment, String> p) {
+                if (p.getValue() != null) {
+                    return new SimpleStringProperty(p.getValue().getModel());
+                } else {
+                    return new SimpleStringProperty("<no model>");
+                }
             }
-            else {
-              setGraphic(btn);
+        });
+
+        categoryColumn.setCellValueFactory(new Callback<>() {
+            @Override
+            public ObservableValue<String> call(
+                    TableColumn.CellDataFeatures<Equipment, String> p) {
+                if (p.getValue() != null) {
+                    return new SimpleStringProperty(p.getValue().getCategory());
+                } else {
+                    return new SimpleStringProperty("<no category>");
+                }
             }
-          }
-        };
-        return cell;
-      }
-    });
-
-    editColumn.setCellFactory(new Callback<>() {
-      @Override public TableCell<Equipment, String> call(
-          final TableColumn<Equipment, String> param) {
-        final TableCell<Equipment, String> cell = new TableCell<>() {
-          private final Button btn = new Button("Edit");
-
-          {
-            btn.setOnAction((ActionEvent event) -> {
-              Equipment data = getTableView().getItems().get(getIndex());
-              model.setText(data.getModel());
-              category.setText(data.getCategory());
-              viewModel.bindSelectedEquipment(new SimpleObjectProperty<>(data));
-            });
-          }
-
-          @Override public void updateItem(String item, boolean empty) {
-            super.updateItem(item, empty);
-            if (empty) {
-              setGraphic(null);
+        });
+        availabilityColumn.setCellValueFactory(new Callback<>() {
+            @Override
+            public ObservableValue<String> call(
+                    TableColumn.CellDataFeatures<Equipment, String> p) {
+                if (p.getValue() != null) {
+                    return new SimpleStringProperty(
+                            Boolean.toString(p.getValue().isAvailable()));
+                } else {
+                    return new SimpleStringProperty("<no category>");
+                }
             }
-            else {
-              setGraphic(btn);
+        });
+        changeAvailabilityColumn.setCellFactory(new Callback<>() {
+            @Override
+            public TableCell<Equipment, String> call(
+                    final TableColumn<Equipment, String> param) {
+                final TableCell<Equipment, String> cell = new TableCell<>() {
+                    private final Button btn = new Button("Change");
+
+                    {
+                        btn.setOnAction((ActionEvent event) -> {
+                            Equipment data = getTableView().getItems().get(getIndex());
+                            viewModel.bindSelectedEquipment(new SimpleObjectProperty<>(data));
+                            viewModel.toggleAvailability();
+                            equipmentTable.refresh();
+                        });
+                    }
+
+                    @Override
+                    public void updateItem(String item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            setGraphic(btn);
+                        }
+                    }
+                };
+                return cell;
             }
-          }
-        };
-        return cell;
-      }
-    });
-    viewModel.bindEquipmentList(equipmentTable.itemsProperty());
-  }
+        });
 
-  public void reset() {
+        editColumn.setCellFactory(new Callback<>() {
+            @Override
+            public TableCell<Equipment, String> call(
+                    final TableColumn<Equipment, String> param) {
+                final TableCell<Equipment, String> cell = new TableCell<>() {
+                    private final Button btn = new Button("Edit");
 
-  }
+                    {
+                        btn.setOnAction((ActionEvent event) -> {
+                            Equipment data = getTableView().getItems().get(getIndex());
+                            model.setText(data.getModel());
+                            category.setText(data.getCategory());
+                            viewModel.bindSelectedEquipment(new SimpleObjectProperty<>(data));
+                        });
+                    }
 
-  public Region getRoot() {
-    return root;
-  }
+                    @Override
+                    public void updateItem(String item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            setGraphic(btn);
+                        }
+                    }
+                };
+                return cell;
+            }
+        });
+        viewModel.bindEquipmentList(equipmentTable.itemsProperty());
+    }
 
-  public void editButtonPressed() {
+    public void reset() {
 
-  }
+    }
 
-  public void onViewReservations() {
-    viewHandler.openView(ViewHandler.RESERVATION_LIST_VIEW);
-  }
+    public Region getRoot() {
+        return root;
+    }
 
-  public void backButtonPressed() {
-    viewHandler.openView(ViewHandler.EQUIPMENT_LIST_VIEW);
-  }
+    public void editButtonPressed() {
+
+    }
+
+    public void onViewReservations() {
+        viewHandler.openView(ViewHandler.RESERVATION_LIST_VIEW);
+    }
+
+    public void backButtonPressed() {
+        viewHandler.openView(ViewHandler.EQUIPMENT_LIST_VIEW);
+    }
 
 }

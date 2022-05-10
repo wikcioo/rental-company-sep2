@@ -130,4 +130,11 @@ public class ReservationViewController {
         viewHandler.openView(ViewHandler.EQUIPMENT_LIST_VIEW);
     }
 
+    public void approvedButtonPressed() {
+        viewModel.showApprovedReservations();
+    }
+
+    public void showAllReservations() {
+        viewModel.showAllReservations();
+    }
 }

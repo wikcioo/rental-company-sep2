@@ -9,8 +9,8 @@ import java.util.ArrayList;
 public interface Model extends NamedPropertyChangeSubject {
     void addEquipment(Equipment equipment) throws RemoteException;
 
-    ArrayList<Equipment> getAllEquipment()
-        throws RemoteException;
+    ArrayList<Equipment> getAllEquipment() throws RemoteException;
+
     void retrieveAllEquipment() throws RemoteException;
 
     void addReservation(User rentee, Equipment equipment, LocalDateTime reservationEndDate) throws RemoteException;
@@ -19,7 +19,7 @@ public interface Model extends NamedPropertyChangeSubject {
 
     ArrayList<Reservation> getReservationList() throws RemoteException;
 
-    ArrayList<Reservation> getApprovedReservationList();
+    ArrayList<Reservation> getApprovedReservationList() throws RemoteException;
 
     void approveReservation(Reservation reservation) throws RemoteException;
 

@@ -22,4 +22,6 @@ public interface Model extends NamedPropertyChangeSubject {
     void toggleAvailability(Equipment equipment) throws RemoteException;
 
     void editEquipment(Equipment oldEquipment, Equipment newEquipment) throws RemoteException;
+
+    void editEquipment(Equipment equipment, int index) throws RemoteException;
 }

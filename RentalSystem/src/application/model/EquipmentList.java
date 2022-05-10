@@ -25,6 +25,10 @@ public class EquipmentList
     equipmentList.remove(equipment);
   }
 
+  public void editEquipment(Equipment equipment, int index){
+    equipmentList.set(index, equipment);
+  }
+
   public ArrayList<Equipment> getAllEquipments() {
     return equipmentList;
   }

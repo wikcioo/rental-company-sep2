@@ -117,4 +117,7 @@ public class EquipmentViewController {
         datePicker.setValue(null);
     }
 
+  public void onViewManagerEquipment() {
+        viewHandler.openView(ViewHandler.MANAGER_EQUIPMENT_LIST_VIEW);
+  }
 }

@@ -42,9 +42,9 @@ public class ManagerEquipmentViewModel
         reservationEndDate.bind(property);
     }
 
-    public void toggleAvailability(Equipment equipment) {
+    public void toggleAvailability() {
         try {
-            model.toggleAvailability(equipment);
+            model.toggleAvailability(selectedEquipmentProperty.get());
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
@@ -60,11 +60,4 @@ public class ManagerEquipmentViewModel
         }
     }
 
-    public void reserveEquipment(){
-        try {
-            model.addReservation(new User("a","b"),selectedEquipmentProperty.get(),reservationEndDate.get());
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
-    }
 }

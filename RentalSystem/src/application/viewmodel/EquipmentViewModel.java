@@ -6,6 +6,8 @@ import application.model.ModelManager;
 import application.model.User;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -13,22 +15,24 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.rmi.RemoteException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class EquipmentViewModel
-        implements  PropertyChangeListener {
+public class EquipmentViewModel implements PropertyChangeListener {
     private final Model model;
     private final ObjectProperty<ObservableList<Equipment>> listObjectProperty;
     private final ObjectProperty<Equipment> selectedEquipmentProperty;
     private final ObjectProperty<LocalDateTime> reservationEndDate;
+    private final StringProperty errorProperty;
 
     public EquipmentViewModel(Model model) {
         this.model = model;
-        listObjectProperty = new SimpleObjectProperty<>();
-        selectedEquipmentProperty = new SimpleObjectProperty<>();
+        this.listObjectProperty = new SimpleObjectProperty<>();
+        this.selectedEquipmentProperty = new SimpleObjectProperty<>();
         model.addListener(ModelManager.EQUIPMENT_LIST_CHANGED, this);
-        reservationEndDate = new SimpleObjectProperty<>();
+        this.reservationEndDate = new SimpleObjectProperty<>();
+        this.errorProperty = new SimpleStringProperty();
     }
 
     public void bindEquipmentList(ObjectProperty<ObservableList<Equipment>> property) {
@@ -43,8 +47,19 @@ public class EquipmentViewModel
         reservationEndDate.bind(property);
     }
 
+    public void bindErrorLabel(StringProperty property) {
+        property.bind(errorProperty);
+    }
 
-
+    public void retrieveAllEquipment() {
+        try {
+            errorProperty.set("Successfully retrieved equipment from DB");
+            model.retrieveAllEquipment();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            errorProperty.set("Failed to retrieve equipment list");
+        }
+    }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {

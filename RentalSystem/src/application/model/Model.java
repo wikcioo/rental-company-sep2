@@ -19,6 +19,8 @@ public interface Model extends NamedPropertyChangeSubject {
 
     ArrayList<Reservation> getReservationList() throws RemoteException;
 
+    ArrayList<Reservation> getApprovedReservationList();
+
     void approveReservation(Reservation reservation) throws RemoteException;
 
     void toggleAvailability(Equipment equipment) throws RemoteException;

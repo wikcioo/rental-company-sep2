@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public interface Model extends NamedPropertyChangeSubject {
     void addEquipment(Equipment equipment) throws RemoteException;
 
-    ArrayList<Equipment> getAllEquipment() throws RemoteException;
+    void retrieveAllEquipment() throws RemoteException;
 
     void addReservation(User rentee, Equipment equipment, LocalDateTime reservationEndDate) throws RemoteException;
 

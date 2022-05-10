@@ -31,6 +31,8 @@ public class EquipmentViewController {
     private TableColumn<Equipment, String> categoryColumn;
     @FXML
     private TableColumn<Equipment, String> reserveColumn;
+    @FXML
+    private Label error;
 
     public void init(ViewHandler viewHandler, EquipmentViewModel equipmentViewModel, Region root) {
         this.viewHandler = viewHandler;
@@ -86,7 +88,10 @@ public class EquipmentViewController {
                 return cell;
             }
         });
+
         viewModel.bindEquipmentList(equipmentTable.itemsProperty());
+        viewModel.bindErrorLabel(error.textProperty());
+        viewModel.retrieveAllEquipment();
     }
 
     public void reset() {

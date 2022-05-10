@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class EquipmentList
 {
-  private ArrayList<Equipment> equipmentList;
+  private final ArrayList<Equipment> equipmentList;
 
   public EquipmentList() {
     equipmentList = new ArrayList<>();
@@ -15,6 +15,10 @@ public class EquipmentList
 
   public void addEquipment(Equipment equipment) {
     equipmentList.add(equipment);
+  }
+
+  public void addEquipmentList(ArrayList<Equipment> list) {
+    equipmentList.addAll(list);
   }
 
   public ArrayList<Equipment> getAllEquipment() {

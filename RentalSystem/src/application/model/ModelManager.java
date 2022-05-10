@@ -31,10 +31,17 @@ public class ModelManager implements Model {
         equipmentList.getAllEquipments());
   }
 
+
   @Override public ArrayList<Equipment> getAllEquipment()
       throws RemoteException {
     return equipmentList.getAllEquipment();
   }
+
+    @Override
+    public void retrieveAllEquipment() throws RemoteException {
+        equipmentList.addEquipmentList(client.getAllEquipment());
+        support.firePropertyChange(EQUIPMENT_LIST_CHANGED, null, equipmentList.getAllEquipments());
+    }
 
   @Override public ArrayList<Reservation> getReservationList()
       throws RemoteException {

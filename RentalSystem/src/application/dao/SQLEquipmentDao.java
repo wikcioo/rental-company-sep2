@@ -2,10 +2,7 @@ package application.dao;
 
 import application.model.Equipment;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class SQLEquipmentDao implements EquipmentDao {
@@ -43,8 +40,22 @@ public class SQLEquipmentDao implements EquipmentDao {
 
     @Override
     public ArrayList<Equipment> getAll() throws SQLException {
-        // TODO
-        return null;
+        ArrayList<Equipment> equipmentList = new ArrayList<>();
+        try (
+                Connection connection = getConnection();
+                Statement statement = connection.createStatement()
+        ) {
+            ResultSet rs = statement.executeQuery("SELECT * FROM rentalsystemdbs.equipment");
+            while (rs.next()) {
+                String name = rs.getString("name");
+                String type = rs.getString("type");
+                boolean available = rs.getBoolean("availability");
+                double price = rs.getDouble("price");
+                equipmentList.add(new Equipment(name, type, price));
+            }
+        }
+
+        return equipmentList;
     }
 
     @Override

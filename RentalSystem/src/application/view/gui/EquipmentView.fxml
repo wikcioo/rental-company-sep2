@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="406.0" prefWidth="988.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.EquipmentViewController">
+<AnchorPane prefHeight="406.0" prefWidth="988.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.EquipmentViewController">
    <children>
       <Button layoutX="435.0" layoutY="352.0" mnemonicParsing="false" onAction="#addButtonPressed" text="Add" />
       <Button layoutX="507.0" layoutY="352.0" mnemonicParsing="false" onAction="#closeButtonPressed" text="Close" />
@@ -39,6 +39,10 @@
       <AnchorPane prefHeight="200.0" prefWidth="200.0" />
       <Button layoutX="729.0" layoutY="288.0" mnemonicParsing="false" onAction="#OnReserve" text="Reserve" />
       <Button layoutX="315.0" layoutY="352.0" mnemonicParsing="false" onAction="#onViewReservations" text="Reservations" />
+
       <Button layoutX="222.0" layoutY="352.0" mnemonicParsing="false" onAction="#onViewManagerEquipment" text="Manager" />
+
+      <Label fx:id="error" layoutX="43.0" layoutY="356.0" />
+
    </children>
 </AnchorPane>

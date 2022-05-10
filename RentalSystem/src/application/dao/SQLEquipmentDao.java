@@ -51,7 +51,7 @@ public class SQLEquipmentDao implements EquipmentDao {
                 String type = rs.getString("type");
                 boolean available = rs.getBoolean("availability");
                 double price = rs.getDouble("price");
-                equipmentList.add(new Equipment(name, type, price));
+                equipmentList.add(new Equipment(name, type,available ));
             }
         }
 

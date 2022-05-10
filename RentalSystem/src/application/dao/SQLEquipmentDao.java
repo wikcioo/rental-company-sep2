@@ -27,13 +27,12 @@ public class SQLEquipmentDao implements EquipmentDao {
     @Override
     public void add(Equipment equipment) throws SQLException {
         try (
-            Connection connection = getConnection();
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO rentalsystemdbs.equipment VALUES (?, ?, ?, ?)")
+                Connection connection = getConnection();
+                PreparedStatement statement = connection.prepareStatement("INSERT INTO rentalsystemdbs.equipment VALUES (DEFAULT, ?, ?, ?)")
         ) {
             statement.setString(1, equipment.getModel());
             statement.setString(2, equipment.getCategory());
             statement.setBoolean(3, true);
-            statement.setDouble(4, 10);
             statement.executeUpdate();
         }
     }
@@ -47,11 +46,11 @@ public class SQLEquipmentDao implements EquipmentDao {
         ) {
             ResultSet rs = statement.executeQuery("SELECT * FROM rentalsystemdbs.equipment");
             while (rs.next()) {
-                String name = rs.getString("name");
-                String type = rs.getString("type");
+                int id = rs.getInt("equipment_id");
+                String model = rs.getString("model");
+                String category = rs.getString("category");
                 boolean available = rs.getBoolean("availability");
-                double price = rs.getDouble("price");
-                equipmentList.add(new Equipment(name, type,available ));
+                equipmentList.add(new Equipment(model, category, available));
             }
         }
 

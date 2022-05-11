@@ -92,11 +92,14 @@ public class ModelManager implements Model {
         support.firePropertyChange(RESERVATION_LIST_CHANGED, null, reservationList);
     }
 
-    public boolean logIn(String name, String password) throws RemoteException {
-        if (name.equals("") && password.equals("")) {
-            return true;
+    @Override
+    public String logIn(String email, String password) throws RemoteException {
+        if (client.isValidUser(email, password)) {
+            if (client.isUserAManager(email)) return "Manager";
+            else return "Rentee";
         }
-        return false;
+
+        return "Invalid";
     }
 
     @Override

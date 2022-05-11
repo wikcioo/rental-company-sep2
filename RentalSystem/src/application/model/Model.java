@@ -15,7 +15,7 @@ public interface Model extends NamedPropertyChangeSubject {
 
     void addReservation(User rentee, Equipment equipment, LocalDateTime reservationEndDate) throws RemoteException;
 
-    boolean logIn(String name, String password) throws RemoteException;
+    String logIn(String email, String password) throws RemoteException;
 
     ArrayList<Reservation> getReservationList() throws RemoteException;
 

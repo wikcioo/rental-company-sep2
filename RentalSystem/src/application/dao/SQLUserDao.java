@@ -39,7 +39,7 @@ public class SQLUserDao implements UserDao {
 
     @Override
     public User get(String firstName, String lastName) throws SQLException {
-        try(
+        try (
                 Connection connection = getConnection();
                 PreparedStatement statement = connection.prepareStatement("SELECT * FROM Users WHERE firstName = ? AND lastName = ?")
         ) {
@@ -57,7 +57,7 @@ public class SQLUserDao implements UserDao {
 
     @Override
     public void update(User user) throws SQLException {
-        try(
+        try (
                 Connection connection = getConnection();
                 PreparedStatement statement = connection.prepareStatement("UPDATE User SET password = ? WHERE firstName = ? AND lastName = ?")
         ) {
@@ -65,6 +65,36 @@ public class SQLUserDao implements UserDao {
             statement.setString(2, user.getFirstName());
             statement.setString(3, user.getLastName());
             statement.executeUpdate();
+        }
+    }
+
+    @Override
+    public boolean isValidUser(String email, String password) throws SQLException {
+        try (
+                Connection connection = getConnection();
+                PreparedStatement statement = connection.prepareStatement("SELECT password FROM rentalsystemdbs.users WHERE email = ?")
+        ) {
+            statement.setString(1, email);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                String pass = resultSet.getString("password");
+                if (pass.equals(password)) return true;
+            } else {
+                return false;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean isUserAManager(String email) throws SQLException {
+        try (
+                Connection connection = getConnection();
+                PreparedStatement statement = connection.prepareStatement("SELECT * FROM rentalsystemdbs.manager WHERE email = ?")
+        ) {
+            statement.setString(1, email);
+            ResultSet resultSet = statement.executeQuery();
+            return resultSet.next();
         }
     }
 }

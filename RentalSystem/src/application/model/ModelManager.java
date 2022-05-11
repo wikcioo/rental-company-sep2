@@ -51,6 +51,17 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public ArrayList<Reservation> getApprovedReservationList() {
+        ArrayList<Reservation> reservations = new ArrayList<>();
+        for (Reservation r : reservationList) {
+            if (r.isApproved()) {
+                reservations.add(r);
+            }
+        }
+        return reservations;
+    }
+
+    @Override
     public void approveReservation(Reservation reservation)
             throws RemoteException {
         reservation.approve();

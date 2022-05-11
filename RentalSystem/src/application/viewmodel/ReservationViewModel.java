@@ -34,6 +34,22 @@ public class ReservationViewModel implements PropertyChangeListener {
         }
     }
 
+    public void showApprovedReservations() {
+        try {
+            listObjectProperty.setValue(FXCollections.observableList(model.getApprovedReservationList()));
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void showAllReservations() {
+        try {
+            listObjectProperty.setValue(FXCollections.observableList(model.getReservationList()));
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         switch (evt.getPropertyName()) {

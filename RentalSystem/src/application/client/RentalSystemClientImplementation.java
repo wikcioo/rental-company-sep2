@@ -31,6 +31,16 @@ public class RentalSystemClientImplementation extends UnicastRemoteObject implem
     }
 
     @Override
+    public boolean isValidUser(String email, String password) throws RemoteException {
+        return server.isValidUser(email, password);
+    }
+
+    @Override
+    public boolean isUserAManager(String email) throws RemoteException {
+        return server.isUserAManager(email);
+    }
+
+    @Override
     public void addListener(String propertyName, PropertyChangeListener listener) {
         support.addPropertyChangeListener(propertyName, listener);
     }

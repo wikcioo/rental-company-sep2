@@ -14,6 +14,7 @@ public class ViewHandler {
     public static final String EQUIPMENT_LIST_VIEW = "equipment_list_view";
     public static final String MANAGER_EQUIPMENT_LIST_VIEW = "manager_equipment_list_view";
     public static final String RESERVATION_LIST_VIEW = "reservation_list_view";
+    public static final String APPROVED_RESERVATION_LIST_VIEW = "approved_reservation_list_view";
     public static final String LOG_IN = "log_in_view";
     public static final String ADD_USER_VIEW = "add_user_view";
 
@@ -40,6 +41,7 @@ public class ViewHandler {
             case LOG_IN -> viewFactory.loadLogInView();
             case RESERVATION_LIST_VIEW -> viewFactory.loadReservationListView();
             case ADD_USER_VIEW -> viewFactory.loadAddUserView();
+            case APPROVED_RESERVATION_LIST_VIEW -> viewFactory.loadApprovedReservationView();
             default -> throw new IllegalArgumentException("Unknown id: " + id);
         };
 

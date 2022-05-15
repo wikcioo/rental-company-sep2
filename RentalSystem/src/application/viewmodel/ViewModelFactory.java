@@ -9,6 +9,7 @@ public class ViewModelFactory {
     private final LogInViewModel logInViewModel;
     private final ReservationViewModel reservationViewModel;
     private final ManagerEquipmentViewModel managerEquipmentViewModel;
+    private final AddUserViewModel addUserViewModel;
 
     public ViewModelFactory(Model model) {
         this.dummyViewModel = new DummyViewModel(model);
@@ -17,6 +18,7 @@ public class ViewModelFactory {
         this.logInViewModel = new LogInViewModel(model);
         this.reservationViewModel = new ReservationViewModel(model);
         this.managerEquipmentViewModel = new ManagerEquipmentViewModel(model);
+        this.addUserViewModel = new AddUserViewModel(model);
     }
 
     public DummyViewModel getDummyViewModel() {
@@ -41,5 +43,9 @@ public class ViewModelFactory {
 
     public ManagerEquipmentViewModel getManagerEquipmentViewModel() {
         return managerEquipmentViewModel;
+    }
+
+    public AddUserViewModel getAddUserViewModel() {
+        return addUserViewModel;
     }
 }

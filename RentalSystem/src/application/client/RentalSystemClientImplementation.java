@@ -1,6 +1,7 @@
 package application.client;
 
 import application.model.Equipment;
+import application.model.User;
 import application.shared.IServer;
 import application.util.NamedPropertyChangeSubject;
 
@@ -28,6 +29,11 @@ public class RentalSystemClientImplementation extends UnicastRemoteObject implem
     @Override
     public ArrayList<Equipment> getAllEquipment() throws RemoteException {
         return server.getAllEquipment();
+    }
+
+    @Override
+    public void addUser(User user) throws RemoteException {
+        server.addUser(user);
     }
 
     @Override

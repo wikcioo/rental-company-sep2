@@ -5,6 +5,9 @@ import application.dao.SQLEquipmentDao;
 import application.dao.SQLUserDao;
 import application.dao.UserDao;
 import application.model.Equipment;
+import application.model.Manager;
+import application.model.Rentee;
+import application.model.User;
 import application.shared.IServer;
 
 import java.rmi.RemoteException;
@@ -36,6 +39,19 @@ public class RentalSystemServer implements IServer {
             return equipmentDao.getAll();
         } catch (SQLException e) {
             throw new RemoteException(e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public void addUser(User user) throws RemoteException {
+        try {
+            if (user instanceof Manager) {
+                userDao.createManager(user.getFirstName(), user.getLastName(), user.getPhoneNumber(), user.getEmail(), user.getPassword());
+            } else if (user instanceof Rentee) {
+                userDao.createRentee(user.getFirstName(), user.getLastName(), user.getPhoneNumber(), user.getEmail(), user.getPassword());
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e.getMessage(), e);
         }
     }
 

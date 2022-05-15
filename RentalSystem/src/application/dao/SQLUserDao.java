@@ -23,38 +23,68 @@ public class SQLUserDao implements UserDao {
         return instance;
     }
 
-    @Override
-    public User create(String firstName, String lastName, String password) throws SQLException {
+    private void createUser(String firstName, String lastName, String phoneNumber, String email, String password) throws SQLException {
         try (
                 Connection connection = getConnection();
-                PreparedStatement statement = connection.prepareStatement("INSERT INTO User VALUES (?, ?, ?)")
+                PreparedStatement statement = connection.prepareStatement("INSERT INTO rentalsystemdbs.users VALUES (?, ?, ?, ?, ?)")
         ) {
-            statement.setString(1, firstName);
-            statement.setString(2, lastName);
-            statement.setString(3, password);
+            statement.setString(1, email);
+            statement.setString(2, password);
+            statement.setString(3, phoneNumber);
+            statement.setString(4, firstName);
+            statement.setString(5, lastName);
             statement.executeUpdate();
-            return new User(firstName, lastName, password);
         }
     }
 
     @Override
-    public User get(String firstName, String lastName) throws SQLException {
+    public void createManager(String firstName, String lastName, String phoneNumber, String email, String password) throws SQLException {
+        createUser(firstName, lastName, phoneNumber, email, password);
+
         try (
                 Connection connection = getConnection();
-                PreparedStatement statement = connection.prepareStatement("SELECT * FROM Users WHERE firstName = ? AND lastName = ?")
+                PreparedStatement statement = connection.prepareStatement("INSERT INTO rentalsystemdbs.manager VALUES (?)");
         ) {
-            statement.setString(1, firstName);
-            statement.setString(2, lastName);
+            statement.setString(1, email);
+            statement.executeUpdate();
+        }
+    }
+
+    @Override
+    public void createRentee(String firstName, String lastName, String phoneNumber, String email, String password) throws SQLException {
+        createUser(firstName, lastName, phoneNumber, email, password);
+
+        try (
+                Connection connection = getConnection();
+                PreparedStatement statement = connection.prepareStatement("INSERT INTO rentalsystemdbs.rentee VALUES (?, ?)")
+        ) {
+            statement.setString(1, email);
+            statement.setNull(2, Types.INTEGER);
+            statement.executeUpdate();
+        }
+    }
+
+    @Override
+    public User get(String email) throws SQLException {
+        try (
+                Connection connection = getConnection();
+                PreparedStatement statement = connection.prepareStatement("SELECT * FROM rentalsystemdbs.users WHERE email = ?")
+        ) {
+            statement.setString(1, email);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
+                String firstName = resultSet.getString("first_name");
+                String lastName = resultSet.getString("last_name");
+                String phoneNumber = resultSet.getString("phone_number");
                 String password = resultSet.getString("password");
-                return new User(firstName, lastName, password);
+                return new User(firstName, lastName, phoneNumber, email, password);
             } else {
                 return null;
             }
         }
     }
 
+    // TODO: Make proper update function (design[usage] is wrong)
     @Override
     public void update(User user) throws SQLException {
         try (

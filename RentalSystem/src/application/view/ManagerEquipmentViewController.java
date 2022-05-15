@@ -151,6 +151,11 @@ public class ManagerEquipmentViewController {
         viewHandler.openView(ViewHandler.RESERVATION_LIST_VIEW);
     }
 
+    @FXML
+    public void onAddNewUserButtonClick() {
+        viewHandler.openView(ViewHandler.ADD_USER_VIEW);
+    }
+
     public void backButtonPressed() {
         viewHandler.openView(ViewHandler.EQUIPMENT_LIST_VIEW);
     }

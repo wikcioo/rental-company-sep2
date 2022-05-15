@@ -93,6 +93,11 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public void addUser(User user) throws RemoteException {
+        client.addUser(user);
+    }
+
+    @Override
     public String logIn(String email, String password) throws RemoteException {
         if (client.isValidUser(email, password)) {
             if (client.isUserAManager(email)) return "Manager";

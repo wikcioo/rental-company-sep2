@@ -38,11 +38,7 @@
       <TextField fx:id="category" disable="true" layoutX="675.0" layoutY="154.0" prefHeight="25.0" prefWidth="174.0" />
       <AnchorPane prefHeight="200.0" prefWidth="200.0" />
       <Button layoutX="729.0" layoutY="288.0" mnemonicParsing="false" onAction="#OnReserve" text="Reserve" />
-      <Button layoutX="315.0" layoutY="352.0" mnemonicParsing="false" onAction="#onViewReservations" text="Reservations" />
-
       <Button layoutX="566.0" layoutY="352.0" mnemonicParsing="false" onAction="#onViewManagerEquipment" text="Manager" />
-
       <Label fx:id="error" layoutX="43.0" layoutY="356.0" />
-
    </children>
 </AnchorPane>

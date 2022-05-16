@@ -16,6 +16,7 @@ public class ViewFactory {
     private ReservationViewController reservationViewController;
     private ManagerEquipmentViewController managerEquipmentViewController;
     private AddUserViewController addUserViewController;
+    private ApprovedReservationViewController approvedReservationViewController;
 
     public ViewFactory(ViewHandler viewHandler,
                        ViewModelFactory viewModelFactory) {
@@ -141,6 +142,23 @@ public class ViewFactory {
         }
         addUserViewController.reset();
         return addUserViewController.getRoot();
+    }
+
+    public Region loadApprovedReservationView() {
+        if (approvedReservationViewController == null) {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("gui/ApprovedReservationView.fxml"));
+            try {
+                Region root = loader.load();
+                approvedReservationViewController = loader.getController();
+                approvedReservationViewController.init(viewHandler,
+                        viewModelFactory.getApprovedReservationViewModel(), root);
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        approvedReservationViewController.reset();
+        return approvedReservationViewController.getRoot();
     }
 
 }

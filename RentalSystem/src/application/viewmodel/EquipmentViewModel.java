@@ -65,7 +65,11 @@ public class EquipmentViewModel implements PropertyChangeListener {
     public void propertyChange(PropertyChangeEvent evt) {
         switch (evt.getPropertyName()) {
             case ModelManager.EQUIPMENT_LIST_CHANGED -> {
-                listObjectProperty.setValue(FXCollections.observableList((List<Equipment>) evt.getNewValue()));
+                try {
+                    listObjectProperty.setValue(FXCollections.observableList(model.getAllAvailableEquipment()));
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
     }

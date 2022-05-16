@@ -1,20 +1,24 @@
 package application.view;
 
 import application.model.Reservation;
+import application.viewmodel.ApprovedReservationViewModel;
 import application.viewmodel.ReservationViewModel;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.layout.Region;
 import javafx.util.Callback;
 
 import java.time.format.DateTimeFormatter;
 
-public class ReservationViewController {
+public class ApprovedReservationViewController {
     private ViewHandler viewHandler;
-    private ReservationViewModel viewModel;
+    private ApprovedReservationViewModel viewModel;
     private Region root;
     @FXML
     private TableView<Reservation> reservationTable;
@@ -27,14 +31,13 @@ public class ReservationViewController {
     @FXML
     private TableColumn<Reservation, String> endDateColumn;
     @FXML
-    private TableColumn<Reservation, String> approvalColumn;
+    public TableColumn<Reservation, String> daysOverdueColumn;
     @FXML
-    private TableColumn<Reservation, String> approveButtonColumn;
+    public TableColumn<Reservation, String> returnButtonColumn;
 
-
-    public void init(ViewHandler viewHandler, ReservationViewModel reservationViewModel, Region root) {
+    public void init(ViewHandler viewHandler, ApprovedReservationViewModel approvedReservationViewModel, Region root) {
         this.viewHandler = viewHandler;
-        this.viewModel = reservationViewModel;
+        this.viewModel = approvedReservationViewModel;
         this.root = root;
         renteeColumn.setCellValueFactory(new Callback<>() {
             @Override
@@ -64,10 +67,11 @@ public class ReservationViewController {
                 if (p.getValue() != null) {
                     return new SimpleStringProperty(p.getValue().getReservationStartDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
                 } else {
-                    return new SimpleStringProperty("<no start date>");
+                    return new SimpleStringProperty("<no end date>");
                 }
             }
         });
+
         endDateColumn.setCellValueFactory(new Callback<>() {
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Reservation, String> p) {
@@ -78,26 +82,28 @@ public class ReservationViewController {
                 }
             }
         });
-        approvalColumn.setCellValueFactory(new Callback<>() {
+
+        daysOverdueColumn.setCellValueFactory(new Callback<>() {
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Reservation, String> p) {
                 if (p.getValue() != null) {
-                    return new SimpleStringProperty(p.getValue().isApproved().toString());
+                    return new SimpleStringProperty(p.getValue().getDaysOverdue().toString());
                 } else {
                     return new SimpleStringProperty("<no end date>");
                 }
             }
         });
-        approveButtonColumn.setCellFactory(new Callback<>() {
+
+        returnButtonColumn.setCellFactory(new Callback<>() {
             @Override
             public TableCell<Reservation, String> call(final TableColumn<Reservation, String> param) {
                 final TableCell<Reservation, String> cell = new TableCell<>() {
-                    private final Button btn = new Button("Approve");
+                    private final Button btn = new Button("Return");
 
                     {
                         btn.setOnAction((ActionEvent event) -> {
                             Reservation reservation = getTableView().getItems().get(getIndex());
-                            viewModel.approveReservation(reservation);
+                            viewModel.removeReservation(reservation);
                             reservationTable.refresh();
                         });
                     }

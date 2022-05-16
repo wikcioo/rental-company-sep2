@@ -25,15 +25,22 @@ public class SQLEquipmentDao implements EquipmentDao {
     }
 
     @Override
-    public void add(Equipment equipment) throws SQLException {
+    public Equipment add(String model, String category, boolean available) throws SQLException {
         try (
                 Connection connection = getConnection();
-                PreparedStatement statement = connection.prepareStatement("INSERT INTO rentalsystemdbs.equipment VALUES (DEFAULT, ?, ?, ?)")
+                PreparedStatement statement = connection.prepareStatement("INSERT INTO rentalsystemdbs.equipment VALUES (DEFAULT, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS)
         ) {
-            statement.setString(1, equipment.getModel());
-            statement.setString(2, equipment.getCategory());
-            statement.setBoolean(3, true);
+            statement.setString(1, model);
+            statement.setString(2, category);
+            statement.setBoolean(3, available);
             statement.executeUpdate();
+            ResultSet rs = statement.getGeneratedKeys();
+            long pk = 0;
+            if (rs.next()) {
+                pk = rs.getLong(1);
+            }
+
+            return new Equipment((int)pk, model, category, available);
         }
     }
 
@@ -50,7 +57,7 @@ public class SQLEquipmentDao implements EquipmentDao {
                 String model = rs.getString("model");
                 String category = rs.getString("category");
                 boolean available = rs.getBoolean("availability");
-                equipmentList.add(new Equipment(model, category, available));
+                equipmentList.add(new Equipment(id, model, category, available));
             }
         }
 
@@ -73,6 +80,18 @@ public class SQLEquipmentDao implements EquipmentDao {
     public ArrayList<Equipment> getByPrice(double min, double max) throws SQLException {
         // TODO
         return null;
+    }
+
+    @Override
+    public void setAvailability(Equipment equipment, boolean available) throws SQLException {
+        try (
+                Connection connection = getConnection();
+                PreparedStatement statement = connection.prepareStatement("UPDATE TABLE rentalsystemdbs.equipment SET availability = ? WHERE equipment_id = ?")
+        ) {
+            statement.setBoolean(1, available);
+            statement.setInt(2, equipment.getEquipmentId());
+            statement.executeUpdate();
+        }
     }
 
     @Override

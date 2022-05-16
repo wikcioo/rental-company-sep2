@@ -13,6 +13,8 @@ import javafx.scene.control.*;
 import javafx.scene.layout.Region;
 import javafx.util.Callback;
 
+import java.time.LocalDate;
+
 public class EquipmentViewController {
     @FXML
     public DatePicker datePicker;
@@ -38,6 +40,17 @@ public class EquipmentViewController {
         this.viewHandler = viewHandler;
         this.viewModel = equipmentViewModel;
         this.root = root;
+
+        //Only allows user to pick a date from today to 4 weeks from today.
+        LocalDate minDate = LocalDate.now();
+        LocalDate maxDate = minDate.plusWeeks(4);
+        datePicker.setDayCellFactory(d ->
+                new DateCell() {
+                    @Override public void updateItem(LocalDate item, boolean empty) {
+                        super.updateItem(item, empty);
+                        setDisable(item.isAfter(maxDate) || item.isBefore(minDate));
+                    }});
+
         modelColumn.setCellValueFactory(new Callback<>() {
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Equipment, String> p) {
@@ -96,6 +109,10 @@ public class EquipmentViewController {
 
     public void reset() {
         equipmentTable.refresh();
+        viewModel.bindSelectedEquipment(new SimpleObjectProperty<>());
+        model.clear();
+        category.clear();
+        datePicker.setValue(null);
     }
 
     public Region getRoot() {
@@ -120,6 +137,7 @@ public class EquipmentViewController {
         model.clear();
         category.clear();
         datePicker.setValue(null);
+        viewModel.bindSelectedEquipment(new SimpleObjectProperty<>());
     }
 
   public void onViewManagerEquipment() {

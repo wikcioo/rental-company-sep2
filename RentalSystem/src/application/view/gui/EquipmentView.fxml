@@ -12,7 +12,6 @@
 <AnchorPane prefHeight="406.0" prefWidth="988.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.EquipmentViewController">
    <children>
       <Button layoutX="435.0" layoutY="352.0" mnemonicParsing="false" onAction="#addButtonPressed" text="Add" />
-      <Button layoutX="507.0" layoutY="352.0" mnemonicParsing="false" onAction="#closeButtonPressed" text="Close" />
       <Label layoutX="81.0" layoutY="14.0" text="Equipment for rental">
          <font>
             <Font name="System Bold" size="25.0" />

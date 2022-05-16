@@ -25,9 +25,9 @@ public class RentalSystemServer implements IServer {
     }
 
     @Override
-    public void addEquipment(Equipment equipment) throws RemoteException {
+    public Equipment addEquipment(String model, String category, boolean available) throws RemoteException {
         try {
-            equipmentDao.add(equipment);
+            return equipmentDao.add(model, category, available);
         } catch (SQLException e) {
             throw new RemoteException(e.getMessage(), e);
         }

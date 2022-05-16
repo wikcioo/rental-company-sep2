@@ -24,9 +24,8 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void addEquipment(Equipment equipment) throws RemoteException {
-        client.addEquipment(equipment);
-        equipmentList.addEquipment(equipment);
+    public void addEquipment(String model, String category, boolean available) throws RemoteException {
+        equipmentList.addEquipment(client.addEquipment(model, category, available));
         support.firePropertyChange(EQUIPMENT_LIST_CHANGED, null, equipmentList.getAllEquipment());
     }
 

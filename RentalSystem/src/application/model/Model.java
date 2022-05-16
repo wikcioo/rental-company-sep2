@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public interface Model extends NamedPropertyChangeSubject {
-    void addEquipment(Equipment equipment) throws RemoteException;
+    void addEquipment(String model, String category, boolean available) throws RemoteException;
 
     ArrayList<Equipment> getAllEquipment() throws RemoteException;
 

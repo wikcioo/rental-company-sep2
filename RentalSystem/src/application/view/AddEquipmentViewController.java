@@ -1,7 +1,6 @@
 package application.view;
 
 import application.viewmodel.AddEquipmentViewModel;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Region;

@@ -28,7 +28,7 @@ public class ModelManager implements Model {
         client.addEquipment(equipment);
         equipmentList.addEquipment(equipment);
         support.firePropertyChange(EQUIPMENT_LIST_CHANGED, null,
-                equipmentList.getAllEquipments());
+                equipmentList.getAllEquipment());
     }
 
 
@@ -39,9 +39,14 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public ArrayList<Equipment> getAllAvailableEquipment() throws RemoteException {
+        return equipmentList.getAllAvailableEquipment();
+    }
+
+    @Override
     public void retrieveAllEquipment() throws RemoteException {
         equipmentList.addEquipmentList(client.getAllEquipment());
-        support.firePropertyChange(EQUIPMENT_LIST_CHANGED, null, equipmentList.getAllEquipments());
+        support.firePropertyChange(EQUIPMENT_LIST_CHANGED, null, equipmentList.getAllEquipment());
     }
 
     @Override
@@ -121,5 +126,12 @@ public class ModelManager implements Model {
 
     public void editEquipment(Equipment equipment, int index) {
         equipmentList.editEquipment(equipment, index);
+    }
+
+    @Override
+    public void removeReservation(Reservation reservation) throws RemoteException {
+        reservation.getEquipment().setAvailable(true);
+        reservationList.remove(reservation);
+        support.firePropertyChange(RESERVATION_LIST_CHANGED, null, reservationList);
     }
 }

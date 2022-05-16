@@ -3,6 +3,8 @@ package application.viewmodel;
 import application.model.*;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -17,6 +19,7 @@ public class ManagerEquipmentViewModel implements PropertyChangeListener {
     private final ObjectProperty<ObservableList<Equipment>> listObjectProperty;
     private final ObjectProperty<Equipment> selectedEquipmentProperty;
     private final ObjectProperty<LocalDateTime> reservationEndDate;
+    private final StringProperty errorProperty;
 
     public ManagerEquipmentViewModel(Model model) {
         this.model = model;
@@ -24,6 +27,7 @@ public class ManagerEquipmentViewModel implements PropertyChangeListener {
         selectedEquipmentProperty = new SimpleObjectProperty<>();
         model.addListener(ModelManager.EQUIPMENT_LIST_CHANGED, this);
         reservationEndDate = new SimpleObjectProperty<>();
+        errorProperty = new SimpleStringProperty();
     }
 
     public void bindEquipmentList(ObjectProperty<ObservableList<Equipment>> property) {
@@ -34,8 +38,8 @@ public class ManagerEquipmentViewModel implements PropertyChangeListener {
         selectedEquipmentProperty.bind(property);
     }
 
-    public void bindReservationEndDate(SimpleObjectProperty<LocalDateTime> property) {
-        reservationEndDate.bind(property);
+    public void bindErrorLabel(StringProperty property) {
+        property.bind(errorProperty);
     }
 
     public void toggleAvailability() {
@@ -43,6 +47,16 @@ public class ManagerEquipmentViewModel implements PropertyChangeListener {
             model.toggleAvailability(selectedEquipmentProperty.get());
         } catch (RemoteException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public void retrieveAllEquipment() {
+        try {
+            errorProperty.set("Successfully retrieved equipment from DB");
+            model.retrieveAllEquipment();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            errorProperty.set("Failed to retrieve equipment list");
         }
     }
 

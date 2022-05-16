@@ -27,14 +27,12 @@ public class ModelManager implements Model {
     public void addEquipment(Equipment equipment) throws RemoteException {
         client.addEquipment(equipment);
         equipmentList.addEquipment(equipment);
-        support.firePropertyChange(EQUIPMENT_LIST_CHANGED, null,
-                equipmentList.getAllEquipment());
+        support.firePropertyChange(EQUIPMENT_LIST_CHANGED, null, equipmentList.getAllEquipment());
     }
 
 
     @Override
-    public ArrayList<Equipment> getAllEquipment()
-            throws RemoteException {
+    public ArrayList<Equipment> getAllEquipment() throws RemoteException {
         return equipmentList.getAllEquipment();
     }
 
@@ -43,15 +41,18 @@ public class ModelManager implements Model {
         return equipmentList.getAllAvailableEquipment();
     }
 
+    //TODO: This only retrieves equipment when the list is empty,
+    // but this check can and probably should be removed when rentee and manager views are fully separated
     @Override
     public void retrieveAllEquipment() throws RemoteException {
-        equipmentList.addEquipmentList(client.getAllEquipment());
-        support.firePropertyChange(EQUIPMENT_LIST_CHANGED, null, equipmentList.getAllEquipment());
+        if (equipmentList.getAllEquipment().size() == 0) {
+            equipmentList.addEquipmentList(client.getAllEquipment());
+            support.firePropertyChange(EQUIPMENT_LIST_CHANGED, null, equipmentList.getAllEquipment());
+        }
     }
 
     @Override
-    public ArrayList<Reservation> getReservationList()
-            throws RemoteException {
+    public ArrayList<Reservation> getReservationList() throws RemoteException {
         return reservationList;
     }
 
@@ -67,33 +68,29 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void approveReservation(Reservation reservation)
-            throws RemoteException {
+    public void approveReservation(Reservation reservation) throws RemoteException {
         reservation.approve();
         support.firePropertyChange(RESERVATION_LIST_CHANGED, null, reservationList);
     }
 
     @Override
-    public void toggleAvailability(Equipment equipment)
-            throws RemoteException {
+    public void toggleAvailability(Equipment equipment) throws RemoteException {
         equipment.toggleAvailability();
-        support.firePropertyChange(EQUIPMENT_LIST_CHANGED, null,
-                equipmentList.getAllEquipment());
+        support.firePropertyChange(EQUIPMENT_LIST_CHANGED, null, equipmentList.getAllEquipment());
     }
 
     @Override
-    public void editEquipment(Equipment oldEquipment,
-                              Equipment newEquipment) throws RemoteException {
+    public void editEquipment(Equipment oldEquipment, Equipment newEquipment) throws RemoteException {
         int index = equipmentList.getAllEquipment().indexOf(oldEquipment);
         equipmentList.getAllEquipment().set(index, newEquipment);
-        support.firePropertyChange(EQUIPMENT_LIST_CHANGED, null,
-                equipmentList.getAllEquipment());
+        support.firePropertyChange(EQUIPMENT_LIST_CHANGED, null, equipmentList.getAllEquipment());
     }
 
     @Override
-    public void addReservation(User user, Equipment equipment,
-                               LocalDateTime reservationEndDate) throws RemoteException {
+    public void addReservation(User user, Equipment equipment, LocalDateTime reservationEndDate) throws RemoteException {
         reservationList.add(new Reservation(user, equipment, reservationEndDate));
+        equipment.setAvailable(false);
+        support.firePropertyChange(EQUIPMENT_LIST_CHANGED, null, equipmentList.getAllEquipment());
         support.firePropertyChange(RESERVATION_LIST_CHANGED, null, reservationList);
     }
 
@@ -113,14 +110,12 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void addListener(String propertyName,
-                            PropertyChangeListener listener) {
+    public void addListener(String propertyName, PropertyChangeListener listener) {
         support.addPropertyChangeListener(propertyName, listener);
     }
 
     @Override
-    public void removeListener(String propertyName,
-                               PropertyChangeListener listener) {
+    public void removeListener(String propertyName, PropertyChangeListener listener) {
         support.removePropertyChangeListener(propertyName, listener);
     }
 
@@ -132,6 +127,7 @@ public class ModelManager implements Model {
     public void removeReservation(Reservation reservation) throws RemoteException {
         reservation.getEquipment().setAvailable(true);
         reservationList.remove(reservation);
+        support.firePropertyChange(EQUIPMENT_LIST_CHANGED, null, equipmentList.getAllEquipment());
         support.firePropertyChange(RESERVATION_LIST_CHANGED, null, reservationList);
     }
 }

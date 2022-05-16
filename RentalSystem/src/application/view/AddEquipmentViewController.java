@@ -23,7 +23,8 @@ public class AddEquipmentViewController {
     }
 
     public void reset() {
-
+        equipmentModel.clear();
+        category.clear();
     }
 
     public Region getRoot() {

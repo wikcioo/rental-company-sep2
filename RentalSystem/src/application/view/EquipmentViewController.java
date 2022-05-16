@@ -95,7 +95,7 @@ public class EquipmentViewController {
     }
 
     public void reset() {
-
+        equipmentTable.refresh();
     }
 
     public Region getRoot() {

@@ -41,19 +41,20 @@ public class AddUserViewController {
 
     @FXML
     public void onAddButtonClick() {
-        if (!password1.getText().equals(password2.getText())) {
+        if (!highlightEmptyFields()) {
             error.setTextFill(Paint.valueOf("RED"));
-            error.setText("Passwords do not match!");
-        } else {
-            viewModel.addUser(((RadioButton)userRole.getSelectedToggle()).getText());
-            error.setTextFill(Paint.valueOf("GREEN"));
-            error.setText("User added successfully!");
-            firstName.clear();
-            lastName.clear();
-            phoneNumber.clear();
-            email.clear();
-            password1.clear();
-            password2.clear();
+            if (!password1.getText().equals(password2.getText())) {
+                error.setText("Passwords do not match!");
+            } else {
+                if (userRole.getSelectedToggle() == null) {
+                    error.setText("Please select manager or rentee radio button");
+                } else if (viewModel.addUser(((RadioButton) userRole.getSelectedToggle()).getText())) {
+                    error.setTextFill(Paint.valueOf("GREEN"));
+                    error.setText("User added successfully!");
+                    resetInputFields();
+                    userRole.selectToggle(null);
+                }
+            }
         }
     }
 
@@ -62,8 +63,61 @@ public class AddUserViewController {
         viewHandler.openView(ViewHandler.MANAGER_EQUIPMENT_LIST_VIEW);
     }
 
-    public void reset() {
+    private boolean highlightEmptyFields() {
+        resetFieldsStyle();
+        String emptyInputFieldBorderColor = "#FF0000";
+        boolean emptyFieldOccurred = false;
+        if (firstName.getText().isEmpty()) {
+            firstName.setStyle("-fx-text-box-border: " + emptyInputFieldBorderColor + ";");
+            emptyFieldOccurred = true;
+        }
+        if (lastName.getText().isEmpty()) {
+            lastName.setStyle("-fx-text-box-border: " + emptyInputFieldBorderColor + ";");
+            emptyFieldOccurred = true;
+        }
+        if (phoneNumber.getText().isEmpty()) {
+            phoneNumber.setStyle("-fx-text-box-border: " + emptyInputFieldBorderColor + ";");
+            emptyFieldOccurred = true;
+        }
+        if (email.getText().isEmpty()) {
+            email.setStyle("-fx-text-box-border: " + emptyInputFieldBorderColor + ";");
+            emptyFieldOccurred = true;
+        }
+        if (password1.getText().isEmpty()) {
+            password1.setStyle("-fx-text-box-border: " + emptyInputFieldBorderColor + ";");
+            emptyFieldOccurred = true;
+        }
+        if (password2.getText().isEmpty()) {
+            password2.setStyle("-fx-text-box-border: " + emptyInputFieldBorderColor + ";");
+            emptyFieldOccurred = true;
+        }
 
+        return emptyFieldOccurred;
+    }
+
+    private void resetFieldsStyle() {
+        firstName.setStyle(null);
+        lastName.setStyle(null);
+        phoneNumber.setStyle(null);
+        email.setStyle(null);
+        password1.setStyle(null);
+        password2.setStyle(null);
+    }
+
+    private void resetInputFields() {
+        firstName.clear();
+        lastName.clear();
+        phoneNumber.clear();
+        email.clear();
+        password1.clear();
+        password2.clear();
+    }
+
+    public void reset() {
+        resetFieldsStyle();
+        resetInputFields();
+        userRole.selectToggle(null);
+        error.setText(null);
     }
 
     public Region getRoot() {

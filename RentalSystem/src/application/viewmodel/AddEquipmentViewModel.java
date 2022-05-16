@@ -1,6 +1,5 @@
 package application.viewmodel;
 
-import application.model.Equipment;
 import application.model.Model;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -28,7 +27,7 @@ public class AddEquipmentViewModel {
 
     public void addEquipment() {
         try {
-            model.addEquipment(new Equipment(equipmentModel.get(), category.get(), true));
+            model.addEquipment(equipmentModel.get(), category.get(), true);
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }

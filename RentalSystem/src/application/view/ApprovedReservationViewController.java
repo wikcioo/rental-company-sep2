@@ -31,10 +31,9 @@ public class ApprovedReservationViewController {
     @FXML
     private TableColumn<Reservation, String> endDateColumn;
     @FXML
-    private TableColumn<Reservation, String> approvalColumn;
+    public TableColumn<Reservation, String> daysOverdueColumn;
     @FXML
-    private TableColumn<Reservation, String> approveButtonColumn;
-
+    public TableColumn<Reservation, String> returnButtonColumn;
 
     public void init(ViewHandler viewHandler, ApprovedReservationViewModel approvedReservationViewModel, Region root) {
         this.viewHandler = viewHandler;
@@ -62,7 +61,17 @@ public class ApprovedReservationViewController {
             }
         });
 
-        //Make column "Return By"
+        startDateColumn.setCellValueFactory(new Callback<>() {
+            @Override
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<Reservation, String> p) {
+                if (p.getValue() != null) {
+                    return new SimpleStringProperty(p.getValue().getReservationStartDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+                } else {
+                    return new SimpleStringProperty("<no end date>");
+                }
+            }
+        });
+
         endDateColumn.setCellValueFactory(new Callback<>() {
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Reservation, String> p) {
@@ -74,29 +83,27 @@ public class ApprovedReservationViewController {
             }
         });
 
-        //Make column "How long overdue, or how much left"
-        approvalColumn.setCellValueFactory(new Callback<>() {
+        daysOverdueColumn.setCellValueFactory(new Callback<>() {
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Reservation, String> p) {
                 if (p.getValue() != null) {
-                    return new SimpleStringProperty(p.getValue().isApproved().toString());
+                    return new SimpleStringProperty(p.getValue().getDaysOverdue().toString());
                 } else {
                     return new SimpleStringProperty("<no end date>");
                 }
             }
         });
 
-        //Make column "Return Equipment"
-        approveButtonColumn.setCellFactory(new Callback<>() {
+        returnButtonColumn.setCellFactory(new Callback<>() {
             @Override
             public TableCell<Reservation, String> call(final TableColumn<Reservation, String> param) {
                 final TableCell<Reservation, String> cell = new TableCell<>() {
-                    private final Button btn = new Button("Approve");
+                    private final Button btn = new Button("Return");
 
                     {
                         btn.setOnAction((ActionEvent event) -> {
-                            Reservation data = getTableView().getItems().get(getIndex());
-                            viewModel.approveReservation(data);
+                            Reservation reservation = getTableView().getItems().get(getIndex());
+                            viewModel.removeReservation(reservation);
                             reservationTable.refresh();
                         });
                     }
@@ -126,14 +133,7 @@ public class ApprovedReservationViewController {
     }
 
     public void backButtonPressed() {
-        viewHandler.openView(ViewHandler.EQUIPMENT_LIST_VIEW);
+        viewHandler.openView(ViewHandler.MANAGER_EQUIPMENT_LIST_VIEW);
     }
 
-    public void approvedButtonPressed() {
-        viewModel.showApprovedReservations();
-    }
-
-    public void showAllReservations() {
-        viewModel.showAllReservations();
-    }
 }

@@ -96,8 +96,8 @@ public class ReservationViewController {
 
                     {
                         btn.setOnAction((ActionEvent event) -> {
-                            Reservation data = getTableView().getItems().get(getIndex());
-                            viewModel.approveReservation(data);
+                            Reservation reservation = getTableView().getItems().get(getIndex());
+                            viewModel.approveReservation(reservation);
                             reservationTable.refresh();
                         });
                     }
@@ -127,14 +127,7 @@ public class ReservationViewController {
     }
 
     public void backButtonPressed() {
-        viewHandler.openView(ViewHandler.EQUIPMENT_LIST_VIEW);
+        viewHandler.openView(ViewHandler.MANAGER_EQUIPMENT_LIST_VIEW);
     }
 
-    public void approvedButtonPressed() {
-        viewModel.showApprovedReservations();
-    }
-
-    public void showAllReservations() {
-        viewModel.showAllReservations();
-    }
 }

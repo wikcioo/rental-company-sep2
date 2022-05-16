@@ -30,8 +30,8 @@ public class ManagerEquipmentViewController {
     private TableColumn<Equipment, String> availabilityColumn;
     @FXML
     private TableColumn<Equipment, String> changeAvailabilityColumn;
-    @FXML
-    private TableColumn<Equipment, String> editColumn;
+//    @FXML
+//    private TableColumn<Equipment, String> editColumn;
 
     public void init(ViewHandler viewHandler,
                      ManagerEquipmentViewModel managerEquipmentViewModel, Region root) {
@@ -82,8 +82,8 @@ public class ManagerEquipmentViewController {
 
                     {
                         btn.setOnAction((ActionEvent event) -> {
-                            Equipment data = getTableView().getItems().get(getIndex());
-                            viewModel.bindSelectedEquipment(new SimpleObjectProperty<>(data));
+                            Equipment equipment = getTableView().getItems().get(getIndex());
+                            viewModel.bindSelectedEquipment(new SimpleObjectProperty<>(equipment));
                             viewModel.toggleAvailability();
                             equipmentTable.refresh();
                         });
@@ -103,35 +103,35 @@ public class ManagerEquipmentViewController {
             }
         });
 
-        editColumn.setCellFactory(new Callback<>() {
-            @Override
-            public TableCell<Equipment, String> call(
-                    final TableColumn<Equipment, String> param) {
-                final TableCell<Equipment, String> cell = new TableCell<>() {
-                    private final Button btn = new Button("Edit");
-
-                    {
-                        btn.setOnAction((ActionEvent event) -> {
-                            Equipment data = getTableView().getItems().get(getIndex());
-                            model.setText(data.getModel());
-                            category.setText(data.getCategory());
-                            viewModel.bindSelectedEquipment(new SimpleObjectProperty<>(data));
-                        });
-                    }
-
-                    @Override
-                    public void updateItem(String item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if (empty) {
-                            setGraphic(null);
-                        } else {
-                            setGraphic(btn);
-                        }
-                    }
-                };
-                return cell;
-            }
-        });
+//        editColumn.setCellFactory(new Callback<>() {
+//            @Override
+//            public TableCell<Equipment, String> call(
+//                    final TableColumn<Equipment, String> param) {
+//                final TableCell<Equipment, String> cell = new TableCell<>() {
+//                    private final Button btn = new Button("Edit");
+//
+//                    {
+//                        btn.setOnAction((ActionEvent event) -> {
+//                            Equipment data = getTableView().getItems().get(getIndex());
+//                            model.setText(data.getModel());
+//                            category.setText(data.getCategory());
+//                            viewModel.bindSelectedEquipment(new SimpleObjectProperty<>(data));
+//                        });
+//                    }
+//
+//                    @Override
+//                    public void updateItem(String item, boolean empty) {
+//                        super.updateItem(item, empty);
+//                        if (empty) {
+//                            setGraphic(null);
+//                        } else {
+//                            setGraphic(btn);
+//                        }
+//                    }
+//                };
+//                return cell;
+//            }
+//        });
         viewModel.bindEquipmentList(equipmentTable.itemsProperty());
     }
 
@@ -143,9 +143,9 @@ public class ManagerEquipmentViewController {
         return root;
     }
 
-    public void editButtonPressed() {
-
-    }
+//    public void editButtonPressed() {
+//
+//    }
 
     public void onViewReservations() {
         viewHandler.openView(ViewHandler.RESERVATION_LIST_VIEW);
@@ -160,4 +160,7 @@ public class ManagerEquipmentViewController {
         viewHandler.openView(ViewHandler.EQUIPMENT_LIST_VIEW);
     }
 
+    public void onViewApprovedReservations() {
+        viewHandler.openView(ViewHandler.APPROVED_RESERVATION_LIST_VIEW);
+    }
 }

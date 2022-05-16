@@ -11,6 +11,8 @@ public interface Model extends NamedPropertyChangeSubject {
 
     ArrayList<Equipment> getAllEquipment() throws RemoteException;
 
+    ArrayList<Equipment> getAllAvailableEquipment() throws RemoteException;
+
     void retrieveAllEquipment() throws RemoteException;
 
     void addReservation(User rentee, Equipment equipment, LocalDateTime reservationEndDate) throws RemoteException;
@@ -29,4 +31,6 @@ public interface Model extends NamedPropertyChangeSubject {
     void editEquipment(Equipment oldEquipment, Equipment newEquipment) throws RemoteException;
 
     void editEquipment(Equipment equipment, int index) throws RemoteException;
+
+    void removeReservation(Reservation reservation) throws RemoteException;
 }

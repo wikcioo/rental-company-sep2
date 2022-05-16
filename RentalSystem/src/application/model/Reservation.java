@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import static java.time.temporal.ChronoUnit.DAYS;
+
 public class Reservation implements Serializable {
     private Boolean approved;
     private User rentee;
@@ -47,6 +49,10 @@ public class Reservation implements Serializable {
 
     public LocalDateTime getReservationEndDate() {
         return reservationEndDate;
+    }
+
+    public Long getDaysOverdue(){
+        return DAYS.between(reservationEndDate, LocalDateTime.now());
     }
 
     public Equipment getEquipment() {

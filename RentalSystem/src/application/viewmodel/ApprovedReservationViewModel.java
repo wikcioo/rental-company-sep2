@@ -52,12 +52,25 @@ public class ApprovedReservationViewModel implements PropertyChangeListener {
         }
     }
 
+    //TODO: Check if it should be done like this. Didn't want to create 2 separate property events, but taking list this way might not be ideal.
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         switch (evt.getPropertyName()) {
             case ModelManager.RESERVATION_LIST_CHANGED -> {
-                listObjectProperty.setValue(FXCollections.observableList((List<Reservation>) evt.getNewValue()));
+                try {
+                    listObjectProperty.setValue(FXCollections.observableList(model.getApprovedReservationList()));
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
             }
+        }
+    }
+
+    public void removeReservation(Reservation reservation) {
+        try {
+            model.removeReservation(reservation);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
         }
     }
 }

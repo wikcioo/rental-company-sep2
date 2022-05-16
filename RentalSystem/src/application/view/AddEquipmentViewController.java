@@ -31,8 +31,31 @@ public class AddEquipmentViewController {
     }
 
     public void onAddEquipment() {
-        viewModel.addEquipment();
-        viewHandler.openView(ViewHandler.EQUIPMENT_LIST_VIEW);
+        if (!highlightEmptyFields()) {
+            viewModel.addEquipment();
+            viewHandler.openView(ViewHandler.EQUIPMENT_LIST_VIEW);
+        }
+    }
+
+    private boolean highlightEmptyFields() {
+        resetFieldsStyle();
+        String emptyInputFieldBorderColor = "#FF0000";
+        boolean emptyFieldOccurred = false;
+        if (equipmentModel.getText().isEmpty()) {
+            equipmentModel.setStyle("-fx-text-box-border: " + emptyInputFieldBorderColor + ";");
+            emptyFieldOccurred = true;
+        }
+        if (category.getText().isEmpty()) {
+            category.setStyle("-fx-text-box-border: " + emptyInputFieldBorderColor + ";");
+            emptyFieldOccurred = true;
+        }
+
+        return emptyFieldOccurred;
+    }
+
+    private void resetFieldsStyle() {
+        equipmentModel.setStyle(null);
+        category.setStyle(null);
     }
 
     public void onCancel() {

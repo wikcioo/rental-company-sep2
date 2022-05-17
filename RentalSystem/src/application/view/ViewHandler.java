@@ -56,8 +56,6 @@ public class ViewHandler {
             @Override
             public void handle(WindowEvent windowEvent) {
                 closeView();
-                Platform.exit();
-                System.exit(0);
             }
         });
 
@@ -68,5 +66,7 @@ public class ViewHandler {
 
     public void closeView() {
         this.primaryStage.close();
+        Platform.exit();
+        System.exit(0);
     }
 }

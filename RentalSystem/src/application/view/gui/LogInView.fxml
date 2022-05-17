@@ -49,11 +49,16 @@
                     </TextField>
                 </children>
             </HBox>
-      <Label fx:id="error"/>
+      <Label fx:id="error" />
             <Button mnemonicParsing="false" onAction="#onLogIn" text="Log In">
                 <VBox.margin>
                     <Insets top="25.0" />
                 </VBox.margin>
             </Button>
+      <Button mnemonicParsing="false" text="Exit" onAction="#onExitButtonClick">
+         <VBox.margin>
+            <Insets left="450.0" top="90.0" />
+         </VBox.margin>
+      </Button>
         </children>
     </VBox>

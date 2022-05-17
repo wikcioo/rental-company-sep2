@@ -28,13 +28,16 @@ public class LogInViewController {
     }
 
     public void reset() {
-
+        email.clear();
+        password.clear();
+        error.setText(null);
     }
 
     public Region getRoot() {
         return root;
     }
 
+    @FXML
     public void onLogIn() {
         error.setTextFill(Paint.valueOf("BLUE"));
         error.setText("Processing...");
@@ -47,5 +50,10 @@ public class LogInViewController {
             error.setTextFill(Paint.valueOf("RED"));
             error.setText("Wrong credentials");
         }
+    }
+
+    @FXML
+    public void onExitButtonClick() {
+        viewHandler.closeView();
     }
 }

@@ -20,14 +20,16 @@ public class ManagerEquipmentViewModel implements PropertyChangeListener {
     private final ObjectProperty<Equipment> selectedEquipmentProperty;
     private final ObjectProperty<LocalDateTime> reservationEndDate;
     private final StringProperty errorProperty;
+    private final StringProperty loggedUserProperty;
 
     public ManagerEquipmentViewModel(Model model) {
         this.model = model;
-        listObjectProperty = new SimpleObjectProperty<>();
-        selectedEquipmentProperty = new SimpleObjectProperty<>();
+        this.listObjectProperty = new SimpleObjectProperty<>();
+        this.selectedEquipmentProperty = new SimpleObjectProperty<>();
         model.addListener(ModelManager.EQUIPMENT_LIST_CHANGED, this);
-        reservationEndDate = new SimpleObjectProperty<>();
-        errorProperty = new SimpleStringProperty();
+        this.reservationEndDate = new SimpleObjectProperty<>();
+        this.errorProperty = new SimpleStringProperty();
+        this.loggedUserProperty = new SimpleStringProperty();
     }
 
     public void bindEquipmentList(ObjectProperty<ObservableList<Equipment>> property) {
@@ -40,6 +42,10 @@ public class ManagerEquipmentViewModel implements PropertyChangeListener {
 
     public void bindErrorLabel(StringProperty property) {
         property.bind(errorProperty);
+    }
+
+    public void bindLoggedUser(StringProperty property) {
+        loggedUserProperty.bindBidirectional(property);
     }
 
     public void toggleAvailability() {
@@ -70,4 +76,7 @@ public class ManagerEquipmentViewModel implements PropertyChangeListener {
         }
     }
 
+    public void displayLoggedUser() {
+        loggedUserProperty.set("Logged as: " + model.getCurrentlyLoggedInUser().getEmail());
+    }
 }

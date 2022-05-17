@@ -36,6 +36,8 @@ public class EquipmentViewController {
     private Label equipmentError;
     @FXML
     private Label reservationError;
+    @FXML
+    private Label loggedUser;
 
     public void init(ViewHandler viewHandler, EquipmentViewModel equipmentViewModel, Region root) {
         this.viewHandler = viewHandler;
@@ -47,10 +49,12 @@ public class EquipmentViewController {
         LocalDate maxDate = minDate.plusWeeks(4);
         datePicker.setDayCellFactory(d ->
                 new DateCell() {
-                    @Override public void updateItem(LocalDate item, boolean empty) {
+                    @Override
+                    public void updateItem(LocalDate item, boolean empty) {
                         super.updateItem(item, empty);
                         setDisable(item.isAfter(maxDate) || item.isBefore(minDate));
-                    }});
+                    }
+                });
 
         modelColumn.setCellValueFactory(new Callback<>() {
             @Override
@@ -105,7 +109,7 @@ public class EquipmentViewController {
 
         viewModel.bindEquipmentList(equipmentTable.itemsProperty());
         viewModel.bindErrorLabel(equipmentError.textProperty());
-//        viewModel.retrieveAllEquipment();
+        viewModel.bindLoggedUser(loggedUser.textProperty());
         viewModel.retrieveAllUnreservedEquipment();
     }
 
@@ -117,6 +121,7 @@ public class EquipmentViewController {
         datePicker.setValue(null);
         reservationError.setText(null);
         viewModel.retrieveAllUnreservedEquipment();
+        viewModel.displayLoggedUser();
     }
 
     public Region getRoot() {
@@ -153,7 +158,16 @@ public class EquipmentViewController {
         }
     }
 
-  public void onViewManagerEquipment() {
+    public void onViewManagerEquipment() {
         viewHandler.openView(ViewHandler.MANAGER_EQUIPMENT_LIST_VIEW);
-  }
+    }
+
+    @FXML
+    public void onLogOutButtonClick() {
+        viewHandler.openView(ViewHandler.LOG_IN);
+    }
+
+    public void onRefreshButtonClick() {
+        viewModel.retrieveAllUnreservedEquipment();
+    }
 }

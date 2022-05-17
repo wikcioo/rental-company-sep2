@@ -1,7 +1,6 @@
 package application.view;
 
 import application.model.Equipment;
-import application.viewmodel.EquipmentViewModel;
 import application.viewmodel.ManagerEquipmentViewModel;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -12,15 +11,15 @@ import javafx.scene.control.*;
 import javafx.scene.layout.Region;
 import javafx.util.Callback;
 
-import java.time.LocalDate;
-
 public class ManagerEquipmentViewController {
     @FXML
-    public TextField model;
+    private TextField model;
     @FXML
-    public TextField category;
+    private TextField category;
     @FXML
-    public Label error;
+    private Label error;
+    @FXML
+    private Label loggedUser;
     private ViewHandler viewHandler;
     private ManagerEquipmentViewModel viewModel;
     private Region root;
@@ -139,20 +138,18 @@ public class ManagerEquipmentViewController {
 //        });
         viewModel.bindEquipmentList(equipmentTable.itemsProperty());
         viewModel.bindErrorLabel(error.textProperty());
+        viewModel.bindLoggedUser(loggedUser.textProperty());
         viewModel.retrieveAllEquipment();
     }
 
     public void reset() {
         viewModel.retrieveAllEquipment();
+        viewModel.displayLoggedUser();
     }
 
     public Region getRoot() {
         return root;
     }
-
-//    public void editButtonPressed() {
-//
-//    }
 
     public void onViewReservations() {
         viewHandler.openView(ViewHandler.RESERVATION_LIST_VIEW);
@@ -169,5 +166,14 @@ public class ManagerEquipmentViewController {
 
     public void onViewApprovedReservations() {
         viewHandler.openView(ViewHandler.APPROVED_RESERVATION_LIST_VIEW);
+    }
+
+    @FXML
+    public void onLogOutButtonClick() {
+        viewHandler.openView(ViewHandler.LOG_IN);
+    }
+
+    public void onRefreshButtonClick() {
+        viewModel.retrieveAllEquipment();
     }
 }

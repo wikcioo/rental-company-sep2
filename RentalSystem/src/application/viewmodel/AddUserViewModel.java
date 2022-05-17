@@ -55,9 +55,9 @@ public class AddUserViewModel {
     public boolean addUser(String role) {
         try {
             if (role.equals("Manager")) {
-                model.addUser(new Manager(firstName.getValue(), lastName.getValue(), phoneNumber.getValue(), email.getValue(), password.getValue()));
+                model.addUser(firstName.getValue(), lastName.getValue(), phoneNumber.getValue(), email.getValue(), password.getValue(), true);
             } else if (role.equals("Rentee")) {
-                model.addUser(new Rentee(firstName.getValue(), lastName.getValue(), phoneNumber.getValue(), email.getValue(), password.getValue()));
+                model.addUser(firstName.getValue(), lastName.getValue(), phoneNumber.getValue(), email.getValue(), password.getValue(), false);
             }
             return true;
         } catch (RemoteException e) {

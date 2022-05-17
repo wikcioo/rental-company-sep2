@@ -1,5 +1,6 @@
 package application.server;
 
+
 import application.dao.*;
 import application.model.*;
 import application.shared.IServer;
@@ -57,13 +58,22 @@ public class RentalSystemServer implements IServer {
     }
 
     @Override
-    public void addUser(User user) throws RemoteException {
+    public void addUser(String firstName, String lastName, String phoneNumber, String email, String password, boolean isManager) throws RemoteException {
         try {
-            if (user instanceof Manager) {
-                userDao.createManager(user.getFirstName(), user.getLastName(), user.getPhoneNumber(), user.getEmail(), user.getPassword());
-            } else if (user instanceof Rentee) {
-                userDao.createRentee(user.getFirstName(), user.getLastName(), user.getPhoneNumber(), user.getEmail(), user.getPassword());
+            if (isManager) {
+                userDao.createManager(firstName, lastName, phoneNumber, email, password);
+            } else {
+                userDao.createRentee(firstName, lastName, phoneNumber, email, password);
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public User getUser(String email) throws RemoteException {
+        try {
+            return userDao.get(email);
         } catch (SQLException e) {
             throw new RuntimeException(e.getMessage(), e);
         }

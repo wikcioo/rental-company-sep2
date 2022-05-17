@@ -168,4 +168,8 @@ public class ManagerEquipmentViewController {
     public void onLogOutButtonClick() {
         viewHandler.openView(ViewHandler.LOG_IN);
     }
+
+    public void onRefreshButtonClick() {
+        viewModel.retrieveAllEquipment();
+    }
 }

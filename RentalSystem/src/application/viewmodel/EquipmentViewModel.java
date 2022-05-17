@@ -96,6 +96,6 @@ public class EquipmentViewModel implements PropertyChangeListener {
     }
 
     public void displayLoggedUser() {
-        loggedUserProperty.set("Logged in as: " + model.getCurrentlyLoggedInUser().getEmail());
+        loggedUserProperty.set("Logged as: " + model.getCurrentlyLoggedInUser().getEmail());
     }
 }

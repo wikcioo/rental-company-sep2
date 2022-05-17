@@ -13,11 +13,13 @@ import javafx.util.Callback;
 
 public class ManagerEquipmentViewController {
     @FXML
-    public TextField model;
+    private TextField model;
     @FXML
-    public TextField category;
+    private TextField category;
     @FXML
-    public Label error;
+    private Label error;
+    @FXML
+    private Label loggedUser;
     private ViewHandler viewHandler;
     private ManagerEquipmentViewModel viewModel;
     private Region root;
@@ -136,11 +138,13 @@ public class ManagerEquipmentViewController {
 //        });
         viewModel.bindEquipmentList(equipmentTable.itemsProperty());
         viewModel.bindErrorLabel(error.textProperty());
+        viewModel.bindLoggedUser(loggedUser.textProperty());
         viewModel.retrieveAllEquipment();
     }
 
     public void reset() {
         viewModel.retrieveAllEquipment();
+        viewModel.displayLoggedUser();
     }
 
     public Region getRoot() {

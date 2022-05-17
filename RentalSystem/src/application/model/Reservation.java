@@ -2,15 +2,14 @@ package application.model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 
 public class Reservation implements Serializable {
     private Boolean approved;
     private User rentee;
-    private LocalDateTime reservationStartDate;
-    private LocalDateTime reservationEndDate;
+    private LocalDateTime reservationDate;
+    private LocalDateTime rentedFor;
     private Equipment equipment;
 
     @Override
@@ -18,16 +17,16 @@ public class Reservation implements Serializable {
         return "Reservation{" +
                 "approved=" + approved +
                 ", rentee=" + rentee +
-                ", reservationDate=" + reservationStartDate +
+                ", reservationDate=" + reservationDate +
                 ", equipment=" + equipment +
                 '}';
     }
 
-    public Reservation(User rentee, Equipment equipment, LocalDateTime reservationEndDate) {
+    public Reservation(User rentee, Equipment equipment, LocalDateTime rentedFor) {
         this.rentee = rentee;
         this.equipment = equipment;
-        reservationStartDate = LocalDateTime.now();
-        this.reservationEndDate = reservationEndDate;
+        reservationDate = LocalDateTime.now();
+        this.rentedFor = rentedFor;
         approved = false;
     }
 
@@ -43,16 +42,16 @@ public class Reservation implements Serializable {
         return rentee;
     }
 
-    public LocalDateTime getReservationStartDate() {
-        return reservationStartDate;
+    public LocalDateTime getReservationDate() {
+        return reservationDate;
     }
 
-    public LocalDateTime getReservationEndDate() {
-        return reservationEndDate;
+    public LocalDateTime getRentedFor() {
+        return rentedFor;
     }
 
     public Long getDaysOverdue(){
-        return DAYS.between(reservationEndDate, LocalDateTime.now());
+        return DAYS.between(rentedFor, LocalDateTime.now());
     }
 
     public Equipment getEquipment() {

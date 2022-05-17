@@ -2,7 +2,6 @@ package application.view;
 
 import application.model.Reservation;
 import application.viewmodel.ApprovedReservationViewModel;
-import application.viewmodel.ReservationViewModel;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -65,7 +64,7 @@ public class ApprovedReservationViewController {
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Reservation, String> p) {
                 if (p.getValue() != null) {
-                    return new SimpleStringProperty(p.getValue().getReservationStartDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+                    return new SimpleStringProperty(p.getValue().getReservationDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
                 } else {
                     return new SimpleStringProperty("<no end date>");
                 }
@@ -76,7 +75,7 @@ public class ApprovedReservationViewController {
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Reservation, String> p) {
                 if (p.getValue() != null) {
-                    return new SimpleStringProperty(p.getValue().getReservationEndDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+                    return new SimpleStringProperty(p.getValue().getRentedFor().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
                 } else {
                     return new SimpleStringProperty("<no end date>");
                 }

@@ -27,7 +27,7 @@ class ReservationTest {
 
     @Test
     void getReservationDate() {
-        assertTrue(reservation.getReservationStartDate() instanceof LocalDateTime);
+        assertTrue(reservation.getReservationDate() instanceof LocalDateTime);
     }
 
     @Test

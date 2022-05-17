@@ -27,7 +27,11 @@ public class LogInViewModel {
 
     public String logIn(){
         try {
-            return model.logIn(email.get(), password.get());
+            String result = model.logIn(email.get(), password.get());
+            if (!result.equals("Invalid")) {
+                model.setCurrentlyLoggedInUser(model.getUser(email.get()));
+            }
+            return result;
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }

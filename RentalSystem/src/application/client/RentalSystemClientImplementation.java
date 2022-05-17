@@ -43,8 +43,13 @@ public class RentalSystemClientImplementation extends UnicastRemoteObject implem
     }
 
     @Override
-    public void addUser(User user) throws RemoteException {
-        server.addUser(user);
+    public void addUser(String firstName, String lastName, String phoneNumber, String email, String password, boolean isManager) throws RemoteException {
+        server.addUser(firstName, lastName, phoneNumber, email, password, isManager);
+    }
+
+    @Override
+    public User getUser(String email) throws RemoteException {
+        return server.getUser(email);
     }
 
     @Override

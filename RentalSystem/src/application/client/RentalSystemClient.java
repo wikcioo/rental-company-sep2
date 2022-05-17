@@ -12,7 +12,8 @@ public interface RentalSystemClient extends Remote {
     ArrayList<Equipment> getAllEquipment() throws RemoteException;
     ArrayList<Equipment> getAllUnreservedEquipment() throws RemoteException;
     void setAvailability(Equipment equipment, boolean available) throws RemoteException;
-    void addUser(User user) throws RemoteException;
+    void addUser(String firstName, String lastName, String phoneNumber, String email, String password, boolean isManager) throws RemoteException;
+    User getUser(String email) throws RemoteException;
     boolean isValidUser(String email, String password) throws RemoteException;
     boolean isUserAManager(String email) throws RemoteException;
 }

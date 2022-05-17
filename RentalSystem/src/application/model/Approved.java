@@ -4,19 +4,34 @@ import java.time.LocalDateTime;
 
 public class Approved extends Reservation {
     private final LocalDateTime approvedDate;
-    private final Manager approvedBy;
+    private final String approvedBy;
 
-    public Approved(User rentee, Equipment equipment, LocalDateTime reservationEndDate, LocalDateTime approvedDate, Manager approvedBy) {
-        super(rentee, equipment, reservationEndDate);
+    public static final String type = "Approved";
+    @Override
+    public String status() {
+        return type;
+    }
+
+
+    public Approved(int id, User rentee, Equipment equipment, LocalDateTime reservationEndDate, LocalDateTime approvedDate, String approvedBy) {
+        super(id, rentee, equipment, reservationEndDate);
         this.approvedDate = approvedDate;
         this.approvedBy = approvedBy;
     }
+
+    public Approved(Reservation reservation, LocalDateTime approvedDate, String approvedBy) {
+        super(reservation.getId(), reservation.getRentee(),reservation.getReservationDate(), reservation.getRentedFor(), reservation.getEquipment());
+        this.approvedBy = approvedBy;
+        this.approvedDate = approvedDate;
+    }
+
+
 
     public LocalDateTime getApprovedDate() {
         return approvedDate;
     }
 
-    public Manager getApprovedBy() {
+    public String getApprovedBy() {
         return approvedBy;
     }
 }

@@ -1,13 +1,7 @@
 package application.server;
 
-import application.dao.EquipmentDao;
-import application.dao.SQLEquipmentDao;
-import application.dao.SQLUserDao;
-import application.dao.UserDao;
-import application.model.Equipment;
-import application.model.Manager;
-import application.model.Rentee;
-import application.model.User;
+import application.dao.*;
+import application.model.*;
 import application.shared.IServer;
 
 import java.rmi.RemoteException;
@@ -18,9 +12,11 @@ import java.util.ArrayList;
 public class RentalSystemServer implements IServer {
     private final EquipmentDao equipmentDao;
     private final UserDao userDao;
+    private final ReservationDao reservationDao;
     public RentalSystemServer() throws RemoteException {
         this.equipmentDao = SQLEquipmentDao.getInstance();
         this.userDao = SQLUserDao.getInstance();
+        this.reservationDao = SQLReservationDao.getInstance();
         UnicastRemoteObject.exportObject(this, 0);
     }
 
@@ -86,6 +82,61 @@ public class RentalSystemServer implements IServer {
     public boolean isUserAManager(String email) throws RemoteException {
         try {
             return userDao.isUserAManager(email);
+        } catch (SQLException e) {
+            throw new RemoteException(e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public ArrayList<IReservation> retrieveReservations() throws RemoteException {
+        try {
+            return reservationDao.retrieveReservations();
+        } catch (SQLException e) {
+            throw new RemoteException(e.getMessage(), e);
+        }
+    };
+
+
+    @Override
+    public void approveReservation(int id, String manager_id) throws RemoteException{
+        try {
+            reservationDao.approveReservation(id, manager_id);
+        } catch (SQLException e) {
+            throw new RemoteException(e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public void rejectReservation(int id, String manager_id) throws RemoteException{
+        try {
+            reservationDao.rejectReservation(id, manager_id);
+        } catch (SQLException e) {
+            throw new RemoteException(e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public void expireReservation(int id) throws RemoteException{
+        try {
+            reservationDao.expireReservation(id);
+        } catch (SQLException e) {
+            throw new RemoteException(e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public void returnReservation(int id) throws RemoteException{
+        try {
+            reservationDao.returnReservation(id);
+        } catch (SQLException e) {
+            throw new RemoteException(e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public void reserveEquipment(int equipment_id, String rentee_id) throws RemoteException{
+        try {
+            reservationDao.reserveEquipment(equipment_id, rentee_id);
         } catch (SQLException e) {
             throw new RemoteException(e.getMessage(), e);
         }

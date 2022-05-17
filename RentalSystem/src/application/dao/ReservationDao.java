@@ -1,21 +1,18 @@
 package application.dao;
 
-import application.model.Equipment;
-import application.model.Manager;
-import application.model.Rentee;
-import application.model.Reservation;
+import application.model.*;
 
+import java.rmi.RemoteException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public interface ReservationDao {
-    void reserve(Equipment equipment, Rentee rentee);
-    ArrayList<Reservation> getAllAwaitingApproval();
-    ArrayList<Reservation> getAllApproved();
-    ArrayList<Reservation> getAllReturned();
-    ArrayList<Reservation> getAllExpired();
-    ArrayList<Reservation> getAllOverdue();
-    void approve(Reservation reservation, Manager approvedBy);
-    void reject(Reservation reservation, Manager rejectedBy);
-    void expire(Reservation reservation);
+    ArrayList<IReservation> retrieveReservations() throws SQLException;
+
+    void approveReservation(int id, String manager_id) throws SQLException;
+    void rejectReservation(int id, String manager_id) throws SQLException;
+    void expireReservation(int id) throws SQLException;
+    void returnReservation(int id) throws SQLException;
+    void reserveEquipment(int equipment_id, String rentee_id) throws SQLException;
 
 }

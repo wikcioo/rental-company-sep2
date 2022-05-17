@@ -12,5 +12,6 @@ public class StartServer {
         IServer server = new RentalSystemServer();
         Registry registry = LocateRegistry.createRegistry(Registry.REGISTRY_PORT);
         registry.bind("Server", server);
+        System.out.println("Registry opened. Server ready to connect");
     }
 }

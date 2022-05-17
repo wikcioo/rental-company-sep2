@@ -71,7 +71,7 @@ public class ReservationViewController {
         endDateColumn.setCellValueFactory(new Callback<>() {
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Reservation, String> p) {
-                if (p.getValue() != null) {
+                if (p.getValue() != null && p.getValue().getRentedFor() != null) {
                     return new SimpleStringProperty(p.getValue().getRentedFor().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
                 } else {
                     return new SimpleStringProperty("<no end date>");
@@ -82,7 +82,7 @@ public class ReservationViewController {
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Reservation, String> p) {
                 if (p.getValue() != null) {
-                    return new SimpleStringProperty(p.getValue().isApproved().toString());
+                    return new SimpleStringProperty("false");
                 } else {
                     return new SimpleStringProperty("<no end date>");
                 }

@@ -5,10 +5,23 @@ import java.time.LocalDateTime;
 public class Rejected extends Reservation{
     private final LocalDateTime rejectionDate;
     private final String reason;
-    private final Manager rejectedBy;
+    private final String rejectedBy;
+    public static final String type = "Rejected";
+    @Override
+    public String status() {
+        return type;
+    }
 
-    public Rejected(User rentee, Equipment equipment, LocalDateTime reservationEndDate, LocalDateTime rejectionDate, String reason, Manager rejectedBy) {
-        super(rentee, equipment, reservationEndDate);
+
+    public Rejected(int id, User rentee, Equipment equipment, LocalDateTime reservationEndDate, LocalDateTime rejectionDate, String reason, String rejectedBy) {
+        super(id, rentee, equipment, reservationEndDate);
+        this.rejectionDate = rejectionDate;
+        this.reason = reason;
+        this.rejectedBy = rejectedBy;
+    }
+
+    public Rejected(Reservation reservation, LocalDateTime rejectionDate, String reason, String rejectedBy) {
+        super(reservation.getId(), reservation.getRentee(),reservation.getReservationDate(), reservation.getRentedFor(), reservation.getEquipment());
         this.rejectionDate = rejectionDate;
         this.reason = reason;
         this.rejectedBy = rejectedBy;
@@ -18,7 +31,7 @@ public class Rejected extends Reservation{
         return rejectionDate;
     }
 
-    public Manager getRejectedBy() {
+    public String getRejectedBy() {
         return rejectedBy;
     }
 }

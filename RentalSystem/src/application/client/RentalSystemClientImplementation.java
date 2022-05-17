@@ -1,7 +1,6 @@
 package application.client;
 
-import application.model.Equipment;
-import application.model.User;
+import application.model.*;
 import application.shared.IServer;
 import application.util.NamedPropertyChangeSubject;
 
@@ -65,5 +64,35 @@ public class RentalSystemClientImplementation extends UnicastRemoteObject implem
     @Override
     public void removeListener(String propertyName, PropertyChangeListener listener) {
         support.removePropertyChangeListener(propertyName, listener);
+    }
+
+    @Override
+    public ArrayList<IReservation> retrieveReservations() throws RemoteException {
+        return server.retrieveReservations();
+    }
+
+    @Override
+    public void approveReservation(int id, String manager_id) throws RemoteException {
+        server.approveReservation(id, manager_id);
+    }
+
+    @Override
+    public void rejectReservation(int id, String manager_id) throws RemoteException {
+        server.rejectReservation(id, manager_id);
+    }
+
+    @Override
+    public void expireReservation(int id) throws RemoteException {
+        server.expireReservation(id);
+    }
+
+    @Override
+    public void returnReservation(int id) throws RemoteException {
+        server.returnReservation(id);
+    }
+
+    @Override
+    public void reserveEquipment(int equipment_id, String rentee_id) throws RemoteException {
+        server.reserveEquipment(equipment_id, rentee_id);
     }
 }

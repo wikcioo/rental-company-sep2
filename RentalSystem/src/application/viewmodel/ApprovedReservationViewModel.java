@@ -1,5 +1,6 @@
 package application.viewmodel;
 
+import application.model.Approved;
 import application.model.Model;
 import application.model.ModelManager;
 import application.model.Reservation;
@@ -11,20 +12,20 @@ import javafx.collections.ObservableList;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.rmi.RemoteException;
-import java.util.List;
 
 public class ApprovedReservationViewModel implements PropertyChangeListener {
     private final Model model;
-    private final ObjectProperty<ObservableList<Reservation>> listObjectProperty;
+    private final ObjectProperty<ObservableList<Approved>> listObjectProperty;
 
 
     public ApprovedReservationViewModel(Model model) {
         this.model = model;
         listObjectProperty = new SimpleObjectProperty<>();
+        listObjectProperty.setValue(FXCollections.observableList(model.getApprovedReservations()));
         model.addListener(ModelManager.RESERVATION_LIST_CHANGED, this);
     }
 
-    public void bindReservationList(ObjectProperty<ObservableList<Reservation>> property) {
+    public void bindReservationList(ObjectProperty<ObservableList<Approved>> property) {
         property.bind(listObjectProperty);
     }
 
@@ -36,39 +37,19 @@ public class ApprovedReservationViewModel implements PropertyChangeListener {
         }
     }
 
-    public void showApprovedReservations() {
-        try {
-            listObjectProperty.setValue(FXCollections.observableList(model.getApprovedReservationList()));
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void showAllReservations() {
-        try {
-            listObjectProperty.setValue(FXCollections.observableList(model.getReservationList()));
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     //TODO: Check if it should be done like this. Didn't want to create 2 separate property events, but taking list this way might not be ideal.
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         switch (evt.getPropertyName()) {
             case ModelManager.RESERVATION_LIST_CHANGED -> {
-                try {
-                    listObjectProperty.setValue(FXCollections.observableList(model.getApprovedReservationList()));
-                } catch (RemoteException e) {
-                    throw new RuntimeException(e);
-                }
+                listObjectProperty.setValue(FXCollections.observableList(model.getApprovedReservations()));
             }
         }
     }
 
     public void removeReservation(Reservation reservation) {
         try {
-            model.removeReservation(reservation);
+            model.returnReservation(reservation.getId());
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }

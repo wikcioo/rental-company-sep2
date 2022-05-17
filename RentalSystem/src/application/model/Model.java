@@ -21,8 +21,6 @@ public interface Model extends NamedPropertyChangeSubject {
 
     String logIn(String email, String password) throws RemoteException;
 
-    ArrayList<Reservation> getReservationList() throws RemoteException;
-
     ArrayList<Reservation> getApprovedReservationList() throws RemoteException;
 
     void approveReservation(Reservation reservation) throws RemoteException;
@@ -33,5 +31,15 @@ public interface Model extends NamedPropertyChangeSubject {
 
     void editEquipment(Equipment equipment, int index) throws RemoteException;
 
-    void removeReservation(Reservation reservation) throws RemoteException;
+    ArrayList<Reservation> getUnapprovedReservations();
+    ArrayList<Approved> getApprovedReservations();
+    ArrayList<Rejected> getRejectedReservations();
+    ArrayList<Returned> getReturnedReservations();
+    ArrayList<Expired> getExpiredReservations();
+
+    void approveReservation(int id, String manager_id) throws RemoteException;
+    void rejectReservation(int id, String manager_id) throws RemoteException;
+    void expireReservation(int id) throws RemoteException;
+    void returnReservation(int id) throws RemoteException;
+    void reserveEquipment(int equipment_id, String rentee_id) throws RemoteException;
 }

@@ -12,7 +12,7 @@ public class ModelManager implements Model {
     private User currentlyLoggedInUser;
     private final RentalSystemClient client;
     private final EquipmentList equipmentList;
-    private final ArrayList<Reservation> reservationList;
+    private final IReservationList reservationList;
     private final PropertyChangeSupport support;
     public static final String EQUIPMENT_LIST_CHANGED = "equipment_list_changed";
     public static final String RESERVATION_LIST_CHANGED = "reservation_list_changed";
@@ -21,8 +21,27 @@ public class ModelManager implements Model {
         this.currentlyLoggedInUser = null;
         this.client = client;
         this.equipmentList = new EquipmentList();
-        this.reservationList = new ArrayList<>();
+        this.reservationList = new ReservationList();
         this.support = new PropertyChangeSupport(this);
+        refreshReservations();
+
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(true) {
+                    refreshReservations();
+                    System.out.println("Refreshed");
+                    try {
+                        Thread.sleep(10000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+
+        thread.start();
+
     }
 
     @Override
@@ -56,24 +75,13 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public ArrayList<Reservation> getReservationList() throws RemoteException {
-        return reservationList;
-    }
-
-    @Override
     public ArrayList<Reservation> getApprovedReservationList() {
-        ArrayList<Reservation> reservations = new ArrayList<>();
-        for (Reservation r : reservationList) {
-            if (r.isApproved()) {
-                reservations.add(r);
-            }
-        }
-        return reservations;
+        return reservationList.getUnapprovedReservations();
     }
 
     @Override
     public void approveReservation(Reservation reservation) throws RemoteException {
-        reservation.approve();
+        client.approveReservation(reservation.getId(), "john@gmail.com");
         support.firePropertyChange(RESERVATION_LIST_CHANGED, null, reservationList);
     }
 
@@ -93,10 +101,10 @@ public class ModelManager implements Model {
 
     @Override
     public void addReservation(User user, Equipment equipment, LocalDateTime reservationEndDate) throws RemoteException {
-        reservationList.add(new Reservation(user, equipment, reservationEndDate));
+        client.reserveEquipment(equipment.getEquipmentId(),user.getEmail());
         equipment.setAvailable(false);
         support.firePropertyChange(EQUIPMENT_LIST_CHANGED, null, equipmentList.getAllEquipment());
-        support.firePropertyChange(RESERVATION_LIST_CHANGED, null, reservationList);
+        support.firePropertyChange(RESERVATION_LIST_CHANGED, null, reservationList.getAll());
     }
 
     @Override
@@ -129,16 +137,68 @@ public class ModelManager implements Model {
         support.removePropertyChangeListener(propertyName, listener);
     }
 
+
+    // TODO: DEPRECATED
     public void editEquipment(Equipment equipment, int index) {
         equipmentList.editEquipment(equipment, index);
     }
 
+    public ArrayList<Reservation> getUnapprovedReservations() {
+        return reservationList.getUnapprovedReservations();
+    }
+
+    public ArrayList<Approved> getApprovedReservations() {
+        System.out.println(reservationList.getApprovedReservations());
+        return reservationList.getApprovedReservations();
+    }
+
+    public ArrayList<Rejected> getRejectedReservations() {
+        return reservationList.getRejectedReservations();
+    }
+
+    public ArrayList<Returned> getReturnedReservations() {
+        return reservationList.getReturnedReservations();
+    }
+
+    public ArrayList<Expired> getExpiredReservations() {
+        return reservationList.getExpiredReservations();
+    }
+
+    private void refreshReservations() {
+        try {
+            reservationList.setReservationList(client.retrieveReservations());
+            support.firePropertyChange(RESERVATION_LIST_CHANGED, null, reservationList.getAll());
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     @Override
-    public void removeReservation(Reservation reservation) throws RemoteException {
-        reservation.getEquipment().setAvailable(true);
-        reservationList.remove(reservation);
-        support.firePropertyChange(EQUIPMENT_LIST_CHANGED, null, equipmentList.getAllEquipment());
-        support.firePropertyChange(RESERVATION_LIST_CHANGED, null, reservationList);
+    public void approveReservation(int id, String manager_id) throws RemoteException {
+        client.approveReservation(id, manager_id);
+    }
+
+    @Override
+    public void rejectReservation(int id, String manager_id) throws RemoteException {
+        client.rejectReservation(id, manager_id);
+
+    }
+
+    @Override
+    public void expireReservation(int id) throws RemoteException {
+        client.expireReservation(id);
+    }
+
+    @Override
+    public void returnReservation(int id) throws RemoteException {
+        client.returnReservation(id);
+
+    }
+
+    @Override
+    public void reserveEquipment(int equipment_id, String rentee_id) throws RemoteException {
+        client.reserveEquipment(equipment_id, rentee_id);
     }
 
     @Override

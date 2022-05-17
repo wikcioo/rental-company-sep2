@@ -20,6 +20,7 @@ public class ReservationViewModel implements PropertyChangeListener {
         this.model = model;
         listObjectProperty = new SimpleObjectProperty<>();
         model.addListener(ModelManager.RESERVATION_LIST_CHANGED, this);
+        listObjectProperty.setValue(FXCollections.observableList((List<Reservation>) model.getUnapprovedReservations()));
     }
 
     public void bindReservationList(ObjectProperty<ObservableList<Reservation>> property) {
@@ -34,27 +35,12 @@ public class ReservationViewModel implements PropertyChangeListener {
         }
     }
 
-    public void showApprovedReservations() {
-        try {
-            listObjectProperty.setValue(FXCollections.observableList(model.getApprovedReservationList()));
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void showAllReservations() {
-        try {
-            listObjectProperty.setValue(FXCollections.observableList(model.getReservationList()));
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
+    //TODO I dont think passing the list in a event is a good idea ; better to just call a function to get a list
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         switch (evt.getPropertyName()) {
             case ModelManager.RESERVATION_LIST_CHANGED -> {
-                listObjectProperty.setValue(FXCollections.observableList((List<Reservation>) evt.getNewValue()));
+                listObjectProperty.setValue(FXCollections.observableList((List<Reservation>) model.getUnapprovedReservations()));
             }
         }
     }

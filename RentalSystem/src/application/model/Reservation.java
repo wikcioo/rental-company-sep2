@@ -2,60 +2,64 @@ package application.model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 
-public class Reservation implements Serializable {
-    private Boolean approved;
+public class Reservation implements Serializable, IReservation {
+
+    private int id;
     private User rentee;
-    private LocalDateTime reservationStartDate;
-    private LocalDateTime reservationEndDate;
+    private LocalDateTime reservationDate;
+    private LocalDateTime rentedFor;
     private Equipment equipment;
+    public static final String type = "Unapproved";
 
     @Override
-    public String toString() {
-        return "Reservation{" +
-                "approved=" + approved +
-                ", rentee=" + rentee +
-                ", reservationDate=" + reservationStartDate +
-                ", equipment=" + equipment +
-                '}';
+    public String status() {
+        return type;
     }
 
-    public Reservation(User rentee, Equipment equipment, LocalDateTime reservationEndDate) {
+    public Reservation(int id, User rentee, LocalDateTime reservationDate, LocalDateTime rentedFor, Equipment equipment) {
+        this.id = id;
+        this.rentee = rentee;
+        this.reservationDate = reservationDate;
+        this.rentedFor = rentedFor;
+        this.equipment = equipment;
+    }
+
+    public Reservation(int id, User rentee, Equipment equipment, LocalDateTime rentedFor) {
+        this.id = id;
         this.rentee = rentee;
         this.equipment = equipment;
-        reservationStartDate = LocalDateTime.now();
-        this.reservationEndDate = reservationEndDate;
-        approved = false;
+        reservationDate = LocalDateTime.now();
+        this.rentedFor = rentedFor;
     }
 
-    public Boolean isApproved() {
-        return approved;
-    }
-
-    public void approve() {
-        approved = true;
-    }
 
     public User getRentee() {
         return rentee;
     }
 
-    public LocalDateTime getReservationStartDate() {
-        return reservationStartDate;
+    public LocalDateTime getReservationDate() {
+        return reservationDate;
     }
 
-    public LocalDateTime getReservationEndDate() {
-        return reservationEndDate;
+    public LocalDateTime getRentedFor() {
+        return rentedFor;
     }
 
     public Long getDaysOverdue(){
-        return DAYS.between(reservationEndDate, LocalDateTime.now());
+        return DAYS.between(rentedFor, LocalDateTime.now());
     }
 
     public Equipment getEquipment() {
         return equipment;
     }
+
+    public int getId() {
+        return id;
+    }
+
+
+
 }

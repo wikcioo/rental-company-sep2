@@ -1,8 +1,8 @@
 package application.view;
 
+import application.model.Approved;
 import application.model.Reservation;
 import application.viewmodel.ApprovedReservationViewModel;
-import application.viewmodel.ReservationViewModel;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -21,7 +21,7 @@ public class ApprovedReservationViewController {
     private ApprovedReservationViewModel viewModel;
     private Region root;
     @FXML
-    private TableView<Reservation> reservationTable;
+    private TableView<Approved> reservationTable;
     @FXML
     private TableColumn<Reservation, String> renteeColumn;
     @FXML
@@ -65,7 +65,7 @@ public class ApprovedReservationViewController {
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Reservation, String> p) {
                 if (p.getValue() != null) {
-                    return new SimpleStringProperty(p.getValue().getReservationStartDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+                    return new SimpleStringProperty(p.getValue().getReservationDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
                 } else {
                     return new SimpleStringProperty("<no end date>");
                 }
@@ -75,8 +75,8 @@ public class ApprovedReservationViewController {
         endDateColumn.setCellValueFactory(new Callback<>() {
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Reservation, String> p) {
-                if (p.getValue() != null) {
-                    return new SimpleStringProperty(p.getValue().getReservationEndDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+                if (p.getValue() != null && p.getValue().getRentedFor() != null) {
+                    return new SimpleStringProperty(p.getValue().getRentedFor().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
                 } else {
                     return new SimpleStringProperty("<no end date>");
                 }
@@ -86,7 +86,7 @@ public class ApprovedReservationViewController {
         daysOverdueColumn.setCellValueFactory(new Callback<>() {
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Reservation, String> p) {
-                if (p.getValue() != null) {
+                if (p.getValue() != null && p.getValue().getRentedFor() != null) {
                     return new SimpleStringProperty(p.getValue().getDaysOverdue().toString());
                 } else {
                     return new SimpleStringProperty("<no end date>");

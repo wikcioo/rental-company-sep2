@@ -89,7 +89,7 @@ public class EquipmentViewModel implements PropertyChangeListener {
 
     public void reserveEquipment(){
         try {
-            model.addReservation(model.getCurrentlyLoggedInUser(), selectedEquipmentProperty.get(), reservationEndDate.get());
+            model.addReservation(model.getCurrentlyLoggedInUser(),selectedEquipmentProperty.get(),reservationEndDate.get());
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }

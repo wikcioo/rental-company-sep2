@@ -43,6 +43,15 @@ public class RentalSystemServer implements IServer {
     }
 
     @Override
+    public void setAvailability(Equipment equipment, boolean available) throws RemoteException {
+        try {
+            equipmentDao.setAvailability(equipment, available);
+        } catch (SQLException e) {
+            throw new RuntimeException(e.getMessage(), e);
+        }
+    }
+
+    @Override
     public void addUser(User user) throws RemoteException {
         try {
             if (user instanceof Manager) {

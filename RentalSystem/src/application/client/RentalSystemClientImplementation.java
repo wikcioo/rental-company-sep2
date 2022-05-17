@@ -33,6 +33,11 @@ public class RentalSystemClientImplementation extends UnicastRemoteObject implem
     }
 
     @Override
+    public void setAvailability(Equipment equipment, boolean available) throws RemoteException {
+        server.setAvailability(equipment, available);
+    }
+
+    @Override
     public void addUser(User user) throws RemoteException {
         server.addUser(user);
     }

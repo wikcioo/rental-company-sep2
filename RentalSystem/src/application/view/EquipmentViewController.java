@@ -105,7 +105,8 @@ public class EquipmentViewController {
 
         viewModel.bindEquipmentList(equipmentTable.itemsProperty());
         viewModel.bindErrorLabel(equipmentError.textProperty());
-        viewModel.retrieveAllEquipment();
+//        viewModel.retrieveAllEquipment();
+        viewModel.retrieveAllUnreservedEquipment();
     }
 
     public void reset() {

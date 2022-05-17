@@ -43,6 +43,15 @@ public class RentalSystemServer implements IServer {
     }
 
     @Override
+    public ArrayList<Equipment> getAllUnreservedEquipment() throws RemoteException {
+        try {
+            return equipmentDao.getAllUnreserved();
+        } catch (SQLException e) {
+            throw new RemoteException(e.getMessage(), e);
+        }
+    }
+
+    @Override
     public void setAvailability(Equipment equipment, boolean available) throws RemoteException {
         try {
             equipmentDao.setAvailability(equipment, available);

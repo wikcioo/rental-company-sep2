@@ -14,6 +14,7 @@ public interface Model extends NamedPropertyChangeSubject {
     ArrayList<Equipment> getAllAvailableEquipment() throws RemoteException;
 
     void retrieveAllEquipment() throws RemoteException;
+    void retrieveAllUnreservedEquipment() throws RemoteException;
 
     void addReservation(User rentee, Equipment equipment, LocalDateTime reservationEndDate) throws RemoteException;
     void addUser(User user) throws RemoteException;

@@ -65,6 +65,35 @@ public class SQLEquipmentDao implements EquipmentDao {
     }
 
     @Override
+    public ArrayList<Equipment> getAllUnreserved() throws SQLException {
+        ArrayList<Equipment> equipmentList = new ArrayList<>();
+        try (
+                Connection connection = getConnection();
+                Statement statement = connection.createStatement()
+        ) {
+            ResultSet rs = statement.executeQuery("SELECT * FROM rentalsystemdbs.reservation");
+            ArrayList<Integer> reservedEquipmentIds = new ArrayList<>();
+            while (rs.next()) {
+                reservedEquipmentIds.add(rs.getInt("equipment_id"));
+            }
+
+            rs = statement.executeQuery("SELECT * FROM rentalsystemdbs.equipment");
+            while (rs.next()) {
+                int id = rs.getInt("equipment_id");
+                if (reservedEquipmentIds.contains(id)) {
+                    continue;
+                }
+                String model = rs.getString("model");
+                String category = rs.getString("category");
+                boolean available = rs.getBoolean("availability");
+                equipmentList.add(new Equipment(id, model, category, available));
+            }
+        }
+
+        return equipmentList;
+    }
+
+    @Override
     public ArrayList<Equipment> getByModel(String model) throws SQLException {
         // TODO
         return null;

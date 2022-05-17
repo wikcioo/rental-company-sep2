@@ -40,14 +40,20 @@ public class ModelManager implements Model {
         return equipmentList.getAllAvailableEquipment();
     }
 
-    //TODO: This only retrieves equipment when the list is empty,
-    // but this check can and probably should be removed when rentee and manager views are fully separated
+    // TODO[viktor]: doubt is works, make it work. That if-statements seems bad
     @Override
     public void retrieveAllEquipment() throws RemoteException {
         if (equipmentList.getAllEquipment().size() == 0) {
             equipmentList.addEquipmentList(client.getAllEquipment());
             support.firePropertyChange(EQUIPMENT_LIST_CHANGED, null, equipmentList.getAllEquipment());
         }
+    }
+
+    @Override
+    public void retrieveAllUnreservedEquipment() throws RemoteException {
+        equipmentList.clear();
+        equipmentList.addEquipmentList(client.getAllUnreservedEquipment());
+        support.firePropertyChange(EQUIPMENT_LIST_CHANGED, null, equipmentList.getAllEquipment());
     }
 
     @Override

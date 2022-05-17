@@ -1,8 +1,6 @@
 package application.view;
 
 import application.model.Equipment;
-import application.model.Reservation;
-import application.model.User;
 import application.viewmodel.EquipmentViewModel;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -11,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.Region;
+import javafx.scene.paint.Paint;
 import javafx.util.Callback;
 
 import java.time.LocalDate;
@@ -34,7 +33,9 @@ public class EquipmentViewController {
     @FXML
     private TableColumn<Equipment, String> reserveColumn;
     @FXML
-    private Label error;
+    private Label equipmentError;
+    @FXML
+    private Label reservationError;
 
     public void init(ViewHandler viewHandler, EquipmentViewModel equipmentViewModel, Region root) {
         this.viewHandler = viewHandler;
@@ -103,7 +104,7 @@ public class EquipmentViewController {
         });
 
         viewModel.bindEquipmentList(equipmentTable.itemsProperty());
-        viewModel.bindErrorLabel(error.textProperty());
+        viewModel.bindErrorLabel(equipmentError.textProperty());
         viewModel.retrieveAllEquipment();
     }
 
@@ -113,6 +114,7 @@ public class EquipmentViewController {
         model.clear();
         category.clear();
         datePicker.setValue(null);
+        reservationError.setText(null);
     }
 
     public Region getRoot() {
@@ -132,12 +134,21 @@ public class EquipmentViewController {
     }
 
     public void OnReserve() {
-        viewModel.bindReservationEndDate(new SimpleObjectProperty<>(datePicker.getValue().atTime(14, 0)));
-        viewModel.reserveEquipment();
-        model.clear();
-        category.clear();
-        datePicker.setValue(null);
-        viewModel.bindSelectedEquipment(new SimpleObjectProperty<>());
+        reservationError.setTextFill(Paint.valueOf("RED"));
+        if (datePicker.getValue() == null) {
+            reservationError.setText("You must choose the date");
+        } else if (model.getText().isEmpty() && category.getText().isEmpty()) {
+            reservationError.setText("You must select an item to reserve");
+        } else {
+            reservationError.setTextFill(Paint.valueOf("GREEN"));
+            reservationError.setText("Success");
+            viewModel.bindReservationEndDate(new SimpleObjectProperty<>(datePicker.getValue().atTime(14, 0)));
+            viewModel.reserveEquipment();
+            model.clear();
+            category.clear();
+            datePicker.setValue(null);
+            viewModel.bindSelectedEquipment(new SimpleObjectProperty<>());
+        }
     }
 
   public void onViewManagerEquipment() {

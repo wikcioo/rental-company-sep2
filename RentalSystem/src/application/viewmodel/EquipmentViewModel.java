@@ -21,7 +21,7 @@ public class EquipmentViewModel implements PropertyChangeListener {
     private final ObjectProperty<ObservableList<Equipment>> listObjectProperty;
     private final ObjectProperty<Equipment> selectedEquipmentProperty;
     private final ObjectProperty<LocalDateTime> reservationEndDate;
-    private final StringProperty errorProperty;
+    private final StringProperty equipmentErrorProperty;
 
     public EquipmentViewModel(Model model) {
         this.model = model;
@@ -29,7 +29,7 @@ public class EquipmentViewModel implements PropertyChangeListener {
         this.selectedEquipmentProperty = new SimpleObjectProperty<>();
         model.addListener(ModelManager.EQUIPMENT_LIST_CHANGED, this);
         this.reservationEndDate = new SimpleObjectProperty<>();
-        this.errorProperty = new SimpleStringProperty();
+        this.equipmentErrorProperty = new SimpleStringProperty();
     }
 
     public void bindEquipmentList(ObjectProperty<ObservableList<Equipment>> property) {
@@ -45,16 +45,16 @@ public class EquipmentViewModel implements PropertyChangeListener {
     }
 
     public void bindErrorLabel(StringProperty property) {
-        property.bind(errorProperty);
+        equipmentErrorProperty.bindBidirectional(property);
     }
 
     public void retrieveAllEquipment() {
         try {
-            errorProperty.set("Successfully retrieved equipment from DB");
+            equipmentErrorProperty.set("Successfully retrieved equipment from DB");
             model.retrieveAllEquipment();
         } catch (RemoteException e) {
             e.printStackTrace();
-            errorProperty.set("Failed to retrieve equipment list");
+            equipmentErrorProperty.set("Failed to retrieve equipment list");
         }
     }
 

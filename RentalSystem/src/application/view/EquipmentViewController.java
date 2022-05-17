@@ -116,6 +116,7 @@ public class EquipmentViewController {
         category.clear();
         datePicker.setValue(null);
         reservationError.setText(null);
+        viewModel.retrieveAllUnreservedEquipment();
     }
 
     public Region getRoot() {
@@ -136,10 +137,10 @@ public class EquipmentViewController {
 
     public void OnReserve() {
         reservationError.setTextFill(Paint.valueOf("RED"));
-        if (datePicker.getValue() == null) {
-            reservationError.setText("You must choose the date");
-        } else if (model.getText().isEmpty() && category.getText().isEmpty()) {
+        if (model.getText().isEmpty() && category.getText().isEmpty()) {
             reservationError.setText("You must select an item to reserve");
+        } else if (datePicker.getValue() == null) {
+            reservationError.setText("You must choose the date");
         } else {
             reservationError.setTextFill(Paint.valueOf("GREEN"));
             reservationError.setText("Success");

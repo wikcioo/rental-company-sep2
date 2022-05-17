@@ -3,14 +3,20 @@ package application.model;
 import java.io.Serializable;
 
 public class Equipment implements Serializable {
+    private final int equipmentId;
     private String model;
     private String category;
     private boolean isAvailable;
 
-    public Equipment(String model, String category, boolean isAvailable) {
+    public Equipment(int equipmentId, String model, String category, boolean isAvailable) {
+        this.equipmentId = equipmentId;
         this.model = model;
         this.category = category;
         this.isAvailable = isAvailable;
+    }
+
+    public int getEquipmentId() {
+        return equipmentId;
     }
 
     public String getModel() {

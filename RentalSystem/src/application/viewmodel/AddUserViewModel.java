@@ -5,6 +5,7 @@ import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.scene.paint.Paint;
 
 import java.rmi.RemoteException;
 
@@ -48,18 +49,20 @@ public class AddUserViewModel {
     }
 
     public void bindError(StringProperty property) {
-        error.bind(property);
+        error.bindBidirectional(property);
     }
 
-    public void addUser(String role) {
+    public boolean addUser(String role) {
         try {
             if (role.equals("Manager")) {
                 model.addUser(new Manager(firstName.getValue(), lastName.getValue(), phoneNumber.getValue(), email.getValue(), password.getValue()));
             } else if (role.equals("Rentee")) {
                 model.addUser(new Rentee(firstName.getValue(), lastName.getValue(), phoneNumber.getValue(), email.getValue(), password.getValue()));
             }
+            return true;
         } catch (RemoteException e) {
             error.setValue("Failed to add user to the database");
+            return false;
         }
     }
 }

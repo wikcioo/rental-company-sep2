@@ -21,14 +21,25 @@ public class RentalSystemClientImplementation extends UnicastRemoteObject implem
         this.server = (IServer) LocateRegistry.getRegistry(host, port).lookup("Server");
         this.support = new PropertyChangeSupport(this);
     }
+
     @Override
-    public void addEquipment(Equipment equipment) throws RemoteException {
-        server.addEquipment(equipment);
+    public Equipment addEquipment(String model, String category, boolean available) throws RemoteException {
+        return server.addEquipment(model, category, available);
     }
 
     @Override
     public ArrayList<Equipment> getAllEquipment() throws RemoteException {
         return server.getAllEquipment();
+    }
+
+    @Override
+    public ArrayList<Equipment> getAllUnreservedEquipment() throws RemoteException {
+        return server.getAllUnreservedEquipment();
+    }
+
+    @Override
+    public void setAvailability(Equipment equipment, boolean available) throws RemoteException {
+        server.setAvailability(equipment, available);
     }
 
     @Override

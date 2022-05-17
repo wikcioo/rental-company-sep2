@@ -7,13 +7,14 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public interface Model extends NamedPropertyChangeSubject {
-    void addEquipment(Equipment equipment) throws RemoteException;
+    void addEquipment(String model, String category, boolean available) throws RemoteException;
 
     ArrayList<Equipment> getAllEquipment() throws RemoteException;
 
     ArrayList<Equipment> getAllAvailableEquipment() throws RemoteException;
 
     void retrieveAllEquipment() throws RemoteException;
+    void retrieveAllUnreservedEquipment() throws RemoteException;
 
     void addReservation(User rentee, Equipment equipment, LocalDateTime reservationEndDate) throws RemoteException;
     void addUser(User user) throws RemoteException;

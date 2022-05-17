@@ -12,11 +12,15 @@ import javafx.scene.control.*;
 import javafx.scene.layout.Region;
 import javafx.util.Callback;
 
+import java.time.LocalDate;
+
 public class ManagerEquipmentViewController {
     @FXML
     public TextField model;
     @FXML
     public TextField category;
+    @FXML
+    public Label error;
     private ViewHandler viewHandler;
     private ManagerEquipmentViewModel viewModel;
     private Region root;
@@ -38,6 +42,7 @@ public class ManagerEquipmentViewController {
         this.viewHandler = viewHandler;
         this.viewModel = managerEquipmentViewModel;
         this.root = root;
+
         modelColumn.setCellValueFactory(new Callback<>() {
             @Override
             public ObservableValue<String> call(
@@ -133,10 +138,12 @@ public class ManagerEquipmentViewController {
 //            }
 //        });
         viewModel.bindEquipmentList(equipmentTable.itemsProperty());
+        viewModel.bindErrorLabel(error.textProperty());
+        viewModel.retrieveAllEquipment();
     }
 
     public void reset() {
-
+        viewModel.retrieveAllEquipment();
     }
 
     public Region getRoot() {

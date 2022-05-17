@@ -25,9 +25,9 @@ public class RentalSystemServer implements IServer {
     }
 
     @Override
-    public void addEquipment(Equipment equipment) throws RemoteException {
+    public Equipment addEquipment(String model, String category, boolean available) throws RemoteException {
         try {
-            equipmentDao.add(equipment);
+            return equipmentDao.add(model, category, available);
         } catch (SQLException e) {
             throw new RemoteException(e.getMessage(), e);
         }
@@ -39,6 +39,24 @@ public class RentalSystemServer implements IServer {
             return equipmentDao.getAll();
         } catch (SQLException e) {
             throw new RemoteException(e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public ArrayList<Equipment> getAllUnreservedEquipment() throws RemoteException {
+        try {
+            return equipmentDao.getAllUnreserved();
+        } catch (SQLException e) {
+            throw new RemoteException(e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public void setAvailability(Equipment equipment, boolean available) throws RemoteException {
+        try {
+            equipmentDao.setAvailability(equipment, available);
+        } catch (SQLException e) {
+            throw new RuntimeException(e.getMessage(), e);
         }
     }
 

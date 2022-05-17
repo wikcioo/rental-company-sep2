@@ -8,8 +8,10 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 public interface RentalSystemClient extends Remote {
-    void addEquipment(Equipment equipment) throws RemoteException;
+    Equipment addEquipment(String model, String category, boolean available) throws RemoteException;
     ArrayList<Equipment> getAllEquipment() throws RemoteException;
+    ArrayList<Equipment> getAllUnreservedEquipment() throws RemoteException;
+    void setAvailability(Equipment equipment, boolean available) throws RemoteException;
     void addUser(User user) throws RemoteException;
     boolean isValidUser(String email, String password) throws RemoteException;
     boolean isUserAManager(String email) throws RemoteException;

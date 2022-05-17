@@ -1,8 +1,6 @@
 package application.view;
 
 import application.model.Equipment;
-import application.model.Reservation;
-import application.model.User;
 import application.viewmodel.EquipmentViewModel;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -11,7 +9,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.Region;
+import javafx.scene.paint.Paint;
 import javafx.util.Callback;
+
+import java.time.LocalDate;
 
 public class EquipmentViewController {
     @FXML
@@ -32,12 +33,25 @@ public class EquipmentViewController {
     @FXML
     private TableColumn<Equipment, String> reserveColumn;
     @FXML
-    private Label error;
+    private Label equipmentError;
+    @FXML
+    private Label reservationError;
 
     public void init(ViewHandler viewHandler, EquipmentViewModel equipmentViewModel, Region root) {
         this.viewHandler = viewHandler;
         this.viewModel = equipmentViewModel;
         this.root = root;
+
+        //Only allows user to pick a date from today to 4 weeks from today.
+        LocalDate minDate = LocalDate.now();
+        LocalDate maxDate = minDate.plusWeeks(4);
+        datePicker.setDayCellFactory(d ->
+                new DateCell() {
+                    @Override public void updateItem(LocalDate item, boolean empty) {
+                        super.updateItem(item, empty);
+                        setDisable(item.isAfter(maxDate) || item.isBefore(minDate));
+                    }});
+
         modelColumn.setCellValueFactory(new Callback<>() {
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Equipment, String> p) {
@@ -90,12 +104,19 @@ public class EquipmentViewController {
         });
 
         viewModel.bindEquipmentList(equipmentTable.itemsProperty());
-        viewModel.bindErrorLabel(error.textProperty());
-        viewModel.retrieveAllEquipment();
+        viewModel.bindErrorLabel(equipmentError.textProperty());
+//        viewModel.retrieveAllEquipment();
+        viewModel.retrieveAllUnreservedEquipment();
     }
 
     public void reset() {
         equipmentTable.refresh();
+        viewModel.bindSelectedEquipment(new SimpleObjectProperty<>());
+        model.clear();
+        category.clear();
+        datePicker.setValue(null);
+        reservationError.setText(null);
+        viewModel.retrieveAllUnreservedEquipment();
     }
 
     public Region getRoot() {
@@ -115,11 +136,21 @@ public class EquipmentViewController {
     }
 
     public void OnReserve() {
-        viewModel.bindReservationEndDate(new SimpleObjectProperty<>(datePicker.getValue().atTime(14, 0)));
-        viewModel.reserveEquipment();
-        model.clear();
-        category.clear();
-        datePicker.setValue(null);
+        reservationError.setTextFill(Paint.valueOf("RED"));
+        if (model.getText().isEmpty() && category.getText().isEmpty()) {
+            reservationError.setText("You must select an item to reserve");
+        } else if (datePicker.getValue() == null) {
+            reservationError.setText("You must choose the date");
+        } else {
+            reservationError.setTextFill(Paint.valueOf("GREEN"));
+            reservationError.setText("Success");
+            viewModel.bindReservationEndDate(new SimpleObjectProperty<>(datePicker.getValue().atTime(14, 0)));
+            viewModel.reserveEquipment();
+            model.clear();
+            category.clear();
+            datePicker.setValue(null);
+            viewModel.bindSelectedEquipment(new SimpleObjectProperty<>());
+        }
     }
 
   public void onViewManagerEquipment() {

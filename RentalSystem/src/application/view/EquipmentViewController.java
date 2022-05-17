@@ -162,4 +162,8 @@ public class EquipmentViewController {
     public void onLogOutButtonClick() {
         viewHandler.openView(ViewHandler.LOG_IN);
     }
+
+    public void onRefreshButtonClick() {
+        viewModel.retrieveAllUnreservedEquipment();
+    }
 }

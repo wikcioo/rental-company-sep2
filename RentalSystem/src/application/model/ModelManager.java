@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class ModelManager implements Model {
+    private User currentlyLoggedInUser;
     private final RentalSystemClient client;
     private final EquipmentList equipmentList;
     private final ArrayList<Reservation> reservationList;
@@ -17,6 +18,7 @@ public class ModelManager implements Model {
     public static final String RESERVATION_LIST_CHANGED = "reservation_list_changed";
 
     public ModelManager(RentalSystemClient client) {
+        this.currentlyLoggedInUser = null;
         this.client = client;
         this.equipmentList = new EquipmentList();
         this.reservationList = new ArrayList<>();
@@ -28,7 +30,6 @@ public class ModelManager implements Model {
         equipmentList.addEquipment(client.addEquipment(model, category, available));
         support.firePropertyChange(EQUIPMENT_LIST_CHANGED, null, equipmentList.getAllEquipment());
     }
-
 
     @Override
     public ArrayList<Equipment> getAllEquipment() throws RemoteException {
@@ -99,8 +100,13 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void addUser(User user) throws RemoteException {
-        client.addUser(user);
+    public void addUser(String firstName, String lastName, String phoneNumber, String email, String password, boolean isManager) throws RemoteException {
+        client.addUser(firstName, lastName, phoneNumber, email, password, isManager);
+    }
+
+    @Override
+    public User getUser(String email) throws RemoteException {
+        return client.getUser(email);
     }
 
     @Override
@@ -133,5 +139,15 @@ public class ModelManager implements Model {
         reservationList.remove(reservation);
         support.firePropertyChange(EQUIPMENT_LIST_CHANGED, null, equipmentList.getAllEquipment());
         support.firePropertyChange(RESERVATION_LIST_CHANGED, null, reservationList);
+    }
+
+    @Override
+    public User getCurrentlyLoggedInUser() {
+        return currentlyLoggedInUser;
+    }
+
+    @Override
+    public void setCurrentlyLoggedInUser(User newUser) {
+        this.currentlyLoggedInUser = newUser;
     }
 }

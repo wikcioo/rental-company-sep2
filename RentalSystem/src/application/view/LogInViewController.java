@@ -37,6 +37,7 @@ public class LogInViewController {
         return root;
     }
 
+    @FXML
     public void onLogIn() {
         error.setTextFill(Paint.valueOf("BLUE"));
         error.setText("Processing...");
@@ -49,5 +50,10 @@ public class LogInViewController {
             error.setTextFill(Paint.valueOf("RED"));
             error.setText("Wrong credentials");
         }
+    }
+
+    @FXML
+    public void onExitButtonClick() {
+        viewHandler.closeView();
     }
 }

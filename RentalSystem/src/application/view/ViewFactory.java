@@ -9,7 +9,6 @@ import java.io.IOException;
 public class ViewFactory {
     private final ViewHandler viewHandler;
     private final ViewModelFactory viewModelFactory;
-    private DummyViewController dummyViewController;
     private AddEquipmentViewController addEquipmentViewController;
     private EquipmentViewController equipmentViewController;
     private LogInViewController logInViewController;
@@ -22,23 +21,6 @@ public class ViewFactory {
                        ViewModelFactory viewModelFactory) {
         this.viewHandler = viewHandler;
         this.viewModelFactory = viewModelFactory;
-    }
-
-    public Region loadDummyView() {
-        if (dummyViewController == null) {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("gui/DummyUI.fxml"));
-            try {
-                Region root = loader.load();
-                dummyViewController = loader.getController();
-                dummyViewController.init(viewHandler,
-                        viewModelFactory.getDummyViewModel(), root);
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
-            }
-        }
-        dummyViewController.reset();
-        return dummyViewController.getRoot();
     }
 
     public Region loadAddEquipmentView() {

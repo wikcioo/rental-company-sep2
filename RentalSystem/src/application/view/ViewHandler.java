@@ -34,7 +34,6 @@ public class ViewHandler {
 
     public void openView(String id) {
         Region root = switch (id) {
-            case DUMMY_VIEW -> viewFactory.loadDummyView();
             case ADD_EQUIPMENT_VIEW -> viewFactory.loadAddEquipmentView();
             case EQUIPMENT_LIST_VIEW -> viewFactory.loadShowEquipmentView();
             case MANAGER_EQUIPMENT_LIST_VIEW -> viewFactory.loadManagerEquipmentView();

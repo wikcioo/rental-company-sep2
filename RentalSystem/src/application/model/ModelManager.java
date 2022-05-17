@@ -40,13 +40,11 @@ public class ModelManager implements Model {
         return equipmentList.getAllAvailableEquipment();
     }
 
-    // TODO[viktor]: doubt is works, make it work. That if-statements seems bad
     @Override
     public void retrieveAllEquipment() throws RemoteException {
-        if (equipmentList.getAllEquipment().size() == 0) {
-            equipmentList.addEquipmentList(client.getAllEquipment());
-            support.firePropertyChange(EQUIPMENT_LIST_CHANGED, null, equipmentList.getAllEquipment());
-        }
+        equipmentList.clear();
+        equipmentList.addEquipmentList(client.getAllEquipment());
+        support.firePropertyChange(EQUIPMENT_LIST_CHANGED, null, equipmentList.getAllEquipment());
     }
 
     @Override

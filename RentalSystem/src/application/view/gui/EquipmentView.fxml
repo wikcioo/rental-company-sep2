@@ -11,36 +11,37 @@
 
 <AnchorPane prefHeight="406.0" prefWidth="988.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.EquipmentViewController">
    <children>
-      <Button layoutX="435.0" layoutY="352.0" mnemonicParsing="false" onAction="#addButtonPressed" text="Add" />
+      <Button layoutX="435.0" layoutY="365.0" mnemonicParsing="false" onAction="#addButtonPressed" text="Add" />
       <Label layoutX="81.0" layoutY="14.0" text="Equipment for rental">
          <font>
             <Font name="System Bold" size="25.0" />
          </font>
       </Label>
-      <TableView fx:id="equipmentTable" layoutX="43.0" layoutY="62.0" prefHeight="268.0" prefWidth="509.0">
+      <TableView fx:id="equipmentTable" layoutX="43.0" layoutY="62.0" prefHeight="290.0" prefWidth="510.0">
          <columns>
             <TableColumn fx:id="modelColumn" prefWidth="228.0" text="Model" />
             <TableColumn fx:id="categoryColumn" prefWidth="185.0" text="Category" />
             <TableColumn fx:id="reserveColumn" prefWidth="95.0" text="Reserve" />
          </columns>
       </TableView>
-      <Label layoutX="674.0" layoutY="94.0" text="Model" />
-      <Label layoutX="675.0" layoutY="136.0" text="Category" />
+      <Label layoutX="674.0" layoutY="113.0" text="Model" />
+      <Label layoutX="675.0" layoutY="155.0" text="Category" />
       <Label layoutX="679.0" layoutY="203.0" text="Pick date until which to reserve" />
-      <Label layoutX="598.0" layoutY="36.0" text="Select equipment to reserve">
+      <Label layoutX="598.0" layoutY="62.0" text="Select equipment to reserve">
       <font>
          <Font name="System Bold" size="25.0" />
       </font>
       </Label>
-      <DatePicker fx:id="datePicker" layoutX="680.0" layoutY="220.0" />
-      <TextField fx:id="model" disable="true" layoutX="675.0" layoutY="111.0" prefHeight="25.0" prefWidth="174.0" />
-      <TextField fx:id="category" disable="true" layoutX="675.0" layoutY="154.0" prefHeight="25.0" prefWidth="174.0" />
+      <DatePicker fx:id="datePicker" layoutX="680.0" layoutY="239.0" />
+      <TextField fx:id="model" disable="true" layoutX="675.0" layoutY="130.0" prefHeight="25.0" prefWidth="174.0" />
+      <TextField fx:id="category" disable="true" layoutX="675.0" layoutY="173.0" prefHeight="25.0" prefWidth="174.0" />
       <AnchorPane prefHeight="200.0" prefWidth="200.0" />
-      <Button layoutX="733.0" layoutY="266.0" mnemonicParsing="false" onAction="#OnReserve" text="Reserve" />
-      <Button layoutX="566.0" layoutY="352.0" mnemonicParsing="false" onAction="#onViewManagerEquipment" text="Manager" />
-      <Label fx:id="equipmentError" layoutX="43.0" layoutY="356.0" />
-      <Label fx:id="reservationError" alignment="CENTER" contentDisplay="CENTER" layoutX="638.0" layoutY="306.0" prefHeight="25.0" prefWidth="254.0" />
-      <Button layoutX="892.0" layoutY="352.0" mnemonicParsing="false" text="Log out" onAction="#onLogOutButtonClick" />
-      <Button layoutX="780.0" layoutY="352.0" mnemonicParsing="false" onAction="#onRefreshButtonClick" text="Refresh Table" />
+      <Button layoutX="733.0" layoutY="285.0" mnemonicParsing="false" onAction="#OnReserve" text="Reserve" />
+      <Button layoutX="566.0" layoutY="365.0" mnemonicParsing="false" onAction="#onViewManagerEquipment" text="Manager" />
+      <Label fx:id="equipmentError" layoutX="43.0" layoutY="369.0" />
+      <Label fx:id="reservationError" alignment="CENTER" contentDisplay="CENTER" layoutX="638.0" layoutY="325.0" prefHeight="25.0" prefWidth="254.0" />
+      <Button layoutX="892.0" layoutY="365.0" mnemonicParsing="false" onAction="#onLogOutButtonClick" text="Log out" />
+      <Button layoutX="780.0" layoutY="365.0" mnemonicParsing="false" onAction="#onRefreshButtonClick" text="Refresh Table" />
+      <Label fx:id="loggedUser" alignment="CENTER_RIGHT" layoutX="602.0" layoutY="23.0" prefHeight="21.0" prefWidth="352.0" text="Logged as: " />
    </children>
 </AnchorPane>

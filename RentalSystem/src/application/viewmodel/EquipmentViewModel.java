@@ -22,6 +22,7 @@ public class EquipmentViewModel implements PropertyChangeListener {
     private final ObjectProperty<Equipment> selectedEquipmentProperty;
     private final ObjectProperty<LocalDateTime> reservationEndDate;
     private final StringProperty equipmentErrorProperty;
+    private final StringProperty loggedUserProperty;
 
     public EquipmentViewModel(Model model) {
         this.model = model;
@@ -30,6 +31,7 @@ public class EquipmentViewModel implements PropertyChangeListener {
         model.addListener(ModelManager.EQUIPMENT_LIST_CHANGED, this);
         this.reservationEndDate = new SimpleObjectProperty<>();
         this.equipmentErrorProperty = new SimpleStringProperty();
+        this.loggedUserProperty = new SimpleStringProperty();
     }
 
     public void bindEquipmentList(ObjectProperty<ObservableList<Equipment>> property) {
@@ -46,6 +48,10 @@ public class EquipmentViewModel implements PropertyChangeListener {
 
     public void bindErrorLabel(StringProperty property) {
         equipmentErrorProperty.bindBidirectional(property);
+    }
+
+    public void bindLoggedUser(StringProperty property) {
+        loggedUserProperty.bindBidirectional(property);
     }
 
     public void retrieveAllEquipment() {
@@ -87,5 +93,9 @@ public class EquipmentViewModel implements PropertyChangeListener {
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void displayLoggedUser() {
+        loggedUserProperty.set("Logged in as: " + model.getCurrentlyLoggedInUser().getEmail());
     }
 }

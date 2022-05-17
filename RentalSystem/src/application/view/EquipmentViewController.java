@@ -36,6 +36,8 @@ public class EquipmentViewController {
     private Label equipmentError;
     @FXML
     private Label reservationError;
+    @FXML
+    private Label loggedUser;
 
     public void init(ViewHandler viewHandler, EquipmentViewModel equipmentViewModel, Region root) {
         this.viewHandler = viewHandler;
@@ -107,6 +109,7 @@ public class EquipmentViewController {
 
         viewModel.bindEquipmentList(equipmentTable.itemsProperty());
         viewModel.bindErrorLabel(equipmentError.textProperty());
+        viewModel.bindLoggedUser(loggedUser.textProperty());
         viewModel.retrieveAllUnreservedEquipment();
     }
 
@@ -118,6 +121,7 @@ public class EquipmentViewController {
         datePicker.setValue(null);
         reservationError.setText(null);
         viewModel.retrieveAllUnreservedEquipment();
+        viewModel.displayLoggedUser();
     }
 
     public Region getRoot() {

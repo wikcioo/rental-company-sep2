@@ -86,7 +86,7 @@ public class SQLEquipmentDao implements EquipmentDao {
     public void setAvailability(Equipment equipment, boolean available) throws SQLException {
         try (
                 Connection connection = getConnection();
-                PreparedStatement statement = connection.prepareStatement("UPDATE TABLE rentalsystemdbs.equipment SET availability = ? WHERE equipment_id = ?")
+                PreparedStatement statement = connection.prepareStatement("UPDATE rentalsystemdbs.equipment SET availability = ? WHERE equipment_id = ?")
         ) {
             statement.setBoolean(1, available);
             statement.setInt(2, equipment.getEquipmentId());

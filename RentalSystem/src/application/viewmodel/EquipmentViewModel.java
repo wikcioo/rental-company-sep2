@@ -58,6 +58,16 @@ public class EquipmentViewModel implements PropertyChangeListener {
         }
     }
 
+    public void retrieveAllUnreservedEquipment() {
+        try {
+            model.retrieveAllUnreservedEquipment();
+            equipmentErrorProperty.set("Successfully retrieved equipment from DB");
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            equipmentErrorProperty.set("Failed to retrieve equipment list");
+        }
+    }
+
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         switch (evt.getPropertyName()) {

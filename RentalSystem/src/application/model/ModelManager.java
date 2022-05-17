@@ -75,6 +75,7 @@ public class ModelManager implements Model {
     @Override
     public void toggleAvailability(Equipment equipment) throws RemoteException {
         equipment.toggleAvailability();
+        client.setAvailability(equipment, equipment.isAvailable());
         support.firePropertyChange(EQUIPMENT_LIST_CHANGED, null, equipmentList.getAllEquipment());
     }
 

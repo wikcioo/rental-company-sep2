@@ -40,5 +40,6 @@
       <Button layoutX="566.0" layoutY="352.0" mnemonicParsing="false" onAction="#onViewManagerEquipment" text="Manager" />
       <Label fx:id="equipmentError" layoutX="43.0" layoutY="356.0" />
       <Label fx:id="reservationError" alignment="CENTER" contentDisplay="CENTER" layoutX="638.0" layoutY="306.0" prefHeight="25.0" prefWidth="254.0" />
+      <Button layoutX="892.0" layoutY="352.0" mnemonicParsing="false" text="Log out" onAction="#onLogOutButtonClick" />
    </children>
 </AnchorPane>

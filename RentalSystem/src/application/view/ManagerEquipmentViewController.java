@@ -1,7 +1,6 @@
 package application.view;
 
 import application.model.Equipment;
-import application.viewmodel.EquipmentViewModel;
 import application.viewmodel.ManagerEquipmentViewModel;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -11,8 +10,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.Region;
 import javafx.util.Callback;
-
-import java.time.LocalDate;
 
 public class ManagerEquipmentViewController {
     @FXML
@@ -150,10 +147,6 @@ public class ManagerEquipmentViewController {
         return root;
     }
 
-//    public void editButtonPressed() {
-//
-//    }
-
     public void onViewReservations() {
         viewHandler.openView(ViewHandler.RESERVATION_LIST_VIEW);
     }
@@ -169,5 +162,10 @@ public class ManagerEquipmentViewController {
 
     public void onViewApprovedReservations() {
         viewHandler.openView(ViewHandler.APPROVED_RESERVATION_LIST_VIEW);
+    }
+
+    @FXML
+    public void onLogOutButtonClick() {
+        viewHandler.openView(ViewHandler.LOG_IN);
     }
 }

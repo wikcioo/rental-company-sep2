@@ -28,7 +28,9 @@ public class LogInViewController {
     }
 
     public void reset() {
-
+        email.clear();
+        password.clear();
+        error.setText(null);
     }
 
     public Region getRoot() {

@@ -143,7 +143,7 @@ public class ManagerEquipmentViewController {
     }
 
     public void reset() {
-
+        viewModel.retrieveAllEquipment();
     }
 
     public Region getRoot() {

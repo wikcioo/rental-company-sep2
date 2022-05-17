@@ -39,4 +39,7 @@ public class EquipmentList {
         equipmentList.set(index, equipment);
     }
 
+    public void clear() {
+        equipmentList.clear();
+    }
 }

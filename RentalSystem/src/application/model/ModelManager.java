@@ -101,7 +101,7 @@ public class ModelManager implements Model {
 
     @Override
     public void addReservation(User user, Equipment equipment, LocalDateTime reservationEndDate) throws RemoteException {
-        client.reserveEquipment(equipment.getEquipmentId(),user.getEmail());
+        client.reserveEquipment(equipment.getEquipmentId(),user.getEmail(),reservationEndDate);
         equipment.setAvailable(false);
         support.firePropertyChange(EQUIPMENT_LIST_CHANGED, null, equipmentList.getAllEquipment());
         support.firePropertyChange(RESERVATION_LIST_CHANGED, null, reservationList.getAll());
@@ -197,8 +197,8 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void reserveEquipment(int equipment_id, String rentee_id) throws RemoteException {
-        client.reserveEquipment(equipment_id, rentee_id);
+    public void reserveEquipment(int equipment_id, String rentee_id, LocalDateTime rentedFor) throws RemoteException {
+        client.reserveEquipment(equipment_id, rentee_id, rentedFor);
     }
 
     @Override

@@ -144,13 +144,14 @@ public class SQLReservationDao implements ReservationDao{
     }
 
     @Override
-    public void reserveEquipment(int equipment_id, String rentee_id) throws SQLException {
+    public void reserveEquipment(int equipment_id, String rentee_id, LocalDateTime rentedFor) throws SQLException {
         try (
                 Connection connection = getConnection();
-                PreparedStatement statement = connection.prepareStatement("INSERT INTO rentalsystemdbs.reservation VALUES (DEFAULT, DEFAULT, ?, ?,NULL)")
+                PreparedStatement statement = connection.prepareStatement("INSERT INTO rentalsystemdbs.reservation VALUES (DEFAULT, DEFAULT, ?, ?,?)")
         ) {
             statement.setString(1, rentee_id);
             statement.setInt(2, equipment_id);
+            statement.setTimestamp(3, Timestamp.valueOf(rentedFor));
             statement.executeUpdate();
         }
     }

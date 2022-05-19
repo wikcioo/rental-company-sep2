@@ -1,7 +1,7 @@
 package application.view;
 
-import application.model.Approved;
-import application.model.Reservation;
+import application.model.reservations.Approved;
+import application.model.reservations.Reservation;
 import application.viewmodel.ApprovedReservationViewModel;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;

@@ -1,6 +1,8 @@
 package application.client;
 
-import application.model.*;
+import application.model.equipment.Equipment;
+import application.model.reservations.IReservation;
+import application.model.users.User;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;

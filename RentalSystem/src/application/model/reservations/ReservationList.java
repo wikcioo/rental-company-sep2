@@ -1,4 +1,4 @@
-package application.model;
+package application.model.reservations;
 
 import java.util.ArrayList;
 

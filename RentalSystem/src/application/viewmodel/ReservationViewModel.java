@@ -1,6 +1,7 @@
 package application.viewmodel;
 
 import application.model.*;
+import application.model.reservations.Reservation;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;

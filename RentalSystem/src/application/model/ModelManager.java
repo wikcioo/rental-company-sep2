@@ -1,6 +1,10 @@
 package application.model;
 
 import application.client.RentalSystemClient;
+import application.model.equipment.Equipment;
+import application.model.equipment.EquipmentList;
+import application.model.reservations.*;
+import application.model.users.User;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;

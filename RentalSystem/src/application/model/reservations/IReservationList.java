@@ -1,6 +1,5 @@
-package application.model;
+package application.model.reservations;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 public interface IReservationList {

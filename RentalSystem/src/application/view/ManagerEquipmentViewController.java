@@ -1,6 +1,6 @@
 package application.view;
 
-import application.model.Equipment;
+import application.model.equipment.Equipment;
 import application.viewmodel.ManagerEquipmentViewModel;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;

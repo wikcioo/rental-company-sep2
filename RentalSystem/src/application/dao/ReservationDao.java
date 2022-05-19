@@ -1,8 +1,7 @@
 package application.dao;
 
-import application.model.*;
+import application.model.reservations.IReservation;
 
-import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 

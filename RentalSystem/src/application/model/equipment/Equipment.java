@@ -1,4 +1,4 @@
-package application.model;
+package application.model.equipment;
 
 import java.io.Serializable;
 

@@ -1,4 +1,7 @@
-package application.model;
+package application.model.reservations;
+
+import application.model.users.User;
+import application.model.equipment.Equipment;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;

@@ -1,8 +1,11 @@
-package application.model;
+package application.model.reservations;
+
+import application.model.users.User;
+import application.model.equipment.Equipment;
 
 import java.time.LocalDateTime;
 
-public class Rejected extends Reservation{
+public class Rejected extends Reservation {
     private final LocalDateTime rejectionDate;
     private final String reason;
     private final String rejectedBy;

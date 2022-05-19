@@ -1,8 +1,7 @@
 package application.dao;
 
-import application.model.Equipment;
+import application.model.equipment.Equipment;
 
-import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 

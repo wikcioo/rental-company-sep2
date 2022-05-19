@@ -1,10 +1,14 @@
-package application.model;
+package application.model.reservations;
+
+import application.model.users.User;
+import application.model.equipment.Equipment;
 
 import java.time.LocalDateTime;
 
-public class Expired  extends Reservation{
+public class Expired extends Reservation {
     private final LocalDateTime dateTime;
     public static final String type = "Expired";
+
     @Override
     public String status() {
         return type;
@@ -16,7 +20,7 @@ public class Expired  extends Reservation{
     }
 
     public Expired(Reservation reservation, LocalDateTime expiredDate) {
-        super(reservation.getId(), reservation.getRentee(),reservation.getReservationDate(), reservation.getRentedFor(), reservation.getEquipment());
+        super(reservation.getId(), reservation.getRentee(), reservation.getReservationDate(), reservation.getRentedFor(), reservation.getEquipment());
         this.dateTime = expiredDate;
     }
 

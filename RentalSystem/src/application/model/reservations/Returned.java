@@ -1,8 +1,11 @@
-package application.model;
+package application.model.reservations;
+
+import application.model.users.User;
+import application.model.equipment.Equipment;
 
 import java.time.LocalDateTime;
 
-public class Returned extends Approved{
+public class Returned extends Approved {
     private final LocalDateTime returnDate;
     public static final String type = "Returned";
     @Override

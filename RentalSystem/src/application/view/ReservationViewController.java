@@ -1,6 +1,6 @@
 package application.view;
 
-import application.model.Reservation;
+import application.model.reservations.Reservation;
 import application.viewmodel.ReservationViewModel;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;

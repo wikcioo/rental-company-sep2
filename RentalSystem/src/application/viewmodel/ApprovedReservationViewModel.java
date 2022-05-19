@@ -1,9 +1,9 @@
 package application.viewmodel;
 
-import application.model.Approved;
+import application.model.reservations.Approved;
 import application.model.Model;
 import application.model.ModelManager;
-import application.model.Reservation;
+import application.model.reservations.Reservation;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;

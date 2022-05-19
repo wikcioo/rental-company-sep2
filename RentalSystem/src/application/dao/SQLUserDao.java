@@ -1,6 +1,6 @@
 package application.dao;
 
-import application.model.User;
+import application.model.users.User;
 
 import java.sql.*;
 

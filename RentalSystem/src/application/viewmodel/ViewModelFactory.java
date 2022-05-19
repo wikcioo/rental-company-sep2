@@ -1,6 +1,8 @@
 package application.viewmodel;
 
 import application.model.Model;
+import application.viewmodel.manager.*;
+import application.viewmodel.rentee.EquipmentViewModel;
 
 public class ViewModelFactory {
     private final DummyViewModel dummyViewModel;

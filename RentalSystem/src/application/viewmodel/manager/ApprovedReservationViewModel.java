@@ -1,4 +1,4 @@
-package application.viewmodel;
+package application.viewmodel.manager;
 
 import application.model.reservations.Approved;
 import application.model.Model;

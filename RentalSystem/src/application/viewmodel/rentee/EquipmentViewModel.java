@@ -1,4 +1,4 @@
-package application.viewmodel;
+package application.viewmodel.rentee;
 
 import application.model.equipment.Equipment;
 import application.model.Model;

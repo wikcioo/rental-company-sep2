@@ -1,6 +1,6 @@
 package application.view;
 
-import application.viewmodel.AddUserViewModel;
+import application.viewmodel.manager.AddUserViewModel;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.Region;

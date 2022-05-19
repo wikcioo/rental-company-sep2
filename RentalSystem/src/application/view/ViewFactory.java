@@ -1,5 +1,7 @@
 package application.view;
 
+import application.view.manager.*;
+import application.view.rentee.EquipmentViewController;
 import application.viewmodel.ViewModelFactory;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.Region;
@@ -26,7 +28,7 @@ public class ViewFactory {
     public Region loadAddEquipmentView() {
         if (addEquipmentViewController == null) {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("gui/AddEquipmentView.fxml"));
+            loader.setLocation(getClass().getResource("gui/manager/AddEquipmentView.fxml"));
             try {
                 Region root = loader.load();
                 addEquipmentViewController = loader.getController();
@@ -43,7 +45,7 @@ public class ViewFactory {
     public Region loadShowEquipmentView() {
         if (equipmentViewController == null) {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("gui/EquipmentView.fxml"));
+            loader.setLocation(getClass().getResource("gui/rentee/EquipmentView.fxml"));
             try {
                 Region root = loader.load();
                 equipmentViewController = loader.getController();
@@ -78,7 +80,7 @@ public class ViewFactory {
         if (managerEquipmentViewController == null) {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(
-                    getClass().getResource("gui/ManagerEquipmentView.fxml"));
+                    getClass().getResource("gui/manager/ManagerEquipmentView.fxml"));
             try {
                 Region root = loader.load();
                 managerEquipmentViewController = loader.getController();
@@ -95,7 +97,7 @@ public class ViewFactory {
     public Region loadReservationListView() {
         if (reservationViewController == null) {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("gui/ReservationView.fxml"));
+            loader.setLocation(getClass().getResource("gui/manager/ReservationView.fxml"));
             try {
                 Region root = loader.load();
                 reservationViewController = loader.getController();
@@ -112,7 +114,7 @@ public class ViewFactory {
     public Region loadAddUserView() {
         if (addUserViewController == null) {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("gui/AddUserView.fxml"));
+            loader.setLocation(getClass().getResource("gui/manager/AddUserView.fxml"));
             try {
                 Region root = loader.load();
                 addUserViewController = loader.getController();
@@ -129,7 +131,7 @@ public class ViewFactory {
     public Region loadApprovedReservationView() {
         if (approvedReservationViewController == null) {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("gui/ApprovedReservationView.fxml"));
+            loader.setLocation(getClass().getResource("gui/manager/ApprovedReservationView.fxml"));
             try {
                 Region root = loader.load();
                 approvedReservationViewController = loader.getController();

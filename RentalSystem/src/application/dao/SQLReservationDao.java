@@ -1,6 +1,8 @@
 package application.dao;
 
-import application.model.*;
+import application.model.equipment.Equipment;
+import application.model.reservations.*;
+import application.model.users.User;
 
 import java.sql.*;
 import java.time.LocalDateTime;

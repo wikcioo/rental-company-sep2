@@ -1,6 +1,6 @@
 package application.dao;
 
-import application.model.Equipment;
+import application.model.equipment.Equipment;
 
 import java.sql.*;
 import java.util.ArrayList;

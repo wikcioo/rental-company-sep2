@@ -1,8 +1,8 @@
 package test.model;
 
-import application.model.Equipment;
-import application.model.Reservation;
-import application.model.User;
+import application.model.equipment.Equipment;
+import application.model.reservations.Reservation;
+import application.model.users.User;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;

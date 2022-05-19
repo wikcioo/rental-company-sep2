@@ -177,4 +177,8 @@ public class ManagerEquipmentViewController {
     public void onRefreshButtonClick() {
         viewModel.retrieveAllEquipment();
     }
+
+    public void addButtonPressed() {
+        viewHandler.openView(ViewHandler.ADD_EQUIPMENT_VIEW);
+    }
 }

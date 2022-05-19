@@ -35,7 +35,7 @@ public class AddEquipmentViewController {
     public void onAddEquipment() {
         if (!highlightEmptyFields()) {
             viewModel.addEquipment();
-            viewHandler.openView(ViewHandler.EQUIPMENT_LIST_VIEW);
+            viewHandler.openView(ViewHandler.MANAGER_EQUIPMENT_LIST_VIEW);
         }
     }
 
@@ -61,6 +61,6 @@ public class AddEquipmentViewController {
     }
 
     public void onCancel() {
-        viewHandler.openView(ViewHandler.EQUIPMENT_LIST_VIEW);
+        viewHandler.openView(ViewHandler.MANAGER_EQUIPMENT_LIST_VIEW);
     }
 }

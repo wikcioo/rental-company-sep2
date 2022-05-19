@@ -129,10 +129,6 @@ public class EquipmentViewController {
         return root;
     }
 
-    public void addButtonPressed() {
-        viewHandler.openView(ViewHandler.ADD_EQUIPMENT_VIEW);
-    }
-
     public void onViewReservations() {
         viewHandler.openView(ViewHandler.RESERVATION_LIST_VIEW);
     }

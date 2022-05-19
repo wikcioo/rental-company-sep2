@@ -11,7 +11,6 @@
 
 <AnchorPane prefHeight="406.0" prefWidth="988.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.rentee.EquipmentViewController">
    <children>
-      <Button layoutX="435.0" layoutY="365.0" mnemonicParsing="false" onAction="#addButtonPressed" text="Add" />
       <Label layoutX="81.0" layoutY="14.0" text="Equipment for rental">
          <font>
             <Font name="System Bold" size="25.0" />

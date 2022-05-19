@@ -10,6 +10,7 @@ import application.shared.IServer;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class RentalSystemServer implements IServer {
@@ -146,9 +147,9 @@ public class RentalSystemServer implements IServer {
     }
 
     @Override
-    public void reserveEquipment(int equipment_id, String rentee_id) throws RemoteException{
+    public void reserveEquipment(int equipment_id, String rentee_id, LocalDateTime rentedFor) throws RemoteException{
         try {
-            reservationDao.reserveEquipment(equipment_id, rentee_id);
+            reservationDao.reserveEquipment(equipment_id, rentee_id, rentedFor);
         } catch (SQLException e) {
             throw new RemoteException(e.getMessage(), e);
         }

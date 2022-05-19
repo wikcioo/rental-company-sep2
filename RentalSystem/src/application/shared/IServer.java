@@ -6,6 +6,8 @@ import application.model.users.User;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public interface IServer extends Remote {
@@ -24,5 +26,5 @@ public interface IServer extends Remote {
     void rejectReservation(int id, String manager_id) throws RemoteException;
     void expireReservation(int id) throws RemoteException;
     void returnReservation(int id) throws RemoteException;
-    void reserveEquipment(int equipment_id, String rentee_id) throws RemoteException;
+    void reserveEquipment(int equipment_id, String rentee_id, LocalDateTime rentedFor) throws RemoteException;
 }

@@ -1,27 +1,24 @@
-package application.view;
+package application.view.manager;
 
-import application.model.reservations.Approved;
 import application.model.reservations.Reservation;
-import application.viewmodel.manager.ApprovedReservationViewModel;
+import application.view.ViewHandler;
+import application.viewmodel.manager.ReservationViewModel;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.layout.Region;
 import javafx.util.Callback;
 
 import java.time.format.DateTimeFormatter;
 
-public class ApprovedReservationViewController {
+public class ReservationViewController {
     private ViewHandler viewHandler;
-    private ApprovedReservationViewModel viewModel;
+    private ReservationViewModel viewModel;
     private Region root;
     @FXML
-    private TableView<Approved> reservationTable;
+    private TableView<Reservation> reservationTable;
     @FXML
     private TableColumn<Reservation, String> renteeColumn;
     @FXML
@@ -31,13 +28,14 @@ public class ApprovedReservationViewController {
     @FXML
     private TableColumn<Reservation, String> endDateColumn;
     @FXML
-    public TableColumn<Reservation, String> daysOverdueColumn;
+    private TableColumn<Reservation, String> approvalColumn;
     @FXML
-    public TableColumn<Reservation, String> returnButtonColumn;
+    private TableColumn<Reservation, String> approveButtonColumn;
 
-    public void init(ViewHandler viewHandler, ApprovedReservationViewModel approvedReservationViewModel, Region root) {
+
+    public void init(ViewHandler viewHandler, ReservationViewModel reservationViewModel, Region root) {
         this.viewHandler = viewHandler;
-        this.viewModel = approvedReservationViewModel;
+        this.viewModel = reservationViewModel;
         this.root = root;
         renteeColumn.setCellValueFactory(new Callback<>() {
             @Override
@@ -67,11 +65,10 @@ public class ApprovedReservationViewController {
                 if (p.getValue() != null) {
                     return new SimpleStringProperty(p.getValue().getReservationDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
                 } else {
-                    return new SimpleStringProperty("<no end date>");
+                    return new SimpleStringProperty("<no start date>");
                 }
             }
         });
-
         endDateColumn.setCellValueFactory(new Callback<>() {
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Reservation, String> p) {
@@ -82,28 +79,26 @@ public class ApprovedReservationViewController {
                 }
             }
         });
-
-        daysOverdueColumn.setCellValueFactory(new Callback<>() {
+        approvalColumn.setCellValueFactory(new Callback<>() {
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Reservation, String> p) {
-                if (p.getValue() != null && p.getValue().getRentedFor() != null) {
-                    return new SimpleStringProperty(p.getValue().getDaysOverdue().toString());
+                if (p.getValue() != null) {
+                    return new SimpleStringProperty("false");
                 } else {
                     return new SimpleStringProperty("<no end date>");
                 }
             }
         });
-
-        returnButtonColumn.setCellFactory(new Callback<>() {
+        approveButtonColumn.setCellFactory(new Callback<>() {
             @Override
             public TableCell<Reservation, String> call(final TableColumn<Reservation, String> param) {
                 final TableCell<Reservation, String> cell = new TableCell<>() {
-                    private final Button btn = new Button("Return");
+                    private final Button btn = new Button("Approve");
 
                     {
                         btn.setOnAction((ActionEvent event) -> {
                             Reservation reservation = getTableView().getItems().get(getIndex());
-                            viewModel.removeReservation(reservation);
+                            viewModel.approveReservation(reservation);
                             reservationTable.refresh();
                         });
                     }

@@ -1,5 +1,6 @@
-package application.view;
+package application.view.manager;
 
+import application.view.ViewHandler;
 import application.viewmodel.manager.AddEquipmentViewModel;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;

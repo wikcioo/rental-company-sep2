@@ -1,6 +1,8 @@
 package application.view.manager;
 
 import application.model.reservations.Reservation;
+import application.model.users.Rentee;
+import application.model.users.User;
 import application.view.ViewHandler;
 import application.viewmodel.manager.ReservationViewModel;
 import javafx.beans.property.SimpleStringProperty;
@@ -41,7 +43,8 @@ public class ReservationViewController {
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Reservation, String> p) {
                 if (p.getValue() != null) {
-                    return new SimpleStringProperty(p.getValue().getRentee().toString());
+                    User r = p.getValue().getRentee();
+                    return new SimpleStringProperty( r.getFirstName() + " " + r.getLastName() + " - " + r.getEmail());
                 } else {
                     return new SimpleStringProperty("<no rentee>");
                 }

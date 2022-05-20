@@ -145,17 +145,13 @@ public class FakeRentalSystemClient implements RentalSystemClient {
         reservationList.setReservationList(reservations);
     }
 
+    //Reserving will create new equipment with given id
     @Override
     public void reserveEquipment(int equipment_id, String rentee_id, LocalDateTime rentedFor) throws RemoteException {
-        ArrayList<IReservation> reservations = new ArrayList<>();
-        for (Equipment e : equipmentList.getAllEquipment()) {
-            if (e.getEquipmentId() == equipment_id) {
-                reservations.add(new Reservation(reservationIndex, getUser(rentee_id), LocalDateTime.now(), rentedFor, e));
-                break;
-            }
-        }
-        reservationIndex++;
+        ArrayList<IReservation> reservations = new ArrayList<>(reservationList.getAll());
+        reservations.add(new Reservation(reservationIndex, getUser(rentee_id), LocalDateTime.now(), rentedFor, new Equipment(equipment_id, "model", "category", true)));
         reservationList.setReservationList(reservations);
+        reservationIndex++;
     }
 }
 

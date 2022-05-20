@@ -137,7 +137,6 @@ public class ModelManager implements Model {
     }
 
 
-    // TODO: DEPRECATED
     public void editEquipment(Equipment equipment, int index) {
         equipmentList.editEquipment(equipment, index);
     }
@@ -163,6 +162,8 @@ public class ModelManager implements Model {
         return reservationList.getExpiredReservations();
     }
 
+
+    //TODO: ADD A CALLBACK FUNCTIONALITY, THIS METHOD WILL NEVER WORK CORRECTLY IN CURRENT STATE
     public void refreshReservations() {
         try {
             reservationList.setReservationList(client.retrieveReservations());

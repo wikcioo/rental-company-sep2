@@ -25,9 +25,9 @@ public class EquipmentViewModel implements PropertyChangeListener {
 
     public EquipmentViewModel(Model model) {
         this.model = model;
+        this.model.addListener(ModelManager.EQUIPMENT_LIST_CHANGED, this);
         this.listObjectProperty = new SimpleObjectProperty<>();
         this.selectedEquipmentProperty = new SimpleObjectProperty<>();
-        model.addListener(ModelManager.EQUIPMENT_LIST_CHANGED, this);
         this.reservationEndDate = new SimpleObjectProperty<>();
         this.equipmentErrorProperty = new SimpleStringProperty();
         this.loggedUserProperty = new SimpleStringProperty();
@@ -58,7 +58,6 @@ public class EquipmentViewModel implements PropertyChangeListener {
             equipmentErrorProperty.set("Successfully retrieved equipment from DB");
             model.retrieveAllEquipment();
         } catch (RemoteException e) {
-            e.printStackTrace();
             equipmentErrorProperty.set("Failed to retrieve equipment list");
         }
     }
@@ -68,7 +67,6 @@ public class EquipmentViewModel implements PropertyChangeListener {
             model.retrieveAllUnreservedEquipment();
             equipmentErrorProperty.set("Successfully retrieved equipment from DB");
         } catch (RemoteException e) {
-            e.printStackTrace();
             equipmentErrorProperty.set("Failed to retrieve equipment list");
         }
     }

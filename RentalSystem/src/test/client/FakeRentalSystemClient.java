@@ -23,6 +23,8 @@ public class FakeRentalSystemClient implements RentalSystemClient {
     public FakeRentalSystemClient() {
         this.equipmentList = new EquipmentList();
         this.userList = new ArrayList<>();
+        userList.add(new Manager("a", "b", "c", "john@gmail.com", "123"));
+        userList.add(new Rentee("a", "b", "c", "tomas@gmail.com", "abc"));
         this.equipmentIndex = 0;
         this.reservationIndex = 0;
         this.reservationList = new ReservationList();

@@ -7,13 +7,16 @@ import application.model.reservations.*;
 import application.model.users.Manager;
 import application.model.users.Rentee;
 import application.model.users.User;
+import application.util.NamedPropertyChangeSubject;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.rmi.RemoteException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public class FakeRentalSystemClient implements RentalSystemClient {
-
+public class FakeRentalSystemClient implements RentalSystemClient, NamedPropertyChangeSubject {
+    private final PropertyChangeSupport support;
     private final EquipmentList equipmentList;
     private final ReservationList reservationList;
     private final ArrayList<User> userList;
@@ -21,6 +24,7 @@ public class FakeRentalSystemClient implements RentalSystemClient {
     private int reservationIndex;
 
     public FakeRentalSystemClient() {
+        this.support = new PropertyChangeSupport(this);
         this.equipmentList = new EquipmentList();
         this.userList = new ArrayList<>();
         userList.add(new Manager("a", "b", "c", "john@gmail.com", "123"));
@@ -152,6 +156,16 @@ public class FakeRentalSystemClient implements RentalSystemClient {
         reservations.add(new Reservation(reservationIndex, getUser(rentee_id), LocalDateTime.now(), rentedFor, new Equipment(equipment_id, "model", "category", true)));
         reservationList.setReservationList(reservations);
         reservationIndex++;
+    }
+
+    @Override
+    public void addListener(String propertyName, PropertyChangeListener listener) {
+        support.addPropertyChangeListener(propertyName, listener);
+    }
+
+    @Override
+    public void removeListener(String propertyName, PropertyChangeListener listener) {
+        support.removePropertyChangeListener(propertyName, listener);
     }
 }
 

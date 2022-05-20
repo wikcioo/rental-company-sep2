@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 
-public class Reservation implements Serializable, IReservation {
+public class Reservation implements Serializable {
 
     private int id;
     private User rentee;
@@ -17,7 +17,6 @@ public class Reservation implements Serializable, IReservation {
     private Equipment equipment;
     public static final String type = "Unapproved";
 
-    @Override
     public String status() {
         return type;
     }

@@ -16,7 +16,7 @@ public class ModelManager implements Model {
     private User currentlyLoggedInUser;
     private final RentalSystemClient client;
     private final EquipmentList equipmentList;
-    private final IReservationList reservationList;
+    private final ReservationList reservationList;
     private final PropertyChangeSupport support;
     public static final String EQUIPMENT_LIST_CHANGED = "equipment_list_changed";
     public static final String RESERVATION_LIST_CHANGED = "reservation_list_changed";

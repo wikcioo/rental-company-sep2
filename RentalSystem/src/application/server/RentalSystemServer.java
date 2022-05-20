@@ -3,7 +3,7 @@ package application.server;
 
 import application.dao.*;
 import application.model.equipment.Equipment;
-import application.model.reservations.IReservation;
+import application.model.reservations.Reservation;
 import application.model.users.User;
 import application.shared.IServer;
 
@@ -101,7 +101,7 @@ public class RentalSystemServer implements IServer {
     }
 
     @Override
-    public ArrayList<IReservation> retrieveReservations() throws RemoteException {
+    public ArrayList<Reservation> retrieveReservations() throws RemoteException {
         try {
             return reservationDao.retrieveReservations();
         } catch (SQLException e) {

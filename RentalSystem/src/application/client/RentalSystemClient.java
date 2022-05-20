@@ -1,7 +1,7 @@
 package application.client;
 
 import application.model.equipment.Equipment;
-import application.model.reservations.IReservation;
+import application.model.reservations.Reservation;
 import application.model.users.User;
 
 import java.rmi.Remote;
@@ -19,7 +19,7 @@ public interface RentalSystemClient extends Remote {
     boolean isValidUser(String email, String password) throws RemoteException;
     boolean isUserAManager(String email) throws RemoteException;
 
-    ArrayList<IReservation> retrieveReservations() throws RemoteException;
+    ArrayList<Reservation> retrieveReservations() throws RemoteException;
 
     void approveReservation(int id, String manager_id) throws RemoteException;
     void rejectReservation(int id, String manager_id) throws RemoteException;

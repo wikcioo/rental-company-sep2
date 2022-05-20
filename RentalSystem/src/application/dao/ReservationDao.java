@@ -1,13 +1,15 @@
 package application.dao;
 
-import application.model.reservations.IReservation;
+import application.model.reservations.Reservation;
 
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public interface ReservationDao {
-    ArrayList<IReservation> retrieveReservations() throws SQLException;
+
+
+    ArrayList<Reservation> retrieveReservations() throws SQLException;
 
     void approveReservation(int id, String manager_id) throws SQLException;
     void rejectReservation(int id, String manager_id) throws SQLException;

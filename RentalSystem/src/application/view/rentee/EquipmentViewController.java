@@ -5,6 +5,7 @@ import application.view.ViewHandler;
 import application.viewmodel.rentee.EquipmentViewModel;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -40,42 +41,43 @@ public class EquipmentViewController {
     @FXML
     private Label loggedUser;
 
+    private static final LocalDate MIN_DATE = LocalDate.now();
+    private static final LocalDate MAX_DATE = MIN_DATE.plusWeeks(4);
+
     public void init(ViewHandler viewHandler, EquipmentViewModel equipmentViewModel, Region root) {
         this.viewHandler = viewHandler;
         this.viewModel = equipmentViewModel;
         this.root = root;
 
         //Only allows user to pick a date from today to 4 weeks from today.
-        LocalDate minDate = LocalDate.now();
-        LocalDate maxDate = minDate.plusWeeks(4);
         datePicker.setDayCellFactory(d ->
                 new DateCell() {
                     @Override
                     public void updateItem(LocalDate item, boolean empty) {
                         super.updateItem(item, empty);
-                        setDisable(item.isAfter(maxDate) || item.isBefore(minDate));
+                        setDisable(item.isAfter(MAX_DATE) || item.isBefore(MIN_DATE));
                     }
                 });
+        datePicker.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue){
+                datePicker.setValue(datePicker.getValue());
+            }
+        });
+        //
 
-        modelColumn.setCellValueFactory(new Callback<>() {
-            @Override
-            public ObservableValue<String> call(TableColumn.CellDataFeatures<Equipment, String> p) {
-                if (p.getValue() != null) {
-                    return new SimpleStringProperty(p.getValue().getModel());
-                } else {
-                    return new SimpleStringProperty("<no model>");
-                }
+        modelColumn.setCellValueFactory(p -> {
+            if (p.getValue() != null) {
+                return new SimpleStringProperty(p.getValue().getModel());
+            } else {
+                return new SimpleStringProperty("<no model>");
             }
         });
 
-        categoryColumn.setCellValueFactory(new Callback<>() {
-            @Override
-            public ObservableValue<String> call(TableColumn.CellDataFeatures<Equipment, String> p) {
-                if (p.getValue() != null) {
-                    return new SimpleStringProperty(p.getValue().getCategory());
-                } else {
-                    return new SimpleStringProperty("<no category>");
-                }
+        categoryColumn.setCellValueFactory(p -> {
+            if (p.getValue() != null) {
+                return new SimpleStringProperty(p.getValue().getCategory());
+            } else {
+                return new SimpleStringProperty("<no category>");
             }
         });
 
@@ -138,11 +140,14 @@ public class EquipmentViewController {
     }
 
     public void OnReserve() {
+        LocalDate date = datePicker.getValue();
         reservationError.setTextFill(Paint.valueOf("RED"));
         if (model.getText().isEmpty() && category.getText().isEmpty()) {
             reservationError.setText("You must select an item to reserve");
         } else if (datePicker.getValue() == null) {
             reservationError.setText("You must choose the date");
+        } else if (datePicker.getValue().isAfter(MAX_DATE) || datePicker.getValue().isBefore(MIN_DATE)) {
+            reservationError.setText("You must choose a date in the correct interval");
         } else {
             reservationError.setTextFill(Paint.valueOf("GREEN"));
             reservationError.setText("Success");

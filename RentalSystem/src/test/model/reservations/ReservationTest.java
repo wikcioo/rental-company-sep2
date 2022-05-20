@@ -1,4 +1,4 @@
-package test.model;
+package test.model.reservations;
 
 import application.model.equipment.Equipment;
 import application.model.reservations.Reservation;

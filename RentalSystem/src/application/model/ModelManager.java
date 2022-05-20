@@ -79,11 +79,6 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public ArrayList<Reservation> getApprovedReservationList() {
-        return reservationList.getUnapprovedReservations();
-    }
-
-    @Override
     public void approveReservation(Reservation reservation) throws RemoteException {
         client.approveReservation(reservation.getId(), "john@gmail.com");
         support.firePropertyChange(RESERVATION_LIST_CHANGED, null, reservationList);
@@ -168,7 +163,7 @@ public class ModelManager implements Model {
         return reservationList.getExpiredReservations();
     }
 
-    private void refreshReservations() {
+    public void refreshReservations() {
         try {
             reservationList.setReservationList(client.retrieveReservations());
             support.firePropertyChange(RESERVATION_LIST_CHANGED, null, reservationList.getAll());

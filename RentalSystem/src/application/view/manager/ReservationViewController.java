@@ -14,6 +14,7 @@ import javafx.scene.layout.Region;
 import javafx.util.Callback;
 
 import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 
 public class ReservationViewController {
     private ViewHandler viewHandler;
@@ -118,7 +119,7 @@ public class ReservationViewController {
                     {
                         btn.setOnAction((ActionEvent event) -> {
                             Reservation reservation = getTableView().getItems().get(getIndex());
-                            viewModel.rejectReservation(reservation);
+                            confirmRejection(reservation);
                             reservationTable.refresh();
                         });
                     }
@@ -150,6 +151,16 @@ public class ReservationViewController {
 
     public void backButtonPressed() {
         viewHandler.openView(ViewHandler.MANAGER_EQUIPMENT_LIST_VIEW);
+    }
+
+    private void confirmRejection(Reservation reservation) {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Reason for rejection");
+        dialog.setHeaderText("Reason for rejection");
+        dialog.setContentText("Give a reason for rejection:");
+
+        Optional<String> result = dialog.showAndWait();
+        result.ifPresent(reason -> viewModel.rejectReservation(reservation));
     }
 
 }

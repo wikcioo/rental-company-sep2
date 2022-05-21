@@ -21,8 +21,8 @@
             <TableColumn fx:id="equipmentColumn" prefWidth="198.0" text="Equipment" />
             <TableColumn fx:id="startDateColumn" prefWidth="153.0" text="Start date" />
             <TableColumn fx:id="endDateColumn" prefWidth="150.0" text="End date" />
-            <TableColumn fx:id="approvalColumn" prefWidth="101.0" text="Approval" />
-            <TableColumn fx:id="approveButtonColumn" prefWidth="121.0" text="Approve" />
+            <TableColumn fx:id="approveButtonColumn" prefWidth="80.5" text="Approve" />
+            <TableColumn fx:id="rejectButtonColumn" prefWidth="80.5" text="Reject" />
          </columns>
       </TableView>
    </children>

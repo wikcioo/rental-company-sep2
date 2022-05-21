@@ -30,9 +30,9 @@ public class ReservationViewController {
     @FXML
     private TableColumn<Reservation, String> endDateColumn;
     @FXML
-    private TableColumn<Reservation, String> approvalColumn;
-    @FXML
     private TableColumn<Reservation, String> approveButtonColumn;
+    @FXML
+    private TableColumn<Reservation, String> rejectButtonColumn;
 
 
     public void init(ViewHandler viewHandler, ReservationViewModel reservationViewModel, Region root) {
@@ -82,16 +82,6 @@ public class ReservationViewController {
                 }
             }
         });
-        approvalColumn.setCellValueFactory(new Callback<>() {
-            @Override
-            public ObservableValue<String> call(TableColumn.CellDataFeatures<Reservation, String> p) {
-                if (p.getValue() != null) {
-                    return new SimpleStringProperty("false");
-                } else {
-                    return new SimpleStringProperty("<no end date>");
-                }
-            }
-        });
         approveButtonColumn.setCellFactory(new Callback<>() {
             @Override
             public TableCell<Reservation, String> call(final TableColumn<Reservation, String> param) {
@@ -119,6 +109,34 @@ public class ReservationViewController {
                 return cell;
             }
         });
+        rejectButtonColumn.setCellFactory(new Callback<>() {
+            @Override
+            public TableCell<Reservation, String> call(final TableColumn<Reservation, String> param) {
+                final TableCell<Reservation, String> cell = new TableCell<>() {
+                    private final Button btn = new Button("Reject");
+
+                    {
+                        btn.setOnAction((ActionEvent event) -> {
+                            Reservation reservation = getTableView().getItems().get(getIndex());
+                            viewModel.rejectReservation(reservation);
+                            reservationTable.refresh();
+                        });
+                    }
+
+                    @Override
+                    public void updateItem(String item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            setGraphic(btn);
+                        }
+                    }
+                };
+                return cell;
+            }
+        });
+
         viewModel.bindReservationList(reservationTable.itemsProperty());
     }
 

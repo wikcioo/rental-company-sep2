@@ -80,7 +80,7 @@ public class ModelManager implements Model {
 
     @Override
     public void approveReservation(Reservation reservation) throws RemoteException {
-        client.approveReservation(reservation.getId(), "john@gmail.com");
+        client.approveReservation(reservation.getId(), getCurrentlyLoggedInUser().getEmail());
         support.firePropertyChange(RESERVATION_LIST_CHANGED, null, reservationList);
     }
 

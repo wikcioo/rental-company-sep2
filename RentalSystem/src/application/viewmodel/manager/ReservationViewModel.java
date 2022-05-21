@@ -36,6 +36,14 @@ public class ReservationViewModel implements PropertyChangeListener {
         }
     }
 
+    public void rejectReservation(Reservation reservation) {
+        try {
+            model.rejectReservation(reservation.getId(),model.getCurrentlyLoggedInUser().getEmail());
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     //TODO I dont think passing the list in a event is a good idea ; better to just call a function to get a list
     @Override
     public void propertyChange(PropertyChangeEvent evt) {

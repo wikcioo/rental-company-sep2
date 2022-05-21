@@ -1,7 +1,7 @@
 package application.client;
 
 import application.model.equipment.Equipment;
-import application.model.reservations.IReservation;
+import application.model.reservations.Reservation;
 import application.model.users.User;
 import application.shared.IServer;
 import application.util.NamedPropertyChangeSubject;
@@ -75,7 +75,7 @@ public class RentalSystemClientImplementation extends UnicastRemoteObject implem
     }
 
     @Override
-    public ArrayList<IReservation> retrieveReservations() throws RemoteException {
+    public ArrayList<Reservation> retrieveReservations() throws RemoteException {
         return server.retrieveReservations();
     }
 

@@ -69,7 +69,7 @@ public class FailingRentalSystemClient implements RentalSystemClient {
     }
 
     @Override
-    public ArrayList<IReservation> retrieveReservations() throws RemoteException {
+    public ArrayList<Reservation> retrieveReservations() throws RemoteException {
         throw new RemoteException();
     }
 

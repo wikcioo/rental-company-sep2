@@ -16,7 +16,7 @@ public class ModelManager implements Model {
     private User currentlyLoggedInUser;
     private final RentalSystemClient client;
     private final EquipmentList equipmentList;
-    private final IReservationList reservationList;
+    private final ReservationList reservationList;
     private final PropertyChangeSupport support;
     public static final String EQUIPMENT_LIST_CHANGED = "equipment_list_changed";
     public static final String RESERVATION_LIST_CHANGED = "reservation_list_changed";
@@ -137,7 +137,6 @@ public class ModelManager implements Model {
     }
 
 
-    // TODO: DEPRECATED
     public void editEquipment(Equipment equipment, int index) {
         equipmentList.editEquipment(equipment, index);
     }
@@ -163,6 +162,8 @@ public class ModelManager implements Model {
         return reservationList.getExpiredReservations();
     }
 
+
+    //TODO: ADD A CALLBACK FUNCTIONALITY, THIS METHOD WILL NEVER WORK CORRECTLY IN CURRENT STATE
     public void refreshReservations() {
         try {
             reservationList.setReservationList(client.retrieveReservations());

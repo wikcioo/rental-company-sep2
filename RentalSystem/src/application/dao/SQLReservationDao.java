@@ -28,8 +28,8 @@ public class SQLReservationDao implements ReservationDao{
     }
 
     @Override
-    public ArrayList<IReservation> retrieveReservations() throws SQLException {
-        ArrayList<IReservation> reservationList = new ArrayList<>();
+    public ArrayList<Reservation> retrieveReservations() throws SQLException {
+        ArrayList<Reservation> reservationList = new ArrayList<>();
         try (
                 Connection connection = getConnection();
                 Statement statement = connection.createStatement()

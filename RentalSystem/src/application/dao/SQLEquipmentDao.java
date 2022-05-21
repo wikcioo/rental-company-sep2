@@ -64,6 +64,8 @@ public class SQLEquipmentDao implements EquipmentDao {
         return equipmentList;
     }
 
+
+    //TODO Two queries which are not a transaction. Possibility of creating inconsistent state of the database
     @Override
     public ArrayList<Equipment> getAllUnreserved() throws SQLException {
         ArrayList<Equipment> equipmentList = new ArrayList<>();

@@ -1,6 +1,8 @@
 package application.view.manager;
 
 import application.model.reservations.Reservation;
+import application.model.users.Rentee;
+import application.model.users.User;
 import application.view.ViewHandler;
 import application.viewmodel.manager.ReservationViewModel;
 import javafx.beans.property.SimpleStringProperty;
@@ -12,6 +14,7 @@ import javafx.scene.layout.Region;
 import javafx.util.Callback;
 
 import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 
 public class ReservationViewController {
     private ViewHandler viewHandler;
@@ -28,9 +31,9 @@ public class ReservationViewController {
     @FXML
     private TableColumn<Reservation, String> endDateColumn;
     @FXML
-    private TableColumn<Reservation, String> approvalColumn;
-    @FXML
     private TableColumn<Reservation, String> approveButtonColumn;
+    @FXML
+    private TableColumn<Reservation, String> rejectButtonColumn;
 
 
     public void init(ViewHandler viewHandler, ReservationViewModel reservationViewModel, Region root) {
@@ -41,7 +44,8 @@ public class ReservationViewController {
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Reservation, String> p) {
                 if (p.getValue() != null) {
-                    return new SimpleStringProperty(p.getValue().getRentee().toString());
+                    User r = p.getValue().getRentee();
+                    return new SimpleStringProperty( r.getFirstName() + " " + r.getLastName() + " - " + r.getEmail());
                 } else {
                     return new SimpleStringProperty("<no rentee>");
                 }
@@ -79,16 +83,6 @@ public class ReservationViewController {
                 }
             }
         });
-        approvalColumn.setCellValueFactory(new Callback<>() {
-            @Override
-            public ObservableValue<String> call(TableColumn.CellDataFeatures<Reservation, String> p) {
-                if (p.getValue() != null) {
-                    return new SimpleStringProperty("false");
-                } else {
-                    return new SimpleStringProperty("<no end date>");
-                }
-            }
-        });
         approveButtonColumn.setCellFactory(new Callback<>() {
             @Override
             public TableCell<Reservation, String> call(final TableColumn<Reservation, String> param) {
@@ -116,6 +110,34 @@ public class ReservationViewController {
                 return cell;
             }
         });
+        rejectButtonColumn.setCellFactory(new Callback<>() {
+            @Override
+            public TableCell<Reservation, String> call(final TableColumn<Reservation, String> param) {
+                final TableCell<Reservation, String> cell = new TableCell<>() {
+                    private final Button btn = new Button("Reject");
+
+                    {
+                        btn.setOnAction((ActionEvent event) -> {
+                            Reservation reservation = getTableView().getItems().get(getIndex());
+                            confirmRejection(reservation);
+                            reservationTable.refresh();
+                        });
+                    }
+
+                    @Override
+                    public void updateItem(String item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            setGraphic(btn);
+                        }
+                    }
+                };
+                return cell;
+            }
+        });
+
         viewModel.bindReservationList(reservationTable.itemsProperty());
     }
 
@@ -129,6 +151,16 @@ public class ReservationViewController {
 
     public void backButtonPressed() {
         viewHandler.openView(ViewHandler.MANAGER_EQUIPMENT_LIST_VIEW);
+    }
+
+    private void confirmRejection(Reservation reservation) {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Reason for rejection");
+        dialog.setHeaderText("Reason for rejection");
+        dialog.setContentText("Give a reason for rejection:");
+
+        Optional<String> result = dialog.showAndWait();
+        result.ifPresent(reason -> viewModel.rejectReservation(reservation));
     }
 
 }

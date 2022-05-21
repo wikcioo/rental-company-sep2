@@ -96,13 +96,13 @@ public class FakeRentalSystemClient implements RentalSystemClient, NamedProperty
     }
 
     @Override
-    public ArrayList<IReservation> retrieveReservations() throws RemoteException {
+    public ArrayList<Reservation> retrieveReservations() throws RemoteException {
         return new ArrayList<>(reservationList.getAll());
     }
 
     @Override
     public void approveReservation(int id, String manager_id) throws RemoteException {
-        ArrayList<IReservation> reservations = new ArrayList<>(reservationList.getAll());
+        ArrayList<Reservation> reservations = new ArrayList<>(reservationList.getAll());
         for (Reservation r : reservationList.getUnapprovedReservations()) {
             if (r.getId() == id) {
                 reservations.set(reservations.indexOf(r), new Approved(r.getId(), r.getRentee(), r.getEquipment(), r.getRentedFor(), LocalDateTime.now(), manager_id));
@@ -115,7 +115,7 @@ public class FakeRentalSystemClient implements RentalSystemClient, NamedProperty
     //TODO: rejectReservation requires a reason but the method to reject one does not have a reason field
     @Override
     public void rejectReservation(int id, String manager_id) throws RemoteException {
-        ArrayList<IReservation> reservations = new ArrayList<>(reservationList.getAll());
+        ArrayList<Reservation> reservations = new ArrayList<>(reservationList.getAll());
         for (Reservation r : reservationList.getUnapprovedReservations()) {
             if (r.getId() == id) {
                 reservations.set(reservations.indexOf(r), new Rejected(r.getId(), r.getRentee(), r.getEquipment(), r.getRentedFor(), LocalDateTime.now(), "reason", manager_id));
@@ -127,7 +127,7 @@ public class FakeRentalSystemClient implements RentalSystemClient, NamedProperty
 
     @Override
     public void expireReservation(int id) throws RemoteException {
-        ArrayList<IReservation> reservations = new ArrayList<>(reservationList.getAll());
+        ArrayList<Reservation> reservations = new ArrayList<>(reservationList.getAll());
         for (Reservation r : reservationList.getUnapprovedReservations()) {
             if (r.getId() == id) {
                 reservations.set(reservations.indexOf(r), new Expired(r.getId(), r.getRentee(), r.getEquipment(), r.getRentedFor(), LocalDateTime.now()));
@@ -139,7 +139,7 @@ public class FakeRentalSystemClient implements RentalSystemClient, NamedProperty
 
     @Override
     public void returnReservation(int id) throws RemoteException {
-        ArrayList<IReservation> reservations = new ArrayList<>(reservationList.getAll());
+        ArrayList<Reservation> reservations = new ArrayList<>(reservationList.getAll());
         for (Approved a : reservationList.getApprovedReservations()) {
             if (a.getId() == id) {
                 reservations.set(reservations.indexOf(a), new Returned(a.getId(), a.getRentee(), a.getEquipment(), a.getRentedFor(), a.getApprovedDate(), a.getApprovedBy(), LocalDateTime.now()));
@@ -152,7 +152,7 @@ public class FakeRentalSystemClient implements RentalSystemClient, NamedProperty
     //Reserving will create new equipment with given id
     @Override
     public void reserveEquipment(int equipment_id, String rentee_id, LocalDateTime rentedFor) throws RemoteException {
-        ArrayList<IReservation> reservations = new ArrayList<>(reservationList.getAll());
+        ArrayList<Reservation> reservations = new ArrayList<>(reservationList.getAll());
         reservations.add(new Reservation(reservationIndex, getUser(rentee_id), LocalDateTime.now(), rentedFor, new Equipment(equipment_id, "model", "category", true)));
         reservationList.setReservationList(reservations);
         reservationIndex++;

@@ -85,6 +85,7 @@ public class SQLUserDao implements UserDao {
     }
 
     // TODO: Make proper update function (design[usage] is wrong)
+    // TODO TODO: Remove that TODO above and this function as well. Why is it here if we don't even have the update the user use case?
     @Override
     public void update(User user) throws SQLException {
         try (

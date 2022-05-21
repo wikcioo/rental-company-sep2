@@ -1,18 +1,15 @@
-package test.viewmodel.rentee;
+package application.viewmodel.rentee;
 
 import application.model.Model;
 import application.model.ModelManager;
 import application.model.equipment.Equipment;
 import application.model.reservations.Reservation;
-import application.viewmodel.rentee.EquipmentViewModel;
-import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.beans.value.ObservableValue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import test.client.FakeRentalSystemClient;
+import application.client.FakeRentalSystemClient;
 
 import java.rmi.RemoteException;
 import java.time.LocalDateTime;

@@ -1,4 +1,4 @@
-package test.client;
+package application.client;
 
 import application.client.RentalSystemClient;
 import application.model.equipment.Equipment;

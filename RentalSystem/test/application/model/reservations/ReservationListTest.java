@@ -1,4 +1,4 @@
-package test.model.reservations;
+package application.model.reservations;
 
 import application.model.reservations.*;
 import org.junit.jupiter.api.BeforeEach;

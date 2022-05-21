@@ -1,4 +1,4 @@
-package test.model.equipment;
+package application.model.equipment;
 
 import application.model.equipment.Equipment;
 import application.model.equipment.EquipmentList;

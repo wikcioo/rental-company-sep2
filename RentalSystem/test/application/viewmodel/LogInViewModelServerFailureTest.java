@@ -1,14 +1,12 @@
-package test.viewmodel;
+package application.viewmodel;
 
 import application.model.Model;
 import application.model.ModelManager;
-import application.viewmodel.LogInViewModel;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import test.client.FailingRentalSystemClient;
-import test.client.FakeRentalSystemClient;
+import application.client.FailingRentalSystemClient;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;

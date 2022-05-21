@@ -1,13 +1,12 @@
-package test.viewmodel.manager;
+package application.viewmodel.manager;
 
 import application.model.Model;
 import application.model.ModelManager;
-import application.viewmodel.manager.AddEquipmentViewModel;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import test.client.FakeRentalSystemClient;
+import application.client.FakeRentalSystemClient;
 
 import java.rmi.RemoteException;
 

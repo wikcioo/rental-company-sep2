@@ -1,12 +1,11 @@
-package test.viewmodel.rentee;
+package application.viewmodel.rentee;
 
 import application.model.ModelManager;
-import application.viewmodel.rentee.EquipmentViewModel;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import test.client.FailingRentalSystemClient;
+import application.client.FailingRentalSystemClient;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;

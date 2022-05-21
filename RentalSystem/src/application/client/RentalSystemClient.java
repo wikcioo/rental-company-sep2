@@ -150,7 +150,7 @@ public interface RentalSystemClient extends Remote {
      *
      * @param equipment_id equipment's id
      * @param rentee_id rentee's id
-     * @param rentedFor amount of time that the equipment is being rented for
+     * @param rentedFor expiration date of the reserved equipment
      * @throws RemoteException indicates connection failure
      */
     void reserveEquipment(int equipment_id, String rentee_id, LocalDateTime rentedFor) throws RemoteException;

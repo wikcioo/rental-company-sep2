@@ -96,19 +96,7 @@ public class SQLEquipmentDao implements EquipmentDao {
     }
 
     @Override
-    public ArrayList<Equipment> getByModel(String model) throws SQLException {
-        // TODO
-        return null;
-    }
-
-    @Override
     public ArrayList<Equipment> getByCategory(String category) throws SQLException {
-        // TODO
-        return null;
-    }
-
-    @Override
-    public ArrayList<Equipment> getByPrice(double min, double max) throws SQLException {
         // TODO
         return null;
     }

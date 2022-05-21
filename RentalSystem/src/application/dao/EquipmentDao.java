@@ -17,7 +17,6 @@ public interface EquipmentDao {
      */
     Equipment add(String model, String category, boolean available) throws SQLException;
 
-
     /**
      *Returns all the equipment from Equipment relation.
      *
@@ -34,9 +33,6 @@ public interface EquipmentDao {
      */
     ArrayList<Equipment> getAllUnreserved() throws SQLException;
 
-
-
-
     /**
      * Returns all equipment that matches a given category. Will return only the equipment that matches exactly the given category
      * @param category The equipment's desired category
@@ -44,14 +40,6 @@ public interface EquipmentDao {
      * @throws SQLException
      */
     ArrayList<Equipment> getByCategory(String category) throws SQLException;
-
-
-    //TODO Remove getByModel, getByPrice as filtering will be handled in a view model.
-    // GetByCategory might stay, but would require splitting a table view of available equipment to different views / tableviews which would improve efficiency
-    // It would also require changing the equipment list to store different lists divided by category
-    ArrayList<Equipment> getByModel(String model) throws SQLException;
-    ArrayList<Equipment> getByPrice(double min, double max) throws SQLException;
-
 
     //TODO why pass the entire object Equipment if only the id is needed? Also would be nice if the method would return a boolean whether it succeeded
     /**
@@ -65,7 +53,7 @@ public interface EquipmentDao {
     void setAvailability(Equipment equipment, boolean available) throws SQLException;
 
     /**
-     *Deletes the given equipment from the equipment relation
+     * Deletes the given equipment from the equipment relation
      *
      * TODO (TO PO CHUJ TO TU STOI JAK CI SIE NIE CHCE TEGO IMPLEMENTOWAC)
      *

@@ -114,7 +114,13 @@ public class SQLEquipmentDao implements EquipmentDao {
     }
 
     @Override
-    public void delete(Equipment equipment) throws SQLException {
-        // TODO
+    public void delete(int equipment_id) throws SQLException {
+        try (
+                Connection connection = getConnection();
+                PreparedStatement statement = connection.prepareStatement("DELETE FROM rentalsystemdbs.equipment WHERE equipment_id = ?")
+        ) {
+            statement.setInt(1, equipment_id);
+            statement.executeUpdate();
+        }
     }
 }

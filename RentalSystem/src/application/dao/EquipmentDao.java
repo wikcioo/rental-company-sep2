@@ -44,7 +44,7 @@ public interface EquipmentDao {
     //TODO why pass the entire object Equipment if only the id is needed? Also would be nice if the method would return a boolean whether it succeeded
     /**
      * Changes the availability of given equipment in the database.
-     * The id of the equipment is used to change the availability
+     * The id of the equipment is used to change the availability.
      *
      * @param equipment The equipment which the availability will be changed
      * @param available The desired availability
@@ -53,12 +53,10 @@ public interface EquipmentDao {
     void setAvailability(Equipment equipment, boolean available) throws SQLException;
 
     /**
-     * Deletes the given equipment from the equipment relation
+     * Deletes the given equipment from the equipment relation.
      *
-     * TODO (TO PO CHUJ TO TU STOI JAK CI SIE NIE CHCE TEGO IMPLEMENTOWAC)
-     *
-     * @param equipment The soon to be removed equipment
+     * @param equipment_id id of the equipment to be removed from the equipment table
      * @throws SQLException
      */
-    void delete(Equipment equipment) throws SQLException;
+    void delete(int equipment_id) throws SQLException;
 }

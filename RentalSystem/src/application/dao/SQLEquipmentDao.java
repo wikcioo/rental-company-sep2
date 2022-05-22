@@ -102,13 +102,13 @@ public class SQLEquipmentDao implements EquipmentDao {
     }
 
     @Override
-    public void setAvailability(Equipment equipment, boolean available) throws SQLException {
+    public void setAvailability(int equipment_id, boolean available) throws SQLException {
         try (
                 Connection connection = getConnection();
                 PreparedStatement statement = connection.prepareStatement("UPDATE rentalsystemdbs.equipment SET availability = ? WHERE equipment_id = ?")
         ) {
             statement.setBoolean(1, available);
-            statement.setInt(2, equipment.getEquipmentId());
+            statement.setInt(2, equipment_id);
             statement.executeUpdate();
         }
     }

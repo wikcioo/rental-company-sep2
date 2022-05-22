@@ -42,13 +42,13 @@ public interface RentalSystemClient extends Remote {
 
     /**
      * Sets the availability of given equipment object in the database.
-     * Calls {@link application.shared.IServer#setAvailability(Equipment, boolean) setAvailability} method.
+     * Calls {@link application.shared.IServer#setAvailability(int, boolean) setAvailability} method.
      *
-     * @param equipment equipment object
+     * @param equipment_id equipment's id
      * @param available equipment's availability
      * @throws RemoteException indicates connection failure
      */
-    void setAvailability(Equipment equipment, boolean available) throws RemoteException;
+    void setAvailability(int equipment_id, boolean available) throws RemoteException;
 
     /**
      * Adds new user to the database with given parameters.

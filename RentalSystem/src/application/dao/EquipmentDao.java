@@ -41,16 +41,14 @@ public interface EquipmentDao {
      */
     ArrayList<Equipment> getByCategory(String category) throws SQLException;
 
-    //TODO why pass the entire object Equipment if only the id is needed? Also would be nice if the method would return a boolean whether it succeeded
     /**
-     * Changes the availability of given equipment in the database.
-     * The id of the equipment is used to change the availability.
+     * Changes the availability of given equipment id in the database.
      *
-     * @param equipment The equipment which the availability will be changed
+     * @param equipment_id id of the equipment that will have its availability set
      * @param available The desired availability
      * @throws SQLException
      */
-    void setAvailability(Equipment equipment, boolean available) throws SQLException;
+    void setAvailability(int equipment_id, boolean available) throws SQLException;
 
     /**
      * Deletes the given equipment from the equipment relation.

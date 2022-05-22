@@ -114,7 +114,7 @@ public interface Model extends NamedPropertyChangeSubject {
 
     /**
      * Toggles the availability of the given equipment.
-     * Calls {@link application.client.RentalSystemClient#setAvailability(Equipment, boolean) setAvailability} method with an appropriate boolean value.
+     * Calls {@link application.client.RentalSystemClient#setAvailability(int, boolean) setAvailability} method with an appropriate boolean value.
      * Fires property change on EQUIPMENT_LIST_CHANGED event.
      *
      * @param equipment equipment object

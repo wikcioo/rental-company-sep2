@@ -52,9 +52,9 @@ public class RentalSystemServer implements IServer {
     }
 
     @Override
-    public void setAvailability(Equipment equipment, boolean available) throws RemoteException {
+    public void setAvailability(int equipment_id, boolean available) throws RemoteException {
         try {
-            equipmentDao.setAvailability(equipment, available);
+            equipmentDao.setAvailability(equipment_id, available);
         } catch (SQLException e) {
             throw new RuntimeException(e.getMessage(), e);
         }

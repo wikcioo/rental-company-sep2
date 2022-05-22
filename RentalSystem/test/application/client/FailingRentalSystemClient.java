@@ -44,7 +44,7 @@ public class FailingRentalSystemClient implements RentalSystemClient {
     }
 
     @Override
-    public void setAvailability(Equipment equipment, boolean available) throws RemoteException {
+    public void setAvailability(int equipment_id, boolean available) throws RemoteException {
         throw new RemoteException();
     }
 

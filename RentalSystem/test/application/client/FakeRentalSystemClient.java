@@ -52,9 +52,9 @@ public class FakeRentalSystemClient implements RentalSystemClient, NamedProperty
     }
 
     @Override
-    public void setAvailability(Equipment equipment, boolean available) throws RemoteException {
+    public void setAvailability(int equipment_id, boolean available) throws RemoteException {
         for (Equipment e : equipmentList.getAllEquipment()) {
-            if (e.getEquipmentId() == equipment.getEquipmentId()) {
+            if (e.getEquipmentId() == equipment_id) {
                 e.setAvailable(available);
             }
         }

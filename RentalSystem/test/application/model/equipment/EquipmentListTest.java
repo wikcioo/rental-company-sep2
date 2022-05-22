@@ -69,13 +69,6 @@ public class EquipmentListTest {
     }
 
     @Test
-    void editing_equipment_changes_equipment_to_new_equipment() {
-        equipmentList.addEquipment(new Equipment(0, "a", "b", false));
-        equipmentList.editEquipment(new Equipment(14, "a", "b", false),0);
-        assertEquals(14, equipmentList.getAllEquipment().get(0).getEquipmentId());
-    }
-
-    @Test
     void removing_equipment_removes_them_from_list() {
         Equipment e = new Equipment(0, "a", "b", false);
         equipmentList.addEquipment(e);

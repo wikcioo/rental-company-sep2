@@ -34,8 +34,6 @@ public class ManagerEquipmentViewController {
     private TableColumn<Equipment, String> availabilityColumn;
     @FXML
     private TableColumn<Equipment, String> changeAvailabilityColumn;
-//    @FXML
-//    private TableColumn<Equipment, String> editColumn;
 
     public void init(ViewHandler viewHandler,
                      ManagerEquipmentViewModel managerEquipmentViewModel, Region root) {
@@ -108,35 +106,6 @@ public class ManagerEquipmentViewController {
             }
         });
 
-//        editColumn.setCellFactory(new Callback<>() {
-//            @Override
-//            public TableCell<Equipment, String> call(
-//                    final TableColumn<Equipment, String> param) {
-//                final TableCell<Equipment, String> cell = new TableCell<>() {
-//                    private final Button btn = new Button("Edit");
-//
-//                    {
-//                        btn.setOnAction((ActionEvent event) -> {
-//                            Equipment data = getTableView().getItems().get(getIndex());
-//                            model.setText(data.getModel());
-//                            category.setText(data.getCategory());
-//                            viewModel.bindSelectedEquipment(new SimpleObjectProperty<>(data));
-//                        });
-//                    }
-//
-//                    @Override
-//                    public void updateItem(String item, boolean empty) {
-//                        super.updateItem(item, empty);
-//                        if (empty) {
-//                            setGraphic(null);
-//                        } else {
-//                            setGraphic(btn);
-//                        }
-//                    }
-//                };
-//                return cell;
-//            }
-//        });
         viewModel.bindEquipmentList(equipmentTable.itemsProperty());
         viewModel.bindErrorLabel(error.textProperty());
         viewModel.bindLoggedUser(loggedUser.textProperty());

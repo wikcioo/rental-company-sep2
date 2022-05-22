@@ -32,7 +32,7 @@ public class ModelManager implements Model {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                while(true) {
+                while (true) {
                     refreshReservations();
                     System.out.println("Refreshed");
                     try {
@@ -92,15 +92,8 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void editEquipment(Equipment oldEquipment, Equipment newEquipment) throws RemoteException {
-        int index = equipmentList.getAllEquipment().indexOf(oldEquipment);
-        equipmentList.getAllEquipment().set(index, newEquipment);
-        support.firePropertyChange(EQUIPMENT_LIST_CHANGED, null, equipmentList.getAllEquipment());
-    }
-
-    @Override
     public void addReservation(User user, Equipment equipment, LocalDateTime reservationEndDate) throws RemoteException {
-        client.reserveEquipment(equipment.getEquipmentId(),user.getEmail(),reservationEndDate);
+        client.reserveEquipment(equipment.getEquipmentId(), user.getEmail(), reservationEndDate);
         equipment.setAvailable(false);
         support.firePropertyChange(EQUIPMENT_LIST_CHANGED, null, equipmentList.getAllEquipment());
         support.firePropertyChange(RESERVATION_LIST_CHANGED, null, reservationList.getAll());
@@ -134,11 +127,6 @@ public class ModelManager implements Model {
     @Override
     public void removeListener(String propertyName, PropertyChangeListener listener) {
         support.removePropertyChangeListener(propertyName, listener);
-    }
-
-
-    public void editEquipment(Equipment equipment, int index) {
-        equipmentList.editEquipment(equipment, index);
     }
 
     public ArrayList<Reservation> getUnapprovedReservations() {

@@ -5,7 +5,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -23,8 +22,8 @@
             <TableColumn fx:id="reserveColumn" prefWidth="95.0" text="Reserve" />
          </columns>
       </TableView>
-      <Label layoutX="674.0" layoutY="113.0" text="Model" />
-      <Label layoutX="675.0" layoutY="155.0" text="Category" />
+      <Label layoutX="697.0" layoutY="126.0" text="Model:" />
+      <Label layoutX="688.0" layoutY="157.0" text="Category:" />
       <Label layoutX="679.0" layoutY="203.0" text="Pick date until which to reserve" />
       <Label layoutX="598.0" layoutY="62.0" text="Select equipment to reserve">
       <font>
@@ -32,8 +31,6 @@
       </font>
       </Label>
       <DatePicker fx:id="datePicker" layoutX="680.0" layoutY="239.0" />
-      <TextField fx:id="model" disable="true" layoutX="675.0" layoutY="130.0" prefHeight="25.0" prefWidth="174.0" />
-      <TextField fx:id="category" disable="true" layoutX="675.0" layoutY="173.0" prefHeight="25.0" prefWidth="174.0" />
       <AnchorPane prefHeight="200.0" prefWidth="200.0" />
       <Button layoutX="733.0" layoutY="285.0" mnemonicParsing="false" onAction="#OnReserve" text="Reserve" />
       <Button layoutX="566.0" layoutY="365.0" mnemonicParsing="false" onAction="#onViewManagerEquipment" text="Manager" />
@@ -42,5 +39,7 @@
       <Button layoutX="892.0" layoutY="365.0" mnemonicParsing="false" onAction="#onLogOutButtonClick" text="Log out" />
       <Button layoutX="780.0" layoutY="365.0" mnemonicParsing="false" onAction="#onRefreshButtonClick" text="Refresh Table" />
       <Label fx:id="loggedUser" alignment="CENTER_RIGHT" layoutX="602.0" layoutY="23.0" prefHeight="21.0" prefWidth="352.0" text="Logged as: " />
+      <Label fx:id="equipmentModel" layoutX="756.0" layoutY="126.0" prefHeight="19.0" prefWidth="152.0" />
+      <Label fx:id="category" layoutX="757.0" layoutY="156.0" prefHeight="20.0" prefWidth="153.0" />
    </children>
 </AnchorPane>

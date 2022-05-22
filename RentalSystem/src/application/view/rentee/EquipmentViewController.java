@@ -5,8 +5,6 @@ import application.view.ViewHandler;
 import application.viewmodel.rentee.EquipmentViewModel;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -20,9 +18,9 @@ public class EquipmentViewController {
     @FXML
     public DatePicker datePicker;
     @FXML
-    public TextField model;
+    public Label equipmentModel;
     @FXML
-    public TextField category;
+    public Label category;
     private ViewHandler viewHandler;
     private EquipmentViewModel viewModel;
     private Region root;
@@ -90,7 +88,7 @@ public class EquipmentViewController {
                     {
                         btn.setOnAction((ActionEvent event) -> {
                             Equipment data = getTableView().getItems().get(getIndex());
-                            model.setText(data.getModel());
+                            equipmentModel.setText(data.getModel());
                             category.setText(data.getCategory());
                             viewModel.bindSelectedEquipment(new SimpleObjectProperty<>(data));
                         });
@@ -119,8 +117,8 @@ public class EquipmentViewController {
     public void reset() {
         equipmentTable.refresh();
         viewModel.bindSelectedEquipment(new SimpleObjectProperty<>());
-        model.clear();
-        category.clear();
+        equipmentModel.setText("Unselected");
+        category.setText("Unselected");
         datePicker.setValue(null);
         reservationError.setText(null);
         viewModel.retrieveAllUnreservedEquipment();
@@ -142,7 +140,7 @@ public class EquipmentViewController {
     public void OnReserve() {
         LocalDate date = datePicker.getValue();
         reservationError.setTextFill(Paint.valueOf("RED"));
-        if (model.getText().isEmpty() && category.getText().isEmpty()) {
+        if (equipmentModel.getText().isEmpty() && category.getText().isEmpty()) {
             reservationError.setText("You must select an item to reserve");
         } else if (datePicker.getValue() == null) {
             reservationError.setText("You must choose the date");
@@ -153,8 +151,8 @@ public class EquipmentViewController {
             reservationError.setText("Success");
             viewModel.bindReservationEndDate(new SimpleObjectProperty<>(datePicker.getValue().atTime(14, 0)));
             viewModel.reserveEquipment();
-            model.clear();
-            category.clear();
+            equipmentModel.setText("Unselected");
+            category.setText("Unselected");
             datePicker.setValue(null);
             viewModel.bindSelectedEquipment(new SimpleObjectProperty<>());
         }

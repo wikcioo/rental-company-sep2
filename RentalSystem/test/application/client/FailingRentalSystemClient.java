@@ -1,11 +1,8 @@
 package application.client;
 
-import application.client.RentalSystemClient;
 import application.model.equipment.Equipment;
 import application.model.equipment.EquipmentList;
 import application.model.reservations.*;
-import application.model.users.Manager;
-import application.model.users.Rentee;
 import application.model.users.User;
 
 import java.rmi.RemoteException;
@@ -13,7 +10,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class FailingRentalSystemClient implements RentalSystemClient {
-
     private final EquipmentList equipmentList;
     private final ReservationList reservationList;
     private final ArrayList<User> userList;
@@ -95,6 +91,11 @@ public class FailingRentalSystemClient implements RentalSystemClient {
 
     @Override
     public void reserveEquipment(int equipment_id, String rentee_id, LocalDateTime rentedFor) throws RemoteException {
+        throw new RemoteException();
+    }
+
+    @Override
+    public void pingServer() throws RemoteException {
         throw new RemoteException();
     }
 }

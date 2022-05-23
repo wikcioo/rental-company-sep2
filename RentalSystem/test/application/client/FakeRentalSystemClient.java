@@ -158,6 +158,11 @@ public class FakeRentalSystemClient implements RentalSystemClient, NamedProperty
     }
 
     @Override
+    public void pingServer() throws RemoteException {
+        // do nothing
+    }
+
+    @Override
     public void addListener(String propertyName, PropertyChangeListener listener) {
         support.addPropertyChangeListener(propertyName, listener);
     }

@@ -53,16 +53,6 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public boolean tryToReconnectClient() {
-        try {
-            client = new RentalSystemClientImplementation("localhost", Registry.REGISTRY_PORT);
-            return true;
-        } catch (RemoteException | NotBoundException e) {
-            return false;
-        }
-    }
-
-    @Override
     public void addEquipment(String model, String category, boolean available) throws RemoteException {
         equipmentList.addEquipment(client.addEquipment(model, category, available));
         support.firePropertyChange(EQUIPMENT_LIST_CHANGED, null, equipmentList.getAllEquipment());
@@ -176,10 +166,19 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public boolean tryToReconnectClient() {
+        try {
+            client = new RentalSystemClientImplementation("localhost", Registry.REGISTRY_PORT);
+            return true;
+        } catch (RemoteException | NotBoundException e) {
+            return false;
+        }
+    }
+
+    @Override
     public void pingServer() throws RemoteException {
         client.pingServer();
     }
-
 
     @Override
     public void approveReservation(int id, String manager_id) throws RemoteException {

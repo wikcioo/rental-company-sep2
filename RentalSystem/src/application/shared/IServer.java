@@ -156,5 +156,11 @@ public interface IServer extends Remote {
      */
     void reserveEquipment(int equipment_id, String rentee_id, LocalDateTime rentedFor) throws RemoteException;
 
+    /**
+     * Throws Remote Exception when RMI client cannot connect to it.
+     * No need for implementation. Method body can be empty.
+     *
+     * @throws RemoteException indicates connection failure
+     */
     void pingServer() throws RemoteException;
 }

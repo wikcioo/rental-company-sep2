@@ -49,7 +49,6 @@ public class ModelManager implements Model {
         });
 
         thread.start();
-
     }
 
     @Override
@@ -153,7 +152,6 @@ public class ModelManager implements Model {
     public ArrayList<Expired> getExpiredReservations() {
         return reservationList.getExpiredReservations();
     }
-
 
     //TODO: ADD A CALLBACK FUNCTIONALITY, THIS METHOD WILL NEVER WORK CORRECTLY IN CURRENT STATE
     public void refreshReservations() {

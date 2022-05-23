@@ -43,7 +43,7 @@ public class Equipment implements Serializable {
         isAvailable = available;
     }
 
-    public void toggleAvailability(){
+    public void toggleAvailability() {
         isAvailable = !isAvailable;
     }
 

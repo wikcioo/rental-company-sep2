@@ -5,7 +5,6 @@ import application.view.ViewHandler;
 import application.viewmodel.manager.ManagerEquipmentViewModel;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -33,8 +32,7 @@ public class ManagerEquipmentViewController {
     @FXML
     private TableColumn<Equipment, String> changeAvailabilityColumn;
 
-    public void init(ViewHandler viewHandler,
-                     ManagerEquipmentViewModel managerEquipmentViewModel, Region root) {
+    public void init(ViewHandler viewHandler, ManagerEquipmentViewModel managerEquipmentViewModel, Region root) {
         this.viewHandler = viewHandler;
         this.viewModel = managerEquipmentViewModel;
         this.root = root;

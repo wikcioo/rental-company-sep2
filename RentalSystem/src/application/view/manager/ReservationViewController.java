@@ -35,7 +35,6 @@ public class ReservationViewController {
     @FXML
     private TableColumn<Reservation, String> rejectButtonColumn;
 
-
     public void init(ViewHandler viewHandler, ReservationViewModel reservationViewModel, Region root) {
         this.viewHandler = viewHandler;
         this.viewModel = reservationViewModel;

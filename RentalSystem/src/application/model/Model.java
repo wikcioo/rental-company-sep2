@@ -237,6 +237,7 @@ public interface Model extends NamedPropertyChangeSubject {
      * @return result of trying to reconnect the client to the server
      */
     boolean tryToReconnectClient();
+
     /**
      * Checks if there is connectivity with the server. Throws exception if it cannot connect.
      * Calls {@link application.client.RentalSystemClient#pingServer() pingServer} method.

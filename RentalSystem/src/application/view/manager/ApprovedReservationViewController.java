@@ -6,7 +6,6 @@ import application.model.users.User;
 import application.view.ViewHandler;
 import application.viewmodel.manager.ApprovedReservationViewModel;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

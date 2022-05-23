@@ -5,12 +5,12 @@ import application.model.equipment.Equipment;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-
 public interface EquipmentDao {
     /**
      * Adds a new row into an Equipment relation in the database and returns an equipment object that's been stored.
-     * @param model the equipment's model
-     * @param category the equipment's category
+     *
+     * @param model     the equipment's model
+     * @param category  the equipment's category
      * @param available the equipment's availability
      * @return the {@link Equipment} with an id that points to the row in a relation.
      * @throws SQLException
@@ -18,7 +18,7 @@ public interface EquipmentDao {
     Equipment add(String model, String category, boolean available) throws SQLException;
 
     /**
-     *Returns all the equipment from Equipment relation.
+     * Returns all the equipment from Equipment relation.
      *
      * @return The {@link ArrayList<Equipment>} containing the {@link Equipment} from the database
      * @throws SQLException
@@ -26,7 +26,7 @@ public interface EquipmentDao {
     ArrayList<Equipment> getAll() throws SQLException;
 
     /**
-     *Returns all the equipment from the equipment relation that is not currently in the reservation relation.
+     * Returns all the equipment from the equipment relation that is not currently in the reservation relation.
      *
      * @return the {@link ArrayList} of the {@link Equipment} containing all the equipment that has never been reserved before
      * @throws SQLException
@@ -35,6 +35,7 @@ public interface EquipmentDao {
 
     /**
      * Returns all equipment that matches a given category. Will return only the equipment that matches exactly the given category
+     *
      * @param category The equipment's desired category
      * @return {@link ArrayList} of the {@link Equipment} that has a matching category
      * @throws SQLException
@@ -45,7 +46,7 @@ public interface EquipmentDao {
      * Changes the availability of given equipment id in the database.
      *
      * @param equipment_id id of the equipment that will have its availability set
-     * @param available The desired availability
+     * @param available    The desired availability
      * @throws SQLException
      */
     void setAvailability(int equipment_id, boolean available) throws SQLException;

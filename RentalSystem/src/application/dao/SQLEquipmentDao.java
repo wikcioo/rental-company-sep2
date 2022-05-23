@@ -40,7 +40,7 @@ public class SQLEquipmentDao implements EquipmentDao {
                 pk = rs.getLong(1);
             }
 
-            return new Equipment((int)pk, model, category, available);
+            return new Equipment((int) pk, model, category, available);
         }
     }
 
@@ -63,7 +63,6 @@ public class SQLEquipmentDao implements EquipmentDao {
 
         return equipmentList;
     }
-
 
     //TODO Two queries which are not a transaction. Possibility of creating inconsistent state of the database
     @Override

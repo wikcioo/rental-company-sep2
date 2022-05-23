@@ -59,11 +59,10 @@ public class EquipmentViewController {
                     }
                 });
         datePicker.focusedProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue){
+            if (!newValue) {
                 datePicker.setValue(datePicker.getValue());
             }
         });
-        //
 
         equipmentIdColumn.setCellValueFactory(p -> {
             if (p.getValue() != null) {

@@ -14,8 +14,8 @@ public interface IServer extends Remote {
      * Adds new equipment with given parameters to the database.
      * Calls {@link application.dao.EquipmentDao#add(String, String, boolean) add} method.
      *
-     * @param model equipment's model
-     * @param category equipment's category
+     * @param model     equipment's model
+     * @param category  equipment's category
      * @param available equipment's availability
      * @return {@link Equipment} that has been added
      * @throws RemoteException indicates connection failure
@@ -39,32 +39,32 @@ public interface IServer extends Remote {
      * @throws RemoteException indicates connection failure
      */
     ArrayList<Equipment> getAllUnreservedEquipment() throws RemoteException;
-    
+
     /**
      * Sets the availability of given equipment object in the database.
      * Calls {@link application.dao.EquipmentDao#setAvailability(int, boolean) setAvailability} method.
      *
      * @param equipment_id equipment's id
-     * @param available equipment's availability
+     * @param available    equipment's availability
      * @throws RemoteException indicates connection failure
      */
     void setAvailability(int equipment_id, boolean available) throws RemoteException;
-    
+
     /**
      * Adds new user to the database with given parameters.
      * If isManager is true, calls {@link application.dao.UserDao#createManager(String, String, String, String, String) createManager} method.
      * Otherwise, calls {@link application.dao.UserDao#createRentee(String, String, String, String, String) createRentee} method.
      *
-     * @param firstName user's first name
-     * @param lastName user's last name
+     * @param firstName   user's first name
+     * @param lastName    user's last name
      * @param phoneNumber user's phone number
-     * @param email user's email address
-     * @param password user's password
-     * @param isManager user's role (true - manager, false - rentee)
+     * @param email       user's email address
+     * @param password    user's password
+     * @param isManager   user's role (true - manager, false - rentee)
      * @throws RemoteException indicates connection failure
      */
     void addUser(String firstName, String lastName, String phoneNumber, String email, String password, boolean isManager) throws RemoteException;
-    
+
     /**
      * Gets the user from the database by given email address.
      * Calls {@link application.dao.UserDao#get(String) get} method.
@@ -74,19 +74,19 @@ public interface IServer extends Remote {
      * @throws RemoteException indicates connection failure
      */
     User getUser(String email) throws RemoteException;
-    
+
     /**
      * Returns true if the user with given email address and password is a valid user in the database.
      * Otherwise, returns false.
      * Calls {@link application.dao.UserDao#isValidUser(String, String) isValidUser} method.
      *
-     * @param email user's email address
+     * @param email    user's email address
      * @param password user's password
      * @return boolean indicating if the user is a valid one
      * @throws RemoteException indicates connection failure
      */
     boolean isValidUser(String email, String password) throws RemoteException;
-    
+
     /**
      * Returns true if the user with given email address is a manager.
      * Otherwise, returns false indicating the user is a rentee.
@@ -97,7 +97,7 @@ public interface IServer extends Remote {
      * @throws RemoteException indicates connection failure
      */
     boolean isUserAManager(String email) throws RemoteException;
-    
+
     /**
      * Retrieves all reservations from the database.
      * Calls {@link application.dao.ReservationDao#reserveEquipment(int, String, LocalDateTime) reserveEquipment} method.
@@ -106,27 +106,27 @@ public interface IServer extends Remote {
      * @throws RemoteException indicates connection failure
      */
     ArrayList<Reservation> retrieveReservations() throws RemoteException;
-    
+
     /**
      * Approves the reservation with given id identified by the manager with given manager_id in the database.
      * Calls {@link application.dao.ReservationDao#approveReservation(int, String) approveReservation} method.
      *
-     * @param id reservation's id
+     * @param id         reservation's id
      * @param manager_id manager's id
      * @throws RemoteException indicates connection failure
      */
     void approveReservation(int id, String manager_id) throws RemoteException;
-    
+
     /**
      * Rejects the reservation with given id identified by the manager with given manager_id in the database
      * Calls {@link application.dao.ReservationDao#rejectReservation(int, String) rejectReservation} method.
      *
-     * @param id reservation's id
+     * @param id         reservation's id
      * @param manager_id manager's id
      * @throws RemoteException indicates connection failure
      */
     void rejectReservation(int id, String manager_id) throws RemoteException;
-    
+
     /**
      * Expires the reservation with given id in the database.
      * Calls {@link application.dao.ReservationDao#expireReservation(int) expireReservation} method.
@@ -135,7 +135,7 @@ public interface IServer extends Remote {
      * @throws RemoteException indicates connection failure
      */
     void expireReservation(int id) throws RemoteException;
-    
+
     /**
      * Makes the reservation with given id being returned, in the database.
      * Calls {@link application.dao.ReservationDao#returnReservation(int) returnReservation} method.
@@ -144,14 +144,14 @@ public interface IServer extends Remote {
      * @throws RemoteException indicates connection failure
      */
     void returnReservation(int id) throws RemoteException;
-    
+
     /**
      * Reserves the equipment with given id in the database.
      * Calls {@link application.dao.ReservationDao#reserveEquipment(int, String, LocalDateTime) reserveEquipment} method.
      *
      * @param equipment_id equipment's id
-     * @param rentee_id rentee's id
-     * @param rentedFor expiration date of the reserved equipment
+     * @param rentee_id    rentee's id
+     * @param rentedFor    expiration date of the reserved equipment
      * @throws RemoteException indicates connection failure
      */
     void reserveEquipment(int equipment_id, String rentee_id, LocalDateTime rentedFor) throws RemoteException;

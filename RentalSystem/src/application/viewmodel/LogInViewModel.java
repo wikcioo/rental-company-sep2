@@ -48,7 +48,7 @@ public class LogInViewModel {
         }
     }
 
-    public String logIn(){
+    public String logIn() {
         try {
             String result = model.logIn(email.get(), password.get());
             if (!result.equals("Invalid")) {

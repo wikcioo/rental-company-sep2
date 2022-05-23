@@ -9,7 +9,6 @@ import java.time.LocalDateTime;
 import static java.time.temporal.ChronoUnit.DAYS;
 
 public class Reservation implements Serializable {
-
     private int id;
     private User rentee;
     private LocalDateTime reservationDate;
@@ -37,7 +36,6 @@ public class Reservation implements Serializable {
         this.rentedFor = rentedFor;
     }
 
-
     public User getRentee() {
         return rentee;
     }
@@ -50,7 +48,7 @@ public class Reservation implements Serializable {
         return rentedFor;
     }
 
-    public Long getDaysOverdue(){
+    public Long getDaysOverdue() {
         return DAYS.between(rentedFor, LocalDateTime.now());
     }
 
@@ -61,7 +59,4 @@ public class Reservation implements Serializable {
     public int getId() {
         return id;
     }
-
-
-
 }

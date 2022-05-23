@@ -29,14 +29,6 @@ public class ApprovedReservationViewModel implements PropertyChangeListener {
         property.bind(listObjectProperty);
     }
 
-    public void approveReservation(Reservation reservation) {
-        try {
-            model.approveReservation(reservation);
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     //TODO: Check if it should be done like this. Didn't want to create 2 separate property events, but taking list this way might not be ideal.
     @Override
     public void propertyChange(PropertyChangeEvent evt) {

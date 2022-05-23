@@ -17,9 +17,10 @@
       </Label>
       <TableView fx:id="equipmentTable" layoutX="43.0" layoutY="62.0" prefHeight="290.0" prefWidth="510.0">
          <columns>
-            <TableColumn fx:id="modelColumn" prefWidth="228.0" text="Model" />
-            <TableColumn fx:id="categoryColumn" prefWidth="185.0" text="Category" />
-            <TableColumn fx:id="reserveColumn" prefWidth="95.0" text="Reserve" />
+            <TableColumn fx:id="equipmentIdColumn" prefWidth="50.0" text="Id" />
+            <TableColumn fx:id="modelColumn" prefWidth="150.0" text="Model" />
+            <TableColumn fx:id="categoryColumn" prefWidth="150.0" text="Category" />
+            <TableColumn fx:id="reserveColumn" prefWidth="70.0" text="Reserve" />
          </columns>
       </TableView>
       <Label layoutX="697.0" layoutY="126.0" text="Model:" />
@@ -31,7 +32,6 @@
       </font>
       </Label>
       <DatePicker fx:id="datePicker" layoutX="680.0" layoutY="239.0" />
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" />
       <Button layoutX="733.0" layoutY="285.0" mnemonicParsing="false" onAction="#OnReserve" text="Reserve" />
       <Button layoutX="566.0" layoutY="365.0" mnemonicParsing="false" onAction="#onViewManagerEquipment" text="Manager" />
       <Label fx:id="equipmentError" layoutX="43.0" layoutY="369.0" />

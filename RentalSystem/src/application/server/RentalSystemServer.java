@@ -120,9 +120,9 @@ public class RentalSystemServer implements IServer {
     }
 
     @Override
-    public void rejectReservation(int id, String manager_id) throws RemoteException {
+    public void rejectReservation(int id, String manager_id, String reason) throws RemoteException{
         try {
-            reservationDao.rejectReservation(id, manager_id);
+            reservationDao.rejectReservation(id, manager_id, reason);
         } catch (SQLException e) {
             throw new RemoteException(e.getMessage(), e);
         }

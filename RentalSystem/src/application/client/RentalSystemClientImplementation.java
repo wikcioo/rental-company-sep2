@@ -85,8 +85,8 @@ public class RentalSystemClientImplementation extends UnicastRemoteObject implem
     }
 
     @Override
-    public void rejectReservation(int id, String manager_id) throws RemoteException {
-        server.rejectReservation(id, manager_id);
+    public void rejectReservation(int id, String manager_id, String reason) throws RemoteException {
+        server.rejectReservation(id, manager_id, reason);
     }
 
     @Override

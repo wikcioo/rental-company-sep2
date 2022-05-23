@@ -30,6 +30,6 @@ public class ReservationViewModelServerFailureTest {
 
     @Test
     public void server_failure_during_rejecting_reservation_throws_RuntimeException() {
-        assertThrows(RuntimeException.class, () -> viewModel.rejectReservation(new Reservation(1, null, null, null, null)));
+        assertThrows(RuntimeException.class, () -> viewModel.rejectReservation(new Reservation(1, null, null, null, null),"") );
     }
 }

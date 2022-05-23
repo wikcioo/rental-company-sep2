@@ -40,7 +40,7 @@ public class ReservationViewModelTest {
     void rejecting_a_reservation_adds_a_reservation_to_rejected_list() throws RemoteException {
         Reservation r = new Reservation(0, null, null, null);
         model.addReservation(model.getCurrentlyLoggedInUser(),new Equipment(0,null,null,true), LocalDateTime.now());
-        viewModel.rejectReservation(r);
+        viewModel.rejectReservation(r, "rejected");
         model.refreshReservations();
         assertEquals(1,model.getRejectedReservations().size());
     }

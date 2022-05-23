@@ -172,13 +172,14 @@ public interface Model extends NamedPropertyChangeSubject {
 
     /**
      * Rejects the reservation with given id by the manger with given manager_id.
-     * Delegates to {@link application.client.RentalSystemClient#rejectReservation(int, String) rejectReservation} method.
+     * Delegates to {@link application.client.RentalSystemClient#rejectReservation(int, String, String) rejectReservation} method.
      *
      * @param id         reservation's id
      * @param manager_id manager's id
+     * @param reason reason given by the manager for rejection
      * @throws RemoteException indicates connection issues
      */
-    void rejectReservation(int id, String manager_id) throws RemoteException;
+    void rejectReservation(int id, String manager_id, String reason) throws RemoteException;
 
     /**
      * Expires the reservation with given id.

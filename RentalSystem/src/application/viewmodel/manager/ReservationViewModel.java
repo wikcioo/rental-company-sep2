@@ -35,9 +35,9 @@ public class ReservationViewModel implements PropertyChangeListener {
         }
     }
 
-    public void rejectReservation(Reservation reservation) {
+    public void rejectReservation(Reservation reservation, String reason) {
         try {
-            model.rejectReservation(reservation.getId(), model.getCurrentlyLoggedInUser().getEmail());
+            model.rejectReservation(reservation.getId(),model.getCurrentlyLoggedInUser().getEmail(), reason);
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }

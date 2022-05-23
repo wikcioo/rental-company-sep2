@@ -184,8 +184,8 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void rejectReservation(int id, String manager_id) throws RemoteException {
-        client.rejectReservation(id, manager_id);
+    public void rejectReservation(int id, String manager_id, String reason) throws RemoteException {
+        client.rejectReservation(id, manager_id, reason );
 
     }
 

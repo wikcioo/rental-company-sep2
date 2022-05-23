@@ -118,13 +118,14 @@ public interface RentalSystemClient extends Remote {
 
     /**
      * Rejects the reservation with given id identified by the manager with given manager_id in the database
-     * Calls {@link application.shared.IServer#rejectReservation(int, String) rejectReservation} method.
+     * Calls {@link application.shared.IServer#rejectReservation(int, String, String) rejectReservation} method.
      *
      * @param id         reservation's id
      * @param manager_id manager's id
+     * @param reason reason given by the manager for rejection
      * @throws RemoteException indicates connection failure
      */
-    void rejectReservation(int id, String manager_id) throws RemoteException;
+    void rejectReservation(int id, String manager_id, String reason) throws RemoteException;
 
     /**
      * Expires the reservation with given id in the database.

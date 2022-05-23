@@ -35,13 +35,12 @@ public interface ReservationDao {
 
     /**
      * Rejects the reservation of the given id. Manager id identifies which manager rejected the reservation
-     * TODO add the reason for rejection
-     *
-     * @param id         the reservation id. The reservation must exist in the database, otherwise SQLException is thrown
+     * @param id the reservation id. The reservation must exist in the database, otherwise SQLException is thrown
      * @param manager_id the id of the manager (email). The email must belong to the manager, otherwise SQLException is thrown
+     * @param reason the reason of rejection given by the manager. If left empty is set to null in the database
      * @throws SQLException
      */
-    void rejectReservation(int id, String manager_id) throws SQLException;
+    void rejectReservation(int id, String manager_id, String reason) throws SQLException;
 
     /**
      * Causes the reservation of the given id to expire.

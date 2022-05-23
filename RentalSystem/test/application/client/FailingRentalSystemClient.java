@@ -75,7 +75,7 @@ public class FailingRentalSystemClient implements RentalSystemClient {
     }
 
     @Override
-    public void rejectReservation(int id, String manager_id) throws RemoteException {
+    public void rejectReservation(int id, String manager_id, String reason) throws RemoteException {
         throw new RemoteException();
     }
 

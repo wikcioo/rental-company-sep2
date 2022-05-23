@@ -110,13 +110,17 @@ public class SQLReservationDao implements ReservationDao {
     }
 
     @Override
-    public void rejectReservation(int id, String manager_id) throws SQLException {
+    public void rejectReservation(int id, String manager_id, String reason) throws SQLException {
         try (
                 Connection connection = getConnection();
-                PreparedStatement statement = connection.prepareStatement("INSERT INTO rentalsystemdbs.rejected VALUES (?, DEFAULT, ?, NULL)")
+                PreparedStatement statement = connection.prepareStatement("INSERT INTO rentalsystemdbs.rejected VALUES (?, DEFAULT, ?, ?)")
         ) {
-            statement.setInt(1, id);
-            statement.setString(2, manager_id);
+            statement.setInt(1,id);
+            statement.setString(2,manager_id);
+            if(reason != null && reason.equals("")) {
+                statement.setNull(3, Types.VARCHAR);
+            }
+            else statement.setString(3, reason);
             statement.executeUpdate();
         }
     }

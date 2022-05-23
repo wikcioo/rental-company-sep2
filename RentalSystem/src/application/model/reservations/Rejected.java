@@ -37,4 +37,8 @@ public class Rejected extends Reservation {
     public String getRejectedBy() {
         return rejectedBy;
     }
+
+    public String getReason() {
+        return reason;
+    }
 }

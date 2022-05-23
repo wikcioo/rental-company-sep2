@@ -40,7 +40,7 @@ public class ModelManagerTest {
         model.returnReservation(5);
         //1 Rejected
         model.addReservation(user, equipment, LocalDateTime.now());
-        model.rejectReservation(6, "john@gmail.com");
+        model.rejectReservation(6, "john@gmail.com", "No reason");
         //3 Unapproved
         model.addReservation(user, equipment, LocalDateTime.now());
         model.addReservation(user, equipment, LocalDateTime.now());
@@ -138,7 +138,7 @@ public class ModelManagerTest {
 
     @Test
     public void rejecting_a_reservation_removes_it_from_unapproved_reservation_list() throws RemoteException {
-        model.rejectReservation(7, "john@gmail.com");
+        model.rejectReservation(7, "john@gmail.com", "");
         model.refreshReservations();
         ArrayList<Reservation> unapprovedReservations = model.getUnapprovedReservations();
         assertEquals(2, unapprovedReservations.size());
@@ -146,7 +146,7 @@ public class ModelManagerTest {
 
     @Test
     public void expiring_a_reservation_removes_it_from_unapproved_reservation_list() throws RemoteException {
-        model.rejectReservation(7, "john@gmail.com");
+        model.rejectReservation(7, "john@gmail.com", "dsafsf");
         model.refreshReservations();
         ArrayList<Reservation> unapprovedReservations = model.getUnapprovedReservations();
         assertEquals(2, unapprovedReservations.size());

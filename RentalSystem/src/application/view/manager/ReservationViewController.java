@@ -155,9 +155,9 @@ public class ReservationViewController {
         dialog.setTitle("Reason for rejection");
         dialog.setHeaderText("Reason for rejection");
         dialog.setContentText("Give a reason for rejection:");
-
         Optional<String> result = dialog.showAndWait();
-        result.ifPresent(reason -> viewModel.rejectReservation(reservation));
+
+        result.ifPresent(reason -> viewModel.rejectReservation(reservation, reason));
     }
 
 }

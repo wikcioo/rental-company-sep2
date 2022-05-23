@@ -37,7 +37,7 @@ public class ReservationViewModelServerFailureTest {
 
     @Test
     public void server_failure_during_rejecting_reservation_throws_RuntimeException() {
-        viewModel.rejectReservation(new Reservation(1,null, null, null, null));
+        viewModel.rejectReservation(new Reservation(1,null, null, null, null),"");
         assertEquals("Server communication error", error.get());
     }
 }

@@ -113,7 +113,7 @@ public class FakeRentalSystemClient implements RentalSystemClient, NamedProperty
 
     //TODO: rejectReservation requires a reason but the method to reject one does not have a reason field
     @Override
-    public void rejectReservation(int id, String manager_id) throws RemoteException {
+    public void rejectReservation(int id, String manager_id, String reason) throws RemoteException {
         ArrayList<Reservation> reservations = new ArrayList<>(reservationList.getAll());
         for (Reservation r : reservationList.getUnapprovedReservations()) {
             if (r.getId() == id) {

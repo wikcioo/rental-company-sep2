@@ -32,41 +32,41 @@ public class ReservationListTest {
     @Test
     public void new_reservation_list_has_size_0() {
         reservationList = new ReservationList();
-        assertEquals(reservationList.getAll().size(), 0);
+        assertEquals(0, reservationList.getAll().size());
     }
 
     @Test
     public void setting_reservation_list_puts_all_elements_into_reservation_list() {
-        assertEquals(reservationList.getAll(), reservations);
+        assertEquals(reservations, reservationList.getAll());
     }
 
     @Test
     public void reservation_list_correctly_returns_unapproved_reservations() {
         ArrayList<Reservation> unapprovedReservations = reservationList.getUnapprovedReservations();
-        assertEquals(unapprovedReservations.size(), 3);
+        assertEquals(3, unapprovedReservations.size());
     }
 
     @Test
     public void reservation_list_correctly_returns_approved_reservations() {
         ArrayList<Approved> approvedReservations = reservationList.getApprovedReservations();
-        assertEquals(approvedReservations.size(), 1);
+        assertEquals(1, approvedReservations.size());
     }
 
     @Test
     public void reservation_list_correctly_returns_rejected_reservations() {
         ArrayList<Rejected> rejectedReservations = reservationList.getRejectedReservations();
-        assertEquals(rejectedReservations.size(), 1);
+        assertEquals(1, rejectedReservations.size());
     }
 
     @Test
     public void reservation_list_correctly_returns_returned_reservations() {
         ArrayList<Returned> returnedReservations = reservationList.getReturnedReservations();
-        assertEquals(returnedReservations.size(), 2);
+        assertEquals(2, returnedReservations.size());
     }
 
     @Test
     public void reservation_list_correctly_returns_expired_reservations() {
         ArrayList<Expired> expiredReservations = reservationList.getExpiredReservations();
-        assertEquals(expiredReservations.size(), 2);
+        assertEquals(2, expiredReservations.size());
     }
 }

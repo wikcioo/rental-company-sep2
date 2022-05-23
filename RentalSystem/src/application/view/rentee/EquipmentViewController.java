@@ -92,7 +92,7 @@ public class EquipmentViewController {
             @Override
             public TableCell<Equipment, String> call(final TableColumn<Equipment, String> param) {
                 return new TableCell<>() {
-                    private final Button btn = new Button("Reserve");
+                    private final Button btn = new Button("Select");
 
                     {
                         btn.setOnAction((ActionEvent event) -> {

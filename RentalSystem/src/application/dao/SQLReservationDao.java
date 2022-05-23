@@ -44,7 +44,7 @@ public class SQLReservationDao implements ReservationDao {
                             " expired.date as expired_date," +
                             " rejected.date as rejected_date," +
                             " returned.date as returned_date  " +
-                            "FROM rentalsystemdbs.reservation" +
+                            " FROM rentalsystemdbs.reservation" +
                             "    INNER JOIN rentalsystemdbs.equipment on equipment.equipment_id = reservation.equipment_id" +
                             "    LEFT JOIN rentalsystemdbs.users u on reservation.rentee = u.email" +
                             "    LEFT JOIN rentalsystemdbs.approved on reservation.reservation_id = approved.reservation_id" +
@@ -102,9 +102,9 @@ public class SQLReservationDao implements ReservationDao {
         try (
                 Connection connection = getConnection();
                 PreparedStatement statement = connection.prepareStatement("INSERT INTO approved(reservation_id, date, approved_by)" +
-                        "SELECT ?,now(), ?" +
-                        "WHERE NOT EXISTS (SELECT reservation_id FROM rejected WHERE reservation_id = ?)" +
-                        "AND NOT EXISTS (SELECT reservation_id FROM expired WHERE reservation_id = ?);")
+                        " SELECT ?,now(), ?" +
+                        " WHERE NOT EXISTS (SELECT reservation_id FROM rejected WHERE reservation_id = ?)" +
+                        " AND NOT EXISTS (SELECT reservation_id FROM expired WHERE reservation_id = ?);")
         ) {
             statement.setInt(1, id);
             statement.setInt(3, id);
@@ -120,9 +120,9 @@ public class SQLReservationDao implements ReservationDao {
                 Connection connection = getConnection();
                 PreparedStatement statement = connection.prepareStatement(
                         "INSERT INTO rejected(reservation_id, date, rejected_by, reason)" +
-                        "SELECT ?,now(), ?,?" +
-                        "WHERE NOT EXISTS (SELECT reservation_id FROM approved WHERE reservation_id = ?)" +
-                        "AND NOT EXISTS (SELECT reservation_id FROM expired WHERE reservation_id = ?);")
+                        " SELECT ?,now(), ?,?" +
+                        " WHERE NOT EXISTS (SELECT reservation_id FROM approved WHERE reservation_id = ?)" +
+                        " AND NOT EXISTS (SELECT reservation_id FROM expired WHERE reservation_id = ?);")
         ) {
             statement.setInt(1,id);
             statement.setInt(4,id);
@@ -141,9 +141,9 @@ public class SQLReservationDao implements ReservationDao {
         try (
                 Connection connection = getConnection();
                 PreparedStatement statement = connection.prepareStatement("INSERT INTO expired(reservation_id, date)" +
-                        "SELECT ?,now()" +
-                        "WHERE NOT EXISTS (SELECT reservation_id FROM rejected WHERE reservation_id = ?)" +
-                        "AND NOT EXISTS (SELECT reservation_id FROM approved WHERE reservation_id = ?);")
+                        " SELECT ?,now()" +
+                        " WHERE NOT EXISTS (SELECT reservation_id FROM rejected WHERE reservation_id = ?)" +
+                        " AND NOT EXISTS (SELECT reservation_id FROM approved WHERE reservation_id = ?);")
         ) {
             statement.setInt(1, id);
             statement.setInt(2, id);

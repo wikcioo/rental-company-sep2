@@ -17,7 +17,7 @@ public class SQLEquipmentDao implements EquipmentDao {
     }
 
     private Connection getConnection() throws SQLException {
-        return DriverManager.getConnection("jdbc:postgresql://abul.db.elephantsql.com/yzwsewzj", "yzwsewzj", "pb2tFI2SZ3_msyeJyrqmf35pRjUtyotU");
+        return DriverManager.getConnection("jdbc:postgresql://abul.db.elephantsql.com/yzwsewzj?currentSchema=rentalsystemdbs", "yzwsewzj", "pb2tFI2SZ3_msyeJyrqmf35pRjUtyotU");
     }
 
     public static EquipmentDao getInstance() {
@@ -64,7 +64,6 @@ public class SQLEquipmentDao implements EquipmentDao {
         return equipmentList;
     }
 
-    //TODO Two queries which are not a transaction. Possibility of creating inconsistent state of the database
     @Override
     public ArrayList<Equipment> getAllUnreserved() throws SQLException {
         ArrayList<Equipment> equipmentList = new ArrayList<>();
@@ -72,23 +71,39 @@ public class SQLEquipmentDao implements EquipmentDao {
                 Connection connection = getConnection();
                 Statement statement = connection.createStatement()
         ) {
-            ResultSet rs = statement.executeQuery("SELECT * FROM rentalsystemdbs.reservation");
-            ArrayList<Integer> reservedEquipmentIds = new ArrayList<>();
-            while (rs.next()) {
-                reservedEquipmentIds.add(rs.getInt("equipment_id"));
-            }
-
-            rs = statement.executeQuery("SELECT * FROM rentalsystemdbs.equipment");
+            ResultSet rs = statement.executeQuery("\n" +
+                    "SELECT * FROM equipment WHERE equipment_id\n" +
+                    "                                  NOT IN (SELECT reservation.equipment_id FROM reservation)\n" +
+                    "                                OR (\n" +
+                    "                                    equipment_id IN (SELECT reservation.equipment_id FROM reservation)\n" +
+                    "                                        AND equipment_id NOT IN (\n" +
+                    "                                            SELECT equipment_id FROM reservation\n" +
+                    "                                                LEFT JOIN approved a on reservation.reservation_id = a.reservation_id\n" +
+                    "                                                LEFT JOIN rejected r on reservation.reservation_id = r.reservation_id\n" +
+                    "                                                LEFT JOIN expired e on reservation.reservation_id = e.reservation_id\n" +
+                    "                                            WHERE a.reservation_id IS NULL\n" +
+                    "                                            AND r.reservation_id IS NULL\n" +
+                    "                                            AND e.reservation_id IS NULL\n" +
+                    "                                            )\n" +
+                    "                                        AND equipment_id NOT IN (\n" +
+                    "                                            SELECT equipment_id FROM reservation\n" +
+                    "                                                INNER JOIN (\n" +
+                    "                                                approved LEFT JOIN returned r2 on approved.reservation_id = r2.approved_id\n" +
+                    "                                                )\n" +
+                    "                                                        on reservation.reservation_id = approved.reservation_id\n" +
+                    "                                            )\n" +
+                    "            );\n");
             while (rs.next()) {
                 int id = rs.getInt("equipment_id");
-                if (reservedEquipmentIds.contains(id)) {
-                    continue;
-                }
                 String model = rs.getString("model");
                 String category = rs.getString("category");
                 boolean available = rs.getBoolean("availability");
                 equipmentList.add(new Equipment(id, model, category, available));
             }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            throw new SQLException();
         }
 
         return equipmentList;

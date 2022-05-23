@@ -4,6 +4,7 @@ import application.view.ViewHandler;
 import application.viewmodel.manager.AddEquipmentViewModel;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Region;
 
@@ -12,6 +13,8 @@ public class AddEquipmentViewController {
     public TextField equipmentModel;
     @FXML
     public TextField category;
+    @FXML
+    public Label error;
     @FXML
     private CheckBox available;
     private ViewHandler viewHandler;
@@ -25,11 +28,13 @@ public class AddEquipmentViewController {
         viewModel.bindEquipmentModel(equipmentModel.textProperty());
         viewModel.bindCategory(category.textProperty());
         viewModel.bindIsAvailable(available.selectedProperty());
+        viewModel.bindErrorLabel(error.textProperty());
     }
 
     public void reset() {
         equipmentModel.clear();
         category.clear();
+        error.setText("");
     }
 
     public Region getRoot() {

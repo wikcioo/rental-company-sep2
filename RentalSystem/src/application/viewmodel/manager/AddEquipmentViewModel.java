@@ -13,12 +13,14 @@ public class AddEquipmentViewModel {
     private final StringProperty category;
     private final BooleanProperty isAvailable;
     private final Model model;
+    private final StringProperty errorProperty;
 
     public AddEquipmentViewModel(Model model) {
         this.model = model;
         category = new SimpleStringProperty("");
         equipmentModel = new SimpleStringProperty("");
         isAvailable = new SimpleBooleanProperty();
+        this.errorProperty = new SimpleStringProperty();
     }
 
     public void bindEquipmentModel(StringProperty property) {
@@ -37,7 +39,11 @@ public class AddEquipmentViewModel {
         try {
             model.addEquipment(equipmentModel.get(), category.get(), isAvailable.get());
         } catch (RemoteException e) {
-            throw new RuntimeException(e);
+            errorProperty.set("Server communication error");
         }
+    }
+
+    public void bindErrorLabel(StringProperty property) {
+        property.bindBidirectional(errorProperty);
     }
 }

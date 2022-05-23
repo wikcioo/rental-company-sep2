@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public interface Model extends NamedPropertyChangeSubject {
+    boolean tryToReconnectClient();
     /**
      * Adds new equipment with given parameters to the database and to the equipmentList field.
      * Fires property change on EQUIPMENT_LIST_CHANGED event.
@@ -229,4 +230,6 @@ public interface Model extends NamedPropertyChangeSubject {
      * Fires property change on RESERVATION_LIST_CHANGED event.
      */
     void refreshReservations();
+
+    void pingServer() throws RemoteException;
 }

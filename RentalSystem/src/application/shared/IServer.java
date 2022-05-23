@@ -155,4 +155,6 @@ public interface IServer extends Remote {
      * @throws RemoteException indicates connection failure
      */
     void reserveEquipment(int equipment_id, String rentee_id, LocalDateTime rentedFor) throws RemoteException;
+
+    void pingServer() throws RemoteException;
 }

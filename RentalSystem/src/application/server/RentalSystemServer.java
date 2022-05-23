@@ -154,4 +154,7 @@ public class RentalSystemServer implements IServer {
             throw new RemoteException(e.getMessage(), e);
         }
     }
+
+    @Override
+    public void pingServer() throws RemoteException {}
 }

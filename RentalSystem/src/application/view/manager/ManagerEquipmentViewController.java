@@ -14,10 +14,6 @@ import javafx.util.Callback;
 
 public class ManagerEquipmentViewController {
     @FXML
-    private TextField model;
-    @FXML
-    private TextField category;
-    @FXML
     private Label error;
     @FXML
     private Label loggedUser;
@@ -26,6 +22,8 @@ public class ManagerEquipmentViewController {
     private Region root;
     @FXML
     private TableView<Equipment> equipmentTable;
+    @FXML
+    public TableColumn<Equipment, String> equipmentIdColumn;
     @FXML
     private TableColumn<Equipment, String> modelColumn;
     @FXML
@@ -41,46 +39,44 @@ public class ManagerEquipmentViewController {
         this.viewModel = managerEquipmentViewModel;
         this.root = root;
 
-        modelColumn.setCellValueFactory(new Callback<>() {
-            @Override
-            public ObservableValue<String> call(
-                    TableColumn.CellDataFeatures<Equipment, String> p) {
-                if (p.getValue() != null) {
-                    return new SimpleStringProperty(p.getValue().getModel());
-                } else {
-                    return new SimpleStringProperty("<no model>");
-                }
+        equipmentIdColumn.setCellValueFactory(p -> {
+            if (p.getValue() != null) {
+                return new SimpleStringProperty(Integer.toString(p.getValue().getEquipmentId()));
+            } else {
+                return new SimpleStringProperty("<no model>");
             }
         });
 
-        categoryColumn.setCellValueFactory(new Callback<>() {
-            @Override
-            public ObservableValue<String> call(
-                    TableColumn.CellDataFeatures<Equipment, String> p) {
-                if (p.getValue() != null) {
-                    return new SimpleStringProperty(p.getValue().getCategory());
-                } else {
-                    return new SimpleStringProperty("<no category>");
-                }
+        modelColumn.setCellValueFactory(p -> {
+            if (p.getValue() != null) {
+                return new SimpleStringProperty(p.getValue().getModel());
+            } else {
+                return new SimpleStringProperty("<no model>");
             }
         });
-        availabilityColumn.setCellValueFactory(new Callback<>() {
-            @Override
-            public ObservableValue<String> call(
-                    TableColumn.CellDataFeatures<Equipment, String> p) {
-                if (p.getValue() != null) {
-                    return new SimpleStringProperty(
-                            Boolean.toString(p.getValue().isAvailable()));
-                } else {
-                    return new SimpleStringProperty("<no category>");
-                }
+
+        categoryColumn.setCellValueFactory(p -> {
+            if (p.getValue() != null) {
+                return new SimpleStringProperty(p.getValue().getCategory());
+            } else {
+                return new SimpleStringProperty("<no category>");
             }
         });
+
+        availabilityColumn.setCellValueFactory(p -> {
+            if (p.getValue() != null) {
+                return new SimpleStringProperty(
+                        Boolean.toString(p.getValue().isAvailable()));
+            } else {
+                return new SimpleStringProperty("<no category>");
+            }
+        });
+
         changeAvailabilityColumn.setCellFactory(new Callback<>() {
             @Override
             public TableCell<Equipment, String> call(
                     final TableColumn<Equipment, String> param) {
-                final TableCell<Equipment, String> cell = new TableCell<>() {
+                return new TableCell<>() {
                     private final Button btn = new Button("Change");
 
                     {
@@ -102,7 +98,6 @@ public class ManagerEquipmentViewController {
                         }
                     }
                 };
-                return cell;
             }
         });
 

@@ -2,6 +2,7 @@ package application.view.manager;
 
 import application.model.reservations.Approved;
 import application.model.reservations.Reservation;
+import application.model.users.User;
 import application.view.ViewHandler;
 import application.viewmodel.manager.ApprovedReservationViewModel;
 import javafx.beans.property.SimpleStringProperty;
@@ -24,6 +25,8 @@ public class ApprovedReservationViewController {
     @FXML
     private TableView<Approved> reservationTable;
     @FXML
+    private TableColumn<Reservation, String> reservationIdColumn;
+    @FXML
     private TableColumn<Reservation, String> renteeColumn;
     @FXML
     private TableColumn<Reservation, String> equipmentColumn;
@@ -40,65 +43,60 @@ public class ApprovedReservationViewController {
         this.viewHandler = viewHandler;
         this.viewModel = approvedReservationViewModel;
         this.root = root;
-        renteeColumn.setCellValueFactory(new Callback<>() {
-            @Override
-            public ObservableValue<String> call(TableColumn.CellDataFeatures<Reservation, String> p) {
-                if (p.getValue() != null) {
-                    return new SimpleStringProperty(p.getValue().getRentee().toString());
-                } else {
-                    return new SimpleStringProperty("<no rentee>");
-                }
+
+        reservationIdColumn.setCellValueFactory(p -> {
+            if (p.getValue() != null) {
+                return new SimpleStringProperty(Integer.toString(p.getValue().getId()));
+            } else {
+                return new SimpleStringProperty("<no equipment>");
             }
         });
 
-        equipmentColumn.setCellValueFactory(new Callback<>() {
-            @Override
-            public ObservableValue<String> call(TableColumn.CellDataFeatures<Reservation, String> p) {
-                if (p.getValue() != null) {
-                    return new SimpleStringProperty(p.getValue().getEquipment().toString());
-                } else {
-                    return new SimpleStringProperty("<no equipment>");
-                }
+        renteeColumn.setCellValueFactory(p -> {
+            if (p.getValue() != null) {
+                User u = p.getValue().getRentee();
+                return new SimpleStringProperty(u.getFirstName() + " " + u.getLastName() + " - " + u.getEmail());
+            } else {
+                return new SimpleStringProperty("<no rentee>");
             }
         });
 
-        startDateColumn.setCellValueFactory(new Callback<>() {
-            @Override
-            public ObservableValue<String> call(TableColumn.CellDataFeatures<Reservation, String> p) {
-                if (p.getValue() != null) {
-                    return new SimpleStringProperty(p.getValue().getReservationDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
-                } else {
-                    return new SimpleStringProperty("<no end date>");
-                }
+        equipmentColumn.setCellValueFactory(p -> {
+            if (p.getValue() != null) {
+                return new SimpleStringProperty(p.getValue().getEquipment().toString());
+            } else {
+                return new SimpleStringProperty("<no equipment>");
             }
         });
 
-        endDateColumn.setCellValueFactory(new Callback<>() {
-            @Override
-            public ObservableValue<String> call(TableColumn.CellDataFeatures<Reservation, String> p) {
-                if (p.getValue() != null && p.getValue().getRentedFor() != null) {
-                    return new SimpleStringProperty(p.getValue().getRentedFor().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
-                } else {
-                    return new SimpleStringProperty("<no end date>");
-                }
+        startDateColumn.setCellValueFactory(p -> {
+            if (p.getValue() != null) {
+                return new SimpleStringProperty(p.getValue().getReservationDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+            } else {
+                return new SimpleStringProperty("<no end date>");
             }
         });
 
-        daysOverdueColumn.setCellValueFactory(new Callback<>() {
-            @Override
-            public ObservableValue<String> call(TableColumn.CellDataFeatures<Reservation, String> p) {
-                if (p.getValue() != null && p.getValue().getRentedFor() != null) {
-                    return new SimpleStringProperty(p.getValue().getDaysOverdue().toString());
-                } else {
-                    return new SimpleStringProperty("<no end date>");
-                }
+        endDateColumn.setCellValueFactory(p -> {
+            if (p.getValue() != null && p.getValue().getRentedFor() != null) {
+                return new SimpleStringProperty(p.getValue().getRentedFor().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+            } else {
+                return new SimpleStringProperty("<no end date>");
+            }
+        });
+
+        daysOverdueColumn.setCellValueFactory(p -> {
+            if (p.getValue() != null && p.getValue().getRentedFor() != null) {
+                return new SimpleStringProperty(p.getValue().getDaysOverdue().toString());
+            } else {
+                return new SimpleStringProperty("<no end date>");
             }
         });
 
         returnButtonColumn.setCellFactory(new Callback<>() {
             @Override
             public TableCell<Reservation, String> call(final TableColumn<Reservation, String> param) {
-                final TableCell<Reservation, String> cell = new TableCell<>() {
+                return new TableCell<>() {
                     private final Button btn = new Button("Return");
 
                     {
@@ -119,7 +117,6 @@ public class ApprovedReservationViewController {
                         }
                     }
                 };
-                return cell;
             }
         });
         viewModel.bindReservationList(reservationTable.itemsProperty());

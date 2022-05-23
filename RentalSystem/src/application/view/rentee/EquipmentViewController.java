@@ -27,6 +27,8 @@ public class EquipmentViewController {
     @FXML
     private TableView<Equipment> equipmentTable;
     @FXML
+    private TableColumn<Equipment, String> equipmentIdColumn;
+    @FXML
     private TableColumn<Equipment, String> modelColumn;
     @FXML
     private TableColumn<Equipment, String> categoryColumn;
@@ -63,6 +65,14 @@ public class EquipmentViewController {
         });
         //
 
+        equipmentIdColumn.setCellValueFactory(p -> {
+            if (p.getValue() != null) {
+                return new SimpleStringProperty(Integer.toString(p.getValue().getEquipmentId()));
+            } else {
+                return new SimpleStringProperty("<no model>");
+            }
+        });
+
         modelColumn.setCellValueFactory(p -> {
             if (p.getValue() != null) {
                 return new SimpleStringProperty(p.getValue().getModel());
@@ -82,7 +92,7 @@ public class EquipmentViewController {
         reserveColumn.setCellFactory(new Callback<>() {
             @Override
             public TableCell<Equipment, String> call(final TableColumn<Equipment, String> param) {
-                final TableCell<Equipment, String> cell = new TableCell<>() {
+                return new TableCell<>() {
                     private final Button btn = new Button("Reserve");
 
                     {
@@ -104,7 +114,6 @@ public class EquipmentViewController {
                         }
                     }
                 };
-                return cell;
             }
         });
 

@@ -6,6 +6,8 @@ import application.model.ModelManager;
 import application.model.reservations.Reservation;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -16,16 +18,22 @@ import java.rmi.RemoteException;
 public class ApprovedReservationViewModel implements PropertyChangeListener {
     private final Model model;
     private final ObjectProperty<ObservableList<Approved>> listObjectProperty;
+    private final StringProperty errorProperty;
 
     public ApprovedReservationViewModel(Model model) {
         this.model = model;
         listObjectProperty = new SimpleObjectProperty<>();
         listObjectProperty.setValue(FXCollections.observableList(model.getApprovedReservations()));
         model.addListener(ModelManager.RESERVATION_LIST_CHANGED, this);
+        this.errorProperty = new SimpleStringProperty();
     }
 
     public void bindReservationList(ObjectProperty<ObservableList<Approved>> property) {
         property.bind(listObjectProperty);
+    }
+
+    public void bindErrorLabel(StringProperty property) {
+        property.bindBidirectional(errorProperty);
     }
 
     //TODO: Check if it should be done like this. Didn't want to create 2 separate property events, but taking list this way might not be ideal.
@@ -42,7 +50,7 @@ public class ApprovedReservationViewModel implements PropertyChangeListener {
         try {
             model.returnReservation(reservation.getId());
         } catch (RemoteException e) {
-            throw new RuntimeException(e);
+            errorProperty.set("Server communication error");
         }
     }
 }

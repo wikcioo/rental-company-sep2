@@ -26,5 +26,6 @@
             <TableColumn fx:id="returnButtonColumn" prefWidth="90.0" text="Return" />
          </columns>
       </TableView>
+      <Label fx:id="error" alignment="CENTER" contentDisplay="CENTER" layoutX="29.0" layoutY="357.0" prefHeight="22.0" prefWidth="310.0" />
    </children>
 </AnchorPane>

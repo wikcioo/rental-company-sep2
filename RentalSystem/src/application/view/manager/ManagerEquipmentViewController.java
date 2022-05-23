@@ -108,6 +108,7 @@ public class ManagerEquipmentViewController {
     public void reset() {
         viewModel.retrieveAllEquipment();
         viewModel.displayLoggedUser();
+        error.setText("");
     }
 
     public Region getRoot() {

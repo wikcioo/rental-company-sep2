@@ -8,12 +8,14 @@ import javafx.beans.property.StringProperty;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class AddEquipmentViewModelServerFailureTest {
     private AddEquipmentViewModel viewModel;
     private StringProperty equipmentModel;
     private StringProperty category;
+    private StringProperty error;
 
     @BeforeEach
     void setUp() {
@@ -21,12 +23,16 @@ public class AddEquipmentViewModelServerFailureTest {
         viewModel = new AddEquipmentViewModel(model);
         equipmentModel = new SimpleStringProperty();
         category = new SimpleStringProperty();
+        error = new SimpleStringProperty();
+        viewModel.bindErrorLabel(error);
         viewModel.bindEquipmentModel(equipmentModel);
         viewModel.bindCategory(category);
     }
 
     @Test
     public void server_failure_during_adding_equipment() {
-        assertThrows(RuntimeException.class, () -> viewModel.addEquipment());
+        viewModel.addEquipment();
+        assertEquals("Server communication error", error.get());
+
     }
 }

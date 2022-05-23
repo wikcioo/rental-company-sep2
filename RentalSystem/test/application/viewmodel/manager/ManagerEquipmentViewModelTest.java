@@ -41,12 +41,6 @@ public class ManagerEquipmentViewModelTest {
     }
 
     @Test
-    public void when_successfully_received_all_equipment_sets_success_label(){
-        viewModel.retrieveAllEquipment();
-        assertEquals("Successfully retrieved equipment from DB", error.get());
-    }
-
-    @Test
     public void when_successfully_toggled_availability_method_returns_exception_free() {
         assertDoesNotThrow(() -> viewModel.toggleAvailability());
     }

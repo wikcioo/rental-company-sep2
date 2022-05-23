@@ -12,19 +12,22 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-//TODO: Class does not have error label
 public class ApprovedReservationViewModelServerFailureTest {
 
     private ApprovedReservationViewModel viewModel;
+    private SimpleStringProperty error;
 
     @BeforeEach
     public void setUp() {
         Model model = new ModelManager(new FailingRentalSystemClient());
         viewModel = new ApprovedReservationViewModel(model);
+        error = new SimpleStringProperty();
+        viewModel.bindErrorLabel(error);
     }
 
     @Test
-    public void server_failure_during_rejecting_reservation_throws_RuntimeException() {
-        assertThrows(RuntimeException.class, () -> viewModel.removeReservation(new Reservation(1, null, null, null, null)));
+    public void server_failure_during_rejecting_reservation_sets_label() {
+        viewModel.removeReservation(new Reservation(1, null, null, null, null));
+        assertEquals("Server communication error", error.get());
     }
 }

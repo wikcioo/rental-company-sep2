@@ -8,16 +8,15 @@ import application.viewmodel.manager.ApprovedReservationViewModel;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.layout.Region;
 import javafx.util.Callback;
 
 import java.time.format.DateTimeFormatter;
 
 public class ApprovedReservationViewController {
+    @FXML
+    public Label error;
     private ViewHandler viewHandler;
     private ApprovedReservationViewModel viewModel;
     private Region root;
@@ -119,10 +118,11 @@ public class ApprovedReservationViewController {
             }
         });
         viewModel.bindReservationList(reservationTable.itemsProperty());
+        viewModel.bindErrorLabel(error.textProperty());
     }
 
     public void reset() {
-
+        error.setText("");
     }
 
     public Region getRoot() {

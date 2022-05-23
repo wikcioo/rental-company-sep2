@@ -1,6 +1,10 @@
 package application.viewmodel.rentee;
 
+import application.model.Model;
 import application.model.ModelManager;
+import application.model.equipment.Equipment;
+import application.model.users.User;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,34 +16,32 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class EquipmentViewModelServerFailureTest {
    private EquipmentViewModel viewModel;
-   private StringProperty loggedUserProperty;
-   private StringProperty error;
+   private StringProperty reservationError;
+   private StringProperty equipmentError;
 
 
    @BeforeEach
    void setUp() {
-      viewModel = new EquipmentViewModel(new ModelManager(new FailingRentalSystemClient()));
-      loggedUserProperty = new SimpleStringProperty();
-      error = new SimpleStringProperty();
-      viewModel.bindErrorLabel(error);
+      Model model = new ModelManager(new FailingRentalSystemClient());
+      User user = new User("d", "e", "f", "abc@gmail.com", "def");
+      model.setCurrentlyLoggedInUser(user);
+      viewModel = new EquipmentViewModel(model);
+      reservationError = new SimpleStringProperty();
+      equipmentError = new SimpleStringProperty();
+      viewModel.bindEquipmentErrorLabel(equipmentError);
+      viewModel.bindReservationErrorLabel(reservationError);
    }
 
    @Test
    public void server_failure_during_retrieving_unreserved_equipment_sets_error() {
       viewModel.retrieveAllUnreservedEquipment();
-      assertEquals("Failed to retrieve equipment list", error.get());
+      assertEquals("Server communication error", equipmentError.get());
    }
 
-   //TODO: The method tested here might no longer be necessary
-   @Test
-   public void server_failure_during_retrieving_all_equipment_sets_error() {
-      viewModel.retrieveAllEquipment();
-      assertEquals("Failed to retrieve equipment list", error.get());
-   }
-
-   //TODO: This method should set some error label
    @Test
    public void server_failure_during_reserving_equipment(){
-      assertThrows(RuntimeException.class,()-> viewModel.reserveEquipment());
+      viewModel.bindSelectedEquipment(new SimpleObjectProperty<>(new Equipment(0, null, null, true)));
+      viewModel.reserveEquipment();
+      assertEquals("Failed to reserve equipment", reservationError.get());
    }
 }

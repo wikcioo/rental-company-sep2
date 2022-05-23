@@ -56,10 +56,9 @@ public class SQLUserDao implements UserDao {
 
         try (
                 Connection connection = getConnection();
-                PreparedStatement statement = connection.prepareStatement("INSERT INTO rentalsystemdbs.rentee VALUES (?, ?)")
+                PreparedStatement statement = connection.prepareStatement("INSERT INTO rentalsystemdbs.rentee VALUES (?)")
         ) {
             statement.setString(1, email);
-            statement.setNull(2, Types.INTEGER);
             statement.executeUpdate();
         }
     }

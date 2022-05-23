@@ -25,7 +25,30 @@ public class LogInViewModel {
         password.bind(property);
     }
 
-    public String logIn(){
+    public void tryToReconnectClientLooped() {
+        while (!model.tryToReconnectClient()) {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    public boolean tryToReconnectClient() {
+        return model.tryToReconnectClient();
+    }
+
+    public boolean isClientConnected() {
+        try {
+            model.pingServer();
+            return true;
+        } catch (RemoteException e) {
+            return false;
+        }
+    }
+
+    public String logIn() {
         try {
             String result = model.logIn(email.get(), password.get());
             if (!result.equals("Invalid")) {
@@ -33,7 +56,7 @@ public class LogInViewModel {
             }
             return result;
         } catch (RemoteException e) {
-            throw new RuntimeException(e);
+            return "ServerConnectionFailure";
         }
     }
 }

@@ -210,14 +210,14 @@ public interface Model extends NamedPropertyChangeSubject {
     void reserveEquipment(int equipment_id, String rentee_id, LocalDateTime rentedFor) throws RemoteException;
 
     /**
-     * Returns currently logged-in user
+     * Returns currently logged-in user.
      *
      * @return user object
      */
     User getCurrentlyLoggedInUser();
 
     /**
-     * Sets a new logged-in user
+     * Sets a new logged-in user.
      *
      * @param newUser user to be set as logged-in
      */
@@ -229,4 +229,20 @@ public interface Model extends NamedPropertyChangeSubject {
      * Fires property change on RESERVATION_LIST_CHANGED event.
      */
     void refreshReservations();
+
+    /**
+     * Returns true if successfully reconnected the client to the server.
+     * Otherwise, returns false.
+     *
+     * @return result of trying to reconnect the client to the server
+     */
+    boolean tryToReconnectClient();
+
+    /**
+     * Checks if there is connectivity with the server. Throws exception if it cannot connect.
+     * Calls {@link application.client.RentalSystemClient#pingServer() pingServer} method.
+     *
+     * @throws RemoteException indicates connection failure
+     */
+    void pingServer() throws RemoteException;
 }

@@ -9,7 +9,6 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 public class ViewHandler {
-    public static final String DUMMY_VIEW = "dummy_view";
     public static final String ADD_EQUIPMENT_VIEW = "add_equipment_view";
     public static final String EQUIPMENT_LIST_VIEW = "equipment_list_view";
     public static final String MANAGER_EQUIPMENT_LIST_VIEW = "manager_equipment_list_view";
@@ -17,7 +16,6 @@ public class ViewHandler {
     public static final String APPROVED_RESERVATION_LIST_VIEW = "approved_reservation_list_view";
     public static final String LOG_IN = "log_in_view";
     public static final String ADD_USER_VIEW = "add_user_view";
-
     private Stage primaryStage;
     private final Scene currentScene;
     private final ViewFactory viewFactory;

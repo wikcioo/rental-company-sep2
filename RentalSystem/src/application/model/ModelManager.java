@@ -1,6 +1,7 @@
 package application.model;
 
 import application.client.RentalSystemClient;
+import application.client.RentalSystemClientImplementation;
 import application.model.equipment.Equipment;
 import application.model.equipment.EquipmentList;
 import application.model.reservations.*;
@@ -8,13 +9,15 @@ import application.model.users.User;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.rmi.registry.Registry;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class ModelManager implements Model {
     private User currentlyLoggedInUser;
-    private final RentalSystemClient client;
+    private RentalSystemClient client;
     private final EquipmentList equipmentList;
     private final ReservationList reservationList;
     private final PropertyChangeSupport support;
@@ -33,8 +36,9 @@ public class ModelManager implements Model {
             @Override
             public void run() {
                 while (true) {
+                    long start = System.currentTimeMillis();
                     refreshReservations();
-                    System.out.println("Refreshed");
+                    System.out.println("Refreshing took: " + (System.currentTimeMillis() - start) + " milliseconds");
                     try {
                         Thread.sleep(10000);
                     } catch (InterruptedException e) {
@@ -45,7 +49,6 @@ public class ModelManager implements Model {
         });
 
         thread.start();
-
     }
 
     @Override
@@ -150,7 +153,6 @@ public class ModelManager implements Model {
         return reservationList.getExpiredReservations();
     }
 
-
     //TODO: ADD A CALLBACK FUNCTIONALITY, THIS METHOD WILL NEVER WORK CORRECTLY IN CURRENT STATE
     public void refreshReservations() {
         try {
@@ -161,6 +163,20 @@ public class ModelManager implements Model {
         }
     }
 
+    @Override
+    public boolean tryToReconnectClient() {
+        try {
+            client = new RentalSystemClientImplementation("localhost", Registry.REGISTRY_PORT);
+            return true;
+        } catch (RemoteException | NotBoundException e) {
+            return false;
+        }
+    }
+
+    @Override
+    public void pingServer() throws RemoteException {
+        client.pingServer();
+    }
 
     @Override
     public void approveReservation(int id, String manager_id) throws RemoteException {

@@ -16,7 +16,6 @@ public class Approved extends Reservation {
         return type;
     }
 
-
     public Approved(int id, User rentee, Equipment equipment, LocalDateTime reservationEndDate, LocalDateTime approvedDate, String approvedBy) {
         super(id, rentee, equipment, reservationEndDate);
         this.approvedDate = approvedDate;
@@ -28,7 +27,6 @@ public class Approved extends Reservation {
         this.approvedBy = approvedBy;
         this.approvedDate = approvedDate;
     }
-
 
     public LocalDateTime getApprovedDate() {
         return approvedDate;

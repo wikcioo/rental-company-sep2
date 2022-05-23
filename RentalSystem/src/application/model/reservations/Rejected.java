@@ -10,11 +10,11 @@ public class Rejected extends Reservation {
     private final String reason;
     private final String rejectedBy;
     public static final String type = "Rejected";
+
     @Override
     public String status() {
         return type;
     }
-
 
     public Rejected(int id, User rentee, Equipment equipment, LocalDateTime reservationEndDate, LocalDateTime rejectionDate, String reason, String rejectedBy) {
         super(id, rentee, equipment, reservationEndDate);
@@ -24,7 +24,7 @@ public class Rejected extends Reservation {
     }
 
     public Rejected(Reservation reservation, LocalDateTime rejectionDate, String reason, String rejectedBy) {
-        super(reservation.getId(), reservation.getRentee(),reservation.getReservationDate(), reservation.getRentedFor(), reservation.getEquipment());
+        super(reservation.getId(), reservation.getRentee(), reservation.getReservationDate(), reservation.getRentedFor(), reservation.getEquipment());
         this.rejectionDate = rejectionDate;
         this.reason = reason;
         this.rejectedBy = rejectedBy;

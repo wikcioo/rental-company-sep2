@@ -17,6 +17,7 @@ public class RentalSystemServer implements IServer {
     private final EquipmentDao equipmentDao;
     private final UserDao userDao;
     private final ReservationDao reservationDao;
+
     public RentalSystemServer() throws RemoteException {
         this.equipmentDao = SQLEquipmentDao.getInstance();
         this.userDao = SQLUserDao.getInstance();
@@ -107,11 +108,10 @@ public class RentalSystemServer implements IServer {
         } catch (SQLException e) {
             throw new RemoteException(e.getMessage(), e);
         }
-    };
-
+    }
 
     @Override
-    public void approveReservation(int id, String manager_id) throws RemoteException{
+    public void approveReservation(int id, String manager_id) throws RemoteException {
         try {
             reservationDao.approveReservation(id, manager_id);
         } catch (SQLException e) {
@@ -120,7 +120,7 @@ public class RentalSystemServer implements IServer {
     }
 
     @Override
-    public void rejectReservation(int id, String manager_id) throws RemoteException{
+    public void rejectReservation(int id, String manager_id) throws RemoteException {
         try {
             reservationDao.rejectReservation(id, manager_id);
         } catch (SQLException e) {
@@ -129,7 +129,7 @@ public class RentalSystemServer implements IServer {
     }
 
     @Override
-    public void expireReservation(int id) throws RemoteException{
+    public void expireReservation(int id) throws RemoteException {
         try {
             reservationDao.expireReservation(id);
         } catch (SQLException e) {
@@ -138,7 +138,7 @@ public class RentalSystemServer implements IServer {
     }
 
     @Override
-    public void returnReservation(int id) throws RemoteException{
+    public void returnReservation(int id) throws RemoteException {
         try {
             reservationDao.returnReservation(id);
         } catch (SQLException e) {
@@ -147,11 +147,15 @@ public class RentalSystemServer implements IServer {
     }
 
     @Override
-    public void reserveEquipment(int equipment_id, String rentee_id, LocalDateTime rentedFor) throws RemoteException{
+    public void reserveEquipment(int equipment_id, String rentee_id, LocalDateTime rentedFor) throws RemoteException {
         try {
             reservationDao.reserveEquipment(equipment_id, rentee_id, rentedFor);
         } catch (SQLException e) {
             throw new RemoteException(e.getMessage(), e);
         }
+    }
+
+    @Override
+    public void pingServer() throws RemoteException {
     }
 }

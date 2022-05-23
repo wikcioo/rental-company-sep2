@@ -7,7 +7,7 @@ public class ReservationList {
 
     public ArrayList<Reservation> getAll() {
         ArrayList<Reservation> reservationList = new ArrayList<>();
-        for(Reservation reservation : reservations) {
+        for (Reservation reservation : reservations) {
             reservationList.add((Reservation) reservation);
         }
         return reservationList;
@@ -15,8 +15,8 @@ public class ReservationList {
 
     public ArrayList<Reservation> getUnapprovedReservations() {
         ArrayList<Reservation> result = new ArrayList<>();
-        for(Reservation reservation :  reservations) {
-            if(reservation.status().equals(Reservation.type)) {
+        for (Reservation reservation : reservations) {
+            if (reservation.status().equals(Reservation.type)) {
                 result.add((Reservation) reservation);
             }
         }
@@ -25,8 +25,8 @@ public class ReservationList {
 
     public ArrayList<Approved> getApprovedReservations() {
         ArrayList<Approved> result = new ArrayList<>();
-        for(Reservation reservation :  reservations) {
-            if(reservation.status().equals(Approved.type)) {
+        for (Reservation reservation : reservations) {
+            if (reservation.status().equals(Approved.type)) {
                 result.add((Approved) reservation);
             }
         }
@@ -35,8 +35,8 @@ public class ReservationList {
 
     public ArrayList<Rejected> getRejectedReservations() {
         ArrayList<Rejected> result = new ArrayList<>();
-        for(Reservation reservation :  reservations) {
-            if(reservation.status().equals(Rejected.type)) {
+        for (Reservation reservation : reservations) {
+            if (reservation.status().equals(Rejected.type)) {
                 result.add((Rejected) reservation);
             }
         }
@@ -45,8 +45,8 @@ public class ReservationList {
 
     public ArrayList<Returned> getReturnedReservations() {
         ArrayList<Returned> result = new ArrayList<>();
-        for(Reservation reservation :  reservations) {
-            if(reservation.status().equals(Returned.type)) {
+        for (Reservation reservation : reservations) {
+            if (reservation.status().equals(Returned.type)) {
                 result.add((Returned) reservation);
             }
         }
@@ -55,8 +55,8 @@ public class ReservationList {
 
     public ArrayList<Expired> getExpiredReservations() {
         ArrayList<Expired> result = new ArrayList<>();
-        for(Reservation reservation :  reservations) {
-            if(reservation.status().equals(Expired.type)) {
+        for (Reservation reservation : reservations) {
+            if (reservation.status().equals(Expired.type)) {
                 result.add((Expired) reservation);
             }
         }

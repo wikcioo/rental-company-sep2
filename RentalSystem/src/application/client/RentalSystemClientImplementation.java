@@ -103,4 +103,9 @@ public class RentalSystemClientImplementation extends UnicastRemoteObject implem
     public void reserveEquipment(int equipment_id, String rentee_id, LocalDateTime rentedFor) throws RemoteException {
         server.reserveEquipment(equipment_id, rentee_id, rentedFor);
     }
+
+    @Override
+    public void pingServer() throws RemoteException {
+        server.pingServer();
+    }
 }

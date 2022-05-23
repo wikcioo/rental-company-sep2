@@ -17,7 +17,6 @@ public class ApprovedReservationViewModel implements PropertyChangeListener {
     private final Model model;
     private final ObjectProperty<ObservableList<Approved>> listObjectProperty;
 
-
     public ApprovedReservationViewModel(Model model) {
         this.model = model;
         listObjectProperty = new SimpleObjectProperty<>();

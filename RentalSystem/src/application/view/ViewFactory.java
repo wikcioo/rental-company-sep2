@@ -19,8 +19,7 @@ public class ViewFactory {
     private AddUserViewController addUserViewController;
     private ApprovedReservationViewController approvedReservationViewController;
 
-    public ViewFactory(ViewHandler viewHandler,
-                       ViewModelFactory viewModelFactory) {
+    public ViewFactory(ViewHandler viewHandler, ViewModelFactory viewModelFactory) {
         this.viewHandler = viewHandler;
         this.viewModelFactory = viewModelFactory;
     }
@@ -144,5 +143,4 @@ public class ViewFactory {
         approvedReservationViewController.reset();
         return approvedReservationViewController.getRoot();
     }
-
 }

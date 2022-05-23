@@ -14,8 +14,8 @@ public interface RentalSystemClient extends Remote {
      * Adds new equipment with given parameters to the database.
      * Calls {@link application.shared.IServer#addEquipment(String, String, boolean) addEquipment} method.
      *
-     * @param model equipment's model
-     * @param category equipment's category
+     * @param model     equipment's model
+     * @param category  equipment's category
      * @param available equipment's availability
      * @return {@link Equipment} that has been added
      * @throws RemoteException indicates connection failure
@@ -45,7 +45,7 @@ public interface RentalSystemClient extends Remote {
      * Calls {@link application.shared.IServer#setAvailability(int, boolean) setAvailability} method.
      *
      * @param equipment_id equipment's id
-     * @param available equipment's availability
+     * @param available    equipment's availability
      * @throws RemoteException indicates connection failure
      */
     void setAvailability(int equipment_id, boolean available) throws RemoteException;
@@ -54,12 +54,12 @@ public interface RentalSystemClient extends Remote {
      * Adds new user to the database with given parameters.
      * Calls {@link application.shared.IServer#addUser(String, String, String, String, String, boolean) addUser} method.
      *
-     * @param firstName user's first name
-     * @param lastName user's last name
+     * @param firstName   user's first name
+     * @param lastName    user's last name
      * @param phoneNumber user's phone number
-     * @param email user's email address
-     * @param password user's password
-     * @param isManager user's role (true - manager, false - rentee)
+     * @param email       user's email address
+     * @param password    user's password
+     * @param isManager   user's role (true - manager, false - rentee)
      * @throws RemoteException indicates connection failure
      */
     void addUser(String firstName, String lastName, String phoneNumber, String email, String password, boolean isManager) throws RemoteException;
@@ -79,7 +79,7 @@ public interface RentalSystemClient extends Remote {
      * Otherwise, returns false.
      * Calls {@link application.shared.IServer#isValidUser(String, String) isValidUser} method.
      *
-     * @param email user's email address
+     * @param email    user's email address
      * @param password user's password
      * @return boolean indicating if the user is a valid one
      * @throws RemoteException indicates connection failure
@@ -110,7 +110,7 @@ public interface RentalSystemClient extends Remote {
      * Approves the reservation with given id identified by the manager with given manager_id in the database.
      * Calls {@link application.shared.IServer#approveReservation(int, String) approveReservation} method.
      *
-     * @param id reservation's id
+     * @param id         reservation's id
      * @param manager_id manager's id
      * @throws RemoteException indicates connection failure
      */
@@ -120,7 +120,7 @@ public interface RentalSystemClient extends Remote {
      * Rejects the reservation with given id identified by the manager with given manager_id in the database
      * Calls {@link application.shared.IServer#rejectReservation(int, String) rejectReservation} method.
      *
-     * @param id reservation's id
+     * @param id         reservation's id
      * @param manager_id manager's id
      * @throws RemoteException indicates connection failure
      */
@@ -149,9 +149,17 @@ public interface RentalSystemClient extends Remote {
      * Calls {@link application.shared.IServer#reserveEquipment(int, String, LocalDateTime) reserveEquipment} method.
      *
      * @param equipment_id equipment's id
-     * @param rentee_id rentee's id
-     * @param rentedFor expiration date of the reserved equipment
+     * @param rentee_id    rentee's id
+     * @param rentedFor    expiration date of the reserved equipment
      * @throws RemoteException indicates connection failure
      */
     void reserveEquipment(int equipment_id, String rentee_id, LocalDateTime rentedFor) throws RemoteException;
+
+    /**
+     * Checks if there is connectivity with the server. Throws exception if it cannot connect.
+     * Calls {@link application.shared.IServer#pingServer() pingServer} method.
+     *
+     * @throws RemoteException indicates connection failure
+     */
+    void pingServer() throws RemoteException;
 }

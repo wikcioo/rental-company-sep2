@@ -1,11 +1,8 @@
 package application.viewmodel.manager;
 
 import application.model.*;
-import javafx.beans.property.ReadOnlyObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.scene.paint.Paint;
 
 import java.rmi.RemoteException;
 

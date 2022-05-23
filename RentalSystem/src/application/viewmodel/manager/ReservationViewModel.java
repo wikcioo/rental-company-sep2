@@ -16,7 +16,6 @@ public class ReservationViewModel implements PropertyChangeListener {
     private final Model model;
     private final ObjectProperty<ObservableList<Reservation>> listObjectProperty;
 
-
     public ReservationViewModel(Model model) {
         this.model = model;
         listObjectProperty = new SimpleObjectProperty<>();
@@ -38,7 +37,7 @@ public class ReservationViewModel implements PropertyChangeListener {
 
     public void rejectReservation(Reservation reservation) {
         try {
-            model.rejectReservation(reservation.getId(),model.getCurrentlyLoggedInUser().getEmail());
+            model.rejectReservation(reservation.getId(), model.getCurrentlyLoggedInUser().getEmail());
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }

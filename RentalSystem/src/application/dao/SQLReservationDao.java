@@ -140,9 +140,14 @@ public class SQLReservationDao implements ReservationDao {
     public void expireReservation(int id) throws SQLException {
         try (
                 Connection connection = getConnection();
-                PreparedStatement statement = connection.prepareStatement("INSERT INTO rentalsystemdbs.expired VALUES (?, DEFAULT)")
+                PreparedStatement statement = connection.prepareStatement("INSERT INTO expired(reservation_id, date)" +
+                        "SELECT ?,now()" +
+                        "WHERE NOT EXISTS (SELECT reservation_id FROM rejected WHERE reservation_id = ?)" +
+                        "AND NOT EXISTS (SELECT reservation_id FROM approved WHERE reservation_id = ?);")
         ) {
             statement.setInt(1, id);
+            statement.setInt(2, id);
+            statement.setInt(3, id);
             statement.executeUpdate();
         }
     }

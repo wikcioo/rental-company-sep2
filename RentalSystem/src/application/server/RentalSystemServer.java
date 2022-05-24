@@ -138,6 +138,8 @@ public class RentalSystemServer extends UnicastRemoteObject implements IServer {
             reservationDao.rejectReservation(id, manager_id, reason);
             ArrayList<Reservation> reservations = retrieveReservations();
             support.firePropertyChange("reservations", null, reservations);
+            ArrayList<Equipment> unreservedEquipment = getAllUnreservedEquipment();
+            support.firePropertyChange("equipmentRentee", null, unreservedEquipment);
         } catch (SQLException e) {
             throw new RemoteException(e.getMessage(), e);
         }
@@ -149,6 +151,8 @@ public class RentalSystemServer extends UnicastRemoteObject implements IServer {
             reservationDao.expireReservation(id);
             ArrayList<Reservation> reservations = retrieveReservations();
             support.firePropertyChange("reservations", null, reservations);
+            ArrayList<Equipment> unreservedEquipment = getAllUnreservedEquipment();
+            support.firePropertyChange("equipmentRentee", null, unreservedEquipment);
         } catch (SQLException e) {
             throw new RemoteException(e.getMessage(), e);
         }
@@ -160,6 +164,8 @@ public class RentalSystemServer extends UnicastRemoteObject implements IServer {
             reservationDao.returnReservation(id);
             ArrayList<Reservation> reservations = retrieveReservations();
             support.firePropertyChange("reservations", null, reservations);
+            ArrayList<Equipment> unreservedEquipment = getAllUnreservedEquipment();
+            support.firePropertyChange("equipmentRentee", null, unreservedEquipment);
         } catch (SQLException e) {
             throw new RemoteException(e.getMessage(), e);
         }

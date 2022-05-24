@@ -1,7 +1,6 @@
 package application.view;
 
 import application.viewmodel.LogInViewModel;
-import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
@@ -13,9 +12,6 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
-import javafx.util.Duration;
-
-import java.util.concurrent.*;
 
 public class LogInViewController {
     @FXML
@@ -53,10 +49,21 @@ public class LogInViewController {
         return root;
     }
 
-    // TODO[viktor]: Find out why the first log in attempt after server reboot is blocking UI thread,
-    // TODO[viktor]: unless server wakes up while we're in the overlay (loop that constantly tries to reconnect)
     @FXML
-    public void onLogIn() throws ExecutionException, InterruptedException {
+    public synchronized void onLogIn() {
+        class LogInValueRetriever implements Runnable {
+            private volatile String value;
+
+            @Override
+            public void run() {
+                value = viewModel.logIn();
+            }
+
+            public String getValue() {
+                return value;
+            }
+        }
+
         if (areInputFieldsEmpty()) {
             error.setText("Please provide all credentials!");
             return;
@@ -68,21 +75,28 @@ public class LogInViewController {
             viewModel.tryToReconnectClient();
         }
 
-        PauseTransition pause = new PauseTransition(Duration.seconds(1));
-        CompletableFuture<String> future = CompletableFuture.supplyAsync(() -> viewModel.logIn());
-        String result = future.get();
+        LogInValueRetriever logInValueRetriever = new LogInValueRetriever();
+        Thread t = new Thread(logInValueRetriever);
+        t.start();
 
-        pause.setOnFinished(event -> {
+        new Thread(() -> {
+            try {
+                t.join();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            String result = logInValueRetriever.getValue();
+
             if (result.equals("ServerConnectionFailure")) {
-                destructOverlay();
+                Platform.runLater(this::destructOverlay);
                 if (!viewModel.tryToReconnectClient()) {
-                    constructOverlayWithMessage("Failed to connect to the server. Restoring the connection...");
+                    Platform.runLater(() -> constructOverlayWithMessage("Failed to connect to the server. Restoring the connection..."));
                     new Thread(() -> {
                         viewModel.tryToReconnectClientLooped();
                         Platform.runLater(this::reset);
                     }).start();
                 } else {
-                    error.setText("There was a problem connecting to you account.\nPlease try again");
+                    Platform.runLater(() -> error.setText("There was a problem connecting to you account.\nPlease try again"));
                 }
             } else {
                 switch (result) {
@@ -93,13 +107,14 @@ public class LogInViewController {
                         Platform.runLater(() -> viewHandler.openView(ViewHandler.EQUIPMENT_LIST_VIEW));
                     }
                     default -> {
-                        destructOverlay();
-                        error.setText("Wrong credentials");
+                        Platform.runLater(() -> {
+                            destructOverlay();
+                            error.setText("Wrong credentials");
+                        });
                     }
                 }
             }
-        });
-        pause.play();
+        }).start();
     }
 
     private boolean areInputFieldsEmpty() {

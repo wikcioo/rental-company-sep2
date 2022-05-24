@@ -33,7 +33,7 @@ public class ReservationViewModel implements PropertyChangeListener {
 
     public void approveReservation(Reservation reservation) {
         try {
-            model.approveReservation(reservation);
+            model.approveReservation(reservation.getId(), model.getCurrentlyLoggedInUser().getEmail());
         } catch (RemoteException e) {
             errorProperty.set("Server communication error");
         }

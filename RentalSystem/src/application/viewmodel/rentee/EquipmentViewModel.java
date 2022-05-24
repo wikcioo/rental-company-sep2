@@ -81,7 +81,7 @@ public class EquipmentViewModel implements PropertyChangeListener {
 
     public void reserveEquipment() {
         try {
-            model.addReservation(model.getCurrentlyLoggedInUser(), selectedEquipmentProperty.get(), reservationEndDate.get());
+            model.reserveEquipment(selectedEquipmentProperty.get().getEquipmentId(), model.getCurrentlyLoggedInUser().getEmail(), reservationEndDate.get());
             reservationErrorProperty.set("Success");
         } catch (RemoteException e) {
             reservationErrorProperty.set("Failed to reserve equipment");

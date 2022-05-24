@@ -6,7 +6,6 @@ import application.model.reservations.*;
 import application.model.users.Manager;
 import application.model.users.Rentee;
 import application.model.users.User;
-import application.util.NamedPropertyChangeSubject;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -84,6 +83,16 @@ public class FakeRentalSystemClient implements RentalSystemClient {
             }
         }
         return null;
+    }
+
+    @Override
+    public ArrayList<User> getAllUsers() throws RemoteException {
+        return userList;
+    }
+
+    @Override
+    public void deleteUser(String email) throws RemoteException {
+        userList.removeIf(u -> u.getEmail().equals(email));
     }
 
     @Override

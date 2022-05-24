@@ -56,6 +56,16 @@ public class FailingRentalSystemClient implements RentalSystemClient {
     }
 
     @Override
+    public ArrayList<User> getAllUsers() throws RemoteException {
+        throw new RemoteException();
+    }
+
+    @Override
+    public void deleteUser(String email) throws RemoteException {
+        throw new RemoteException();
+    }
+
+    @Override
     public boolean isValidUser(String email, String password) throws RemoteException {
         throw new RemoteException();
     }

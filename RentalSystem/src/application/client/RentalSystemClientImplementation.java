@@ -57,6 +57,16 @@ public class RentalSystemClientImplementation extends UnicastRemoteObject implem
     }
 
     @Override
+    public ArrayList<User> getAllUsers() throws RemoteException {
+        return server.getAllUsers();
+    }
+
+    @Override
+    public void deleteUser(String email) throws RemoteException {
+        server.deleteUser(email);
+    }
+
+    @Override
     public boolean isValidUser(String email, String password) throws RemoteException {
         return server.isValidUser(email, password);
     }
@@ -116,6 +126,8 @@ public class RentalSystemClientImplementation extends UnicastRemoteObject implem
         switch (remotePropertyChangeEvent.getPropertyName()) {
             case "reservations" ->
                     support.firePropertyChange("reservations", remotePropertyChangeEvent.getOldValue(), remotePropertyChangeEvent.getNewValue());
+            case "users" ->
+                    support.firePropertyChange("users", remotePropertyChangeEvent.getOldValue(), remotePropertyChangeEvent.getNewValue());
             case "equipmentManager" ->
                     support.firePropertyChange("equipmentManager", remotePropertyChangeEvent.getOldValue(), remotePropertyChangeEvent.getNewValue());
             case "equipmentRentee" ->

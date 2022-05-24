@@ -70,22 +70,10 @@ public class ModelManager implements Model, PropertyChangeListener {
     }
 
     @Override
-    public void approveReservation(Reservation reservation) throws RemoteException {
-        client.approveReservation(reservation.getId(), getCurrentlyLoggedInUser().getEmail());
-        support.firePropertyChange(RESERVATION_LIST_CHANGED, null, reservationList);
-    }
-
-    @Override
     public void toggleAvailability(Equipment equipment) throws RemoteException {
         equipment.toggleAvailability();
         client.setAvailability(equipment.getEquipmentId(), equipment.isAvailable());
         support.firePropertyChange(EQUIPMENT_LIST_CHANGED, null, equipmentList.getAllEquipment());
-    }
-
-    @Override
-    public void addReservation(User user, Equipment equipment, LocalDateTime reservationEndDate) throws RemoteException {
-        client.reserveEquipment(equipment.getEquipmentId(), user.getEmail(), reservationEndDate);
-//        equipment.setAvailable(false);
     }
 
     @Override
@@ -160,6 +148,7 @@ public class ModelManager implements Model, PropertyChangeListener {
     @Override
     public void approveReservation(int id, String manager_id) throws RemoteException {
         client.approveReservation(id, manager_id);
+        support.firePropertyChange(RESERVATION_LIST_CHANGED, null, reservationList);
     }
 
     @Override

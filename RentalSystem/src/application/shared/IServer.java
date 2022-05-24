@@ -76,6 +76,24 @@ public interface IServer extends Remote {
     User getUser(String email) throws RemoteException;
 
     /**
+     * Returns a list of all users in the database.
+     * Calls {@link application.dao.UserDao#getAllUsers() getAllUsers} method.
+     *
+     * @return list of all users
+     * @throws RemoteException indicates connection failure
+     */
+    ArrayList<User> getAllUsers() throws RemoteException;
+
+    /**
+     * Deletes user with given email address from the database.
+     * Calls {@link application.dao.UserDao#delete(String) delete} method.
+     *
+     * @param email - user's email
+     * @throws RemoteException indicates connection failure
+     */
+    void deleteUser(String email) throws RemoteException;
+
+    /**
      * Returns true if the user with given email address and password is a valid user in the database.
      * Otherwise, returns false.
      * Calls {@link application.dao.UserDao#isValidUser(String, String) isValidUser} method.

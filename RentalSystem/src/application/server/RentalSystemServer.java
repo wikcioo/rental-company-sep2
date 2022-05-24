@@ -80,8 +80,11 @@ public class RentalSystemServer extends UnicastRemoteObject implements IServer {
             } else {
                 userDao.createRentee(firstName, lastName, phoneNumber, email, password);
             }
+
+            ArrayList<User> users = getAllUsers();
+            support.firePropertyChange("users", null, users);
         } catch (SQLException e) {
-            throw new RuntimeException(e.getMessage(), e);
+            throw new RemoteException(e.getMessage(), e);
         }
     }
 
@@ -90,7 +93,27 @@ public class RentalSystemServer extends UnicastRemoteObject implements IServer {
         try {
             return userDao.get(email);
         } catch (SQLException e) {
-            throw new RuntimeException(e.getMessage(), e);
+            throw new RemoteException(e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public ArrayList<User> getAllUsers() throws RemoteException {
+        try {
+            return userDao.getAllUsers();
+        } catch (SQLException e) {
+            throw new RemoteException(e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public void deleteUser(String email) throws RemoteException {
+        try {
+            userDao.delete(email);
+            ArrayList<User> users = getAllUsers();
+            support.firePropertyChange("users", null, users);
+        } catch (SQLException e) {
+            throw new RemoteException(e.getMessage(), e);
         }
     }
 

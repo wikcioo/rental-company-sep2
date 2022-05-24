@@ -9,7 +9,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.Region;
-import javafx.scene.paint.Paint;
 import javafx.util.Callback;
 
 import java.time.LocalDate;
@@ -161,7 +160,7 @@ public class EquipmentViewController {
 
     @FXML
     public void onLogOutButtonClick() {
-        viewHandler.openView(ViewHandler.LOG_IN);
+        viewHandler.openView(ViewHandler.LOG_IN_VIEW);
     }
 
 }

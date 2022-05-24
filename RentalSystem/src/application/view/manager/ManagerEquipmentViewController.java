@@ -131,8 +131,13 @@ public class ManagerEquipmentViewController {
     }
 
     @FXML
+    public void onRegisteredUsersButtonClick() {
+        viewHandler.openView(ViewHandler.REGISTERED_USER_VIEW);
+    }
+
+    @FXML
     public void onLogOutButtonClick() {
-        viewHandler.openView(ViewHandler.LOG_IN);
+        viewHandler.openView(ViewHandler.LOG_IN_VIEW);
     }
 
     public void addButtonPressed() {

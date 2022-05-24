@@ -57,11 +57,13 @@ public class LogInViewModel {
                 User currentUser = model.getUser(email.get());
                 if(result.equals("Manager")){
                     currentUser.setManager(true);
+                    model.retrieveAllEquipment();
+                }
+                else{
+                    model.retrieveAllUnreservedEquipment();
                 }
                 model.setCurrentlyLoggedInUser(currentUser);
                 model.refreshReservations();
-                model.retrieveAllEquipment();
-                model.retrieveAllUnreservedEquipment();
             }
             return result;
         } catch (RemoteException e) {

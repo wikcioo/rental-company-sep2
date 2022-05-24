@@ -20,6 +20,7 @@ public class ModelManagerTest {
     void setUp() throws RemoteException {
         model = new ModelManager(new FakeRentalSystemClient());
         User user = new User("d", "e", "f", "abc@gmail.com", "def");
+        model.setCurrentlyLoggedInUser(user);
         Equipment equipment = new Equipment(0, "model", "category", true);
         //2 Approved
         model.addReservation(user, equipment, LocalDateTime.now());
@@ -73,10 +74,6 @@ public class ModelManagerTest {
     }
 
     //Users
-    @Test
-    void new_model_manager_logged_in_user_is_null() {
-        assertEquals(null, model.getCurrentlyLoggedInUser());
-    }
 
     @Test
     void setting_current_logged_in_user_saves_the_user() {

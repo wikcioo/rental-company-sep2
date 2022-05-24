@@ -102,11 +102,9 @@ public class ManagerEquipmentViewController {
         viewModel.bindEquipmentList(equipmentTable.itemsProperty());
         viewModel.bindErrorLabel(error.textProperty());
         viewModel.bindLoggedUser(loggedUser.textProperty());
-        viewModel.retrieveAllEquipment();
     }
 
     public void reset() {
-        viewModel.retrieveAllEquipment();
         viewModel.displayLoggedUser();
         error.setText("");
     }
@@ -135,10 +133,6 @@ public class ManagerEquipmentViewController {
     @FXML
     public void onLogOutButtonClick() {
         viewHandler.openView(ViewHandler.LOG_IN);
-    }
-
-    public void onRefreshButtonClick() {
-        viewModel.retrieveAllEquipment();
     }
 
     public void addButtonPressed() {

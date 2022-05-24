@@ -27,9 +27,8 @@ public interface Model extends NamedPropertyChangeSubject {
      * Delegates to {@link application.model.equipment.EquipmentList#getAllEquipment() getAllEquipment} method.
      *
      * @return {@link ArrayList<Equipment>} of all stored equipment
-     * @throws RemoteException indicates connection issues
      */
-    ArrayList<Equipment> getAllEquipment() throws RemoteException;
+    ArrayList<Equipment> getAllEquipment();
 
     /**
      * Gets all available equipment from the equipmentList.
@@ -229,7 +228,7 @@ public interface Model extends NamedPropertyChangeSubject {
      * {@link application.client.RentalSystemClient#retrieveReservations() retrieveReservations} method.
      * Fires property change on RESERVATION_LIST_CHANGED event.
      */
-    void refreshReservations();
+    void refreshReservations() throws RemoteException;
 
     /**
      * Returns true if successfully reconnected the client to the server.

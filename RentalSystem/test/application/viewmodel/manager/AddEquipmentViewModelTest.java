@@ -2,6 +2,8 @@ package application.viewmodel.manager;
 
 import application.model.Model;
 import application.model.ModelManager;
+import application.model.equipment.Equipment;
+import application.model.users.User;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,6 +23,9 @@ public class AddEquipmentViewModelTest {
     @BeforeEach
     void setUp() {
         model = new ModelManager(new FakeRentalSystemClient());
+        User user = new User("d", "e", "f", "abc@gmail.com", "def");
+        user.setManager(true);
+        model.setCurrentlyLoggedInUser(user);
         viewModel = new AddEquipmentViewModel(model);
         equipmentModel = new SimpleStringProperty();
         category = new SimpleStringProperty();
@@ -29,13 +34,14 @@ public class AddEquipmentViewModelTest {
     }
 
     @Test
-    void equipment_in_equipment_list_when_added() throws RemoteException {
+    void equipment_in_equipment_list_when_added() {
         String _equipmentModel = "Raspberry Pi";
         String _category = "Electronics";
         equipmentModel.set(_equipmentModel);
         category.set(_category);
         viewModel.addEquipment();
-        assertEquals(model.getAllEquipment().get(0).getModel(), _equipmentModel);
-        assertEquals(model.getAllEquipment().get(0).getCategory(), _category);
+        Equipment equipment = model.getAllEquipment().get(0);
+        assertEquals(_equipmentModel, equipment.getModel());
+        assertEquals(_category, equipment.getCategory());
     }
 }

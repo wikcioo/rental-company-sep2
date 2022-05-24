@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import application.client.FailingRentalSystemClient;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class LogInViewModelServerFailureTest {
     private LogInViewModel viewModel;
@@ -28,7 +27,7 @@ public class LogInViewModelServerFailureTest {
 
     @Test
     public void server_failure_during_reserving_equipment(){
-        assertThrows(RuntimeException.class,()-> viewModel.logIn());
+        assertEquals("ServerConnectionFailure", viewModel.logIn());
     }
 
 }

@@ -23,29 +23,29 @@ public class ModelManagerTest {
         model.setCurrentlyLoggedInUser(user);
         Equipment equipment = new Equipment(0, "model", "category", true);
         //2 Approved
-        model.addReservation(user, equipment, LocalDateTime.now());
-        model.addReservation(user, equipment, LocalDateTime.now());
+        model.reserveEquipment(equipment.getEquipmentId(), user.getEmail(), LocalDateTime.now());
+        model.reserveEquipment(equipment.getEquipmentId(), user.getEmail(), LocalDateTime.now());
         model.approveReservation(0, "john@gmail.com");
         model.approveReservation(1, "john@gmail.com");
         //2 Expired
-        model.addReservation(user, equipment, LocalDateTime.now());
-        model.addReservation(user, equipment, LocalDateTime.now());
+        model.reserveEquipment(equipment.getEquipmentId(), user.getEmail(), LocalDateTime.now());
+        model.reserveEquipment(equipment.getEquipmentId(), user.getEmail(), LocalDateTime.now());
         model.expireReservation(2);
         model.expireReservation(3);
         //2 Returned
-        model.addReservation(user, equipment, LocalDateTime.now());
-        model.addReservation(user, equipment, LocalDateTime.now());
+        model.reserveEquipment(equipment.getEquipmentId(), user.getEmail(), LocalDateTime.now());
+        model.reserveEquipment(equipment.getEquipmentId(), user.getEmail(), LocalDateTime.now());
         model.approveReservation(4, "john@gmail.com");
         model.returnReservation(4);
         model.approveReservation(5, "john@gmail.com");
         model.returnReservation(5);
         //1 Rejected
-        model.addReservation(user, equipment, LocalDateTime.now());
+        model.reserveEquipment(equipment.getEquipmentId(), user.getEmail(), LocalDateTime.now());
         model.rejectReservation(6, "john@gmail.com", "No reason");
         //3 Unapproved
-        model.addReservation(user, equipment, LocalDateTime.now());
-        model.addReservation(user, equipment, LocalDateTime.now());
-        model.addReservation(user, equipment, LocalDateTime.now());
+        model.reserveEquipment(equipment.getEquipmentId(), user.getEmail(), LocalDateTime.now());
+        model.reserveEquipment(equipment.getEquipmentId(), user.getEmail(), LocalDateTime.now());
+        model.reserveEquipment(equipment.getEquipmentId(), user.getEmail(), LocalDateTime.now());
 
 
         model.refreshReservations();

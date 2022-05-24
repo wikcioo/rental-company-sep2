@@ -5,9 +5,8 @@ import application.client.RentalSystemClientImplementation;
 import application.model.equipment.Equipment;
 import application.model.equipment.EquipmentList;
 import application.model.reservations.*;
-import application.model.users.Manager;
-import application.model.users.Rentee;
 import application.model.users.User;
+import application.model.users.UserList;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -23,9 +22,11 @@ public class ModelManager implements Model, PropertyChangeListener {
     private RentalSystemClient client;
     private final EquipmentList equipmentList;
     private final ReservationList reservationList;
+    private final UserList userList;
     private final PropertyChangeSupport support;
     public static final String EQUIPMENT_LIST_CHANGED = "equipment_list_changed";
     public static final String RESERVATION_LIST_CHANGED = "reservation_list_changed";
+    public static final String USER_LIST_CHANGED = "user_list_changed";
 
     public ModelManager(RentalSystemClient client) {
         this.currentlyLoggedInUser = null;
@@ -37,6 +38,7 @@ public class ModelManager implements Model, PropertyChangeListener {
         }
         this.equipmentList = new EquipmentList();
         this.reservationList = new ReservationList();
+        this.userList = new UserList();
         this.support = new PropertyChangeSupport(this);
     }
 
@@ -79,11 +81,30 @@ public class ModelManager implements Model, PropertyChangeListener {
     @Override
     public void addUser(String firstName, String lastName, String phoneNumber, String email, String password, boolean isManager) throws RemoteException {
         client.addUser(firstName, lastName, phoneNumber, email, password, isManager);
+        support.firePropertyChange(USER_LIST_CHANGED, null, userList.getUsers());
     }
 
     @Override
     public User getUser(String email) throws RemoteException {
         return client.getUser(email);
+    }
+
+    @Override
+    public void retrieveAllUsers() throws RemoteException {
+        userList.clear();
+        userList.setUsers(client.getAllUsers());
+        support.firePropertyChange(USER_LIST_CHANGED, null, userList.getUsers());
+    }
+
+    @Override
+    public ArrayList<User> getAllUsers() {
+        return userList.getUsers();
+    }
+
+    @Override
+    public void deleteUser(String email) throws RemoteException {
+        client.deleteUser(email);
+        support.firePropertyChange(USER_LIST_CHANGED, null, userList.getUsers());
     }
 
     @Override
@@ -187,6 +208,10 @@ public class ModelManager implements Model, PropertyChangeListener {
             case "reservations" -> {
                 reservationList.setReservationList((ArrayList<Reservation>) evt.getNewValue());
                 support.firePropertyChange(RESERVATION_LIST_CHANGED, null, reservationList.getAll());
+            }
+            case "users" -> {
+                userList.setUsers((ArrayList<User>) evt.getNewValue());
+                support.firePropertyChange(USER_LIST_CHANGED, null, userList.getUsers());
             }
             case "equipmentManager" -> {
                 if (currentlyLoggedInUser.isManager()) {

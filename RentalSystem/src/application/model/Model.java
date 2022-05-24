@@ -80,6 +80,30 @@ public interface Model extends NamedPropertyChangeSubject {
     User getUser(String email) throws RemoteException;
 
     /**
+     * Clears userList and populates it by calling {@link application.client.RentalSystemClient#getAllUsers() getAllUsers} method.
+     * Fires property change on USER_LIST_CHANGED event.
+     *
+     * @throws RemoteException indicates connection issues
+     */
+    void retrieveAllUsers() throws RemoteException;
+
+    /**
+     * Returns a list of all registered users.
+     *
+     * @return list of all users
+     */
+    ArrayList<User> getAllUsers();
+
+    /**
+     * Deletes the user with given email address from the list of registered users.
+     * Delegates to {@link application.client.RentalSystemClient#deleteUser(String) deleteUser} method.
+     *
+     * @param email user's email
+     * @throws RemoteException indicates connection issues
+     */
+    void deleteUser(String email) throws RemoteException;
+
+    /**
      * Returns a String indicating who the user should be treated as (Manager, Rentee or Invalid)
      * Calls {@link application.client.RentalSystemClient#isValidUser(String, String) isValidUser} method to check if the user is valid.
      * Calls {@link application.client.RentalSystemClient#isUserAManager(String) isUserAManager} method to check if the user is a manager, otherwise, rentee.

@@ -15,6 +15,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 public class ReservationViewController {
+    @FXML
+    public Label error;
     private ViewHandler viewHandler;
     private ReservationViewModel viewModel;
     private Region root;
@@ -133,10 +135,11 @@ public class ReservationViewController {
         });
 
         viewModel.bindReservationList(reservationTable.itemsProperty());
+        viewModel.bindErrorLabel(error.textProperty());
     }
 
     public void reset() {
-
+        error.setText("");
     }
 
     public Region getRoot() {

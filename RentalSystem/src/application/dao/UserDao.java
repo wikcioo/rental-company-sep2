@@ -39,14 +39,6 @@ public interface UserDao {
     User get(String email) throws SQLException;
 
     /**
-     * Updates the user by the unique email.
-     *
-     * @param user
-     * @throws SQLException
-     */
-    void update(User user) throws SQLException;
-
-    /**
      * Verifies whether the given credentials and password suit any of the users in the database
      *
      * @param email    - the user's email

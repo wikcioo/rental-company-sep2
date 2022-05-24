@@ -14,7 +14,7 @@ import java.rmi.RemoteException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public class FakeRentalSystemClient implements RentalSystemClient, NamedPropertyChangeSubject {
+public class FakeRentalSystemClient implements RentalSystemClient {
     private final PropertyChangeSupport support;
     private final EquipmentList equipmentList;
     private final ReservationList reservationList;
@@ -34,11 +34,14 @@ public class FakeRentalSystemClient implements RentalSystemClient, NamedProperty
     }
 
     @Override
-    public Equipment addEquipment(String model, String category, boolean available) throws RemoteException {
+    public void addEquipment(String model, String category, boolean available) throws RemoteException {
         Equipment equipment = new Equipment(equipmentIndex, model, category, available);
         equipmentIndex++;
         equipmentList.addEquipment(equipment);
-        return equipment;
+        ArrayList<Equipment> allEquipment = getAllEquipment();
+        ArrayList<Equipment> unreservedEquipment = getAllUnreservedEquipment();
+        support.firePropertyChange("equipmentManager", null, allEquipment);
+        support.firePropertyChange("equipmentRentee", null, unreservedEquipment);
     }
 
     @Override
@@ -58,6 +61,10 @@ public class FakeRentalSystemClient implements RentalSystemClient, NamedProperty
                 e.setAvailable(available);
             }
         }
+        ArrayList<Equipment> allEquipment = getAllEquipment();
+        ArrayList<Equipment> unreservedEquipment = getAllUnreservedEquipment();
+        support.firePropertyChange("equipmentManager", null, allEquipment);
+        support.firePropertyChange("equipmentRentee", null, unreservedEquipment);
     }
 
     @Override
@@ -109,6 +116,7 @@ public class FakeRentalSystemClient implements RentalSystemClient, NamedProperty
             }
         }
         reservationList.setReservationList(reservations);
+        support.firePropertyChange("reservations", null, reservations);
     }
 
     //TODO: rejectReservation requires a reason but the method to reject one does not have a reason field
@@ -122,6 +130,7 @@ public class FakeRentalSystemClient implements RentalSystemClient, NamedProperty
             }
         }
         reservationList.setReservationList(reservations);
+        support.firePropertyChange("reservations", null, reservations);
     }
 
     @Override
@@ -134,6 +143,7 @@ public class FakeRentalSystemClient implements RentalSystemClient, NamedProperty
             }
         }
         reservationList.setReservationList(reservations);
+        support.firePropertyChange("reservations", null, reservations);
     }
 
     @Override
@@ -146,6 +156,7 @@ public class FakeRentalSystemClient implements RentalSystemClient, NamedProperty
             }
         }
         reservationList.setReservationList(reservations);
+        support.firePropertyChange("reservations", null, reservations);
     }
 
     //Reserving will create new equipment with given id
@@ -155,6 +166,11 @@ public class FakeRentalSystemClient implements RentalSystemClient, NamedProperty
         reservations.add(new Reservation(reservationIndex, getUser(rentee_id), LocalDateTime.now(), rentedFor, new Equipment(equipment_id, "application/model", "category", true)));
         reservationList.setReservationList(reservations);
         reservationIndex++;
+        ArrayList<Equipment> allEquipment = getAllEquipment();
+        ArrayList<Equipment> unreservedEquipment = getAllUnreservedEquipment();
+        support.firePropertyChange("reservations", null, reservations);
+        support.firePropertyChange("equipmentManager", null, allEquipment);
+        support.firePropertyChange("equipmentRentee", null, unreservedEquipment);
     }
 
     @Override
@@ -163,15 +179,13 @@ public class FakeRentalSystemClient implements RentalSystemClient, NamedProperty
     }
 
     @Override
-    public void addListener(String propertyName, PropertyChangeListener listener) {
-        support.addPropertyChangeListener(propertyName, listener);
+    public void addListener(PropertyChangeListener listener) throws RemoteException {
+        support.addPropertyChangeListener(listener);
     }
 
     @Override
-    public void removeListener(String propertyName, PropertyChangeListener listener) {
-        support.removePropertyChangeListener(propertyName, listener);
+    public void removeListener(PropertyChangeListener listener) throws RemoteException {
+        support.removePropertyChangeListener(listener);
     }
+
 }
-
-
-

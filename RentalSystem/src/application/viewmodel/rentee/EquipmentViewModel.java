@@ -21,6 +21,7 @@ public class EquipmentViewModel implements PropertyChangeListener {
     private final ObjectProperty<Equipment> selectedEquipmentProperty;
     private final ObjectProperty<LocalDateTime> reservationEndDate;
     private final StringProperty equipmentErrorProperty;
+    private final StringProperty reservationErrorProperty;
     private final StringProperty loggedUserProperty;
 
     public EquipmentViewModel(Model model) {
@@ -30,6 +31,7 @@ public class EquipmentViewModel implements PropertyChangeListener {
         this.selectedEquipmentProperty = new SimpleObjectProperty<>();
         this.reservationEndDate = new SimpleObjectProperty<>();
         this.equipmentErrorProperty = new SimpleStringProperty();
+        this.reservationErrorProperty = new SimpleStringProperty();
         this.loggedUserProperty = new SimpleStringProperty();
     }
 
@@ -42,32 +44,25 @@ public class EquipmentViewModel implements PropertyChangeListener {
     }
 
     public void bindReservationEndDate(SimpleObjectProperty<LocalDateTime> property) {
-        reservationEndDate.bind(property);
+        reservationEndDate.bindBidirectional(property);
     }
 
-    public void bindErrorLabel(StringProperty property) {
-        equipmentErrorProperty.bindBidirectional(property);
+    public void bindEquipmentErrorLabel(StringProperty property) {
+        property.bindBidirectional(equipmentErrorProperty);
+    }
+    public void bindReservationErrorLabel(StringProperty property) {
+        property.bindBidirectional(reservationErrorProperty);
     }
 
     public void bindLoggedUser(StringProperty property) {
         loggedUserProperty.bindBidirectional(property);
     }
 
-    public void retrieveAllEquipment() {
-        try {
-            equipmentErrorProperty.set("Successfully retrieved equipment from DB");
-            model.retrieveAllEquipment();
-        } catch (RemoteException e) {
-            equipmentErrorProperty.set("Failed to retrieve equipment list");
-        }
-    }
-
     public void retrieveAllUnreservedEquipment() {
         try {
             model.retrieveAllUnreservedEquipment();
-            equipmentErrorProperty.set("Successfully retrieved equipment from DB");
         } catch (RemoteException e) {
-            equipmentErrorProperty.set("Failed to retrieve equipment list");
+            equipmentErrorProperty.set("Server communication error");
         }
     }
 
@@ -78,7 +73,7 @@ public class EquipmentViewModel implements PropertyChangeListener {
                 try {
                     listObjectProperty.setValue(FXCollections.observableList(model.getAllAvailableEquipment()));
                 } catch (RemoteException e) {
-                    throw new RuntimeException(e);
+                    equipmentErrorProperty.set("Server communication error");
                 }
             }
         }
@@ -86,9 +81,10 @@ public class EquipmentViewModel implements PropertyChangeListener {
 
     public void reserveEquipment() {
         try {
-            model.addReservation(model.getCurrentlyLoggedInUser(), selectedEquipmentProperty.get(), reservationEndDate.get());
+            model.reserveEquipment(selectedEquipmentProperty.get().getEquipmentId(), model.getCurrentlyLoggedInUser().getEmail(), reservationEndDate.get());
+            reservationErrorProperty.set("Success");
         } catch (RemoteException e) {
-            throw new RuntimeException(e);
+            reservationErrorProperty.set("Failed to reserve equipment");
         }
     }
 

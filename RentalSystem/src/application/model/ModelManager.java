@@ -5,8 +5,11 @@ import application.client.RentalSystemClientImplementation;
 import application.model.equipment.Equipment;
 import application.model.equipment.EquipmentList;
 import application.model.reservations.*;
+import application.model.users.Manager;
+import application.model.users.Rentee;
 import application.model.users.User;
 
+import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.rmi.NotBoundException;
@@ -15,7 +18,7 @@ import java.rmi.registry.Registry;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public class ModelManager implements Model {
+public class ModelManager implements Model, PropertyChangeListener {
     private User currentlyLoggedInUser;
     private RentalSystemClient client;
     private final EquipmentList equipmentList;
@@ -27,43 +30,28 @@ public class ModelManager implements Model {
     public ModelManager(RentalSystemClient client) {
         this.currentlyLoggedInUser = null;
         this.client = client;
+        try {
+            this.client.addListener(this);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
         this.equipmentList = new EquipmentList();
         this.reservationList = new ReservationList();
         this.support = new PropertyChangeSupport(this);
-        refreshReservations();
-
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (true) {
-                    long start = System.currentTimeMillis();
-                    refreshReservations();
-                    System.out.println("Refreshing took: " + (System.currentTimeMillis() - start) + " milliseconds");
-                    try {
-                        Thread.sleep(10000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
-
-        thread.start();
     }
 
     @Override
     public void addEquipment(String model, String category, boolean available) throws RemoteException {
-        equipmentList.addEquipment(client.addEquipment(model, category, available));
-        support.firePropertyChange(EQUIPMENT_LIST_CHANGED, null, equipmentList.getAllEquipment());
+        client.addEquipment(model, category, available);
     }
 
     @Override
-    public ArrayList<Equipment> getAllEquipment() throws RemoteException {
+    public ArrayList<Equipment> getAllEquipment() {
         return equipmentList.getAllEquipment();
     }
 
     @Override
-    public ArrayList<Equipment> getAllAvailableEquipment() throws RemoteException {
+    public ArrayList<Equipment> getAllAvailableEquipment() {
         return equipmentList.getAllAvailableEquipment();
     }
 
@@ -82,24 +70,10 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void approveReservation(Reservation reservation) throws RemoteException {
-        client.approveReservation(reservation.getId(), getCurrentlyLoggedInUser().getEmail());
-        support.firePropertyChange(RESERVATION_LIST_CHANGED, null, reservationList);
-    }
-
-    @Override
     public void toggleAvailability(Equipment equipment) throws RemoteException {
         equipment.toggleAvailability();
         client.setAvailability(equipment.getEquipmentId(), equipment.isAvailable());
         support.firePropertyChange(EQUIPMENT_LIST_CHANGED, null, equipmentList.getAllEquipment());
-    }
-
-    @Override
-    public void addReservation(User user, Equipment equipment, LocalDateTime reservationEndDate) throws RemoteException {
-        client.reserveEquipment(equipment.getEquipmentId(), user.getEmail(), reservationEndDate);
-        equipment.setAvailable(false);
-        support.firePropertyChange(EQUIPMENT_LIST_CHANGED, null, equipmentList.getAllEquipment());
-        support.firePropertyChange(RESERVATION_LIST_CHANGED, null, reservationList.getAll());
     }
 
     @Override
@@ -118,7 +92,6 @@ public class ModelManager implements Model {
             if (client.isUserAManager(email)) return "Manager";
             else return "Rentee";
         }
-
         return "Invalid";
     }
 
@@ -137,7 +110,6 @@ public class ModelManager implements Model {
     }
 
     public ArrayList<Approved> getApprovedReservations() {
-        System.out.println(reservationList.getApprovedReservations());
         return reservationList.getApprovedReservations();
     }
 
@@ -153,14 +125,9 @@ public class ModelManager implements Model {
         return reservationList.getExpiredReservations();
     }
 
-    //TODO: ADD A CALLBACK FUNCTIONALITY, THIS METHOD WILL NEVER WORK CORRECTLY IN CURRENT STATE
-    public void refreshReservations() {
-        try {
-            reservationList.setReservationList(client.retrieveReservations());
-            support.firePropertyChange(RESERVATION_LIST_CHANGED, null, reservationList.getAll());
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
+    public void refreshReservations() throws RemoteException {
+        reservationList.setReservationList(client.retrieveReservations());
+        support.firePropertyChange(RESERVATION_LIST_CHANGED, null, reservationList.getAll());
     }
 
     @Override
@@ -181,12 +148,12 @@ public class ModelManager implements Model {
     @Override
     public void approveReservation(int id, String manager_id) throws RemoteException {
         client.approveReservation(id, manager_id);
+        support.firePropertyChange(RESERVATION_LIST_CHANGED, null, reservationList);
     }
 
     @Override
     public void rejectReservation(int id, String manager_id, String reason) throws RemoteException {
-        client.rejectReservation(id, manager_id, reason );
-
+        client.rejectReservation(id, manager_id, reason);
     }
 
     @Override
@@ -197,7 +164,6 @@ public class ModelManager implements Model {
     @Override
     public void returnReservation(int id) throws RemoteException {
         client.returnReservation(id);
-
     }
 
     @Override
@@ -213,5 +179,29 @@ public class ModelManager implements Model {
     @Override
     public void setCurrentlyLoggedInUser(User newUser) {
         this.currentlyLoggedInUser = newUser;
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        switch (evt.getPropertyName()) {
+            case "reservations" -> {
+                reservationList.setReservationList((ArrayList<Reservation>) evt.getNewValue());
+                support.firePropertyChange(RESERVATION_LIST_CHANGED, null, reservationList.getAll());
+            }
+            case "equipmentManager" -> {
+                if (currentlyLoggedInUser.isManager()) {
+                    equipmentList.clear();
+                    equipmentList.addEquipmentList((ArrayList<Equipment>) evt.getNewValue());
+                    support.firePropertyChange(EQUIPMENT_LIST_CHANGED, null, equipmentList.getAllEquipment());
+                }
+            }
+            case "equipmentRentee" -> {
+                if (!currentlyLoggedInUser.isManager()) {
+                    equipmentList.clear();
+                    equipmentList.addEquipmentList((ArrayList<Equipment>) evt.getNewValue());
+                    support.firePropertyChange(EQUIPMENT_LIST_CHANGED, null, equipmentList.getAllAvailableEquipment());
+                }
+            }
+        }
     }
 }

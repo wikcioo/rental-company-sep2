@@ -42,7 +42,7 @@ public class ManagerEquipmentViewModel implements PropertyChangeListener {
     }
 
     public void bindErrorLabel(StringProperty property) {
-        property.bind(errorProperty);
+        property.bindBidirectional(errorProperty);
     }
 
     public void bindLoggedUser(StringProperty property) {
@@ -53,17 +53,16 @@ public class ManagerEquipmentViewModel implements PropertyChangeListener {
         try {
             model.toggleAvailability(selectedEquipmentProperty.get());
         } catch (RemoteException e) {
-            throw new RuntimeException(e);
+            errorProperty.set("Server communication error");
         }
     }
 
     public void retrieveAllEquipment() {
         try {
-            errorProperty.set("Successfully retrieved equipment from DB");
             model.retrieveAllEquipment();
         } catch (RemoteException e) {
             e.printStackTrace();
-            errorProperty.set("Failed to retrieve equipment list");
+            errorProperty.set("Server communication error");
         }
     }
 

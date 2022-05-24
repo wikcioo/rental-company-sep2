@@ -27,9 +27,8 @@ public interface Model extends NamedPropertyChangeSubject {
      * Delegates to {@link application.model.equipment.EquipmentList#getAllEquipment() getAllEquipment} method.
      *
      * @return {@link ArrayList<Equipment>} of all stored equipment
-     * @throws RemoteException indicates connection issues
      */
-    ArrayList<Equipment> getAllEquipment() throws RemoteException;
+    ArrayList<Equipment> getAllEquipment();
 
     /**
      * Gets all available equipment from the equipmentList.
@@ -55,17 +54,6 @@ public interface Model extends NamedPropertyChangeSubject {
      * @throws RemoteException indicates connection issues
      */
     void retrieveAllUnreservedEquipment() throws RemoteException;
-
-    /**
-     * Adds reservation to the database by calling {@link application.client.RentalSystemClient#reserveEquipment(int, String, LocalDateTime) reserveEquipment} method.
-     * Fires property change on EQUIPMENT_LIST_CHANGED and RESERVATION_LIST_CHANGED events.
-     *
-     * @param rentee             rentee user object
-     * @param equipment          equipment object
-     * @param reservationEndDate reservation's end date
-     * @throws RemoteException indicates connection issues
-     */
-    void addReservation(User rentee, Equipment equipment, LocalDateTime reservationEndDate) throws RemoteException;
 
     /**
      * Adds new user to the database with given parameters.
@@ -102,18 +90,6 @@ public interface Model extends NamedPropertyChangeSubject {
      * @throws RemoteException indicates connection issues
      */
     String logIn(String email, String password) throws RemoteException;
-
-    // TODO[viktor]: Right now the manager_id is hardcoded in the implementation to "john@gmail.com"
-
-    /**
-     * Approves the reservation in the database.
-     * Calls {@link application.client.RentalSystemClient#approveReservation(int, String) approveReservation} method.
-     * Fires property change on RESERVATION_LIST_CHANGED event.
-     *
-     * @param reservation reservation object
-     * @throws RemoteException indicates connection issues
-     */
-    void approveReservation(Reservation reservation) throws RemoteException;
 
     /**
      * Toggles the availability of the given equipment.
@@ -176,7 +152,7 @@ public interface Model extends NamedPropertyChangeSubject {
      *
      * @param id         reservation's id
      * @param manager_id manager's id
-     * @param reason reason given by the manager for rejection
+     * @param reason     reason given by the manager for rejection
      * @throws RemoteException indicates connection issues
      */
     void rejectReservation(int id, String manager_id, String reason) throws RemoteException;
@@ -200,7 +176,7 @@ public interface Model extends NamedPropertyChangeSubject {
     void returnReservation(int id) throws RemoteException;
 
     /**
-     * Reserves the equipment with given id.
+     * Reserves the equipment with given id, by rentee with given id until certain end date
      * Delegates to {@link application.client.RentalSystemClient#reserveEquipment(int, String, LocalDateTime) reserveEquipment} method.
      *
      * @param equipment_id equipment's id
@@ -229,7 +205,7 @@ public interface Model extends NamedPropertyChangeSubject {
      * {@link application.client.RentalSystemClient#retrieveReservations() retrieveReservations} method.
      * Fires property change on RESERVATION_LIST_CHANGED event.
      */
-    void refreshReservations();
+    void refreshReservations() throws RemoteException;
 
     /**
      * Returns true if successfully reconnected the client to the server.

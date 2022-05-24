@@ -3,6 +3,7 @@ package application.shared;
 import application.model.equipment.Equipment;
 import application.model.reservations.Reservation;
 import application.model.users.User;
+import dk.via.remote.observer.RemotePropertyChangeListener;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -17,10 +18,9 @@ public interface IServer extends Remote {
      * @param model     equipment's model
      * @param category  equipment's category
      * @param available equipment's availability
-     * @return {@link Equipment} that has been added
      * @throws RemoteException indicates connection failure
      */
-    Equipment addEquipment(String model, String category, boolean available) throws RemoteException;
+    void addEquipment(String model, String category, boolean available) throws RemoteException;
 
     /**
      * Gets all stored equipment from the database.
@@ -163,4 +163,21 @@ public interface IServer extends Remote {
      * @throws RemoteException indicates connection failure
      */
     void pingServer() throws RemoteException;
+
+
+    /**
+     * Adds a listener to start listening to events in the server
+     *
+     * @param listener the listener which will catch events
+     * @throws RemoteException indicates connection failure
+     */
+    void addPropertyChangeListener(RemotePropertyChangeListener<ArrayList> listener) throws RemoteException;
+
+    /**
+     * Removes a listener to stop listening to events in the server
+     *
+     * @param listener the listener which will catch events
+     * @throws RemoteException indicates connection failure
+     */
+    void removePropertyChangeListener(RemotePropertyChangeListener<ArrayList> listener) throws RemoteException;
 }

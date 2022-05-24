@@ -117,9 +117,9 @@ public class EquipmentViewController {
         });
 
         viewModel.bindEquipmentList(equipmentTable.itemsProperty());
-        viewModel.bindErrorLabel(equipmentError.textProperty());
+        viewModel.bindEquipmentErrorLabel(equipmentError.textProperty());
+        viewModel.bindReservationErrorLabel(reservationError.textProperty());
         viewModel.bindLoggedUser(loggedUser.textProperty());
-        viewModel.retrieveAllUnreservedEquipment();
     }
 
     public void reset() {
@@ -129,34 +129,23 @@ public class EquipmentViewController {
         category.setText("Unselected");
         datePicker.setValue(null);
         reservationError.setText(null);
-        viewModel.retrieveAllUnreservedEquipment();
         viewModel.displayLoggedUser();
+        equipmentError.setText("");
+        reservationError.setText("");
     }
 
     public Region getRoot() {
         return root;
     }
 
-    public void onViewReservations() {
-        viewHandler.openView(ViewHandler.RESERVATION_LIST_VIEW);
-    }
-
-    public void closeButtonPressed() {
-        viewHandler.closeView();
-    }
-
     public void OnReserve() {
-        LocalDate date = datePicker.getValue();
-        reservationError.setTextFill(Paint.valueOf("RED"));
-        if (equipmentModel.getText().isEmpty() && category.getText().isEmpty()) {
+        if (equipmentModel.getText().equals("Unselected") && category.getText().equals("Unselected")) {
             reservationError.setText("You must select an item to reserve");
         } else if (datePicker.getValue() == null) {
             reservationError.setText("You must choose the date");
         } else if (datePicker.getValue().isAfter(MAX_DATE) || datePicker.getValue().isBefore(MIN_DATE)) {
             reservationError.setText("You must choose a date in the correct interval");
         } else {
-            reservationError.setTextFill(Paint.valueOf("GREEN"));
-            reservationError.setText("Success");
             viewModel.bindReservationEndDate(new SimpleObjectProperty<>(datePicker.getValue().atTime(14, 0)));
             viewModel.reserveEquipment();
             equipmentModel.setText("Unselected");
@@ -175,7 +164,4 @@ public class EquipmentViewController {
         viewHandler.openView(ViewHandler.LOG_IN);
     }
 
-    public void onRefreshButtonClick() {
-        viewModel.retrieveAllUnreservedEquipment();
-    }
 }

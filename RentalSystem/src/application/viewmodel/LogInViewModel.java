@@ -1,6 +1,8 @@
 package application.viewmodel;
 
 import application.model.Model;
+import application.model.users.Manager;
+import application.model.users.User;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -52,11 +54,19 @@ public class LogInViewModel {
         try {
             String result = model.logIn(email.get(), password.get());
             if (!result.equals("Invalid")) {
-                model.setCurrentlyLoggedInUser(model.getUser(email.get()));
+                User currentUser = model.getUser(email.get());
+                if(result.equals("Manager")){
+                    currentUser.setManager(true);
+                }
+                model.setCurrentlyLoggedInUser(currentUser);
+                model.refreshReservations();
+                model.retrieveAllEquipment();
+                model.retrieveAllUnreservedEquipment();
             }
             return result;
         } catch (RemoteException e) {
             return "ServerConnectionFailure";
         }
     }
+
 }

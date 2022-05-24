@@ -20,7 +20,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class EquipmentViewModelTest {
     private EquipmentViewModel viewModel;
     private StringProperty loggedUserProperty;
-    private StringProperty error;
     private Model model;
 
     @BeforeEach
@@ -28,8 +27,6 @@ public class EquipmentViewModelTest {
         model = new ModelManager(new FakeRentalSystemClient());
         viewModel = new EquipmentViewModel(model);
         loggedUserProperty = new SimpleStringProperty();
-        error = new SimpleStringProperty();
-        viewModel.bindErrorLabel(error);
         viewModel.bindLoggedUser(loggedUserProperty);
         model.setCurrentlyLoggedInUser(model.getUser("john@gmail.com"));
 
@@ -41,25 +38,11 @@ public class EquipmentViewModelTest {
         assertEquals("Logged as: john@gmail.com", loggedUserProperty.get());
     }
 
-    //TODO: the String Property should probably be renamed from error to result
     @Test
-    void when_successfully_received_all_equipment_sets_success_label() {
-        viewModel.retrieveAllEquipment();
-        assertEquals("Successfully retrieved equipment from DB", error.get());
-    }
-
-    @Test
-    void when_successfully_received_unreserved_equipment_sets_success_label() {
-        viewModel.retrieveAllUnreservedEquipment();
-        assertEquals("Successfully retrieved equipment from DB", error.get());
-    }
-
-    @Test
-    void reserving_equipment_adds_to_reservations_list() {
+    void reserving_equipment_adds_to_reservations_list() throws RemoteException {
         viewModel.bindSelectedEquipment(new SimpleObjectProperty<>(new Equipment(0, "a", "b", false)));
         viewModel.bindReservationEndDate(new SimpleObjectProperty<>(LocalDateTime.now().plusDays(7)));
         viewModel.reserveEquipment();
-        model.refreshReservations();
         ArrayList<Reservation> reservations = model.getUnapprovedReservations();
         assertEquals(1, reservations.size());
     }
@@ -69,7 +52,6 @@ public class EquipmentViewModelTest {
         viewModel.bindSelectedEquipment(new SimpleObjectProperty<>(new Equipment(7, "a", "b", true)));
         viewModel.bindReservationEndDate(new SimpleObjectProperty<>(LocalDateTime.now().plusDays(7)));
         viewModel.reserveEquipment();
-        model.refreshReservations();
         Equipment equipment = model.getUnapprovedReservations().get(0).getEquipment();
         assertEquals(7, equipment.getEquipmentId());
     }

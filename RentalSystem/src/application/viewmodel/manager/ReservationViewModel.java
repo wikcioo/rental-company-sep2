@@ -4,6 +4,8 @@ import application.model.*;
 import application.model.reservations.Reservation;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -15,12 +17,14 @@ import java.util.List;
 public class ReservationViewModel implements PropertyChangeListener {
     private final Model model;
     private final ObjectProperty<ObservableList<Reservation>> listObjectProperty;
+    private final StringProperty errorProperty;
 
     public ReservationViewModel(Model model) {
         this.model = model;
         listObjectProperty = new SimpleObjectProperty<>();
         model.addListener(ModelManager.RESERVATION_LIST_CHANGED, this);
         listObjectProperty.setValue(FXCollections.observableList((List<Reservation>) model.getUnapprovedReservations()));
+        this.errorProperty = new SimpleStringProperty();
     }
 
     public void bindReservationList(ObjectProperty<ObservableList<Reservation>> property) {
@@ -29,9 +33,9 @@ public class ReservationViewModel implements PropertyChangeListener {
 
     public void approveReservation(Reservation reservation) {
         try {
-            model.approveReservation(reservation);
+            model.approveReservation(reservation.getId(), model.getCurrentlyLoggedInUser().getEmail());
         } catch (RemoteException e) {
-            throw new RuntimeException(e);
+            errorProperty.set("Server communication error");
         }
     }
 
@@ -39,8 +43,12 @@ public class ReservationViewModel implements PropertyChangeListener {
         try {
             model.rejectReservation(reservation.getId(),model.getCurrentlyLoggedInUser().getEmail(), reason);
         } catch (RemoteException e) {
-            throw new RuntimeException(e);
+            errorProperty.set("Server communication error");
         }
+    }
+
+    public void bindErrorLabel(StringProperty property) {
+        property.bindBidirectional(errorProperty);
     }
 
     //TODO I dont think passing the list in a event is a good idea ; better to just call a function to get a list

@@ -8,6 +8,7 @@ public class User implements Serializable {
     private String phoneNumber;
     private String email;
     private String password;
+    private boolean isManager;
 
     public User(String firstName, String lastName, String phoneNumber, String email, String password) {
         this.firstName = firstName;
@@ -15,6 +16,7 @@ public class User implements Serializable {
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.password = password;
+        this.isManager = false;
     }
 
     public String getFirstName() {
@@ -55,6 +57,14 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public boolean isManager() {
+        return isManager;
+    }
+
+    public void setManager(boolean manager) {
+        isManager = manager;
     }
 
     @Override

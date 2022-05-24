@@ -17,7 +17,7 @@ public class SQLEquipmentDao implements EquipmentDao {
     }
 
     private Connection getConnection() throws SQLException {
-        return DriverManager.getConnection("jdbc:postgresql://abul.db.elephantsql.com/yzwsewzj", "yzwsewzj", "pb2tFI2SZ3_msyeJyrqmf35pRjUtyotU");
+        return DriverManager.getConnection("jdbc:postgresql://abul.db.elephantsql.com/yzwsewzj?currentSchema=rentalsystemdbs", "yzwsewzj", "pb2tFI2SZ3_msyeJyrqmf35pRjUtyotU");
     }
 
     public static EquipmentDao getInstance() {
@@ -64,7 +64,6 @@ public class SQLEquipmentDao implements EquipmentDao {
         return equipmentList;
     }
 
-    //TODO Two queries which are not a transaction. Possibility of creating inconsistent state of the database
     @Override
     public ArrayList<Equipment> getAllUnreserved() throws SQLException {
         ArrayList<Equipment> equipmentList = new ArrayList<>();
@@ -72,18 +71,24 @@ public class SQLEquipmentDao implements EquipmentDao {
                 Connection connection = getConnection();
                 Statement statement = connection.createStatement()
         ) {
-            ResultSet rs = statement.executeQuery("SELECT * FROM rentalsystemdbs.reservation");
-            ArrayList<Integer> reservedEquipmentIds = new ArrayList<>();
+            ResultSet rs = statement.executeQuery("\n" +
+                    "\n" +
+                    "SELECT equipment.equipment_id as id, model, category, availability FROM equipment\n" +
+                    "    -- joining equipment that's not returned, rejected or expired or never reserved before\n" +
+                    "    LEFT JOIN (\n" +
+                    "        SELECT equipment_id FROM reservation\n" +
+                    "            LEFT JOIN ( approved INNER JOIN returned r2 on approved.reservation_id = r2.approved_id )\n" +
+                    "                as returned on returned.reservation_id = reservation.reservation_id\n" +
+                    "            LEFT JOIN rejected r on reservation.reservation_id = r.reservation_id\n" +
+                    "            LEFT JOIN expired e on reservation.reservation_id = e.reservation_id\n" +
+                    "        WHERE r.reservation_id IS NULL\n" +
+                    "          AND returned.reservation_id IS NULL\n" +
+                    "          AND e.reservation_id IS NULL) as currently_reserved on equipment.equipment_id = currently_reserved.equipment_id\n" +
+                    "    -- and selecting equipment that does not match joined criteria\n" +
+                    "    WHERE currently_reserved.equipment_id IS NULL\n" +
+                    "ORDER BY id;");
             while (rs.next()) {
-                reservedEquipmentIds.add(rs.getInt("equipment_id"));
-            }
-
-            rs = statement.executeQuery("SELECT * FROM rentalsystemdbs.equipment");
-            while (rs.next()) {
-                int id = rs.getInt("equipment_id");
-                if (reservedEquipmentIds.contains(id)) {
-                    continue;
-                }
+                int id = rs.getInt("id");
                 String model = rs.getString("model");
                 String category = rs.getString("category");
                 boolean available = rs.getBoolean("availability");

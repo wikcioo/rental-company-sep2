@@ -16,7 +16,7 @@ public class SQLUserDao implements UserDao {
     }
 
     private Connection getConnection() throws SQLException {
-        return DriverManager.getConnection("jdbc:postgresql://abul.db.elephantsql.com/yzwsewzj", "yzwsewzj", "pb2tFI2SZ3_msyeJyrqmf35pRjUtyotU");
+        return DriverManager.getConnection("jdbc:postgresql://abul.db.elephantsql.com/yzwsewzj?currentSchema=rentalsystemdbs", "yzwsewzj", "pb2tFI2SZ3_msyeJyrqmf35pRjUtyotU");
     }
 
     public static UserDao getInstance() {
@@ -56,10 +56,9 @@ public class SQLUserDao implements UserDao {
 
         try (
                 Connection connection = getConnection();
-                PreparedStatement statement = connection.prepareStatement("INSERT INTO rentalsystemdbs.rentee VALUES (?, ?)")
+                PreparedStatement statement = connection.prepareStatement("INSERT INTO rentalsystemdbs.rentee VALUES (?)")
         ) {
             statement.setString(1, email);
-            statement.setNull(2, Types.INTEGER);
             statement.executeUpdate();
         }
     }

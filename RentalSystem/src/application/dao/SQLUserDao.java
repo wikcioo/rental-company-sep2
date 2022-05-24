@@ -84,21 +84,6 @@ public class SQLUserDao implements UserDao {
         }
     }
 
-    // TODO: Make proper update function (design[usage] is wrong)
-    // TODO TODO: Remove that TODO above and this function as well. Why is it here if we don't even have the update the user use case?
-    @Override
-    public void update(User user) throws SQLException {
-        try (
-                Connection connection = getConnection();
-                PreparedStatement statement = connection.prepareStatement("UPDATE User SET password = ? WHERE firstName = ? AND lastName = ?")
-        ) {
-            statement.setString(1, user.getPassword());
-            statement.setString(2, user.getFirstName());
-            statement.setString(3, user.getLastName());
-            statement.executeUpdate();
-        }
-    }
-
     @Override
     public boolean isValidUser(String email, String password) throws SQLException {
         try (

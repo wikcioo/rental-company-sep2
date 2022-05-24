@@ -4,7 +4,8 @@ import application.model.equipment.Equipment;
 import application.model.reservations.Reservation;
 import application.model.users.User;
 import application.shared.IServer;
-import application.util.NamedPropertyChangeSubject;
+import dk.via.remote.observer.RemotePropertyChangeEvent;
+import dk.via.remote.observer.RemotePropertyChangeListener;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -15,18 +16,19 @@ import java.rmi.server.UnicastRemoteObject;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public class RentalSystemClientImplementation extends UnicastRemoteObject implements RentalSystemClient, NamedPropertyChangeSubject {
+public class RentalSystemClientImplementation extends UnicastRemoteObject implements RentalSystemClient, RemotePropertyChangeListener<ArrayList> {
     private final IServer server;
     private final PropertyChangeSupport support;
 
     public RentalSystemClientImplementation(String host, int port) throws RemoteException, NotBoundException {
         this.server = (IServer) LocateRegistry.getRegistry(host, port).lookup("Server");
         this.support = new PropertyChangeSupport(this);
+        server.addPropertyChangeListener(this);
     }
 
     @Override
-    public Equipment addEquipment(String model, String category, boolean available) throws RemoteException {
-        return server.addEquipment(model, category, available);
+    public void addEquipment(String model, String category, boolean available) throws RemoteException {
+        server.addEquipment(model, category, available);
     }
 
     @Override
@@ -65,13 +67,13 @@ public class RentalSystemClientImplementation extends UnicastRemoteObject implem
     }
 
     @Override
-    public void addListener(String propertyName, PropertyChangeListener listener) {
-        support.addPropertyChangeListener(propertyName, listener);
+    public void addListener(PropertyChangeListener listener) {
+        support.addPropertyChangeListener(listener);
     }
 
     @Override
-    public void removeListener(String propertyName, PropertyChangeListener listener) {
-        support.removePropertyChangeListener(propertyName, listener);
+    public void removeListener(PropertyChangeListener listener) {
+        support.removePropertyChangeListener(listener);
     }
 
     @Override
@@ -107,5 +109,17 @@ public class RentalSystemClientImplementation extends UnicastRemoteObject implem
     @Override
     public void pingServer() throws RemoteException {
         server.pingServer();
+    }
+
+    @Override
+    public void propertyChange(RemotePropertyChangeEvent remotePropertyChangeEvent) throws RemoteException {
+        switch (remotePropertyChangeEvent.getPropertyName()) {
+            case "reservations" ->
+                    support.firePropertyChange("reservations", remotePropertyChangeEvent.getOldValue(), remotePropertyChangeEvent.getNewValue());
+            case "equipmentManager" ->
+                    support.firePropertyChange("equipmentManager", remotePropertyChangeEvent.getOldValue(), remotePropertyChangeEvent.getNewValue());
+            case "equipmentRentee" ->
+                    support.firePropertyChange("equipmentRentee", remotePropertyChangeEvent.getOldValue(), remotePropertyChangeEvent.getNewValue());
+        }
     }
 }

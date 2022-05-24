@@ -5,6 +5,7 @@ import application.model.equipment.EquipmentList;
 import application.model.reservations.*;
 import application.model.users.User;
 
+import java.beans.PropertyChangeListener;
 import java.rmi.RemoteException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ public class FailingRentalSystemClient implements RentalSystemClient {
     }
 
     @Override
-    public Equipment addEquipment(String model, String category, boolean available) throws RemoteException {
+    public void addEquipment(String model, String category, boolean available) throws RemoteException {
         throw new RemoteException();
     }
 
@@ -97,6 +98,16 @@ public class FailingRentalSystemClient implements RentalSystemClient {
     @Override
     public void pingServer() throws RemoteException {
         throw new RemoteException();
+    }
+
+    @Override
+    public void addListener(PropertyChangeListener listener) throws RemoteException {
+
+    }
+
+    @Override
+    public void removeListener(PropertyChangeListener listener) throws RemoteException {
+
     }
 }
 

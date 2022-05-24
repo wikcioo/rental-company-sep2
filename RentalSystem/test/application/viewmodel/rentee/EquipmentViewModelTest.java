@@ -39,11 +39,10 @@ public class EquipmentViewModelTest {
     }
 
     @Test
-    void reserving_equipment_adds_to_reservations_list() {
+    void reserving_equipment_adds_to_reservations_list() throws RemoteException {
         viewModel.bindSelectedEquipment(new SimpleObjectProperty<>(new Equipment(0, "a", "b", false)));
         viewModel.bindReservationEndDate(new SimpleObjectProperty<>(LocalDateTime.now().plusDays(7)));
         viewModel.reserveEquipment();
-        model.refreshReservations();
         ArrayList<Reservation> reservations = model.getUnapprovedReservations();
         assertEquals(1, reservations.size());
     }
@@ -53,7 +52,6 @@ public class EquipmentViewModelTest {
         viewModel.bindSelectedEquipment(new SimpleObjectProperty<>(new Equipment(7, "a", "b", true)));
         viewModel.bindReservationEndDate(new SimpleObjectProperty<>(LocalDateTime.now().plusDays(7)));
         viewModel.reserveEquipment();
-        model.refreshReservations();
         Equipment equipment = model.getUnapprovedReservations().get(0).getEquipment();
         assertEquals(7, equipment.getEquipmentId());
     }

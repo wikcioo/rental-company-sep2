@@ -120,7 +120,6 @@ public class EquipmentViewController {
         viewModel.bindEquipmentErrorLabel(equipmentError.textProperty());
         viewModel.bindReservationErrorLabel(reservationError.textProperty());
         viewModel.bindLoggedUser(loggedUser.textProperty());
-        viewModel.retrieveAllUnreservedEquipment();
     }
 
     public void reset() {
@@ -130,7 +129,6 @@ public class EquipmentViewController {
         category.setText("Unselected");
         datePicker.setValue(null);
         reservationError.setText(null);
-        viewModel.retrieveAllUnreservedEquipment();
         viewModel.displayLoggedUser();
         equipmentError.setText("");
         reservationError.setText("");
@@ -166,7 +164,4 @@ public class EquipmentViewController {
         viewHandler.openView(ViewHandler.LOG_IN);
     }
 
-    public void onRefreshButtonClick() {
-        viewModel.retrieveAllUnreservedEquipment();
-    }
 }

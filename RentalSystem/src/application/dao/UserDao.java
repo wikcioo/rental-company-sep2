@@ -3,6 +3,7 @@ package application.dao;
 import application.model.users.User;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public interface UserDao {
     /**
@@ -37,6 +38,22 @@ public interface UserDao {
      * @throws SQLException
      */
     User get(String email) throws SQLException;
+
+    /**
+     * Gets all the users in the database.
+     *
+     * @return list of users
+     * @throws SQLException
+     */
+    ArrayList<User> getAllUsers() throws SQLException;
+
+    /**
+     * Deletes the user with given email address from the users' table in the database.
+     *
+     * @param email - the user's email
+     * @throws SQLException
+     */
+    void delete(String email) throws SQLException;
 
     /**
      * Verifies whether the given credentials and password suit any of the users in the database

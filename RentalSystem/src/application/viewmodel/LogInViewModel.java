@@ -62,6 +62,7 @@ public class LogInViewModel {
                 else{
                     model.retrieveAllUnreservedEquipment();
                 }
+                model.retrieveAllUsers();
                 model.setCurrentlyLoggedInUser(currentUser);
                 model.refreshReservations();
             }

@@ -19,7 +19,8 @@ public class ViewFactory {
     private AddUserViewController addUserViewController;
     private ApprovedReservationViewController approvedReservationViewController;
     private RegisteredUserViewController registeredUserViewController;
-
+    private RejectedReservationViewController rejectedReservationViewController;
+    private ExpiredReservationViewController expiredReservationViewController;
     public ViewFactory(ViewHandler viewHandler, ViewModelFactory viewModelFactory) {
         this.viewHandler = viewHandler;
         this.viewModelFactory = viewModelFactory;
@@ -144,6 +145,40 @@ public class ViewFactory {
         approvedReservationViewController.reset();
         return approvedReservationViewController.getRoot();
     }
+
+    public Region loadRejectedReservationView() {
+        if (rejectedReservationViewController == null) {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("gui/manager/RejectedReservationView.fxml"));
+            try {
+                Region root = loader.load();
+                rejectedReservationViewController = loader.getController();
+                rejectedReservationViewController.init(viewHandler,
+                    viewModelFactory.getRejectedReservationViewModel(), root);
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        rejectedReservationViewController.reset();
+        return rejectedReservationViewController.getRoot();
+    }
+    public Region loadExpiredReservationView() {
+        if (expiredReservationViewController == null) {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("gui/manager/ExpiredReservationView.fxml"));
+            try {
+                Region root = loader.load();
+                expiredReservationViewController = loader.getController();
+                expiredReservationViewController.init(viewHandler,
+                    viewModelFactory.getExpiredReservationViewModel(), root);
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        expiredReservationViewController.reset();
+        return expiredReservationViewController.getRoot();
+    }
+
 
     public Region loadRegisteredUserView() {
         if (registeredUserViewController == null) {

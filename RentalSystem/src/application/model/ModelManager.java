@@ -155,6 +155,8 @@ public class ModelManager implements Model, PropertyChangeListener {
     public boolean tryToReconnectClient() {
         try {
             client = new RentalSystemClientImplementation("localhost", Registry.REGISTRY_PORT);
+            client.removeListener(this);
+            client.addListener(this);
             return true;
         } catch (RemoteException | NotBoundException e) {
             return false;

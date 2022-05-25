@@ -12,6 +12,8 @@ public class ViewModelFactory {
     private final ManagerEquipmentViewModel managerEquipmentViewModel;
     private final AddUserViewModel addUserViewModel;
     private final ApprovedReservationViewModel approvedReservationViewModel;
+    private final RejectedReservationViewModel rejectedReservationViewModel;
+    private final ExpiredReservationViewModel expiredReservationViewModel;
     private final RegisteredUserViewModel registeredUserViewModel;
 
     public ViewModelFactory(Model model) {
@@ -22,6 +24,8 @@ public class ViewModelFactory {
         this.managerEquipmentViewModel = new ManagerEquipmentViewModel(model);
         this.addUserViewModel = new AddUserViewModel(model);
         this.approvedReservationViewModel = new ApprovedReservationViewModel(model);
+        this.rejectedReservationViewModel = new RejectedReservationViewModel(model);
+        this.expiredReservationViewModel = new ExpiredReservationViewModel(model);
         this.registeredUserViewModel = new RegisteredUserViewModel(model);
     }
 
@@ -44,6 +48,16 @@ public class ViewModelFactory {
     public ApprovedReservationViewModel getApprovedReservationViewModel() {
         return approvedReservationViewModel;
     }
+
+    public RejectedReservationViewModel getRejectedReservationViewModel() {
+        return rejectedReservationViewModel;
+    }
+
+    public ExpiredReservationViewModel getExpiredReservationViewModel() {
+        return expiredReservationViewModel;
+    }
+
+
 
     public ManagerEquipmentViewModel getManagerEquipmentViewModel() {
         return managerEquipmentViewModel;

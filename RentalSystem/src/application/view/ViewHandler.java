@@ -17,6 +17,7 @@ public class ViewHandler {
     public static final String LOG_IN_VIEW = "log_in_view";
     public static final String ADD_USER_VIEW = "add_user_view";
     public static final String REGISTERED_USER_VIEW = "registered_user_view";
+    public static final String REJECTED_RESERVATION_LIST_VIEW ="rejected_reservation_list_view";
     private Stage primaryStage;
     private final Scene currentScene;
     private final ViewFactory viewFactory;
@@ -40,6 +41,7 @@ public class ViewHandler {
             case RESERVATION_LIST_VIEW -> viewFactory.loadReservationListView();
             case ADD_USER_VIEW -> viewFactory.loadAddUserView();
             case APPROVED_RESERVATION_LIST_VIEW -> viewFactory.loadApprovedReservationView();
+            case REJECTED_RESERVATION_LIST_VIEW -> viewFactory.loadRejectedReservationView();
             case REGISTERED_USER_VIEW -> viewFactory.loadRegisteredUserView();
             default -> throw new IllegalArgumentException("Unknown id: " + id);
         };

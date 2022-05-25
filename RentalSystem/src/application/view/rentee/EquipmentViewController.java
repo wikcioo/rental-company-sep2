@@ -40,7 +40,7 @@ public class EquipmentViewController {
     @FXML
     private Label loggedUser;
 
-    private static final LocalDate MIN_DATE = LocalDate.now();
+    private static final LocalDate MIN_DATE = LocalDate.now().plusDays(1);
     private static final LocalDate MAX_DATE = MIN_DATE.plusWeeks(4);
 
     public void init(ViewHandler viewHandler, EquipmentViewModel equipmentViewModel, Region root) {

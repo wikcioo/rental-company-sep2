@@ -23,19 +23,19 @@ public class ApprovedReservationViewController {
     @FXML
     private TableView<Approved> reservationTable;
     @FXML
-    private TableColumn<Reservation, String> reservationIdColumn;
+    private TableColumn<Approved, String> reservationIdColumn;
     @FXML
-    private TableColumn<Reservation, String> renteeColumn;
+    private TableColumn<Approved, String> renteeColumn;
     @FXML
-    private TableColumn<Reservation, String> equipmentColumn;
+    private TableColumn<Approved, String> equipmentColumn;
     @FXML
-    private TableColumn<Reservation, String> startDateColumn;
+    private TableColumn<Approved, String> startDateColumn;
     @FXML
-    private TableColumn<Reservation, String> endDateColumn;
+    private TableColumn<Approved, String> endDateColumn;
     @FXML
-    public TableColumn<Reservation, String> daysOverdueColumn;
+    public TableColumn<Approved, String> daysOverdueColumn;
     @FXML
-    public TableColumn<Reservation, String> returnButtonColumn;
+    public TableColumn<Approved, String> returnButtonColumn;
 
     public void init(ViewHandler viewHandler, ApprovedReservationViewModel approvedReservationViewModel, Region root) {
         this.viewHandler = viewHandler;
@@ -93,13 +93,13 @@ public class ApprovedReservationViewController {
 
         returnButtonColumn.setCellFactory(new Callback<>() {
             @Override
-            public TableCell<Reservation, String> call(final TableColumn<Reservation, String> param) {
+            public TableCell<Approved, String> call(final TableColumn<Approved, String> param) {
                 return new TableCell<>() {
                     private final Button btn = new Button("Return");
 
                     {
                         btn.setOnAction((ActionEvent event) -> {
-                            Reservation reservation = getTableView().getItems().get(getIndex());
+                            Approved reservation = getTableView().getItems().get(getIndex());
                             viewModel.removeReservation(reservation);
                             reservationTable.refresh();
                         });

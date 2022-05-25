@@ -133,6 +133,9 @@ public class ManagerEquipmentViewController {
     public void onViewRejectedReservations() {
         viewHandler.openView(ViewHandler.REJECTED_RESERVATION_LIST_VIEW);
     }
+    public void onViewExpiredReservations() {
+        viewHandler.openView(ViewHandler.EXPIRED_RESERVATION_LIST_VIEW);
+    }
     @FXML
     public void onRegisteredUsersButtonClick() {
         viewHandler.openView(ViewHandler.REGISTERED_USER_VIEW);

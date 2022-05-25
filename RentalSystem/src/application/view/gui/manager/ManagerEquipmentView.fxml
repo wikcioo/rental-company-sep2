@@ -27,11 +27,12 @@
       </TableView>
       <Button layoutX="715.0" layoutY="352.0" mnemonicParsing="false" onAction="#onViewReservations" text="Reservations" />
       <Button layoutX="289.0" layoutY="352.0" mnemonicParsing="false" onAction="#onAddNewUserButtonClick" text="Add new user" />
-      <Button layoutX="557.0" layoutY="352.0" mnemonicParsing="false" onAction="#onViewApprovedReservations" text="Approved Reservations" />
+      <Button layoutX="820.0" layoutY="203.0" mnemonicParsing="false" onAction="#onViewApprovedReservations" text="Approved Reservations" />
        <Label fx:id="error" layoutX="43.0" layoutY="356.0" />
       <Button layoutX="889.0" layoutY="299.0" mnemonicParsing="false" onAction="#onLogOutButtonClick" text="Log out" />
       <Label fx:id="loggedUser" alignment="CENTER_RIGHT" layoutX="729.0" layoutY="23.0" prefHeight="20.0" prefWidth="236.0" text="Logged as:" />
       <Button layoutX="165.0" layoutY="352.0" mnemonicParsing="false" onAction="#onRegisteredUsersButtonClick" text="Registered Users" />
-      <Button layoutX="403.0" layoutY="352.0" mnemonicParsing="false" onAction="#onViewRejectedReservations" text="Rejected Reservations" />
+      <Button layoutX="824.0" layoutY="171.0" mnemonicParsing="false" onAction="#onViewRejectedReservations" text="Rejected Reservations" />
+      <Button layoutX="826.0" layoutY="140.0" mnemonicParsing="false" onAction="#onViewExpiredReservations" text="Expired Reservations" />
    </children>
 </AnchorPane>

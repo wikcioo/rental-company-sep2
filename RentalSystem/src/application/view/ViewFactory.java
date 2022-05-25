@@ -19,6 +19,7 @@ public class ViewFactory {
     private AddUserViewController addUserViewController;
     private ApprovedReservationViewController approvedReservationViewController;
     private RegisteredUserViewController registeredUserViewController;
+    private RejectedReservationViewController rejectedReservationViewController;
 
     public ViewFactory(ViewHandler viewHandler, ViewModelFactory viewModelFactory) {
         this.viewHandler = viewHandler;
@@ -143,6 +144,23 @@ public class ViewFactory {
         }
         approvedReservationViewController.reset();
         return approvedReservationViewController.getRoot();
+    }
+
+    public Region loadRejectedReservationView() {
+        if (rejectedReservationViewController == null) {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("gui/manager/RejectedReservationView.fxml"));
+            try {
+                Region root = loader.load();
+                rejectedReservationViewController = loader.getController();
+                rejectedReservationViewController.init(viewHandler,
+                    viewModelFactory.getRejectedReservationViewModel(), root);
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        rejectedReservationViewController.reset();
+        return rejectedReservationViewController.getRoot();
     }
 
     public Region loadRegisteredUserView() {

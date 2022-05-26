@@ -8,9 +8,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="406.0" prefWidth="988.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.rentee.RenteeEquipmentViewController">
+<AnchorPane prefHeight="406.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.rentee.RenteeEquipmentViewController">
    <children>
-      <Label layoutX="81.0" layoutY="14.0" text="Equipment for rental">
+      <Label alignment="CENTER" layoutX="45.0" layoutY="14.0" prefHeight="36.0" prefWidth="510.0" text="Equipment for rental">
          <font>
             <Font name="System Bold" size="25.0" />
          </font>
@@ -18,27 +18,27 @@
       <TableView fx:id="equipmentTable" layoutX="43.0" layoutY="62.0" prefHeight="290.0" prefWidth="510.0">
          <columns>
             <TableColumn fx:id="equipmentIdColumn" prefWidth="50.0" text="Id" />
-            <TableColumn fx:id="modelColumn" prefWidth="150.0" text="Model" />
-            <TableColumn fx:id="categoryColumn" prefWidth="150.0" text="Category" />
-            <TableColumn fx:id="reserveColumn" prefWidth="90.0" text="Select" />
+            <TableColumn fx:id="modelColumn" prefWidth="176.0" text="Model" />
+            <TableColumn fx:id="categoryColumn" prefWidth="153.0" text="Category" />
+            <TableColumn fx:id="reserveColumn" prefWidth="118.0" text="Select" />
          </columns>
       </TableView>
-      <Label layoutX="697.0" layoutY="126.0" text="Model:" />
-      <Label layoutX="688.0" layoutY="157.0" text="Category:" />
-      <Label layoutX="679.0" layoutY="203.0" text="Pick date until which to reserve" />
-      <Label layoutX="645.0" layoutY="62.0" text="Reservation details">
+      <Label layoutX="690.0" layoutY="78.0" text="Model:" />
+      <Label layoutX="681.0" layoutY="109.0" text="Category:" />
+      <Label layoutX="672.0" layoutY="155.0" text="Pick date until which to reserve" />
+      <Label layoutX="639.0" layoutY="14.0" text="Reservation details">
       <font>
          <Font name="System Bold" size="25.0" />
       </font>
       </Label>
-      <DatePicker fx:id="datePicker" layoutX="680.0" layoutY="239.0" />
-      <Button layoutX="707.0" layoutY="285.0" mnemonicParsing="false" onAction="#OnReserve" text="Confirm reservation" />
+      <DatePicker fx:id="datePicker" layoutX="673.0" layoutY="191.0" />
+      <Button layoutX="681.0" layoutY="237.0" mnemonicParsing="false" onAction="#OnReserve" prefHeight="30.0" prefWidth="150.0" text="Confirm reservation" />
       <Label fx:id="equipmentError" layoutX="43.0" layoutY="369.0" />
-      <Label fx:id="reservationError" alignment="CENTER" contentDisplay="CENTER" layoutX="638.0" layoutY="325.0" prefHeight="25.0" prefWidth="254.0" />
-      <Button layoutX="892.0" layoutY="365.0" mnemonicParsing="false" onAction="#onLogOutButtonClick" text="Log out" />
-      <Button layoutX="792.0" layoutY="365.0" mnemonicParsing="false" onAction="#onViewReservations" text="Reservations" />
-      <Label fx:id="loggedUser" alignment="CENTER_RIGHT" layoutX="602.0" layoutY="23.0" prefHeight="21.0" prefWidth="352.0" text="Logged as: " />
-      <Label fx:id="equipmentModel" layoutX="756.0" layoutY="126.0" prefHeight="19.0" prefWidth="152.0" />
-      <Label fx:id="category" layoutX="757.0" layoutY="156.0" prefHeight="20.0" prefWidth="153.0" />
+      <Label fx:id="reservationError" alignment="CENTER" contentDisplay="CENTER" layoutX="631.0" layoutY="277.0" prefHeight="25.0" prefWidth="254.0" />
+      <Button layoutX="342.0" layoutY="363.0" mnemonicParsing="false" onAction="#onLogOutButtonClick" prefHeight="30.0" prefWidth="100.0" text="Log out" />
+      <Button layoutX="453.0" layoutY="363.0" mnemonicParsing="false" onAction="#onViewReservations" prefHeight="30.0" prefWidth="100.0" text="Reservations" />
+      <Label fx:id="loggedUser" alignment="CENTER_RIGHT" layoutX="572.0" layoutY="368.0" prefHeight="21.0" prefWidth="273.0" text="Logged as: " />
+      <Label fx:id="equipmentModel" layoutX="749.0" layoutY="78.0" prefHeight="19.0" prefWidth="152.0" />
+      <Label fx:id="category" layoutX="750.0" layoutY="108.0" prefHeight="20.0" prefWidth="153.0" />
    </children>
 </AnchorPane>

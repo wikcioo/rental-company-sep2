@@ -101,7 +101,7 @@ public class LogInViewController {
             } else {
                 switch (result) {
                     case "Manager" -> {
-                        Platform.runLater(() -> viewHandler.openView(ViewHandler.MANAGER_EQUIPMENT_LIST_VIEW));
+                        Platform.runLater(() -> viewHandler.openView(ViewHandler.MANAGER_MAIN_MENU_VIEW));
                     }
                     case "Rentee" -> {
                         Platform.runLater(() -> viewHandler.openView(ViewHandler.EQUIPMENT_LIST_VIEW));

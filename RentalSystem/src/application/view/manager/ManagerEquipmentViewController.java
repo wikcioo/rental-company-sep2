@@ -14,8 +14,6 @@ import javafx.util.Callback;
 public class ManagerEquipmentViewController {
     @FXML
     private Label error;
-    @FXML
-    private Label loggedUser;
     private ViewHandler viewHandler;
     private ManagerEquipmentViewModel viewModel;
     private Region root;
@@ -101,7 +99,6 @@ public class ManagerEquipmentViewController {
 
         viewModel.bindEquipmentList(equipmentTable.itemsProperty());
         viewModel.bindErrorLabel(error.textProperty());
-        viewModel.bindLoggedUser(loggedUser.textProperty());
     }
 
     public void reset() {
@@ -113,37 +110,8 @@ public class ManagerEquipmentViewController {
         return root;
     }
 
-    public void onViewReservations() {
-        viewHandler.openView(ViewHandler.RESERVATION_LIST_VIEW);
-    }
-
-    @FXML
-    public void onAddNewUserButtonClick() {
-        viewHandler.openView(ViewHandler.ADD_USER_VIEW);
-    }
-
     public void backButtonPressed() {
-        viewHandler.openView(ViewHandler.EQUIPMENT_LIST_VIEW);
-    }
-
-    public void onViewApprovedReservations() {
-        viewHandler.openView(ViewHandler.APPROVED_RESERVATION_LIST_VIEW);
-    }
-
-    public void onViewRejectedReservations() {
-        viewHandler.openView(ViewHandler.REJECTED_RESERVATION_LIST_VIEW);
-    }
-    public void onViewExpiredReservations() {
-        viewHandler.openView(ViewHandler.EXPIRED_RESERVATION_LIST_VIEW);
-    }
-    @FXML
-    public void onRegisteredUsersButtonClick() {
-        viewHandler.openView(ViewHandler.REGISTERED_USER_VIEW);
-    }
-
-    @FXML
-    public void onLogOutButtonClick() {
-        viewHandler.openView(ViewHandler.LOG_IN_VIEW);
+        viewHandler.openView(ViewHandler.MANAGER_MAIN_MENU_VIEW);
     }
 
     public void addButtonPressed() {

@@ -3,21 +3,26 @@ package application.view.rentee;
 import application.view.ViewHandler;
 import application.viewmodel.rentee.RenteeMainMenuViewModel;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
 
 public class RenteeMainMenuViewController {
-    @FXML
-    private Label loggedUser;
     private ViewHandler viewHandler;
     private RenteeMainMenuViewModel viewModel;
     private Region root;
+    @FXML
+    public Label overdueAmount;
+    @FXML
+    private Label loggedUser;
 
     public void init(ViewHandler viewHandler, RenteeMainMenuViewModel renteeMainMenuViewModel, Region root) {
         this.viewHandler = viewHandler;
         this.viewModel = renteeMainMenuViewModel;
         this.root = root;
         viewModel.bindLoggedUser(loggedUser.textProperty());
+        overdueAmount.setText(viewModel.getCurrentUserOverDueEquipmentAmount());
+
     }
 
     public void reset() {
@@ -39,5 +44,13 @@ public class RenteeMainMenuViewController {
 
     public void onViewReservations() {
         viewHandler.openView(ViewHandler.RENTEE_RESERVATION_LIST_VIEW);
+    }
+
+    public void showOverdueAlert(int amountOverdue) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Alert");
+        alert.setHeaderText("Overdue equipment");
+        alert.setContentText("You have " + amountOverdue + " overdue equipment, which need to be returned");
+        alert.showAndWait();
     }
 }

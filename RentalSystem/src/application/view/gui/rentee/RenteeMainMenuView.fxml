@@ -8,6 +8,20 @@
 
 <AnchorPane prefHeight="463.0" prefWidth="610.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.rentee.RenteeMainMenuViewController">
     <children>
+      <Pane layoutX="40.0" layoutY="249.0" prefHeight="82.0" prefWidth="520.0" style="-fx-background-color: E3E3E3;">
+         <children>
+            <Label alignment="CENTER" layoutX="7.0" layoutY="20.0" prefHeight="40.0" prefWidth="365.0" text="Overdue equipment amount: ">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font>
+            </Label>
+            <Label fx:id="overdueAmount" alignment="TOP_LEFT" layoutX="370.0" layoutY="22.0" prefHeight="40.0" prefWidth="136.0" text="0">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
         <Pane layoutX="40.0" layoutY="40.0" prefHeight="200.0" prefWidth="240.0" style="-fx-background-color: E3E3E3;">
             <children>
                 <Label alignment="CENTER" prefHeight="40.0" prefWidth="240.0" text="Equipment">

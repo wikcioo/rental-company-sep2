@@ -44,6 +44,10 @@ public class FakeRentalSystemClient implements RentalSystemClient {
     }
 
     @Override
+    public void replyReservationId(int id) throws RemoteException {
+    }
+
+    @Override
     public ArrayList<Equipment> getAllEquipment() throws RemoteException {
         return equipmentList.getAllEquipment();
     }

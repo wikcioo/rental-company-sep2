@@ -26,6 +26,11 @@ public class FailingRentalSystemClient implements RentalSystemClient {
     }
 
     @Override
+    public void replyReservationId(int id) throws RemoteException {
+        throw new RemoteException();
+    }
+
+    @Override
     public void addEquipment(String model, String category, boolean available) throws RemoteException {
         throw new RemoteException();
     }

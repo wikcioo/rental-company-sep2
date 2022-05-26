@@ -50,7 +50,7 @@ public class ExpiredReservationViewController {
     renteeColumn.setCellValueFactory(p -> {
       if (p.getValue() != null) {
         User u = p.getValue().getRentee();
-        return new SimpleStringProperty(u.getFirstName() + " " + u.getLastName() + " - " + u.getEmail());
+        return new SimpleStringProperty(p.getValue().getRentee().toString());
       } else {
         return new SimpleStringProperty("<no rentee>");
       }

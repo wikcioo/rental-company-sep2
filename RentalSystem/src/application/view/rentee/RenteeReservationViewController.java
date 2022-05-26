@@ -1,10 +1,8 @@
-package application.view.manager;
+package application.view.rentee;
 
-import application.model.reservations.Approved;
 import application.model.reservations.Reservation;
-import application.model.users.User;
 import application.view.ViewHandler;
-import application.viewmodel.manager.ApprovedReservationViewModel;
+import application.viewmodel.rentee.RenteeReservationViewModel;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,47 +12,37 @@ import javafx.util.Callback;
 
 import java.time.format.DateTimeFormatter;
 
-public class ApprovedReservationViewController {
+public class RenteeReservationViewController {
     @FXML
     public Label error;
     private ViewHandler viewHandler;
-    private ApprovedReservationViewModel viewModel;
+    private RenteeReservationViewModel viewModel;
     private Region root;
     @FXML
-    private TableView<Approved> reservationTable;
+    private TableView<Reservation> reservationTable;
     @FXML
-    private TableColumn<Approved, String> reservationIdColumn;
+    private TableColumn<Reservation, String> reservationIdColumn;
     @FXML
-    private TableColumn<Approved, String> renteeColumn;
+    private TableColumn<Reservation, String> equipmentColumn;
     @FXML
-    private TableColumn<Approved, String> equipmentColumn;
+    public TableColumn<Reservation, String> reservationTypeColumn;
     @FXML
-    private TableColumn<Approved, String> startDateColumn;
+    private TableColumn<Reservation, String> startDateColumn;
     @FXML
-    private TableColumn<Approved, String> endDateColumn;
+    private TableColumn<Reservation, String> endDateColumn;
     @FXML
-    public TableColumn<Approved, String> daysOverdueColumn;
-    @FXML
-    public TableColumn<Approved, String> returnButtonColumn;
+    public TableColumn<Reservation, String> detailsColumn;
 
-    public void init(ViewHandler viewHandler, ApprovedReservationViewModel approvedReservationViewModel, Region root) {
+    public void init(ViewHandler viewHandler, RenteeReservationViewModel renteeReservationViewModel, Region root) {
         this.viewHandler = viewHandler;
-        this.viewModel = approvedReservationViewModel;
+        this.viewModel = renteeReservationViewModel;
         this.root = root;
 
         reservationIdColumn.setCellValueFactory(p -> {
             if (p.getValue() != null) {
                 return new SimpleStringProperty(Integer.toString(p.getValue().getId()));
             } else {
-                return new SimpleStringProperty("<no equipment>");
-            }
-        });
-
-        renteeColumn.setCellValueFactory(p -> {
-            if (p.getValue() != null) {
-                return new SimpleStringProperty(p.getValue().getRentee().toString());
-            } else {
-                return new SimpleStringProperty("<no rentee>");
+                return new SimpleStringProperty("<no reservation id>");
             }
         });
 
@@ -66,11 +54,19 @@ public class ApprovedReservationViewController {
             }
         });
 
+        reservationTypeColumn.setCellValueFactory(p -> {
+            if (p.getValue() != null) {
+                return new SimpleStringProperty(p.getValue().status());
+            } else {
+                return new SimpleStringProperty("<no equipment>");
+            }
+        });
+
         startDateColumn.setCellValueFactory(p -> {
             if (p.getValue() != null) {
                 return new SimpleStringProperty(p.getValue().getReservationDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
             } else {
-                return new SimpleStringProperty("<no end date>");
+                return new SimpleStringProperty("<no start date>");
             }
         });
 
@@ -82,25 +78,16 @@ public class ApprovedReservationViewController {
             }
         });
 
-        daysOverdueColumn.setCellValueFactory(p -> {
-            if (p.getValue() != null && p.getValue().getRentedFor() != null) {
-                return new SimpleStringProperty(p.getValue().getDaysOverdue().toString());
-            } else {
-                return new SimpleStringProperty("<no end date>");
-            }
-        });
-
-        returnButtonColumn.setCellFactory(new Callback<>() {
+        detailsColumn.setCellFactory(new Callback<>() {
             @Override
-            public TableCell<Approved, String> call(final TableColumn<Approved, String> param) {
+            public TableCell<Reservation, String> call(final TableColumn<Reservation, String> param) {
                 return new TableCell<>() {
-                    private final Button btn = new Button("Return");
+                    private final Button btn = new Button("Details");
 
                     {
                         btn.setOnAction((ActionEvent event) -> {
-                            Approved reservation = getTableView().getItems().get(getIndex());
-                            viewModel.removeReservation(reservation);
-                            reservationTable.refresh();
+                            Reservation reservation = getTableView().getItems().get(getIndex());
+                            showDetails(reservation);
                         });
                     }
 
@@ -116,6 +103,8 @@ public class ApprovedReservationViewController {
                 };
             }
         });
+
+
         viewModel.bindReservationList(reservationTable.itemsProperty());
         viewModel.bindErrorLabel(error.textProperty());
     }
@@ -129,7 +118,15 @@ public class ApprovedReservationViewController {
     }
 
     public void backButtonPressed() {
-        viewHandler.openView(ViewHandler.MANAGER_EQUIPMENT_LIST_VIEW);
+        viewHandler.openView(ViewHandler.EQUIPMENT_LIST_VIEW);
     }
 
+
+    private void showDetails(Reservation reservation) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Details");
+        alert.setHeaderText("Reservation details");
+        alert.setContentText("Status - " + reservation.status() + "\n" + reservation);
+        alert.showAndWait();
+    }
 }

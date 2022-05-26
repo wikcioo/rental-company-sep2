@@ -4,6 +4,7 @@ import application.model.users.User;
 import application.model.equipment.Equipment;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Approved extends Reservation {
     private final LocalDateTime approvedDate;
@@ -34,5 +35,12 @@ public class Approved extends Reservation {
 
     public String getApprovedBy() {
         return approvedBy;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() +
+                "\nApproved on: " + approvedDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) +
+                "\nApproved by: " + approvedBy;
     }
 }

@@ -4,6 +4,7 @@ import application.model.users.User;
 import application.model.equipment.Equipment;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Expired extends Reservation {
     private final LocalDateTime dateTime;
@@ -26,5 +27,11 @@ public class Expired extends Reservation {
 
     public LocalDateTime getExpirationDate() {
         return dateTime;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() +
+                "\nExpired on: " + dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
 }

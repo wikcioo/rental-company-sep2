@@ -26,6 +26,7 @@ public class ModelManager implements Model, PropertyChangeListener {
     private final PropertyChangeSupport support;
     public static final String EQUIPMENT_LIST_CHANGED = "equipment_list_changed";
     public static final String RESERVATION_LIST_CHANGED = "reservation_list_changed";
+    public static final String RESERVATION_ID_RECEIVED = "reservation_id_received";
     public static final String USER_LIST_CHANGED = "user_list_changed";
 
     public ModelManager(RentalSystemClient client) {
@@ -210,6 +211,9 @@ public class ModelManager implements Model, PropertyChangeListener {
             case "reservations" -> {
                 reservationList.setReservationList((ArrayList<Reservation>) evt.getNewValue());
                 support.firePropertyChange(RESERVATION_LIST_CHANGED, null, reservationList.getAll());
+            }
+            case "reservation_id" -> {
+                support.firePropertyChange(RESERVATION_ID_RECEIVED, null, evt.getNewValue());
             }
             case "users" -> {
                 userList.setUsers((ArrayList<User>) evt.getNewValue());

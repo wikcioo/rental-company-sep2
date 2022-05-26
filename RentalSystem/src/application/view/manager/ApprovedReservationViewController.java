@@ -1,8 +1,6 @@
 package application.view.manager;
 
 import application.model.reservations.Approved;
-import application.model.reservations.Reservation;
-import application.model.users.User;
 import application.view.ViewHandler;
 import application.viewmodel.manager.ApprovedReservationViewModel;
 import javafx.beans.property.SimpleStringProperty;
@@ -29,9 +27,9 @@ public class ApprovedReservationViewController {
     @FXML
     private TableColumn<Approved, String> equipmentColumn;
     @FXML
-    private TableColumn<Approved, String> startDateColumn;
+    private TableColumn<Approved, String> approvedOnColumn;
     @FXML
-    private TableColumn<Approved, String> endDateColumn;
+    private TableColumn<Approved, String> rentedUntilColumn;
     @FXML
     public TableColumn<Approved, String> daysOverdueColumn;
     @FXML
@@ -66,15 +64,15 @@ public class ApprovedReservationViewController {
             }
         });
 
-        startDateColumn.setCellValueFactory(p -> {
+        approvedOnColumn.setCellValueFactory(p -> {
             if (p.getValue() != null) {
-                return new SimpleStringProperty(p.getValue().getReservationDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+                return new SimpleStringProperty(p.getValue().getApprovedDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
             } else {
                 return new SimpleStringProperty("<no end date>");
             }
         });
 
-        endDateColumn.setCellValueFactory(p -> {
+        rentedUntilColumn.setCellValueFactory(p -> {
             if (p.getValue() != null && p.getValue().getRentedFor() != null) {
                 return new SimpleStringProperty(p.getValue().getRentedFor().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
             } else {
@@ -84,14 +82,7 @@ public class ApprovedReservationViewController {
 
         daysOverdueColumn.setCellValueFactory(p -> {
             if (p.getValue() != null && p.getValue().getRentedFor() != null) {
-                String daysOverDue;
-                int days = Math.toIntExact(p.getValue().getDaysOverdue());
-                if (days <= 0) {
-                    daysOverDue = Math.abs(days) + " days left";
-                } else {
-                    daysOverDue = days + " days overdue";
-                }
-                return new SimpleStringProperty(daysOverDue);
+                return new SimpleStringProperty(p.getValue().getDaysOverdueString());
             } else {
                 return new SimpleStringProperty("<no end date>");
             }

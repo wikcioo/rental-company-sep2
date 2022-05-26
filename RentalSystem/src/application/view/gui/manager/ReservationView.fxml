@@ -20,8 +20,8 @@
             <TableColumn fx:id="reservationIdColumn" prefWidth="50.0" text="Id" />
             <TableColumn fx:id="renteeColumn" prefWidth="170.0" text="Rentee" />
             <TableColumn fx:id="equipmentColumn" prefWidth="198.0" text="Equipment" />
-            <TableColumn fx:id="startDateColumn" prefWidth="153.0" text="Start date" />
-            <TableColumn fx:id="endDateColumn" prefWidth="150.0" text="End date" />
+            <TableColumn fx:id="reservedOnColumn" prefWidth="153.0" text="Reserved on" />
+            <TableColumn fx:id="rentedUntilColumn" prefWidth="150.0" text="Rented until" />
             <TableColumn fx:id="approveButtonColumn" prefWidth="80.5" text="Approve" />
             <TableColumn fx:id="rejectButtonColumn" prefWidth="80.5" text="Reject" />
          </columns>

@@ -24,7 +24,6 @@ public class EquipmentViewModel implements PropertyChangeListener {
     private final ObjectProperty<LocalDateTime> reservationEndDate;
     private final StringProperty equipmentErrorProperty;
     private final StringProperty reservationErrorProperty;
-    private final StringProperty loggedUserProperty;
 
     public static final LocalDate MIN_DATE = LocalDate.now().plusDays(1);
     public static final LocalDate MAX_DATE = MIN_DATE.plusWeeks(4);
@@ -38,7 +37,6 @@ public class EquipmentViewModel implements PropertyChangeListener {
         this.reservationEndDate = new SimpleObjectProperty<>();
         this.equipmentErrorProperty = new SimpleStringProperty();
         this.reservationErrorProperty = new SimpleStringProperty();
-        this.loggedUserProperty = new SimpleStringProperty();
     }
 
     public void bindEquipmentList(ObjectProperty<ObservableList<Equipment>> property) {
@@ -58,10 +56,6 @@ public class EquipmentViewModel implements PropertyChangeListener {
     }
     public void bindReservationErrorLabel(StringProperty property) {
         property.bindBidirectional(reservationErrorProperty);
-    }
-
-    public void bindLoggedUser(StringProperty property) {
-        loggedUserProperty.bindBidirectional(property);
     }
 
     public void retrieveAllUnreservedEquipment() {
@@ -94,7 +88,4 @@ public class EquipmentViewModel implements PropertyChangeListener {
         }
     }
 
-    public void displayLoggedUser() {
-        loggedUserProperty.set("Logged as: " + model.getCurrentlyLoggedInUser().getEmail());
-    }
 }

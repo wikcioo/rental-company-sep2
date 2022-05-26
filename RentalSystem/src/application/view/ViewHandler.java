@@ -22,6 +22,7 @@ public class ViewHandler {
     public static final String EXPIRED_RESERVATION_LIST_VIEW ="expired_reservation_list_view";
     public static final String RETURNED_RESERVATION_LIST_VIEW ="returned_reservation_list_view";
     public static final String RENTEE_RESERVATION_LIST_VIEW = "rentee_reservation_list_view";
+    public static final String RENTEE_MAIN_MENU_VIEW = "rentee_main_menu_view";
     private Stage primaryStage;
     private final Scene currentScene;
     private final ViewFactory viewFactory;
@@ -51,6 +52,7 @@ public class ViewHandler {
             case REGISTERED_USER_VIEW -> viewFactory.loadRegisteredUserView();
             case RENTEE_RESERVATION_LIST_VIEW -> viewFactory.loadRenteeReservationView();
             case MANAGER_MAIN_MENU_VIEW -> viewFactory.loadManagerMainMenuView();
+            case RENTEE_MAIN_MENU_VIEW -> viewFactory.loadRenteeMainMenuView();
             default -> throw new IllegalArgumentException("Unknown id: " + id);
         };
 

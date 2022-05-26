@@ -118,7 +118,7 @@ public class RenteeReservationViewController {
     }
 
     public void backButtonPressed() {
-        viewHandler.openView(ViewHandler.EQUIPMENT_LIST_VIEW);
+        viewHandler.openView(ViewHandler.RENTEE_MAIN_MENU_VIEW);
     }
 
 

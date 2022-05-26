@@ -104,7 +104,7 @@ public class LogInViewController {
                         Platform.runLater(() -> viewHandler.openView(ViewHandler.MANAGER_MAIN_MENU_VIEW));
                     }
                     case "Rentee" -> {
-                        Platform.runLater(() -> viewHandler.openView(ViewHandler.EQUIPMENT_LIST_VIEW));
+                        Platform.runLater(() -> viewHandler.openView(ViewHandler.RENTEE_MAIN_MENU_VIEW));
                     }
                     default -> {
                         Platform.runLater(() -> {

@@ -2,7 +2,6 @@ package application.view.manager;
 
 import application.view.ViewHandler;
 import application.viewmodel.manager.ManagerMainMenuViewModel;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Region;

@@ -1,4 +1,4 @@
-package application.viewmodel.manager;
+package application.viewmodel.rentee;
 
 import application.model.Model;
 import application.model.ModelManager;
@@ -16,12 +16,14 @@ import java.rmi.RemoteException;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class ManagerMainMenuViewModel {
+public class RenteeMainMenuViewModel {
     private final Model model;
+    private final StringProperty errorProperty;
     private final StringProperty loggedUserProperty;
 
-    public ManagerMainMenuViewModel(Model model) {
+    public RenteeMainMenuViewModel(Model model) {
         this.model = model;
+        this.errorProperty = new SimpleStringProperty();
         this.loggedUserProperty = new SimpleStringProperty();
     }
 

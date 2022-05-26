@@ -71,14 +71,7 @@ public class EquipmentViewModel implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         switch (evt.getPropertyName()) {
-            case ModelManager.RESERVATION_ID_RECEIVED ->  {
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        reservationErrorProperty.set("Success! reservation id: " + evt.getNewValue());
-                    }
-                });
-            }
+            case ModelManager.RESERVATION_ID_RECEIVED -> Platform.runLater(() -> reservationErrorProperty.set("Success! reservation id: " + evt.getNewValue()));
             case ModelManager.EQUIPMENT_LIST_CHANGED -> {
                 try {
                     listObjectProperty.setValue(FXCollections.observableList(model.getAllAvailableEquipment()));

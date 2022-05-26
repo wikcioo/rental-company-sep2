@@ -60,12 +60,13 @@ public interface ReservationDao {
     void returnReservation(int id) throws SQLException;
 
     /**
-     * Inserts a new row  in the reservation relation. Inserts the default value in a reservation_date.
+     * Inserts a new row  in the reservation relation and returns its id. Inserts the default value in a reservation_date.
      *
      * @param equipment_id the equipment id. The equipment id must exist in the database, otherwise SQLException is thrown
      * @param rentee_id    the user id. The user must exist in the database, otherwise SQLException is thrown
      * @param rentedFor    the date until which rentee wishes to have time to return the equipment
+     * @return the new reservation id
      * @throws SQLException
      */
-    void reserveEquipment(int equipment_id, String rentee_id, LocalDateTime rentedFor) throws SQLException;
+    int reserveEquipment(int equipment_id, String rentee_id, LocalDateTime rentedFor) throws SQLException;
 }

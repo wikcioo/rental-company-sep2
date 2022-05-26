@@ -198,4 +198,12 @@ public interface RentalSystemClient extends Remote {
      * @throws RemoteException indicates connection failure
      */
     void removeListener(PropertyChangeListener listener) throws RemoteException;
+
+    /** Receives a reservation id given in the argument and fires a property change
+     * @param id - a reservation id that's been created and returned
+     * @throws RemoteException
+     */
+    public void replyReservationId(int id) throws RemoteException;
+
+
 }

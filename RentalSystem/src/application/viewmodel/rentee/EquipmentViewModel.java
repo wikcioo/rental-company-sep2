@@ -3,6 +3,7 @@ package application.viewmodel.rentee;
 import application.model.equipment.Equipment;
 import application.model.Model;
 import application.model.ModelManager;
+import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -31,6 +32,7 @@ public class EquipmentViewModel implements PropertyChangeListener {
     public EquipmentViewModel(Model model) {
         this.model = model;
         this.model.addListener(ModelManager.EQUIPMENT_LIST_CHANGED, this);
+        this.model.addListener(ModelManager.RESERVATION_ID_RECEIVED, this);
         this.listObjectProperty = new SimpleObjectProperty<>();
         this.selectedEquipmentProperty = new SimpleObjectProperty<>();
         this.reservationEndDate = new SimpleObjectProperty<>();
@@ -73,6 +75,14 @@ public class EquipmentViewModel implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         switch (evt.getPropertyName()) {
+            case ModelManager.RESERVATION_ID_RECEIVED ->  {
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        reservationErrorProperty.set("Success! reservation id: " + evt.getNewValue());
+                    }
+                });
+            }
             case ModelManager.EQUIPMENT_LIST_CHANGED -> {
                 try {
                     listObjectProperty.setValue(FXCollections.observableList(model.getAllAvailableEquipment()));
@@ -86,7 +96,6 @@ public class EquipmentViewModel implements PropertyChangeListener {
     public void reserveEquipment() {
         try {
             model.reserveEquipment(selectedEquipmentProperty.get().getEquipmentId(), model.getCurrentlyLoggedInUser().getEmail(), reservationEndDate.get());
-            reservationErrorProperty.set("Success");
         } catch (RemoteException e) {
             reservationErrorProperty.set("Failed to reserve equipment");
         }

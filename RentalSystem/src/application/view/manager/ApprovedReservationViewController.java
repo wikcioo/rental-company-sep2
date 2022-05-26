@@ -84,7 +84,14 @@ public class ApprovedReservationViewController {
 
         daysOverdueColumn.setCellValueFactory(p -> {
             if (p.getValue() != null && p.getValue().getRentedFor() != null) {
-                return new SimpleStringProperty(p.getValue().getDaysOverdue().toString());
+                String daysOverDue;
+                int days = Math.toIntExact(p.getValue().getDaysOverdue());
+                if (days <= 0) {
+                    daysOverDue = Math.abs(days) + " days left";
+                } else {
+                    daysOverDue = days + " days overdue";
+                }
+                return new SimpleStringProperty(daysOverDue);
             } else {
                 return new SimpleStringProperty("<no end date>");
             }

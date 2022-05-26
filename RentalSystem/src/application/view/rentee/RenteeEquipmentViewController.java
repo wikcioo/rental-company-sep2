@@ -13,7 +13,7 @@ import javafx.util.Callback;
 
 import java.time.LocalDate;
 
-public class EquipmentViewController {
+public class RenteeEquipmentViewController {
     @FXML
     public DatePicker datePicker;
     @FXML

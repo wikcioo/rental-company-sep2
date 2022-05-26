@@ -6,6 +6,7 @@ import application.dao.*;
 import application.model.equipment.Equipment;
 import application.model.reservations.Reservation;
 import application.model.users.User;
+import application.server.timer.ExpiringReservationTimerImplementation;
 import application.shared.IServer;
 import dk.via.remote.observer.RemotePropertyChangeListener;
 import dk.via.remote.observer.RemotePropertyChangeSupport;
@@ -20,12 +21,14 @@ public class RentalSystemServer extends UnicastRemoteObject implements IServer {
     private final EquipmentDao equipmentDao;
     private final UserDao userDao;
     private final ReservationDao reservationDao;
+    private final ExpiringReservationTimerImplementation expirationTimer;
     private final RemotePropertyChangeSupport<ArrayList> support;
 
     public RentalSystemServer() throws RemoteException {
         this.equipmentDao = SQLEquipmentDao.getInstance();
         this.userDao = SQLUserDao.getInstance();
         this.reservationDao = SQLReservationDao.getInstance();
+        this.expirationTimer = new ExpiringReservationTimerImplementation(10);
         this.support = new RemotePropertyChangeSupport<>(this);
     }
 
@@ -140,7 +143,9 @@ public class RentalSystemServer extends UnicastRemoteObject implements IServer {
     @Override
     public ArrayList<Reservation> retrieveReservations() throws RemoteException {
         try {
-            return reservationDao.retrieveReservations();
+            ArrayList<Reservation> reservations = reservationDao.retrieveReservations();
+
+            return reservations;
         } catch (SQLException e) {
             throw new RemoteException(e.getMessage(), e);
         }

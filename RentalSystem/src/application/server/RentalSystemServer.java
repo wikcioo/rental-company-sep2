@@ -1,7 +1,6 @@
 package application.server;
 
 
-import application.client.RemoteSender;
 import application.dao.*;
 import application.model.equipment.Equipment;
 import application.model.reservations.Reservation;

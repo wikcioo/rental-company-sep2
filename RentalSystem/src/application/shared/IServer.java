@@ -1,6 +1,5 @@
 package application.shared;
 
-import application.client.RemoteSender;
 import application.model.equipment.Equipment;
 import application.model.reservations.Reservation;
 import application.model.users.User;

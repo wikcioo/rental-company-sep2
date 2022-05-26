@@ -14,6 +14,7 @@ import javafx.collections.ObservableList;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.rmi.RemoteException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class EquipmentViewModel implements PropertyChangeListener {
@@ -24,6 +25,9 @@ public class EquipmentViewModel implements PropertyChangeListener {
     private final StringProperty equipmentErrorProperty;
     private final StringProperty reservationErrorProperty;
     private final StringProperty loggedUserProperty;
+
+    public static final LocalDate MIN_DATE = LocalDate.now().plusDays(1);
+    public static final LocalDate MAX_DATE = MIN_DATE.plusWeeks(4);
 
     public EquipmentViewModel(Model model) {
         this.model = model;

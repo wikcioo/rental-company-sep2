@@ -40,8 +40,7 @@ public class EquipmentViewController {
     @FXML
     private Label loggedUser;
 
-    private static final LocalDate MIN_DATE = LocalDate.now();
-    private static final LocalDate MAX_DATE = MIN_DATE.plusWeeks(4);
+
 
     public void init(ViewHandler viewHandler, EquipmentViewModel equipmentViewModel, Region root) {
         this.viewHandler = viewHandler;
@@ -54,7 +53,7 @@ public class EquipmentViewController {
                     @Override
                     public void updateItem(LocalDate item, boolean empty) {
                         super.updateItem(item, empty);
-                        setDisable(item.isAfter(MAX_DATE) || item.isBefore(MIN_DATE));
+                        setDisable(item.isAfter(EquipmentViewModel.MAX_DATE) || item.isBefore(EquipmentViewModel.MIN_DATE));
                     }
                 });
         datePicker.focusedProperty().addListener((observable, oldValue, newValue) -> {
@@ -142,7 +141,7 @@ public class EquipmentViewController {
             reservationError.setText("You must select an item to reserve");
         } else if (datePicker.getValue() == null) {
             reservationError.setText("You must choose the date");
-        } else if (datePicker.getValue().isAfter(MAX_DATE) || datePicker.getValue().isBefore(MIN_DATE)) {
+        } else if (datePicker.getValue().isAfter(EquipmentViewModel.MAX_DATE) || datePicker.getValue().isBefore(EquipmentViewModel.MIN_DATE)) {
             reservationError.setText("You must choose a date in the correct interval");
         } else {
             viewModel.bindReservationEndDate(new SimpleObjectProperty<>(datePicker.getValue().atTime(14, 0)));

@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="406.0" prefWidth="988.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.rentee.EquipmentViewController">
+<AnchorPane prefHeight="406.0" prefWidth="988.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.rentee.RenteeEquipmentViewController">
    <children>
       <Label layoutX="81.0" layoutY="14.0" text="Equipment for rental">
          <font>
@@ -33,7 +33,6 @@
       </Label>
       <DatePicker fx:id="datePicker" layoutX="680.0" layoutY="239.0" />
       <Button layoutX="707.0" layoutY="285.0" mnemonicParsing="false" onAction="#OnReserve" text="Confirm reservation" />
-      <Button layoutX="566.0" layoutY="365.0" mnemonicParsing="false" onAction="#onViewManagerEquipment" text="Manager" />
       <Label fx:id="equipmentError" layoutX="43.0" layoutY="369.0" />
       <Label fx:id="reservationError" alignment="CENTER" contentDisplay="CENTER" layoutX="638.0" layoutY="325.0" prefHeight="25.0" prefWidth="254.0" />
       <Button layoutX="892.0" layoutY="365.0" mnemonicParsing="false" onAction="#onLogOutButtonClick" text="Log out" />

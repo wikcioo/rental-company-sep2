@@ -71,22 +71,7 @@ public class SQLEquipmentDao implements EquipmentDao {
                 Connection connection = getConnection();
                 Statement statement = connection.createStatement()
         ) {
-            ResultSet rs = statement.executeQuery("\n" +
-                    "\n" +
-                    "SELECT equipment.equipment_id as id, model, category, availability FROM equipment\n" +
-                    "    -- joining equipment that's not returned, rejected or expired or never reserved before\n" +
-                    "    LEFT JOIN (\n" +
-                    "        SELECT equipment_id FROM reservation\n" +
-                    "            LEFT JOIN ( approved INNER JOIN returned r2 on approved.reservation_id = r2.approved_id )\n" +
-                    "                as returned on returned.reservation_id = reservation.reservation_id\n" +
-                    "            LEFT JOIN rejected r on reservation.reservation_id = r.reservation_id\n" +
-                    "            LEFT JOIN expired e on reservation.reservation_id = e.reservation_id\n" +
-                    "        WHERE r.reservation_id IS NULL\n" +
-                    "          AND returned.reservation_id IS NULL\n" +
-                    "          AND e.reservation_id IS NULL) as currently_reserved on equipment.equipment_id = currently_reserved.equipment_id\n" +
-                    "    -- and selecting equipment that does not match joined criteria\n" +
-                    "    WHERE currently_reserved.equipment_id IS NULL\n" +
-                    "ORDER BY id;");
+            ResultSet rs = statement.executeQuery("SELECT id,model,category,availability FROM unreserved UNION SELECT id,model,category,availability FROM unavailable;");
             while (rs.next()) {
                 int id = rs.getInt("id");
                 String model = rs.getString("model");

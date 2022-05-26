@@ -1,7 +1,7 @@
 package application.view;
 
 import application.view.manager.*;
-import application.view.rentee.EquipmentViewController;
+import application.view.rentee.RenteeEquipmentViewController;
 import application.view.rentee.RenteeReservationViewController;
 import application.viewmodel.ViewModelFactory;
 import javafx.fxml.FXMLLoader;
@@ -13,7 +13,7 @@ public class ViewFactory {
     private final ViewHandler viewHandler;
     private final ViewModelFactory viewModelFactory;
     private AddEquipmentViewController addEquipmentViewController;
-    private EquipmentViewController equipmentViewController;
+    private RenteeEquipmentViewController renteeEquipmentViewController;
     private LogInViewController logInViewController;
     private ReservationViewController reservationViewController;
     private ManagerEquipmentViewController managerEquipmentViewController;
@@ -47,20 +47,20 @@ public class ViewFactory {
     }
 
     public Region loadShowEquipmentView() {
-        if (equipmentViewController == null) {
+        if (renteeEquipmentViewController == null) {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("gui/rentee/EquipmentView.fxml"));
+            loader.setLocation(getClass().getResource("gui/rentee/RenteeEquipmentView.fxml"));
             try {
                 Region root = loader.load();
-                equipmentViewController = loader.getController();
-                equipmentViewController.init(viewHandler,
+                renteeEquipmentViewController = loader.getController();
+                renteeEquipmentViewController.init(viewHandler,
                         viewModelFactory.getEquipmentViewModel(), root);
             } catch (IOException e) {
                 System.out.println(e.getMessage());
             }
         }
-        equipmentViewController.reset();
-        return equipmentViewController.getRoot();
+        renteeEquipmentViewController.reset();
+        return renteeEquipmentViewController.getRoot();
     }
 
     public Region loadLogInView() {

@@ -1,5 +1,6 @@
 package application.shared;
 
+import application.client.RemoteSender;
 import application.model.equipment.Equipment;
 import application.model.reservations.Reservation;
 import application.model.users.User;
@@ -164,15 +165,16 @@ public interface IServer extends Remote {
     void returnReservation(int id) throws RemoteException;
 
     /**
-     * Reserves the equipment with given id in the database.
+     * Reserves the equipment with given id in the database and notifies a sender about new reservation's id.
      * Calls {@link application.dao.ReservationDao#reserveEquipment(int, String, LocalDateTime) reserveEquipment} method.
      *
      * @param equipment_id equipment's id
      * @param rentee_id    rentee's id
      * @param rentedFor    expiration date of the reserved equipment
+     * @param sender       sender, to which id of a new reservation will be replied to
      * @throws RemoteException indicates connection failure
      */
-    void reserveEquipment(int equipment_id, String rentee_id, LocalDateTime rentedFor) throws RemoteException;
+    void reserveEquipment(int equipment_id, String rentee_id, LocalDateTime rentedFor, RemoteSender sender) throws RemoteException;
 
     /**
      * Throws Remote Exception when RMI client cannot connect to it.

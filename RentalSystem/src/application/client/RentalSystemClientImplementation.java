@@ -27,7 +27,7 @@ public class RentalSystemClientImplementation extends UnicastRemoteObject implem
     }
 
     @Override
-    public void replyReservationId(int id) {
+    public void replyReservationId(int id) throws RemoteException {
         support.firePropertyChange("reservation_id",null, id);
     }
 
@@ -118,7 +118,7 @@ public class RentalSystemClientImplementation extends UnicastRemoteObject implem
 
     @Override
     public void reserveEquipment(int equipment_id, String rentee_id, LocalDateTime rentedFor) throws RemoteException {
-        server.reserveEquipment(equipment_id, rentee_id, rentedFor);
+        server.reserveEquipment(equipment_id, rentee_id, rentedFor,this);
     }
 
     @Override

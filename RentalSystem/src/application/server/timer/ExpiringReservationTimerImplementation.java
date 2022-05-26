@@ -16,7 +16,6 @@ public class ExpiringReservationTimerImplementation implements ExpiringReservati
     private Timer timer;
     private final HashMap<Integer,ExpiringReservation> reservationHashMap;
     private final PropertyChangeSupport pcs;
-    private final static String RESERVATION_EXPIRED = "reservation_expired";
     private final int expirationTimeout;
 
     public ExpiringReservationTimerImplementation(int expirationTimeout) {

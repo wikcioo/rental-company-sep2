@@ -2,6 +2,7 @@ package application.view.manager;
 
 import application.view.ViewHandler;
 import application.viewmodel.manager.ManagerMainMenuViewModel;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
@@ -56,5 +57,9 @@ public class ManagerMainMenuViewController {
 
     public void onViewAllEquipment() {
         viewHandler.openView(ViewHandler.MANAGER_EQUIPMENT_LIST_VIEW);
+    }
+
+    public void onViewReturnedReservations() {
+        viewHandler.openView(ViewHandler.RETURNED_RESERVATION_LIST_VIEW);
     }
 }

@@ -2,6 +2,7 @@ package application.view;
 
 import application.view.manager.*;
 import application.view.rentee.EquipmentViewController;
+import application.view.rentee.RenteeReservationViewController;
 import application.viewmodel.ViewModelFactory;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.Region;
@@ -21,6 +22,7 @@ public class ViewFactory {
     private RegisteredUserViewController registeredUserViewController;
     private RejectedReservationViewController rejectedReservationViewController;
     private ExpiredReservationViewController expiredReservationViewController;
+    private RenteeReservationViewController renteeReservationViewController;
     public ViewFactory(ViewHandler viewHandler, ViewModelFactory viewModelFactory) {
         this.viewHandler = viewHandler;
         this.viewModelFactory = viewModelFactory;
@@ -195,5 +197,22 @@ public class ViewFactory {
         }
         registeredUserViewController.reset();
         return registeredUserViewController.getRoot();
+    }
+
+    public Region loadRenteeReservationView() {
+        if (renteeReservationViewController == null) {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("gui/rentee/RenteeReservationView.fxml"));
+            try {
+                Region root = loader.load();
+                renteeReservationViewController = loader.getController();
+                renteeReservationViewController.init(viewHandler,
+                        viewModelFactory.getRenteeReservationViewModel(), root);
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        renteeReservationViewController.reset();
+        return renteeReservationViewController.getRoot();
     }
 }

@@ -53,6 +53,19 @@ public class ModelManager implements Model, PropertyChangeListener {
     }
 
     @Override
+    public ArrayList<Reservation> getCurrentUserReservations() {
+        ArrayList<Reservation> userReservations = new ArrayList<>();
+        if (currentlyLoggedInUser != null) {
+            for (Reservation r : reservationList.getAll()) {
+                if (currentlyLoggedInUser.getEmail().equals(r.getRentee().getEmail())) {
+                    userReservations.add(r);
+                }
+            }
+        }
+        return userReservations;
+    }
+
+    @Override
     public ArrayList<Equipment> getAllAvailableEquipment() {
         return equipmentList.getAllAvailableEquipment();
     }

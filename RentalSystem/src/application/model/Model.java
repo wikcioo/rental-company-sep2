@@ -30,6 +30,9 @@ public interface Model extends NamedPropertyChangeSubject {
      */
     ArrayList<Equipment> getAllEquipment();
 
+    //TODO: [Aivaras] JavaDoc for method
+    ArrayList<Reservation> getCurrentUserReservations();
+
     /**
      * Gets all available equipment from the equipmentList.
      * Delegates to {@link application.model.equipment.EquipmentList#getAllAvailableEquipment() getAllAvailableEquipment} method.

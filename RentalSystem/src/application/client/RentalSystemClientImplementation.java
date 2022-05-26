@@ -16,7 +16,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public class RentalSystemClientImplementation extends UnicastRemoteObject implements RentalSystemClient, RemotePropertyChangeListener<ArrayList> {
+public class RentalSystemClientImplementation extends UnicastRemoteObject implements RentalSystemClient,RemoteSender, RemotePropertyChangeListener<ArrayList>  {
     private final IServer server;
     private final PropertyChangeSupport support;
 
@@ -24,6 +24,11 @@ public class RentalSystemClientImplementation extends UnicastRemoteObject implem
         this.server = (IServer) LocateRegistry.getRegistry(host, port).lookup("Server");
         this.support = new PropertyChangeSupport(this);
         server.addPropertyChangeListener(this);
+    }
+
+    @Override
+    public void replyReservationId(int id) {
+        support.firePropertyChange("reservation_id",null, id);
     }
 
     @Override

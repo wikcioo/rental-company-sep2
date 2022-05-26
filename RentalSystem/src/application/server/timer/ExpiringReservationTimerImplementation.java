@@ -59,6 +59,13 @@ public class ExpiringReservationTimerImplementation implements ExpiringReservati
     }
 
     @Override
+    public boolean isExpiring(Reservation reservation) {
+        if(reservationHashMap.containsValue(reservation))
+            return true;
+        return false;
+    }
+
+    @Override
     public void cancelAll() {
         timer.cancel();
         timer = new Timer();

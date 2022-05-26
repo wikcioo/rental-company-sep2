@@ -9,8 +9,8 @@
 
 <AnchorPane prefHeight="406.0" prefWidth="977.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.manager.ApprovedReservationViewController">
    <children>
-      <Button layoutX="466.0" layoutY="355.0" mnemonicParsing="false" onAction="#backButtonPressed" text="Back" />
-      <Label layoutX="365.0" layoutY="14.0" text="Approved reservations">
+      <Button layoutX="466.0" layoutY="355.0" mnemonicParsing="false" onAction="#backButtonPressed" prefHeight="30.0" prefWidth="100.0" text="Back" />
+      <Label alignment="CENTER" layoutX="38.0" layoutY="14.0" prefHeight="36.0" prefWidth="896.0" text="Approved reservations">
          <font>
             <Font name="System Bold" size="25.0" />
          </font>

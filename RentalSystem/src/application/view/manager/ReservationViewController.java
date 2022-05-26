@@ -147,7 +147,7 @@ public class ReservationViewController {
     }
 
     public void backButtonPressed() {
-        viewHandler.openView(ViewHandler.MANAGER_EQUIPMENT_LIST_VIEW);
+        viewHandler.openView(ViewHandler.MANAGER_MAIN_MENU_VIEW);
     }
 
     private void confirmRejection(Reservation reservation) {

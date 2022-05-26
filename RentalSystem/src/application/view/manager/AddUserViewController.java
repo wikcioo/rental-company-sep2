@@ -61,7 +61,7 @@ public class AddUserViewController {
 
     @FXML
     public void onBackButtonClick() {
-        viewHandler.openView(ViewHandler.MANAGER_EQUIPMENT_LIST_VIEW);
+        viewHandler.openView(ViewHandler.REGISTERED_USER_VIEW);
     }
 
     private boolean highlightEmptyFields() {

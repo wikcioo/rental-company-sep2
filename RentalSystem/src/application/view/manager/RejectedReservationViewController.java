@@ -1,4 +1,5 @@
 package application.view.manager;
+
 import application.model.reservations.Rejected;
 import application.model.reservations.Reservation;
 import application.model.users.User;
@@ -36,76 +37,76 @@ public class RejectedReservationViewController {
     public TableColumn<Rejected, String> reasonColumn;
 
     public void init(ViewHandler viewHandler, RejectedReservationViewModel rejectedReservationViewModel, Region root) {
-      this.viewHandler = viewHandler;
-      this.viewModel = rejectedReservationViewModel;
-      this.root = root;
+        this.viewHandler = viewHandler;
+        this.viewModel = rejectedReservationViewModel;
+        this.root = root;
 
-      reservationIdColumn.setCellValueFactory(p -> {
-        if (p.getValue() != null) {
-          return new SimpleStringProperty(Integer.toString(p.getValue().getId()));
-        } else {
-          return new SimpleStringProperty("<no equipment>");
-        }
-      });
+        reservationIdColumn.setCellValueFactory(p -> {
+            if (p.getValue() != null) {
+                return new SimpleStringProperty(Integer.toString(p.getValue().getId()));
+            } else {
+                return new SimpleStringProperty("<no equipment>");
+            }
+        });
 
-      renteeColumn.setCellValueFactory(p -> {
-        if (p.getValue() != null) {
-          User u = p.getValue().getRentee();
-          return new SimpleStringProperty(p.getValue().getRentee().toString());
-        } else {
-          return new SimpleStringProperty("<no rentee>");
-        }
-      });
+        renteeColumn.setCellValueFactory(p -> {
+            if (p.getValue() != null) {
+                User u = p.getValue().getRentee();
+                return new SimpleStringProperty(p.getValue().getRentee().toString());
+            } else {
+                return new SimpleStringProperty("<no rentee>");
+            }
+        });
 
-      equipmentColumn.setCellValueFactory(p -> {
-        if (p.getValue() != null) {
-          return new SimpleStringProperty(p.getValue().getEquipment().toString());
-        } else {
-          return new SimpleStringProperty("<no equipment>");
-        }
-      });
+        equipmentColumn.setCellValueFactory(p -> {
+            if (p.getValue() != null) {
+                return new SimpleStringProperty(p.getValue().getEquipment().toString());
+            } else {
+                return new SimpleStringProperty("<no equipment>");
+            }
+        });
 
-      reservationDateColumn.setCellValueFactory(p -> {
-        if (p.getValue() != null) {
-          return new SimpleStringProperty(p.getValue().getReservationDate().format(
-              DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
-        } else {
-          return new SimpleStringProperty("<no reservation date>");
-        }
-      });
+        reservationDateColumn.setCellValueFactory(p -> {
+            if (p.getValue() != null) {
+                return new SimpleStringProperty(p.getValue().getReservationDate().format(
+                        DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+            } else {
+                return new SimpleStringProperty("<no reservation date>");
+            }
+        });
 
-      rejectionDateColumn.setCellValueFactory(p -> {
-        if (p.getValue() != null && p.getValue().getRentedFor() != null) {
-          return new SimpleStringProperty(p.getValue().getRentedFor().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
-        } else {
-          return new SimpleStringProperty("<no rejection date>");
-        }
-      });
+        rejectionDateColumn.setCellValueFactory(p -> {
+            if (p.getValue() != null && p.getValue().getRentedFor() != null) {
+                return new SimpleStringProperty(p.getValue().getRentedFor().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+            } else {
+                return new SimpleStringProperty("<no rejection date>");
+            }
+        });
 
-      reasonColumn.setCellValueFactory(p -> {
-        if (p.getValue() != null) {
-          return new SimpleStringProperty(p.getValue().getReason());
-        } else {
-          return new SimpleStringProperty("<no reason>");
-        }
-      });
+        reasonColumn.setCellValueFactory(p -> {
+            if (p.getValue() != null) {
+                return new SimpleStringProperty(p.getValue().getReason());
+            } else {
+                return new SimpleStringProperty("<no reason>");
+            }
+        });
 
 
-      viewModel.bindReservationList(reservationTable.itemsProperty());
-      viewModel.bindErrorLabel(error.textProperty());
+        viewModel.bindReservationList(reservationTable.itemsProperty());
+        viewModel.bindErrorLabel(error.textProperty());
     }
 
     public void reset() {
-      error.setText("");
+        error.setText("");
     }
 
     public Region getRoot() {
-      return root;
+        return root;
     }
 
     public void backButtonPressed() {
-      viewHandler.openView(ViewHandler.MANAGER_EQUIPMENT_LIST_VIEW);
+        viewHandler.openView(ViewHandler.MANAGER_MAIN_MENU_VIEW);
     }
 
-  }
+}
 

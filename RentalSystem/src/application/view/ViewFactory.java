@@ -23,6 +23,7 @@ public class ViewFactory {
     private RejectedReservationViewController rejectedReservationViewController;
     private ExpiredReservationViewController expiredReservationViewController;
     private RenteeReservationViewController renteeReservationViewController;
+    private ManagerMainMenuViewController managerMainMenuViewController;
     public ViewFactory(ViewHandler viewHandler, ViewModelFactory viewModelFactory) {
         this.viewHandler = viewHandler;
         this.viewModelFactory = viewModelFactory;
@@ -214,5 +215,22 @@ public class ViewFactory {
         }
         renteeReservationViewController.reset();
         return renteeReservationViewController.getRoot();
+    }
+
+    public Region loadManagerMainMenuView() {
+        if (managerMainMenuViewController == null) {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("gui/manager/ManagerMainMenuView.fxml"));
+            try {
+                Region root = loader.load();
+                managerMainMenuViewController = loader.getController();
+                managerMainMenuViewController.init(viewHandler,
+                        viewModelFactory.getManagerMainMenuViewModel(), root);
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        managerMainMenuViewController.reset();
+        return managerMainMenuViewController.getRoot();
     }
 }

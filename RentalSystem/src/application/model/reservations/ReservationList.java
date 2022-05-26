@@ -13,9 +13,7 @@ public class ReservationList {
         return reservationList;
     }
 
-
-
-    public ArrayList<Reservation> getReservationsByType(String type, ArrayList<T> e) {
+    public ArrayList<Reservation> getReservationsByType(String type) {
         ArrayList<Reservation> result = new ArrayList<>();
         for (Reservation reservation : reservations) {
             if (reservation.status().equals(type)) {

@@ -1,5 +1,6 @@
 package application.shared;
 
+import application.client.RentalSystemClient;
 import application.model.equipment.Equipment;
 import application.model.reservations.Reservation;
 import application.model.users.User;
@@ -173,7 +174,7 @@ public interface IServer extends Remote {
      * @param sender       sender, to which id of a new reservation will be replied to
      * @throws RemoteException indicates connection failure
      */
-    void reserveEquipment(int equipment_id, String rentee_id, LocalDateTime rentedFor, RemoteSender sender) throws RemoteException;
+    void reserveEquipment(int equipment_id, String rentee_id, LocalDateTime rentedFor, RentalSystemClient sender) throws RemoteException;
 
     /**
      * Throws Remote Exception when RMI client cannot connect to it.

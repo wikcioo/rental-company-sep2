@@ -1,6 +1,7 @@
 package application.server;
 
 
+import application.client.RentalSystemClient;
 import application.dao.*;
 import application.model.equipment.Equipment;
 import application.model.reservations.Reservation;
@@ -196,7 +197,7 @@ public class RentalSystemServer extends UnicastRemoteObject implements IServer {
     }
 
     @Override
-    public void reserveEquipment(int equipment_id, String rentee_id, LocalDateTime rentedFor, RemoteSender sender) throws RemoteException {
+    public void reserveEquipment(int equipment_id, String rentee_id, LocalDateTime rentedFor, RentalSystemClient sender) throws RemoteException {
         try {
             sender.replyReservationId(reservationDao.reserveEquipment(equipment_id, rentee_id, rentedFor));
             ArrayList<Reservation> reservations = retrieveReservations();

@@ -3,6 +3,7 @@ package application.viewmodel;
 import application.model.Model;
 import application.viewmodel.manager.*;
 import application.viewmodel.rentee.EquipmentViewModel;
+import application.viewmodel.rentee.RenteeReservationViewModel;
 
 public class ViewModelFactory {
     private final AddEquipmentViewModel addEquipmentViewModel;
@@ -15,6 +16,7 @@ public class ViewModelFactory {
     private final RejectedReservationViewModel rejectedReservationViewModel;
     private final ExpiredReservationViewModel expiredReservationViewModel;
     private final RegisteredUserViewModel registeredUserViewModel;
+    private final RenteeReservationViewModel renteeReservationViewModel;
 
     public ViewModelFactory(Model model) {
         this.addEquipmentViewModel = new AddEquipmentViewModel(model);
@@ -27,6 +29,7 @@ public class ViewModelFactory {
         this.rejectedReservationViewModel = new RejectedReservationViewModel(model);
         this.expiredReservationViewModel = new ExpiredReservationViewModel(model);
         this.registeredUserViewModel = new RegisteredUserViewModel(model);
+        renteeReservationViewModel = new RenteeReservationViewModel(model);
     }
 
     public AddEquipmentViewModel getAddEquipmentViewModel() {
@@ -57,7 +60,9 @@ public class ViewModelFactory {
         return expiredReservationViewModel;
     }
 
-
+    public RenteeReservationViewModel getRenteeReservationViewModel() {
+        return renteeReservationViewModel;
+    }
 
     public ManagerEquipmentViewModel getManagerEquipmentViewModel() {
         return managerEquipmentViewModel;

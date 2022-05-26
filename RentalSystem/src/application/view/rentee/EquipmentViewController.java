@@ -162,4 +162,7 @@ public class EquipmentViewController {
         viewHandler.openView(ViewHandler.LOG_IN_VIEW);
     }
 
+    public void onViewReservations() {
+        viewHandler.openView(ViewHandler.RENTEE_RESERVATION_LIST_VIEW);
+    }
 }

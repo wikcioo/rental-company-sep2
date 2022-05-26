@@ -5,6 +5,7 @@ import application.model.equipment.Equipment;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 
@@ -32,7 +33,7 @@ public class Reservation implements Serializable {
         this.id = id;
         this.rentee = rentee;
         this.equipment = equipment;
-        reservationDate = LocalDateTime.now();
+        this.reservationDate = LocalDateTime.now();
         this.rentedFor = rentedFor;
     }
 
@@ -58,5 +59,13 @@ public class Reservation implements Serializable {
 
     public int getId() {
         return id;
+    }
+
+    @Override
+    public String toString() {
+        return "ID: " + id +
+                " \nRented from " + reservationDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) +
+                " until " + rentedFor.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) +
+                "\nRented equipment: " + equipment;
     }
 }

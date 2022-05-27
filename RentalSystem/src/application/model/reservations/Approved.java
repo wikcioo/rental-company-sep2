@@ -58,6 +58,7 @@ public class Approved extends Reservation {
     @Override
     public String toString() {
         return super.toString() +
+                "\nDays overdue: " + getDaysOverdueString() +
                 "\nApproved on: " + approvedDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) +
                 "\nApproved by: " + approvedBy;
     }

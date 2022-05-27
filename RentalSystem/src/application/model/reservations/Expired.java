@@ -5,6 +5,7 @@ import application.model.equipment.Equipment;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 public class Expired extends Reservation {
     private final LocalDateTime dateTime;
@@ -33,5 +34,19 @@ public class Expired extends Reservation {
     public String toString() {
         return super.toString() +
                 "\nExpired on: " + dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Expired expired = (Expired) o;
+        return Objects.equals(dateTime, expired.dateTime);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), dateTime);
     }
 }

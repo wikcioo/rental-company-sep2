@@ -5,6 +5,7 @@ import application.model.equipment.Equipment;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 
@@ -59,5 +60,19 @@ public class Approved extends Reservation {
         return super.toString() +
                 "\nApproved on: " + approvedDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) +
                 "\nApproved by: " + approvedBy;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Approved approved = (Approved) o;
+        return Objects.equals(getApprovedDate(), approved.getApprovedDate()) && Objects.equals(getApprovedBy(), approved.getApprovedBy());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), getApprovedDate(), getApprovedBy());
     }
 }

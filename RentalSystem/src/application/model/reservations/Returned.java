@@ -5,6 +5,7 @@ import application.model.equipment.Equipment;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 public class Returned extends Approved {
     private final LocalDateTime returnDate;
@@ -32,6 +33,20 @@ public class Returned extends Approved {
     @Override
     public String toString() {
         return super.toString() + "\nReturned on: " + returnDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Returned returned = (Returned) o;
+        return Objects.equals(getReturnDate(), returned.getReturnDate());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), getReturnDate());
     }
 }
 

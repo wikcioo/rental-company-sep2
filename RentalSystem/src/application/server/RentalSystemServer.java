@@ -6,29 +6,49 @@ import application.dao.*;
 import application.model.equipment.Equipment;
 import application.model.reservations.Reservation;
 import application.model.users.User;
+import application.server.timer.ExpiringReservationTimer;
+import application.server.timer.SelectiveReservationTimer;
+import application.server.timer.SelectiveReservationTimerImplementation;
 import application.shared.IServer;
 import dk.via.remote.observer.RemotePropertyChangeListener;
 import dk.via.remote.observer.RemotePropertyChangeSupport;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public class RentalSystemServer extends UnicastRemoteObject implements IServer {
+public class RentalSystemServer extends UnicastRemoteObject implements IServer, PropertyChangeListener {
     private final EquipmentDao equipmentDao;
     private final UserDao userDao;
     private final ReservationDao reservationDao;
+    private final SelectiveReservationTimer expirationTimer;
     private final RemotePropertyChangeSupport<ArrayList> support;
 
     public RentalSystemServer() throws RemoteException {
         this.equipmentDao = SQLEquipmentDao.getInstance();
         this.userDao = SQLUserDao.getInstance();
         this.reservationDao = SQLReservationDao.getInstance();
+        this.expirationTimer = new SelectiveReservationTimerImplementation(1800);
+        this.expirationTimer.addListener(ExpiringReservationTimer.RESERVATION_EXPIRED,this);
         this.support = new RemotePropertyChangeSupport<>(this);
     }
 
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        switch (evt.getPropertyName()) {
+            case ExpiringReservationTimer.RESERVATION_EXPIRED -> {
+                try {
+                    expireReservation((int) evt.getNewValue());
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 
     @Override
     public void addEquipment(String model, String category, boolean available) throws RemoteException {
@@ -140,7 +160,9 @@ public class RentalSystemServer extends UnicastRemoteObject implements IServer {
     @Override
     public ArrayList<Reservation> retrieveReservations() throws RemoteException {
         try {
-            return reservationDao.retrieveReservations();
+            ArrayList<Reservation> reservations = reservationDao.retrieveReservations();
+            expirationTimer.setAllUnapprovedReservations(reservations);
+            return reservations;
         } catch (SQLException e) {
             throw new RemoteException(e.getMessage(), e);
         }

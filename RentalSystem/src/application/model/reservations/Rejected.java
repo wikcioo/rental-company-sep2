@@ -5,6 +5,7 @@ import application.model.equipment.Equipment;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 public class Rejected extends Reservation {
     private final LocalDateTime rejectionDate;
@@ -49,5 +50,19 @@ public class Rejected extends Reservation {
                 "\nRejected on: " + rejectionDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) +
                 "\nRejected by: " + rejectedBy +
                 "\nRejection reason: " + reason;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Rejected rejected = (Rejected) o;
+        return Objects.equals(getRejectionDate(), rejected.getRejectionDate()) && Objects.equals(getReason(), rejected.getReason()) && Objects.equals(getRejectedBy(), rejected.getRejectedBy());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), getRejectionDate(), getReason(), getRejectedBy());
     }
 }

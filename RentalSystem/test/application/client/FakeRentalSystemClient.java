@@ -20,6 +20,7 @@ public class FakeRentalSystemClient implements RentalSystemClient {
     private final ArrayList<User> userList;
     private int equipmentIndex;
     private int reservationIndex;
+    private int expirationTimeout;
 
     public FakeRentalSystemClient() {
         this.support = new PropertyChangeSupport(this);
@@ -171,6 +172,16 @@ public class FakeRentalSystemClient implements RentalSystemClient {
         support.firePropertyChange("reservations", null, reservations);
         support.firePropertyChange("equipmentManager", null, allEquipment);
         support.firePropertyChange("equipmentRentee", null, unreservedEquipment);
+    }
+
+    @Override
+    public int getExpirationTimeout() throws RemoteException {
+        return expirationTimeout;
+    }
+
+    @Override
+    public void setExpirationTimeout(int expirationTimeout) throws RemoteException {
+        this.expirationTimeout = expirationTimeout;
     }
 
     @Override

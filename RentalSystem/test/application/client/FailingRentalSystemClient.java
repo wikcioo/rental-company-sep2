@@ -106,6 +106,16 @@ public class FailingRentalSystemClient implements RentalSystemClient {
     }
 
     @Override
+    public int getExpirationTimeout() throws RemoteException {
+        throw new RemoteException();
+    }
+
+    @Override
+    public void setExpirationTimeout(int expirationTimeout) throws RemoteException {
+        throw new RemoteException();
+    }
+
+    @Override
     public void pingServer() throws RemoteException {
         throw new RemoteException();
     }

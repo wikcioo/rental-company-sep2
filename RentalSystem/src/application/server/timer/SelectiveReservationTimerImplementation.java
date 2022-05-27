@@ -57,4 +57,18 @@ public class SelectiveReservationTimerImplementation implements SelectiveReserva
         }
     }
 
+    @Override
+    public boolean isEmpty() {
+        return expiringReservationTimer.isEmpty();
+    }
+
+    @Override
+    public void setExpirationTimeout(int timeout) {
+        expiringReservationTimer.setExpirationTimeout(timeout);
+    }
+
+    @Override
+    public int getExpirationTimeout() {
+        return expiringReservationTimer.getExpirationTimeout();
+    }
 }

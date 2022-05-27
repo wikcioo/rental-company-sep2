@@ -15,6 +15,10 @@ public class ExpiringReservation extends TimerTask {
         this.pcs = PCSExpiringReservation.getInstance();
     }
 
+    public Reservation getUnapprovedReservation() {
+        return unapprovedReservation;
+    }
+
     @Override
     public void run() {
         pcs.alertAboutExpiration(unapprovedReservation.getId());

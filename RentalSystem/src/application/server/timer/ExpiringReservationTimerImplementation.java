@@ -1,7 +1,6 @@
 package application.server.timer;
 
 import application.model.reservations.Reservation;
-import application.util.NamedPropertyChangeSubject;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -16,7 +15,7 @@ public class ExpiringReservationTimerImplementation implements ExpiringReservati
     private Timer timer;
     private final HashMap<Integer,ExpiringReservation> reservationHashMap;
     private final PropertyChangeSupport pcs;
-    private final int expirationTimeout;
+    private int expirationTimeout;
 
     public ExpiringReservationTimerImplementation(int expirationTimeout) {
         this.expirationTimeout = expirationTimeout;
@@ -26,16 +25,29 @@ public class ExpiringReservationTimerImplementation implements ExpiringReservati
         PCSExpiringReservation.getInstance().addListener(PCSExpiringReservation.RESERVATION_EXPIRED,this);
     }
 
+    public boolean isEmpty() {
+        return reservationHashMap.isEmpty();
+    }
+
+    public void setExpirationTimeout(int timeout) {
+        this.expirationTimeout = timeout;
+    }
+
+    public int getExpirationTimeout() {
+        return expirationTimeout;
+    }
+
     @Override
     public void addReservationToExpire(Reservation reservation) {
         if(!reservation.status().equals(Reservation.type))
             throw new IllegalArgumentException("Only unapproved reservation can expire");
 
-        if(!reservationHashMap.containsKey(reservation.getId())) {
-            ExpiringReservation expiringReservation = new ExpiringReservation(reservation);
-            reservationHashMap.put(reservation.getId(),expiringReservation);
-            timer.schedule(expiringReservation,convertToDate(reservation.getReservationDate().plusSeconds(expirationTimeout)));
-        }
+        if(isExpiring(reservation))
+            cancelExpiration(reservation);
+
+        ExpiringReservation expiringReservation = new ExpiringReservation(reservation);
+        reservationHashMap.put(reservation.getId(),expiringReservation);
+        timer.schedule(expiringReservation,convertToDate(reservation.getReservationDate().plusSeconds(expirationTimeout)));
     }
 
     private Date convertToDate(LocalDateTime time) {
@@ -59,20 +71,26 @@ public class ExpiringReservationTimerImplementation implements ExpiringReservati
 
     @Override
     public boolean isExpiring(Reservation reservation) {
-        if(reservationHashMap.containsValue(reservation))
-            return true;
-        return false;
+        if(!reservationHashMap.containsKey(reservation.getId()))
+            return false;
+        return reservationHashMap.get(reservation.getId()).getUnapprovedReservation().equals(reservation);
     }
 
     @Override
     public void cancelAll() {
         timer.cancel();
+        this.reservationHashMap.clear();
         timer = new Timer();
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        pcs.firePropertyChange(evt);
+        switch (evt.getPropertyName()) {
+            case RESERVATION_EXPIRED -> {
+                reservationHashMap.remove(evt.getNewValue());
+                pcs.firePropertyChange(evt);
+            }
+        }
     }
 
     @Override

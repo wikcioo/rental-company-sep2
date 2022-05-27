@@ -72,7 +72,9 @@ public class ModelManager implements Model, PropertyChangeListener {
         if (currentlyLoggedInUser != null) {
             for (Approved r : reservationList.getApprovedReservations()) {
                 if (currentlyLoggedInUser.getEmail().equals(r.getRentee().getEmail())) {
-                    if (r.getDaysOverdue() > 0) {
+                    if (r.getRentedFor().isBefore(LocalDateTime.now())) {
+                        System.out.println(r.getRentedFor());
+                        System.out.println(LocalDateTime.now());
                         amount++;
                     }
                 }

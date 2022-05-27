@@ -147,11 +147,6 @@ public class RenteeEquipmentViewController {
         }
     }
 
-    @FXML
-    public void onLogOutButtonClick() {
-        viewHandler.openView(ViewHandler.LOG_IN_VIEW);
-    }
-
     public void backButtonPressed() {
         viewHandler.openView(ViewHandler.RENTEE_MAIN_MENU_VIEW);
     }

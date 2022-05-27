@@ -2,7 +2,6 @@ package application.viewmodel.rentee;
 
 import application.model.Model;
 import application.model.ModelManager;
-import application.model.reservations.Approved;
 import application.model.reservations.Reservation;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -10,10 +9,10 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.SortedList;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.rmi.RemoteException;
 
 public class RenteeReservationViewModel implements PropertyChangeListener {
     private final Model model;
@@ -40,7 +39,15 @@ public class RenteeReservationViewModel implements PropertyChangeListener {
     public void propertyChange(PropertyChangeEvent evt) {
         switch (evt.getPropertyName()) {
             case ModelManager.RESERVATION_LIST_CHANGED -> {
-                listObjectProperty.setValue(FXCollections.observableList(model.getCurrentUserReservations()));
+                listObjectProperty.setValue(
+                        new SortedList<>(FXCollections.observableList(model.getCurrentUserReservations()), (res1, res2) -> {
+                            if (res1.getReservationDate().isBefore(res2.getReservationDate())) {
+                                return -1;
+                            } else {
+                                return 0;
+                            }
+                        })
+                );
             }
         }
     }

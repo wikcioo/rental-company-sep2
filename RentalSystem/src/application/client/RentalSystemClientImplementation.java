@@ -3,7 +3,7 @@ package application.client;
 import application.model.equipment.Equipment;
 import application.model.reservations.Reservation;
 import application.model.users.User;
-import application.shared.IServer;
+import application.server.RentalSystemServer;
 import dk.via.remote.observer.RemotePropertyChangeEvent;
 import dk.via.remote.observer.RemotePropertyChangeListener;
 
@@ -17,11 +17,11 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class RentalSystemClientImplementation extends UnicastRemoteObject implements RentalSystemClient, RemotePropertyChangeListener<ArrayList>  {
-    private final IServer server;
+    private final RentalSystemServer server;
     private final PropertyChangeSupport support;
 
     public RentalSystemClientImplementation(String host, int port) throws RemoteException, NotBoundException {
-        this.server = (IServer) LocateRegistry.getRegistry(host, port).lookup("Server");
+        this.server = (RentalSystemServer) LocateRegistry.getRegistry(host, port).lookup("Server");
         this.support = new PropertyChangeSupport(this);
         server.addPropertyChangeListener(this);
     }

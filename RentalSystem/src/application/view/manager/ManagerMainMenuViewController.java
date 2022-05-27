@@ -1,10 +1,15 @@
 package application.view.manager;
 
+import application.model.reservations.Reservation;
 import application.view.ViewHandler;
 import application.viewmodel.manager.ManagerMainMenuViewModel;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.Region;
+
+import java.util.Optional;
 
 public class ManagerMainMenuViewController {
     @FXML
@@ -47,6 +52,38 @@ public class ManagerMainMenuViewController {
     @FXML
     public void onRegisteredUsersButtonClick() {
         viewHandler.openView(ViewHandler.REGISTERED_USER_VIEW);
+    }
+
+    @FXML
+    public void onSetTimeoutButtonClick() {
+        Alert serverError = new Alert(Alert.AlertType.ERROR);
+        serverError.setTitle("Server communication error");
+        serverError.setHeaderText("Failed to connect with the server :(");
+
+        int currentExpirationTime = viewModel.getCurrentExpirationTimeout();
+        if (currentExpirationTime == -1) {
+            serverError.showAndWait();
+        } else {
+            TextInputDialog dialog = new TextInputDialog();
+            dialog.setResizable(false);
+            dialog.setTitle("Reservations timeout");
+            dialog.setHeaderText("Current timeout in seconds: " + currentExpirationTime);
+            dialog.setContentText("New timeout in seconds: ");
+            Optional<String> result = dialog.showAndWait();
+
+            if (result.isPresent()) {
+                try {
+                    if (!viewModel.setCurrentExpirationTimeout(Integer.parseInt(result.get()))) {
+                        serverError.showAndWait();
+                    }
+                } catch (NumberFormatException e) {
+                    Alert invalidInput = new Alert(Alert.AlertType.ERROR);
+                    invalidInput.setTitle("Error");
+                    invalidInput.setHeaderText("Invalid input");
+                    invalidInput.showAndWait();
+                }
+            }
+        }
     }
 
     @FXML

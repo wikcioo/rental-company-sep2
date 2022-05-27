@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="463.0" prefWidth="610.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.manager.ManagerMainMenuViewController">
+<AnchorPane prefHeight="463.0" prefWidth="610.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.manager.ManagerMainMenuViewController">
     <children>
         <Pane layoutX="348.0" layoutY="209.0" prefHeight="173.0" prefWidth="198.0" style="-fx-background-color: E3E3E3;">
             <children>
@@ -31,15 +31,16 @@
         <Pane layoutX="37.0" layoutY="31.0" prefHeight="350.0" prefWidth="299.0" style="-fx-background-color: E3E3E3;">
             <children>
                 <Button layoutX="34.0" layoutY="68.0" mnemonicParsing="false" onAction="#onViewExpiredReservations" prefHeight="60.0" prefWidth="100.0" text="Expired" textAlignment="CENTER" wrapText="true" />
-                <Button alignment="CENTER" contentDisplay="CENTER" layoutX="167.0" layoutY="175.0" mnemonicParsing="false" onAction="#onViewReservations" prefHeight="60.0" prefWidth="100.0" text="Unapproved" textAlignment="CENTER" wrapText="true" />
-                <Button layoutX="34.0" layoutY="175.0" mnemonicParsing="false" onAction="#onViewApprovedReservations" prefHeight="60.0" prefWidth="100.0" text="Approved" textAlignment="CENTER" wrapText="true" />
+                <Button alignment="CENTER" contentDisplay="CENTER" layoutX="167.0" layoutY="165.0" mnemonicParsing="false" onAction="#onViewReservations" prefHeight="60.0" prefWidth="100.0" text="Unapproved" textAlignment="CENTER" wrapText="true" />
+                <Button layoutX="34.0" layoutY="165.0" mnemonicParsing="false" onAction="#onViewApprovedReservations" prefHeight="60.0" prefWidth="100.0" text="Approved" textAlignment="CENTER" wrapText="true" />
                 <Label alignment="CENTER" contentDisplay="CENTER" layoutX="28.0" layoutY="7.0" prefHeight="36.0" prefWidth="243.0" text="Reservations">
                     <font>
                         <Font name="System Bold" size="25.0" />
                     </font>
                 </Label>
                 <Button layoutX="167.0" layoutY="68.0" mnemonicParsing="false" onAction="#onViewRejectedReservations" prefHeight="60.0" prefWidth="100.0" text="Rejected" textAlignment="CENTER" wrapText="true" />
-                <Button layoutX="100.0" layoutY="263.0" mnemonicParsing="false" onAction="#onViewReturnedReservations" prefHeight="60.0" prefWidth="100.0" text="Returned" textAlignment="CENTER" wrapText="true" />
+                <Button layoutX="34.0" layoutY="262.0" mnemonicParsing="false" onAction="#onViewReturnedReservations" prefHeight="60.0" prefWidth="100.0" text="Returned" textAlignment="CENTER" wrapText="true" />
+                <Button layoutX="167.0" layoutY="262.0" mnemonicParsing="false" onAction="#onSetTimeoutButtonClick" prefHeight="60.0" prefWidth="100.0" text="Set timeout" textAlignment="CENTER" wrapText="true" />
             </children>
         </Pane>
         <Button layoutX="397.0" layoutY="390.0" mnemonicParsing="false" onAction="#onLogOutButtonClick" prefHeight="30.0" prefWidth="100.0" text="Log out" />

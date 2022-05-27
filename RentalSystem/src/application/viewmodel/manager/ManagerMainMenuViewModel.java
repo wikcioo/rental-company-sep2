@@ -29,6 +29,23 @@ public class ManagerMainMenuViewModel {
         loggedUserProperty.bindBidirectional(property);
     }
 
+    public int getCurrentExpirationTimeout() {
+        try {
+            return model.getExpirationTimeout();
+        } catch (RemoteException e) {
+            return -1;
+        }
+    }
+
+    public boolean setCurrentExpirationTimeout(int expirationTimeout) {
+        try {
+            model.setExpirationTimeout(expirationTimeout);
+            return true;
+        } catch (RemoteException e) {
+            return false;
+        }
+    }
+
     public void displayLoggedUser() {
         loggedUserProperty.set("Logged as: " + model.getCurrentlyLoggedInUser().getEmail());
     }

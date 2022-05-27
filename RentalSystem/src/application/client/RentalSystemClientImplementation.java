@@ -107,11 +107,6 @@ public class RentalSystemClientImplementation extends UnicastRemoteObject implem
     }
 
     @Override
-    public void expireReservation(int id) throws RemoteException {
-        server.expireReservation(id);
-    }
-
-    @Override
     public void returnReservation(int id) throws RemoteException {
         server.returnReservation(id);
     }

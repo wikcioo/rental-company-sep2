@@ -146,15 +146,6 @@ public interface RentalSystemClient extends Remote {
     void rejectReservation(int id, String manager_id, String reason) throws RemoteException;
 
     /**
-     * Expires the reservation with given id in the database.
-     * Calls {@link application.shared.IServer#expireReservation(int) expireReservation} method.
-     *
-     * @param id reservation's id
-     * @throws RemoteException indicates connection failure
-     */
-    void expireReservation(int id) throws RemoteException;
-
-    /**
      * Makes the reservation with given id being returned, in the database.
      * Calls {@link application.shared.IServer#returnReservation(int) returnReservation} method.
      *
@@ -165,7 +156,7 @@ public interface RentalSystemClient extends Remote {
 
     /**
      * Reserves the equipment with given id in the database.
-     * Calls {@link application.shared.IServer#reserveEquipment(int, String, LocalDateTime) reserveEquipment} method.
+     * Calls {@link application.shared.IServer#reserveEquipment(int, String, LocalDateTime, RentalSystemClient) reserveEquipment} method.
      *
      * @param equipment_id equipment's id
      * @param rentee_id    rentee's id

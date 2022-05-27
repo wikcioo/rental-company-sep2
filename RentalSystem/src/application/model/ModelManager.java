@@ -209,11 +209,6 @@ public class ModelManager implements Model, PropertyChangeListener {
     }
 
     @Override
-    public void expireReservation(int id) throws RemoteException {
-        client.expireReservation(id);
-    }
-
-    @Override
     public void returnReservation(int id) throws RemoteException {
         client.returnReservation(id);
     }

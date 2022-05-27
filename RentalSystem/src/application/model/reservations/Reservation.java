@@ -6,6 +6,7 @@ import application.model.equipment.Equipment;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 
@@ -67,5 +68,18 @@ public class Reservation implements Serializable {
                 " \nRented from " + reservationDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) +
                 " until " + rentedFor.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) +
                 "\nRented equipment: " + equipment;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Reservation that = (Reservation) o;
+        return getId() == that.getId() && Objects.equals(getRentee(), that.getRentee()) && Objects.equals(getReservationDate(), that.getReservationDate()) && Objects.equals(getRentedFor(), that.getRentedFor()) && Objects.equals(getEquipment(), that.getEquipment());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getRentee(), getReservationDate(), getRentedFor(), getEquipment());
     }
 }

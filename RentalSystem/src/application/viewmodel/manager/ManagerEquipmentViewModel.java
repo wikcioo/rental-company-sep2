@@ -19,7 +19,6 @@ public class ManagerEquipmentViewModel implements PropertyChangeListener {
     private final Model model;
     private final ObjectProperty<ObservableList<Equipment>> listObjectProperty;
     private final ObjectProperty<Equipment> selectedEquipmentProperty;
-    private final ObjectProperty<LocalDateTime> reservationEndDate;
     private final StringProperty errorProperty;
     private final StringProperty loggedUserProperty;
 
@@ -28,7 +27,6 @@ public class ManagerEquipmentViewModel implements PropertyChangeListener {
         this.listObjectProperty = new SimpleObjectProperty<>();
         this.selectedEquipmentProperty = new SimpleObjectProperty<>();
         model.addListener(ModelManager.EQUIPMENT_LIST_CHANGED, this);
-        this.reservationEndDate = new SimpleObjectProperty<>();
         this.errorProperty = new SimpleStringProperty();
         this.loggedUserProperty = new SimpleStringProperty();
     }

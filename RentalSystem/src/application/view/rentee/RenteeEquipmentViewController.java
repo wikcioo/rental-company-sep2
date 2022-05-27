@@ -37,10 +37,6 @@ public class RenteeEquipmentViewController {
     private Label equipmentError;
     @FXML
     private Label reservationError;
-    @FXML
-    private Label loggedUser;
-
-
 
     public void init(ViewHandler viewHandler, EquipmentViewModel equipmentViewModel, Region root) {
         this.viewHandler = viewHandler;
@@ -117,7 +113,6 @@ public class RenteeEquipmentViewController {
         viewModel.bindEquipmentList(equipmentTable.itemsProperty());
         viewModel.bindEquipmentErrorLabel(equipmentError.textProperty());
         viewModel.bindReservationErrorLabel(reservationError.textProperty());
-        viewModel.bindLoggedUser(loggedUser.textProperty());
     }
 
     public void reset() {
@@ -127,7 +122,6 @@ public class RenteeEquipmentViewController {
         category.setText("Unselected");
         datePicker.setValue(null);
         reservationError.setText(null);
-        viewModel.displayLoggedUser();
         equipmentError.setText("");
         reservationError.setText("");
     }
@@ -153,16 +147,12 @@ public class RenteeEquipmentViewController {
         }
     }
 
-    public void onViewManagerEquipment() {
-        viewHandler.openView(ViewHandler.MANAGER_EQUIPMENT_LIST_VIEW);
-    }
-
     @FXML
     public void onLogOutButtonClick() {
         viewHandler.openView(ViewHandler.LOG_IN_VIEW);
     }
 
-    public void onViewReservations() {
-        viewHandler.openView(ViewHandler.RENTEE_RESERVATION_LIST_VIEW);
+    public void backButtonPressed() {
+        viewHandler.openView(ViewHandler.RENTEE_MAIN_MENU_VIEW);
     }
 }

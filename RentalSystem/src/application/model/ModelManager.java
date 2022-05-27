@@ -67,6 +67,21 @@ public class ModelManager implements Model, PropertyChangeListener {
     }
 
     @Override
+    public int getCurrentUserOverDueEquipmentAmount() {
+       int amount = 0;
+        if (currentlyLoggedInUser != null) {
+            for (Approved r : reservationList.getApprovedReservations()) {
+                if (currentlyLoggedInUser.getEmail().equals(r.getRentee().getEmail())) {
+                    if (r.getDaysOverdue() > 0) {
+                        amount++;
+                    }
+                }
+            }
+        }
+        return amount;
+    }
+
+    @Override
     public ArrayList<Equipment> getAllAvailableEquipment() {
         return equipmentList.getAllAvailableEquipment();
     }

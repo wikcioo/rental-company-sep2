@@ -57,4 +57,8 @@ public class ManagerMainMenuViewController {
     public void onViewAllEquipment() {
         viewHandler.openView(ViewHandler.MANAGER_EQUIPMENT_LIST_VIEW);
     }
+
+    public void onViewReturnedReservations() {
+        viewHandler.openView(ViewHandler.RETURNED_RESERVATION_LIST_VIEW);
+    }
 }

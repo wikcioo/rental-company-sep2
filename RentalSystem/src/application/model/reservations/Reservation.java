@@ -49,10 +49,6 @@ public class Reservation implements Serializable {
         return rentedFor;
     }
 
-    public Long getDaysOverdue() {
-        return DAYS.between(rentedFor, LocalDateTime.now());
-    }
-
     public Equipment getEquipment() {
         return equipment;
     }

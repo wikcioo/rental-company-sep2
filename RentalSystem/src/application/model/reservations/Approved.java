@@ -6,6 +6,8 @@ import application.model.equipment.Equipment;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import static java.time.temporal.ChronoUnit.DAYS;
+
 public class Approved extends Reservation {
     private final LocalDateTime approvedDate;
     private final String approvedBy;
@@ -36,7 +38,22 @@ public class Approved extends Reservation {
     public String getApprovedBy() {
         return approvedBy;
     }
+    public Long getDaysOverdue() {
+        return DAYS.between(super.getRentedFor(), LocalDateTime.now());
+//        TODO: [Aivaras] remove testing for overdue
+//        return DAYS.between(super.getRentedFor().minusDays(2), LocalDateTime.now());
+    }
 
+    public String getDaysOverdueString(){
+        String daysOverDue;
+        int days = Math.toIntExact(getDaysOverdue());
+        if (days <= 0) {
+            daysOverDue = Math.abs(days) + " days left";
+        } else {
+            daysOverDue = days + " days overdue";
+        }
+        return daysOverDue;
+    }
     @Override
     public String toString() {
         return super.toString() +

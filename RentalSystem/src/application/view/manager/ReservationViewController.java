@@ -29,9 +29,9 @@ public class ReservationViewController {
     @FXML
     private TableColumn<Reservation, String> equipmentColumn;
     @FXML
-    private TableColumn<Reservation, String> startDateColumn;
+    private TableColumn<Reservation, String> reservedOnColumn;
     @FXML
-    private TableColumn<Reservation, String> endDateColumn;
+    private TableColumn<Reservation, String> rentedUntilColumn;
     @FXML
     private TableColumn<Reservation, String> approveButtonColumn;
     @FXML
@@ -67,14 +67,14 @@ public class ReservationViewController {
             }
         });
 
-        startDateColumn.setCellValueFactory(p -> {
+        reservedOnColumn.setCellValueFactory(p -> {
             if (p.getValue() != null) {
                 return new SimpleStringProperty(p.getValue().getReservationDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
             } else {
                 return new SimpleStringProperty("<no start date>");
             }
         });
-        endDateColumn.setCellValueFactory(p -> {
+        rentedUntilColumn.setCellValueFactory(p -> {
             if (p.getValue() != null && p.getValue().getRentedFor() != null) {
                 return new SimpleStringProperty(p.getValue().getRentedFor().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
             } else {

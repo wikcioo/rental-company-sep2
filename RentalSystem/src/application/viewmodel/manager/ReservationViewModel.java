@@ -23,7 +23,7 @@ public class ReservationViewModel implements PropertyChangeListener {
         this.model = model;
         listObjectProperty = new SimpleObjectProperty<>();
         model.addListener(ModelManager.RESERVATION_LIST_CHANGED, this);
-        listObjectProperty.setValue(FXCollections.observableList((List<Reservation>) model.getUnapprovedReservations()));
+        listObjectProperty.setValue(FXCollections.observableList(model.getUnapprovedReservations()));
         this.errorProperty = new SimpleStringProperty();
     }
 
@@ -56,7 +56,7 @@ public class ReservationViewModel implements PropertyChangeListener {
     public void propertyChange(PropertyChangeEvent evt) {
         switch (evt.getPropertyName()) {
             case ModelManager.RESERVATION_LIST_CHANGED -> {
-                listObjectProperty.setValue(FXCollections.observableList((List<Reservation>) model.getUnapprovedReservations()));
+                listObjectProperty.setValue(FXCollections.observableList(model.getUnapprovedReservations()));
             }
         }
     }

@@ -32,6 +32,8 @@ public interface Model extends NamedPropertyChangeSubject {
 
     //TODO: [Aivaras] JavaDoc for method
     ArrayList<Reservation> getCurrentUserReservations();
+    //TODO: [Aivaras] JavaDoc for method
+    int getCurrentUserOverDueEquipmentAmount();
 
     /**
      * Gets all available equipment from the equipmentList.

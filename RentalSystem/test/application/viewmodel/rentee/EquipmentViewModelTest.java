@@ -19,24 +19,24 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class EquipmentViewModelTest {
     private EquipmentViewModel viewModel;
-    private StringProperty loggedUserProperty;
+//    private StringProperty loggedUserProperty;
     private Model model;
 
     @BeforeEach
     void setUp() throws RemoteException {
         model = new ModelManager(new FakeRentalSystemClient());
         viewModel = new EquipmentViewModel(model);
-        loggedUserProperty = new SimpleStringProperty();
-        viewModel.bindLoggedUser(loggedUserProperty);
+//        loggedUserProperty = new SimpleStringProperty();
         model.setCurrentlyLoggedInUser(model.getUser("john@gmail.com"));
 
     }
 
-    @Test
-    void when_logged_in_displays_user_email() {
-        viewModel.displayLoggedUser();
-        assertEquals("Logged as: john@gmail.com", loggedUserProperty.get());
-    }
+    //TODO: [Aivaras] Move to RenteeMainMenuView test
+//    @Test
+//    void when_logged_in_displays_user_email() {
+//        viewModel.displayLoggedUser();
+//        assertEquals("Logged as: john@gmail.com", loggedUserProperty.get());
+//    }
 
     @Test
     void reserving_equipment_adds_to_reservations_list() throws RemoteException {

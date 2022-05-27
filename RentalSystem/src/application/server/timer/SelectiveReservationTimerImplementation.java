@@ -1,6 +1,7 @@
 package application.server.timer;
 
 import application.model.reservations.Reservation;
+import application.model.reservations.Unapproved;
 
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
@@ -51,7 +52,7 @@ public class SelectiveReservationTimerImplementation implements SelectiveReserva
     public void setAllUnapprovedReservations(ArrayList<Reservation> reservations) {
         cancelAll();
         for(Reservation reservation : reservations) {
-            if(!reservation.status().equals(Reservation.type))
+            if(!reservation.status().equals(Unapproved.type))
                 continue;
             addReservationToExpire(reservation);
         }

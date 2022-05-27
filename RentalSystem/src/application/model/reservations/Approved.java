@@ -12,13 +12,7 @@ import static java.time.temporal.ChronoUnit.DAYS;
 public class Approved extends Reservation {
     private final LocalDateTime approvedDate;
     private final String approvedBy;
-
     public static final String type = "Approved";
-
-    @Override
-    public String status() {
-        return type;
-    }
 
     public Approved(int id, User rentee, Equipment equipment, LocalDateTime reservationEndDate, LocalDateTime approvedDate, String approvedBy) {
         super(id, rentee, equipment, reservationEndDate);
@@ -30,6 +24,11 @@ public class Approved extends Reservation {
         super(reservation.getId(), reservation.getRentee(), reservation.getReservationDate(), reservation.getRentedFor(), reservation.getEquipment());
         this.approvedBy = approvedBy;
         this.approvedDate = approvedDate;
+    }
+
+    @Override
+    public String status() {
+        return type;
     }
 
     public LocalDateTime getApprovedDate() {
@@ -55,6 +54,7 @@ public class Approved extends Reservation {
         }
         return daysOverDue;
     }
+
     @Override
     public String toString() {
         return super.toString() +

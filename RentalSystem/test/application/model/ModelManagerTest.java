@@ -92,7 +92,7 @@ public class ModelManagerTest {
     //Reservations
     @Test
     public void reservation_list_correctly_returns_unapproved_reservations() {
-        ArrayList<Reservation> unapprovedReservations = model.getUnapprovedReservations();
+        ArrayList<Unapproved> unapprovedReservations = model.getUnapprovedReservations();
         assertEquals(3, unapprovedReservations.size());
     }
 
@@ -118,7 +118,7 @@ public class ModelManagerTest {
     public void approving_a_reservation_removes_it_from_unapproved_reservation_list() throws RemoteException {
         model.approveReservation(7, "john@gmail.com");
         model.refreshReservations();
-        ArrayList<Reservation> unapprovedReservations = model.getUnapprovedReservations();
+        ArrayList<Unapproved> unapprovedReservations = model.getUnapprovedReservations();
         assertEquals(2, unapprovedReservations.size());
     }
 
@@ -126,7 +126,7 @@ public class ModelManagerTest {
     public void rejecting_a_reservation_removes_it_from_unapproved_reservation_list() throws RemoteException {
         model.rejectReservation(7, "john@gmail.com", "");
         model.refreshReservations();
-        ArrayList<Reservation> unapprovedReservations = model.getUnapprovedReservations();
+        ArrayList<Unapproved> unapprovedReservations = model.getUnapprovedReservations();
         assertEquals(2, unapprovedReservations.size());
     }
 
@@ -134,7 +134,7 @@ public class ModelManagerTest {
     public void expiring_a_reservation_removes_it_from_unapproved_reservation_list() throws RemoteException {
         model.rejectReservation(7, "john@gmail.com", "dsafsf");
         model.refreshReservations();
-        ArrayList<Reservation> unapprovedReservations = model.getUnapprovedReservations();
+        ArrayList<Unapproved> unapprovedReservations = model.getUnapprovedReservations();
         assertEquals(2, unapprovedReservations.size());
     }
 
@@ -150,7 +150,7 @@ public class ModelManagerTest {
     void reserving_equipment_add_a_new_unapproved_reservation() throws RemoteException {
         model.reserveEquipment(0,"bob@gmail.com",LocalDateTime.now());
         model.refreshReservations();
-        ArrayList<Reservation> unapprovedReservations = model.getUnapprovedReservations();
+        ArrayList<Unapproved> unapprovedReservations = model.getUnapprovedReservations();
         assertEquals(4, unapprovedReservations.size());
     }
 }

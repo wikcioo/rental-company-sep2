@@ -155,7 +155,7 @@ public class ModelManager implements Model, PropertyChangeListener {
         support.removePropertyChangeListener(propertyName, listener);
     }
 
-    public ArrayList<Reservation> getUnapprovedReservations() {
+    public ArrayList<Unapproved> getUnapprovedReservations() {
         return reservationList.getUnapprovedReservations();
     }
 

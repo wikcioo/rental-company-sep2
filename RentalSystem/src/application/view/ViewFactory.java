@@ -5,7 +5,6 @@ import application.view.rentee.RenteeEquipmentViewController;
 import application.view.rentee.RenteeMainMenuViewController;
 import application.view.rentee.RenteeReservationViewController;
 import application.viewmodel.ViewModelFactory;
-import application.viewmodel.manager.ReturnedReservationViewModel;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.Region;
 

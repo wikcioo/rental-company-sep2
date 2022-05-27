@@ -2,13 +2,11 @@ package application.server.timer;
 
 import application.model.reservations.Approved;
 import application.model.reservations.Reservation;
+import application.model.reservations.Unapproved;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,11 +24,11 @@ public class ExpiringReservationTimerTest {
         this.reservations = new ArrayList<>();
         this.listener = new FakeListener();
 
-        Reservation reservation1 = new Reservation(1,null,null, LocalDateTime.now().plusDays(7));
-        Reservation reservation2 = new Reservation(2,null,null, LocalDateTime.now().plusDays(7));
+        Reservation reservation1 = new Unapproved(1,null,null, LocalDateTime.now().plusDays(7));
+        Reservation reservation2 = new Unapproved(2,null,null, LocalDateTime.now().plusDays(7));
 
-        Reservation reservation3 = new Reservation(3,null,null, LocalDateTime.now().plusDays(7));
-        Reservation overdue = new Reservation(4,null,null, LocalDateTime.now().minusDays(7));
+        Reservation reservation3 = new Unapproved(3,null,null, LocalDateTime.now().plusDays(7));
+        Reservation overdue = new Unapproved(4,null,null, LocalDateTime.now().minusDays(7));
         Approved approved = new Approved(reservation3,LocalDateTime.now(),null);
         reservations.addAll(List.of(new Reservation[]{reservation1,reservation2,approved,overdue}));
     }

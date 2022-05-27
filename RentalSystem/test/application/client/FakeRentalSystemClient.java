@@ -164,7 +164,7 @@ public class FakeRentalSystemClient implements RentalSystemClient {
     @Override
     public void reserveEquipment(int equipment_id, String rentee_id, LocalDateTime rentedFor) throws RemoteException {
         ArrayList<Reservation> reservations = new ArrayList<>(reservationList.getAll());
-        reservations.add(new Reservation(reservationIndex, getUser(rentee_id), LocalDateTime.now(), rentedFor, new Equipment(equipment_id, "application/model", "category", true)));
+        reservations.add(new Unapproved(reservationIndex, getUser(rentee_id), LocalDateTime.now(), rentedFor, new Equipment(equipment_id, "application/model", "category", true)));
         reservationList.setReservationList(reservations);
         reservationIndex++;
         ArrayList<Equipment> allEquipment = getAllEquipment();

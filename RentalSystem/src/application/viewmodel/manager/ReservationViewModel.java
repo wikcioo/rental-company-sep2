@@ -2,6 +2,7 @@ package application.viewmodel.manager;
 
 import application.model.*;
 import application.model.reservations.Reservation;
+import application.model.reservations.Unapproved;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -12,11 +13,10 @@ import javafx.collections.ObservableList;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.rmi.RemoteException;
-import java.util.List;
 
 public class ReservationViewModel implements PropertyChangeListener {
     private final Model model;
-    private final ObjectProperty<ObservableList<Reservation>> listObjectProperty;
+    private final ObjectProperty<ObservableList<Unapproved>> listObjectProperty;
     private final StringProperty errorProperty;
 
     public ReservationViewModel(Model model) {
@@ -27,7 +27,7 @@ public class ReservationViewModel implements PropertyChangeListener {
         this.errorProperty = new SimpleStringProperty();
     }
 
-    public void bindReservationList(ObjectProperty<ObservableList<Reservation>> property) {
+    public void bindReservationList(ObjectProperty<ObservableList<Unapproved>> property) {
         property.bind(listObjectProperty);
     }
 

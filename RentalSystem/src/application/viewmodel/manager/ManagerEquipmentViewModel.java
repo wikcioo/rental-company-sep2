@@ -12,7 +12,6 @@ import javafx.collections.ObservableList;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.rmi.RemoteException;
-import java.time.LocalDateTime;
 import java.util.List;
 
 public class ManagerEquipmentViewModel implements PropertyChangeListener {

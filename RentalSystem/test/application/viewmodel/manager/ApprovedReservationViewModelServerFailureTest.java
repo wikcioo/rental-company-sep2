@@ -3,14 +3,12 @@ package application.viewmodel.manager;
 import application.client.FailingRentalSystemClient;
 import application.model.Model;
 import application.model.ModelManager;
-import application.model.reservations.Reservation;
+import application.model.reservations.Unapproved;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ApprovedReservationViewModelServerFailureTest {
 
@@ -27,7 +25,7 @@ public class ApprovedReservationViewModelServerFailureTest {
 
     @Test
     public void server_failure_during_rejecting_reservation_sets_label() {
-        viewModel.removeReservation(new Reservation(1, null, null, null, null));
+        viewModel.removeReservation(new Unapproved(1, null, null, null, null));
         assertEquals("Server communication error", error.get());
     }
 }

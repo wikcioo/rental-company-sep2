@@ -2,15 +2,15 @@ package application.server.timer;
 
 
 import application.model.reservations.Reservation;
+import application.model.reservations.Unapproved;
 
-import java.beans.PropertyChangeSupport;
 import java.util.TimerTask;
 
 public class ExpiringReservation extends TimerTask {
-    private final Reservation unapprovedReservation;
+    private final Unapproved unapprovedReservation;
     private final PCSExpiringReservation pcs;
 
-    public ExpiringReservation(Reservation unapprovedReservation) {
+    public ExpiringReservation(Unapproved unapprovedReservation) {
         this.unapprovedReservation = unapprovedReservation;
         this.pcs = PCSExpiringReservation.getInstance();
     }

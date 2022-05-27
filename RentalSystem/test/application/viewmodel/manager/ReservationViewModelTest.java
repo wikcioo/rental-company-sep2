@@ -4,6 +4,7 @@ import application.client.FakeRentalSystemClient;
 import application.model.Model;
 import application.model.ModelManager;
 import application.model.reservations.Reservation;
+import application.model.reservations.Unapproved;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -25,7 +26,7 @@ public class ReservationViewModelTest {
 
     @Test
     void approving_a_reservation_adds_a_reservation_to_approved_list() throws RemoteException {
-        Reservation r = new Reservation(0, null, null, null);
+        Reservation r = new Unapproved(0, null, null, null);
         model.reserveEquipment(0, model.getCurrentlyLoggedInUser().getEmail(), LocalDateTime.now());
         viewModel.approveReservation(r);
         model.refreshReservations();
@@ -34,7 +35,7 @@ public class ReservationViewModelTest {
 
     @Test
     void rejecting_a_reservation_adds_a_reservation_to_rejected_list() throws RemoteException {
-        Reservation r = new Reservation(0, null, null, null);
+        Reservation r = new Unapproved(0, null, null, null);
         model.reserveEquipment(0, model.getCurrentlyLoggedInUser().getEmail(), LocalDateTime.now());
         viewModel.rejectReservation(r, "rejected");
         model.refreshReservations();

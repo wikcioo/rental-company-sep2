@@ -10,8 +10,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import application.client.FakeRentalSystemClient;
 
-import java.rmi.RemoteException;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class AddEquipmentViewModelTest {

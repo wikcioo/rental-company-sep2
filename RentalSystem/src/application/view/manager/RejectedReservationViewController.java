@@ -1,16 +1,13 @@
 package application.view.manager;
 
 import application.model.reservations.Rejected;
-import application.model.reservations.Reservation;
 import application.model.users.User;
 import application.view.ViewHandler;
 import application.viewmodel.manager.RejectedReservationViewModel;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.Region;
-import javafx.util.Callback;
 
 import java.time.format.DateTimeFormatter;
 

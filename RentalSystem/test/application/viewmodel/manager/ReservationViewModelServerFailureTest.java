@@ -3,7 +3,7 @@ package application.viewmodel.manager;
 import application.client.FailingRentalSystemClient;
 import application.model.Model;
 import application.model.ModelManager;
-import application.model.reservations.Reservation;
+import application.model.reservations.Unapproved;
 import application.model.users.User;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -11,9 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
-//TODO: Class does not have error label
 public class ReservationViewModelServerFailureTest {
 
     private ReservationViewModel viewModel;
@@ -31,13 +29,13 @@ public class ReservationViewModelServerFailureTest {
 
     @Test
     public void server_failure_during_approving_reservation_throws_RuntimeException() {
-        viewModel.approveReservation(new Reservation(1, null, null, null, null));
+        viewModel.approveReservation(new Unapproved(1, null, null, null, null));
         assertEquals("Server communication error", error.get());
     }
 
     @Test
     public void server_failure_during_rejecting_reservation_throws_RuntimeException() {
-        viewModel.rejectReservation(new Reservation(1,null, null, null, null),"");
+        viewModel.rejectReservation(new Unapproved(1,null, null, null, null),"");
         assertEquals("Server communication error", error.get());
     }
 }

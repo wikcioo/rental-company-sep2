@@ -12,7 +12,6 @@ import org.junit.jupiter.api.Test;
 import application.client.FailingRentalSystemClient;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class EquipmentViewModelServerFailureTest {
    private EquipmentViewModel viewModel;

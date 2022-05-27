@@ -1,6 +1,7 @@
 package application.view.manager;
 
 import application.model.reservations.Reservation;
+import application.model.reservations.Unapproved;
 import application.model.users.User;
 import application.view.ViewHandler;
 import application.viewmodel.manager.ReservationViewModel;
@@ -21,7 +22,7 @@ public class ReservationViewController {
     private ReservationViewModel viewModel;
     private Region root;
     @FXML
-    private TableView<Reservation> reservationTable;
+    private TableView<Unapproved> reservationTable;
     @FXML
     private TableColumn<Reservation, String> reservationIdColumn;
     @FXML

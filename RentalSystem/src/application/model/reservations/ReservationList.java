@@ -23,11 +23,11 @@ public class ReservationList {
         return result;
     }
 
-    public ArrayList<Reservation> getUnapprovedReservations() {
-        ArrayList<Reservation> result = new ArrayList<>();
+    public ArrayList<Unapproved> getUnapprovedReservations() {
+        ArrayList<Unapproved> result = new ArrayList<>();
         for (Reservation reservation : reservations) {
-            if (reservation.status().equals(Reservation.type)) {
-                result.add((Reservation) reservation);
+            if (reservation.status().equals(Unapproved.type)) {
+                result.add((Unapproved) reservation);
             }
         }
         return result;

@@ -11,11 +11,6 @@ public class Returned extends Approved {
     private final LocalDateTime returnDate;
     public static final String type = "Returned";
 
-    @Override
-    public String status() {
-        return type;
-    }
-
     public Returned(int id, User rentee, Equipment equipment, LocalDateTime reservationEndDate, LocalDateTime approvedDate, String approvedBy, LocalDateTime returnDate) {
         super(id, rentee, equipment, reservationEndDate, approvedDate, approvedBy);
         this.returnDate = returnDate;
@@ -24,6 +19,11 @@ public class Returned extends Approved {
     public Returned(Approved reservation, LocalDateTime returnDate) {
         super(reservation, reservation.getApprovedDate(), reservation.getApprovedBy());
         this.returnDate = returnDate;
+    }
+
+    @Override
+    public String status() {
+        return type;
     }
 
     public LocalDateTime getReturnDate() {

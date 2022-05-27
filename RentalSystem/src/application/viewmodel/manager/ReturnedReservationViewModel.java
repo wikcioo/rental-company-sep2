@@ -2,7 +2,6 @@ package application.viewmodel.manager;
 
 import application.model.Model;
 import application.model.ModelManager;
-import application.model.reservations.Expired;
 import application.model.reservations.Returned;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;

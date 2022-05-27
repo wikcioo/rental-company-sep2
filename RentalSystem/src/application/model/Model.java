@@ -135,7 +135,7 @@ public interface Model extends NamedPropertyChangeSubject {
      *
      * @return {@link ArrayList<Reservation>} of unapproved reservations
      */
-    ArrayList<Reservation> getUnapprovedReservations();
+    ArrayList<Unapproved> getUnapprovedReservations();
 
     /**
      * Delegates to {@link application.model.reservations.ReservationList#getApprovedReservations() getApprovedReservations} method.

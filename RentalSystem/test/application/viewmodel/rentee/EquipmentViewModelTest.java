@@ -3,10 +3,8 @@ package application.viewmodel.rentee;
 import application.model.Model;
 import application.model.ModelManager;
 import application.model.equipment.Equipment;
-import application.model.reservations.Reservation;
+import application.model.reservations.Unapproved;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import application.client.FakeRentalSystemClient;
@@ -43,7 +41,7 @@ public class EquipmentViewModelTest {
         viewModel.bindSelectedEquipment(new SimpleObjectProperty<>(new Equipment(0, "a", "b", false)));
         viewModel.bindReservationEndDate(new SimpleObjectProperty<>(LocalDateTime.now().plusDays(7)));
         viewModel.reserveEquipment();
-        ArrayList<Reservation> reservations = model.getUnapprovedReservations();
+        ArrayList<Unapproved> reservations = model.getUnapprovedReservations();
         assertEquals(1, reservations.size());
     }
 

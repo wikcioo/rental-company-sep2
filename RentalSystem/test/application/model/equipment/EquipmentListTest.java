@@ -1,7 +1,5 @@
 package application.model.equipment;
 
-import application.model.equipment.Equipment;
-import application.model.equipment.EquipmentList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

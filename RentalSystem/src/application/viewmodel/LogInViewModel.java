@@ -1,7 +1,6 @@
 package application.viewmodel;
 
 import application.model.Model;
-import application.model.users.Manager;
 import application.model.users.User;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;

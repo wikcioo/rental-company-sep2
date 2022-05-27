@@ -1,6 +1,7 @@
 package application.server.timer;
 
 import application.model.reservations.Reservation;
+import application.model.reservations.Unapproved;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -39,13 +40,13 @@ public class ExpiringReservationTimerImplementation implements ExpiringReservati
 
     @Override
     public void addReservationToExpire(Reservation reservation) {
-        if(!reservation.status().equals(Reservation.type))
+        if(!reservation.status().equals(Unapproved.type))
             throw new IllegalArgumentException("Only unapproved reservation can expire");
 
         if(isExpiring(reservation))
             cancelExpiration(reservation);
 
-        ExpiringReservation expiringReservation = new ExpiringReservation(reservation);
+        ExpiringReservation expiringReservation = new ExpiringReservation((Unapproved) reservation);
         reservationHashMap.put(reservation.getId(),expiringReservation);
         timer.schedule(expiringReservation,convertToDate(reservation.getReservationDate().plusSeconds(expirationTimeout)));
     }

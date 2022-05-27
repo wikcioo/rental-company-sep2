@@ -13,11 +13,6 @@ public class Rejected extends Reservation {
     private final String rejectedBy;
     public static final String type = "Rejected";
 
-    @Override
-    public String status() {
-        return type;
-    }
-
     public Rejected(int id, User rentee, Equipment equipment, LocalDateTime reservationEndDate, LocalDateTime rejectionDate, String reason, String rejectedBy) {
         super(id, rentee, equipment, reservationEndDate);
         this.rejectionDate = rejectionDate;
@@ -30,6 +25,11 @@ public class Rejected extends Reservation {
         this.rejectionDate = rejectionDate;
         this.reason = reason;
         this.rejectedBy = rejectedBy;
+    }
+
+    @Override
+    public String status() {
+        return type;
     }
 
     public LocalDateTime getRejectionDate() {

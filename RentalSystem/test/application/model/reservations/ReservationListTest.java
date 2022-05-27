@@ -1,6 +1,5 @@
 package application.model.reservations;
 
-import application.model.reservations.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -18,10 +17,10 @@ public class ReservationListTest {
         reservations = new ArrayList<>();
         // parameters of all inserted reservation objects are irrelevant
         reservations.add(new Returned(0, null, null, null, null, null, null));
-        reservations.add(new Reservation(1, null, null, null, null));
-        reservations.add(new Reservation(2, null, null, null, null));
+        reservations.add(new Unapproved(1, null, null, null, null));
+        reservations.add(new Unapproved(2, null, null, null, null));
         reservations.add(new Approved(3, null, null, null, null, null));
-        reservations.add(new Reservation(4, null, null, null, null));
+        reservations.add(new Unapproved(4, null, null, null, null));
         reservations.add(new Rejected(5, null, null, null, null, null, null));
         reservations.add(new Expired(6, null, null, null, null));
         reservations.add(new Returned(7, null, null, null, null, null, null));
@@ -42,7 +41,7 @@ public class ReservationListTest {
 
     @Test
     public void reservation_list_correctly_returns_unapproved_reservations() {
-        ArrayList<Reservation> unapprovedReservations = reservationList.getUnapprovedReservations();
+        ArrayList<Unapproved> unapprovedReservations = reservationList.getUnapprovedReservations();
         assertEquals(3, unapprovedReservations.size());
     }
 

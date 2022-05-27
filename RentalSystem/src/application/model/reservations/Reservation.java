@@ -8,19 +8,12 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
-import static java.time.temporal.ChronoUnit.DAYS;
-
-public class Reservation implements Serializable {
-    private int id;
-    private User rentee;
-    private LocalDateTime reservationDate;
-    private LocalDateTime rentedFor;
-    private Equipment equipment;
-    public static final String type = "Unapproved";
-
-    public String status() {
-        return type;
-    }
+public abstract class Reservation implements Serializable {
+    private final int id;
+    private final User rentee;
+    private final LocalDateTime reservationDate;
+    private final LocalDateTime rentedFor;
+    private final Equipment equipment;
 
     public Reservation(int id, User rentee, LocalDateTime reservationDate, LocalDateTime rentedFor, Equipment equipment) {
         this.id = id;
@@ -33,6 +26,8 @@ public class Reservation implements Serializable {
     public Reservation(int id, User rentee, Equipment equipment, LocalDateTime rentedFor) {
         this(id,rentee,LocalDateTime.now(),rentedFor,equipment);
     }
+
+    public abstract String status();
 
     public User getRentee() {
         return rentee;

@@ -53,7 +53,7 @@ public class SQLReservationDao implements ReservationDao {
                             "    LEFT JOIN rentalsystemdbs.returned on approved.reservation_id = returned.approved_id;");
 
             while (rs.next()) {
-                Reservation reservation = new Reservation(
+                Reservation reservation = new Unapproved(
                         rs.getInt("reservation_id"),
                         new User(
                                 rs.getString("first_name"),

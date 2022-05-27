@@ -1,6 +1,5 @@
 package application.view.manager;
 
-import application.model.reservations.Reservation;
 import application.view.ViewHandler;
 import application.viewmodel.manager.ManagerMainMenuViewModel;
 import javafx.fxml.FXML;

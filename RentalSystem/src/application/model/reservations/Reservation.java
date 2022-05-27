@@ -31,11 +31,7 @@ public class Reservation implements Serializable {
     }
 
     public Reservation(int id, User rentee, Equipment equipment, LocalDateTime rentedFor) {
-        this.id = id;
-        this.rentee = rentee;
-        this.equipment = equipment;
-        this.reservationDate = LocalDateTime.now();
-        this.rentedFor = rentedFor;
+        this(id,rentee,LocalDateTime.now(),rentedFor,equipment);
     }
 
     public User getRentee() {

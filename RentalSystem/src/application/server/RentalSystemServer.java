@@ -234,6 +234,16 @@ public class RentalSystemServer extends UnicastRemoteObject implements IServer, 
     }
 
     @Override
+    public int getExpirationTimeout() throws RemoteException {
+        return expirationTimer.getExpirationTimeout();
+    }
+
+    @Override
+    public void setExpirationTimeout(int expirationTimeout) throws RemoteException {
+        expirationTimer.setExpirationTimeout(expirationTimeout);
+    }
+
+    @Override
     public void pingServer() throws RemoteException {
     }
 

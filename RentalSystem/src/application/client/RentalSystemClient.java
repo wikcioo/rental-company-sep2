@@ -166,6 +166,24 @@ public interface RentalSystemClient extends Remote {
     void reserveEquipment(int equipment_id, String rentee_id, LocalDateTime rentedFor) throws RemoteException;
 
     /**
+     * Returns current expiration timeout of reservations.
+     * Calls {@link application.shared.IServer#getExpirationTimeout() getExpirationTimeout} method.
+     *
+     * @return expiration timeout of reservations
+     * @throws RemoteException indicates connection failure
+     */
+    int getExpirationTimeout() throws RemoteException;
+
+    /**
+     * Sets new expiration timeout for reservations.
+     * Calls {@link application.shared.IServer#setExpirationTimeout(int) setExpirationTimeout} method.
+     *
+     * @param expirationTimeout new reservation expiration timeout in seconds
+     * @throws RemoteException indicates connection failure
+     */
+    void setExpirationTimeout(int expirationTimeout) throws RemoteException;
+    
+    /**
      * Checks if there is connectivity with the server. Throws exception if it cannot connect.
      * Calls {@link application.shared.IServer#pingServer() pingServer} method.
      *

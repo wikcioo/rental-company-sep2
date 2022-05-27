@@ -219,6 +219,16 @@ public class ModelManager implements Model, PropertyChangeListener {
     }
 
     @Override
+    public int getExpirationTimeout() throws RemoteException {
+        return client.getExpirationTimeout();
+    }
+
+    @Override
+    public void setExpirationTimeout(int expirationTimeout) throws RemoteException {
+        client.setExpirationTimeout(expirationTimeout);
+    }
+
+    @Override
     public User getCurrentlyLoggedInUser() {
         return currentlyLoggedInUser;
     }

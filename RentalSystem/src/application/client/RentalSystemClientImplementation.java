@@ -117,6 +117,16 @@ public class RentalSystemClientImplementation extends UnicastRemoteObject implem
     }
 
     @Override
+    public int getExpirationTimeout() throws RemoteException {
+        return server.getExpirationTimeout();
+    }
+
+    @Override
+    public void setExpirationTimeout(int expirationTimeout) throws RemoteException {
+        server.setExpirationTimeout(expirationTimeout);
+    }
+
+    @Override
     public void pingServer() throws RemoteException {
         server.pingServer();
     }

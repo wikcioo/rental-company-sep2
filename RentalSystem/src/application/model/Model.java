@@ -207,6 +207,23 @@ public interface Model extends NamedPropertyChangeSubject {
     void reserveEquipment(int equipment_id, String rentee_id, LocalDateTime rentedFor) throws RemoteException;
 
     /**
+     * Returns current expiration timeout of reservations.
+     * Delegates to {@link application.client.RentalSystemClient#getExpirationTimeout() getExpirationTimeout} method.
+     *
+     * @return expiration timeout of reservations
+     * @throws RemoteException indicates connection issues
+     */
+    int getExpirationTimeout() throws RemoteException;
+
+    /**
+     * Sets expiration timeout for reservations.
+     * Delegates to {@link application.client.RentalSystemClient#setExpirationTimeout(int) setExpirationTimeout} method.
+     *
+     * @param expirationTimeout new expiration timeout in seconds
+     */
+    void setExpirationTimeout(int expirationTimeout) throws RemoteException;
+
+    /**
      * Returns currently logged-in user.
      *
      * @return user object

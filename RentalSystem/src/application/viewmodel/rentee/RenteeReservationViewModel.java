@@ -42,9 +42,9 @@ public class RenteeReservationViewModel implements PropertyChangeListener {
                 listObjectProperty.setValue(
                         new SortedList<>(FXCollections.observableList(model.getCurrentUserReservations()), (res1, res2) -> {
                             if (res1.getReservationDate().isBefore(res2.getReservationDate())) {
-                                return -1;
-                            } else {
                                 return 1;
+                            } else {
+                                return -1;
                             }
                         })
                 );

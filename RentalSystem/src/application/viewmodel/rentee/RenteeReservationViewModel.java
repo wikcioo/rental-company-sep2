@@ -44,7 +44,7 @@ public class RenteeReservationViewModel implements PropertyChangeListener {
                             if (res1.getReservationDate().isBefore(res2.getReservationDate())) {
                                 return -1;
                             } else {
-                                return 0;
+                                return 1;
                             }
                         })
                 );

@@ -34,7 +34,7 @@ public class ExpiringReservationTimerImplementation implements ExpiringReservati
         if(!reservationHashMap.containsKey(reservation.getId())) {
             ExpiringReservation expiringReservation = new ExpiringReservation(reservation);
             reservationHashMap.put(reservation.getId(),expiringReservation);
-            timer.schedule(expiringReservation,convertToDate(reservation.getReservationDate().plusSeconds(3)));
+            timer.schedule(expiringReservation,convertToDate(reservation.getReservationDate().plusSeconds(expirationTimeout)));
         }
     }
 

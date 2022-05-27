@@ -147,19 +147,6 @@ public class FakeRentalSystemClient implements RentalSystemClient {
     }
 
     @Override
-    public void expireReservation(int id) throws RemoteException {
-        ArrayList<Reservation> reservations = new ArrayList<>(reservationList.getAll());
-        for (Reservation r : reservationList.getUnapprovedReservations()) {
-            if (r.getId() == id) {
-                reservations.set(reservations.indexOf(r), new Expired(r.getId(), r.getRentee(), r.getEquipment(), r.getRentedFor(), LocalDateTime.now()));
-                break;
-            }
-        }
-        reservationList.setReservationList(reservations);
-        support.firePropertyChange("reservations", null, reservations);
-    }
-
-    @Override
     public void returnReservation(int id) throws RemoteException {
         ArrayList<Reservation> reservations = new ArrayList<>(reservationList.getAll());
         for (Approved a : reservationList.getApprovedReservations()) {

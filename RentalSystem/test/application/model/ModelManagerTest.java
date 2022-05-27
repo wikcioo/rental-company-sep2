@@ -27,21 +27,16 @@ public class ModelManagerTest {
         model.reserveEquipment(equipment.getEquipmentId(), user.getEmail(), LocalDateTime.now());
         model.approveReservation(0, "john@gmail.com");
         model.approveReservation(1, "john@gmail.com");
-        //2 Expired
-        model.reserveEquipment(equipment.getEquipmentId(), user.getEmail(), LocalDateTime.now());
-        model.reserveEquipment(equipment.getEquipmentId(), user.getEmail(), LocalDateTime.now());
-        model.expireReservation(2);
-        model.expireReservation(3);
         //2 Returned
         model.reserveEquipment(equipment.getEquipmentId(), user.getEmail(), LocalDateTime.now());
         model.reserveEquipment(equipment.getEquipmentId(), user.getEmail(), LocalDateTime.now());
-        model.approveReservation(4, "john@gmail.com");
-        model.returnReservation(4);
-        model.approveReservation(5, "john@gmail.com");
-        model.returnReservation(5);
+        model.approveReservation(2, "john@gmail.com");
+        model.returnReservation(2);
+        model.approveReservation(3, "john@gmail.com");
+        model.returnReservation(3);
         //1 Rejected
         model.reserveEquipment(equipment.getEquipmentId(), user.getEmail(), LocalDateTime.now());
-        model.rejectReservation(6, "john@gmail.com", "No reason");
+        model.rejectReservation(4, "john@gmail.com", "No reason");
         //3 Unapproved
         model.reserveEquipment(equipment.getEquipmentId(), user.getEmail(), LocalDateTime.now());
         model.reserveEquipment(equipment.getEquipmentId(), user.getEmail(), LocalDateTime.now());
@@ -117,12 +112,6 @@ public class ModelManagerTest {
     public void reservation_list_correctly_returns_returned_reservations() {
         ArrayList<Returned> returnedReservations = model.getReturnedReservations();
         assertEquals(2, returnedReservations.size());
-    }
-
-    @Test
-    public void reservation_list_correctly_returns_expired_reservations() {
-        ArrayList<Expired> expiredReservations = model.getExpiredReservations();
-        assertEquals(2, expiredReservations.size());
     }
 
     @Test

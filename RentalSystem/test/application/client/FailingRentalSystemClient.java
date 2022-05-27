@@ -96,11 +96,6 @@ public class FailingRentalSystemClient implements RentalSystemClient {
     }
 
     @Override
-    public void expireReservation(int id) throws RemoteException {
-        throw new RemoteException();
-    }
-
-    @Override
     public void returnReservation(int id) throws RemoteException {
         throw new RemoteException();
     }

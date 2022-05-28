@@ -15,15 +15,15 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class EquipmentViewModelTest {
-    private EquipmentViewModel viewModel;
+public class RenteeEquipmentViewModelTest {
+    private RenteeEquipmentViewModel viewModel;
 //    private StringProperty loggedUserProperty;
     private Model model;
 
     @BeforeEach
     void setUp() throws RemoteException {
         model = new ModelManager(new FakeRentalSystemClient());
-        viewModel = new EquipmentViewModel(model);
+        viewModel = new RenteeEquipmentViewModel(model);
 //        loggedUserProperty = new SimpleStringProperty();
         model.setCurrentlyLoggedInUser(model.getUser("john@gmail.com"));
 

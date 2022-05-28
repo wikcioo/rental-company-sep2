@@ -2,7 +2,7 @@ package application.view.rentee;
 
 import application.model.equipment.Equipment;
 import application.view.ViewHandler;
-import application.viewmodel.rentee.EquipmentViewModel;
+import application.viewmodel.rentee.RenteeEquipmentViewModel;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
@@ -21,7 +21,7 @@ public class RenteeEquipmentViewController {
     @FXML
     public Label category;
     private ViewHandler viewHandler;
-    private EquipmentViewModel viewModel;
+    private RenteeEquipmentViewModel viewModel;
     private Region root;
     @FXML
     private TableView<Equipment> equipmentTable;
@@ -38,9 +38,9 @@ public class RenteeEquipmentViewController {
     @FXML
     private Label reservationError;
 
-    public void init(ViewHandler viewHandler, EquipmentViewModel equipmentViewModel, Region root) {
+    public void init(ViewHandler viewHandler, RenteeEquipmentViewModel renteeEquipmentViewModel, Region root) {
         this.viewHandler = viewHandler;
-        this.viewModel = equipmentViewModel;
+        this.viewModel = renteeEquipmentViewModel;
         this.root = root;
 
         //Only allows user to pick a date from today to 4 weeks from today.
@@ -49,7 +49,7 @@ public class RenteeEquipmentViewController {
                     @Override
                     public void updateItem(LocalDate item, boolean empty) {
                         super.updateItem(item, empty);
-                        setDisable(item.isAfter(EquipmentViewModel.MAX_DATE) || item.isBefore(EquipmentViewModel.MIN_DATE));
+                        setDisable(item.isAfter(RenteeEquipmentViewModel.MAX_DATE) || item.isBefore(RenteeEquipmentViewModel.MIN_DATE));
                     }
                 });
         datePicker.focusedProperty().addListener((observable, oldValue, newValue) -> {
@@ -135,7 +135,7 @@ public class RenteeEquipmentViewController {
             reservationError.setText("You must select an item to reserve");
         } else if (datePicker.getValue() == null) {
             reservationError.setText("You must choose the date");
-        } else if (datePicker.getValue().isAfter(EquipmentViewModel.MAX_DATE) || datePicker.getValue().isBefore(EquipmentViewModel.MIN_DATE)) {
+        } else if (datePicker.getValue().isAfter(RenteeEquipmentViewModel.MAX_DATE) || datePicker.getValue().isBefore(RenteeEquipmentViewModel.MIN_DATE)) {
             reservationError.setText("You must choose a date in the correct interval");
         } else {
             viewModel.bindReservationEndDate(new SimpleObjectProperty<>(datePicker.getValue().atTime(14, 0)));

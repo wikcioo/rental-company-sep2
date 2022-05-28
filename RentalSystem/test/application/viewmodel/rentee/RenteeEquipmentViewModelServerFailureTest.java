@@ -13,8 +13,8 @@ import application.client.FailingRentalSystemClient;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class EquipmentViewModelServerFailureTest {
-   private EquipmentViewModel viewModel;
+public class RenteeEquipmentViewModelServerFailureTest {
+   private RenteeEquipmentViewModel viewModel;
    private StringProperty reservationError;
    private StringProperty equipmentError;
 
@@ -24,7 +24,7 @@ public class EquipmentViewModelServerFailureTest {
       Model model = new ModelManager(new FailingRentalSystemClient());
       User user = new User("d", "e", "f", "abc@gmail.com", "def");
       model.setCurrentlyLoggedInUser(user);
-      viewModel = new EquipmentViewModel(model);
+      viewModel = new RenteeEquipmentViewModel(model);
       reservationError = new SimpleStringProperty();
       equipmentError = new SimpleStringProperty();
       viewModel.bindEquipmentErrorLabel(equipmentError);

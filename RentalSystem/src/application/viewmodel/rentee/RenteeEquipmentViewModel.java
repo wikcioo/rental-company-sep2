@@ -17,7 +17,7 @@ import java.rmi.RemoteException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-public class EquipmentViewModel implements PropertyChangeListener {
+public class RenteeEquipmentViewModel implements PropertyChangeListener {
     private final Model model;
     private final ObjectProperty<ObservableList<Equipment>> listObjectProperty;
     private final ObjectProperty<Equipment> selectedEquipmentProperty;
@@ -28,7 +28,7 @@ public class EquipmentViewModel implements PropertyChangeListener {
     public static final LocalDate MIN_DATE = LocalDate.now().plusDays(1);
     public static final LocalDate MAX_DATE = MIN_DATE.plusWeeks(4);
 
-    public EquipmentViewModel(Model model) {
+    public RenteeEquipmentViewModel(Model model) {
         this.model = model;
         this.model.addListener(ModelManager.EQUIPMENT_LIST_CHANGED, this);
         this.model.addListener(ModelManager.RESERVATION_ID_RECEIVED, this);

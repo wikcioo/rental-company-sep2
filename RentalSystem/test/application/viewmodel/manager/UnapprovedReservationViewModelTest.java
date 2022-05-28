@@ -6,6 +6,7 @@ import application.model.models.Model;
 import application.model.models.ModelManager;
 import application.model.reservations.Reservation;
 import application.model.reservations.Unapproved;
+import application.viewmodel.manager.reservations.UnapprovedReservationViewModel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -14,14 +15,14 @@ import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class ReservationViewModelTest {
-    private ReservationViewModel viewModel;
+public class UnapprovedReservationViewModelTest {
+    private UnapprovedReservationViewModel viewModel;
     private Model model;
 
     @BeforeEach
     void setUp() throws RemoteException {
         model = new ModelManager(new FakeRentalSystemClient());
-        viewModel = new ReservationViewModel((ManagerModel) model);
+        viewModel = new UnapprovedReservationViewModel((ManagerModel) model);
         model.setCurrentlyLoggedInUser(model.getUser("john@gmail.com"));
     }
 

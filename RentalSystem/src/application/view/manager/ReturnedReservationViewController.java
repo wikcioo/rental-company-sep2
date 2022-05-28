@@ -3,7 +3,7 @@ package application.view.manager;
 import application.model.reservations.Returned;
 import application.model.users.User;
 import application.view.ViewHandler;
-import application.viewmodel.manager.ReturnedReservationViewModel;
+import application.viewmodel.manager.reservations.ReturnedReservationViewModel;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

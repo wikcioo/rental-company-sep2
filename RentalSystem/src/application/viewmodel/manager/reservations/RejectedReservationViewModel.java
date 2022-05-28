@@ -1,32 +1,31 @@
-package application.viewmodel.manager;
+package application.viewmodel.manager.reservations;
 
 import application.model.models.ManagerModel;
 import application.model.models.ModelManager;
-import application.model.reservations.Returned;
+import application.model.reservations.Rejected;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-public class ReturnedReservationViewModel implements PropertyChangeListener {
+public class RejectedReservationViewModel implements PropertyChangeListener {
     private final ManagerModel model;
-    private final ObjectProperty<ObservableList<Returned>> listObjectProperty;
+    private final ObjectProperty<ObservableList<Rejected>> listObjectProperty;
     private final StringProperty errorProperty;
 
-    public ReturnedReservationViewModel(ManagerModel model) {
+    public RejectedReservationViewModel(ManagerModel model) {
       this.model = model;
       listObjectProperty = new SimpleObjectProperty<>();
-      listObjectProperty.setValue(FXCollections.observableList(model.getReturnedReservations()));
+      listObjectProperty.setValue(FXCollections.observableList(model.getRejectedReservations()));
       model.addListener(ModelManager.RESERVATION_LIST_CHANGED, this);
       this.errorProperty = new SimpleStringProperty();
     }
 
-    public void bindReservationList(ObjectProperty<ObservableList<Returned>> property) {
+    public void bindReservationList(ObjectProperty<ObservableList<Rejected>> property) {
       property.bind(listObjectProperty);
     }
 
@@ -38,10 +37,10 @@ public class ReturnedReservationViewModel implements PropertyChangeListener {
     public void propertyChange(PropertyChangeEvent evt) {
       switch (evt.getPropertyName()) {
         case ModelManager.RESERVATION_LIST_CHANGED -> {
-          listObjectProperty.setValue(FXCollections.observableList(model.getReturnedReservations()));
+          listObjectProperty.setValue(FXCollections.observableList(model.getRejectedReservations()));
         }
       }
     }
 
-  }
+    }
 

@@ -5,6 +5,7 @@ import application.model.models.Model;
 import application.model.models.ModelManager;
 import application.model.equipment.Equipment;
 import application.model.users.User;
+import application.viewmodel.manager.equipment.AddEquipmentViewModel;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import org.junit.jupiter.api.BeforeEach;

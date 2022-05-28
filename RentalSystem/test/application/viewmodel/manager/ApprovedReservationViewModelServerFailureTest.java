@@ -5,6 +5,7 @@ import application.model.models.ManagerModel;
 import application.model.models.Model;
 import application.model.models.ModelManager;
 import application.model.reservations.Unapproved;
+import application.viewmodel.manager.reservations.ApprovedReservationViewModel;
 import javafx.beans.property.SimpleStringProperty;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -1,7 +1,7 @@
 package application.view.manager;
 
 import application.view.ViewHandler;
-import application.viewmodel.manager.AddUserViewModel;
+import application.viewmodel.manager.users.AddUserViewModel;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.Region;

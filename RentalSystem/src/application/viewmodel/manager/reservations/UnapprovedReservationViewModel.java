@@ -1,4 +1,4 @@
-package application.viewmodel.manager;
+package application.viewmodel.manager.reservations;
 
 import application.model.models.ManagerModel;
 import application.model.models.ModelManager;
@@ -15,12 +15,12 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.rmi.RemoteException;
 
-public class ReservationViewModel implements PropertyChangeListener {
+public class UnapprovedReservationViewModel implements PropertyChangeListener {
     private final ManagerModel model;
     private final ObjectProperty<ObservableList<Unapproved>> listObjectProperty;
     private final StringProperty errorProperty;
 
-    public ReservationViewModel(ManagerModel model) {
+    public UnapprovedReservationViewModel(ManagerModel model) {
         this.model = model;
         listObjectProperty = new SimpleObjectProperty<>();
         model.addListener(ModelManager.RESERVATION_LIST_CHANGED, this);

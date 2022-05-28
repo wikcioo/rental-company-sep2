@@ -6,6 +6,7 @@ import application.model.models.Model;
 import application.model.models.ModelManager;
 import application.model.reservations.Unapproved;
 import application.model.users.User;
+import application.viewmodel.manager.reservations.UnapprovedReservationViewModel;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,9 +14,9 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class ReservationViewModelServerFailureTest {
+public class UnapprovedReservationViewModelServerFailureTest {
 
-    private ReservationViewModel viewModel;
+    private UnapprovedReservationViewModel viewModel;
     private StringProperty error;
 
     @BeforeEach
@@ -23,7 +24,7 @@ public class ReservationViewModelServerFailureTest {
         Model model = new ModelManager(new FailingRentalSystemClient());
         User user = new User("d", "e", "f", "abc@gmail.com", "def");
         model.setCurrentlyLoggedInUser(user);
-        viewModel = new ReservationViewModel((ManagerModel) model);
+        viewModel = new UnapprovedReservationViewModel((ManagerModel) model);
         error = new SimpleStringProperty();
         viewModel.bindErrorLabel(error);
     }

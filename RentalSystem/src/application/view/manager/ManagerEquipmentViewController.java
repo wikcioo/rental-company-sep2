@@ -2,7 +2,7 @@ package application.view.manager;
 
 import application.model.equipment.Equipment;
 import application.view.ViewHandler;
-import application.viewmodel.manager.ManagerEquipmentViewModel;
+import application.viewmodel.manager.equipment.ManagerEquipmentViewModel;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;

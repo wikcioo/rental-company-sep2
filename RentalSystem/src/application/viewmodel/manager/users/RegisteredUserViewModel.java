@@ -1,4 +1,4 @@
-package application.viewmodel.manager;
+package application.viewmodel.manager.users;
 
 import application.model.models.ManagerModel;
 import application.model.models.ModelManager;

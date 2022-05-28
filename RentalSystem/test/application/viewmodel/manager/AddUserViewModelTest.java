@@ -3,6 +3,7 @@ package application.viewmodel.manager;
 import application.model.models.ManagerModel;
 import application.model.models.Model;
 import application.model.models.ModelManager;
+import application.viewmodel.manager.users.AddUserViewModel;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import org.junit.jupiter.api.BeforeEach;

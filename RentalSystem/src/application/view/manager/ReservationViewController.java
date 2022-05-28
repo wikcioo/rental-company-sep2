@@ -4,7 +4,7 @@ import application.model.reservations.Reservation;
 import application.model.reservations.Unapproved;
 import application.model.users.User;
 import application.view.ViewHandler;
-import application.viewmodel.manager.ReservationViewModel;
+import application.viewmodel.manager.reservations.UnapprovedReservationViewModel;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,7 +19,7 @@ public class ReservationViewController {
     @FXML
     public Label error;
     private ViewHandler viewHandler;
-    private ReservationViewModel viewModel;
+    private UnapprovedReservationViewModel viewModel;
     private Region root;
     @FXML
     private TableView<Unapproved> reservationTable;
@@ -38,9 +38,9 @@ public class ReservationViewController {
     @FXML
     private TableColumn<Reservation, String> rejectButtonColumn;
 
-    public void init(ViewHandler viewHandler, ReservationViewModel reservationViewModel, Region root) {
+    public void init(ViewHandler viewHandler, UnapprovedReservationViewModel unapprovedReservationViewModel, Region root) {
         this.viewHandler = viewHandler;
-        this.viewModel = reservationViewModel;
+        this.viewModel = unapprovedReservationViewModel;
         this.root = root;
 
         reservationIdColumn.setCellValueFactory(p -> {

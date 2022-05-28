@@ -5,6 +5,7 @@ import application.model.models.ManagerModel;
 import application.model.models.Model;
 import application.model.models.ModelManager;
 import application.model.equipment.Equipment;
+import application.viewmodel.manager.equipment.ManagerEquipmentViewModel;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;

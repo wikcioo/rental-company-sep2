@@ -1,7 +1,7 @@
 package application.view.manager;
 
 import application.view.ViewHandler;
-import application.viewmodel.manager.AddEquipmentViewModel;
+import application.viewmodel.manager.equipment.AddEquipmentViewModel;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;

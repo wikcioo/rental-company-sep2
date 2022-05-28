@@ -4,6 +4,11 @@ import application.model.models.ManagerModel;
 import application.model.models.RenteeModel;
 import application.model.models.UserModel;
 import application.viewmodel.manager.*;
+import application.viewmodel.manager.equipment.AddEquipmentViewModel;
+import application.viewmodel.manager.equipment.ManagerEquipmentViewModel;
+import application.viewmodel.manager.reservations.*;
+import application.viewmodel.manager.users.AddUserViewModel;
+import application.viewmodel.manager.users.RegisteredUserViewModel;
 import application.viewmodel.rentee.RenteeEquipmentViewModel;
 import application.viewmodel.rentee.RenteeMainMenuViewModel;
 import application.viewmodel.rentee.RenteeReservationViewModel;
@@ -12,7 +17,7 @@ public class ViewModelFactory {
     private final AddEquipmentViewModel addEquipmentViewModel;
     private final RenteeEquipmentViewModel renteeEquipmentViewModel;
     private final LogInViewModel logInViewModel;
-    private final ReservationViewModel reservationViewModel;
+    private final UnapprovedReservationViewModel unapprovedReservationViewModel;
     private final ManagerEquipmentViewModel managerEquipmentViewModel;
     private final AddUserViewModel addUserViewModel;
     private final ApprovedReservationViewModel approvedReservationViewModel;
@@ -28,7 +33,7 @@ public class ViewModelFactory {
         this.addEquipmentViewModel = new AddEquipmentViewModel(managerModel);
         this.renteeEquipmentViewModel = new RenteeEquipmentViewModel(renteeModel);
         this.logInViewModel = new LogInViewModel(userModel);
-        this.reservationViewModel = new ReservationViewModel(managerModel);
+        this.unapprovedReservationViewModel = new UnapprovedReservationViewModel(managerModel);
         this.managerEquipmentViewModel = new ManagerEquipmentViewModel(managerModel);
         this.addUserViewModel = new AddUserViewModel(managerModel);
         this.approvedReservationViewModel = new ApprovedReservationViewModel(managerModel);
@@ -53,8 +58,8 @@ public class ViewModelFactory {
         return logInViewModel;
     }
 
-    public ReservationViewModel getReservationViewModel() {
-        return reservationViewModel;
+    public UnapprovedReservationViewModel getReservationViewModel() {
+        return unapprovedReservationViewModel;
     }
 
     public ApprovedReservationViewModel getApprovedReservationViewModel() {

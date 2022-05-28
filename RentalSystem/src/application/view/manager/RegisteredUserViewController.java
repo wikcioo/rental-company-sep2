@@ -2,7 +2,7 @@ package application.view.manager;
 
 import application.model.users.User;
 import application.view.ViewHandler;
-import application.viewmodel.manager.RegisteredUserViewModel;
+import application.viewmodel.manager.users.RegisteredUserViewModel;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

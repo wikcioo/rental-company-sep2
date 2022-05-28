@@ -1,4 +1,4 @@
-package application.view.manager;
+package application.view.manager.reservations;
 
 import application.model.reservations.Returned;
 import application.model.users.User;

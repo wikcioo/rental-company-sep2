@@ -1,4 +1,4 @@
-package application.view.manager;
+package application.view.manager.users;
 
 import application.view.ViewHandler;
 import application.viewmodel.manager.users.AddUserViewModel;

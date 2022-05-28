@@ -1,9 +1,9 @@
-package application.view.manager;
+package application.view.manager.reservations;
 
-import application.model.reservations.Expired;
+import application.model.reservations.Rejected;
 import application.model.users.User;
 import application.view.ViewHandler;
-import application.viewmodel.manager.reservations.ExpiredReservationViewModel;
+import application.viewmodel.manager.reservations.RejectedReservationViewModel;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -11,29 +11,31 @@ import javafx.scene.layout.Region;
 
 import java.time.format.DateTimeFormatter;
 
-public class ExpiredReservationViewController {
+
+public class RejectedReservationViewController {
     @FXML
     public Label error;
     private ViewHandler viewHandler;
-    private ExpiredReservationViewModel viewModel;
+    private RejectedReservationViewModel viewModel;
     private Region root;
     @FXML
-    private TableView<Expired> reservationTable;
+    private TableView<Rejected> reservationTable;
     @FXML
-    private TableColumn<Expired, String> reservationIdColumn;
+    private TableColumn<Rejected, String> reservationIdColumn;
     @FXML
-    private TableColumn<Expired, String> renteeColumn;
+    private TableColumn<Rejected, String> renteeColumn;
     @FXML
-    private TableColumn<Expired, String> equipmentColumn;
+    private TableColumn<Rejected, String> equipmentColumn;
     @FXML
-    private TableColumn<Expired, String> reservationDateColumn;
+    private TableColumn<Rejected, String> reservationDateColumn;
     @FXML
-    private TableColumn<Expired, String> expirationDateColumn;
+    private TableColumn<Rejected, String> rejectionDateColumn;
+    @FXML
+    public TableColumn<Rejected, String> reasonColumn;
 
-
-    public void init(ViewHandler viewHandler, ExpiredReservationViewModel expiredReservationViewModel, Region root) {
+    public void init(ViewHandler viewHandler, RejectedReservationViewModel rejectedReservationViewModel, Region root) {
         this.viewHandler = viewHandler;
-        this.viewModel = expiredReservationViewModel;
+        this.viewModel = rejectedReservationViewModel;
         this.root = root;
 
         reservationIdColumn.setCellValueFactory(p -> {
@@ -63,17 +65,26 @@ public class ExpiredReservationViewController {
 
         reservationDateColumn.setCellValueFactory(p -> {
             if (p.getValue() != null) {
-                return new SimpleStringProperty(p.getValue().getReservationDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+                return new SimpleStringProperty(p.getValue().getReservationDate().format(
+                        DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
             } else {
-                return new SimpleStringProperty("<no end date>");
+                return new SimpleStringProperty("<no reservation date>");
             }
         });
 
-        expirationDateColumn.setCellValueFactory(p -> {
-            if (p.getValue() != null) {
-                return new SimpleStringProperty(p.getValue().getExpirationDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+        rejectionDateColumn.setCellValueFactory(p -> {
+            if (p.getValue() != null && p.getValue().getRentedFor() != null) {
+                return new SimpleStringProperty(p.getValue().getRentedFor().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
             } else {
-                return new SimpleStringProperty("<no end date>");
+                return new SimpleStringProperty("<no rejection date>");
+            }
+        });
+
+        reasonColumn.setCellValueFactory(p -> {
+            if (p.getValue() != null) {
+                return new SimpleStringProperty(p.getValue().getReason());
+            } else {
+                return new SimpleStringProperty("<no reason>");
             }
         });
 
@@ -95,3 +106,4 @@ public class ExpiredReservationViewController {
     }
 
 }
+

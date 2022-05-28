@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="465.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.manager.AddUserViewController">
+<AnchorPane prefHeight="465.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.manager.users.AddUserViewController">
    <children>
       <Label alignment="CENTER" layoutX="174.0" layoutY="59.0" prefHeight="36.0" prefWidth="274.0" text="Add New User">
          <VBox.margin>

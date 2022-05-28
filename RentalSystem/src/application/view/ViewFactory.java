@@ -3,6 +3,11 @@ package application.view;
 import application.util.ConsoleLogger;
 import application.util.Logger;
 import application.view.manager.*;
+import application.view.manager.equipment.AddEquipmentViewController;
+import application.view.manager.equipment.ManagerEquipmentViewController;
+import application.view.manager.reservations.*;
+import application.view.manager.users.AddUserViewController;
+import application.view.manager.users.RegisteredUserViewController;
 import application.view.rentee.RenteeEquipmentViewController;
 import application.view.rentee.RenteeMainMenuViewController;
 import application.view.rentee.RenteeReservationViewController;
@@ -17,7 +22,7 @@ public class ViewFactory {
     private AddEquipmentViewController addEquipmentViewController;
     private RenteeEquipmentViewController renteeEquipmentViewController;
     private LogInViewController logInViewController;
-    private ReservationViewController reservationViewController;
+    private UnapprovedReservationViewController unapprovedReservationViewController;
     private ManagerEquipmentViewController managerEquipmentViewController;
     private AddUserViewController addUserViewController;
     private ApprovedReservationViewController approvedReservationViewController;
@@ -105,20 +110,20 @@ public class ViewFactory {
     }
 
     public Region loadReservationListView() {
-        if (reservationViewController == null) {
+        if (unapprovedReservationViewController == null) {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("gui/manager/ReservationView.fxml"));
+            loader.setLocation(getClass().getResource("gui/manager/UnapprovedReservationView.fxml"));
             try {
                 Region root = loader.load();
-                reservationViewController = loader.getController();
-                reservationViewController.init(viewHandler,
+                unapprovedReservationViewController = loader.getController();
+                unapprovedReservationViewController.init(viewHandler,
                         viewModelFactory.getReservationViewModel(), root);
             } catch (Exception e) {
                 logger.error(e.getMessage());
             }
         }
-        reservationViewController.reset();
-        return reservationViewController.getRoot();
+        unapprovedReservationViewController.reset();
+        return unapprovedReservationViewController.getRoot();
     }
 
     public Region loadAddUserView() {

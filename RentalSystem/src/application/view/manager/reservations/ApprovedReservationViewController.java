@@ -1,4 +1,4 @@
-package application.view.manager;
+package application.view.manager.reservations;
 
 import application.model.reservations.Approved;
 import application.view.ViewHandler;

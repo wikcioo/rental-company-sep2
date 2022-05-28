@@ -1,4 +1,4 @@
-package application.view.manager;
+package application.view.manager.reservations;
 
 import application.model.reservations.Reservation;
 import application.model.reservations.Unapproved;
@@ -15,7 +15,7 @@ import javafx.util.Callback;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
-public class ReservationViewController {
+public class UnapprovedReservationViewController {
     @FXML
     public Label error;
     private ViewHandler viewHandler;

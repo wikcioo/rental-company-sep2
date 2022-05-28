@@ -1,4 +1,4 @@
-package application.view.manager;
+package application.view.manager.users;
 
 import application.model.users.User;
 import application.view.ViewHandler;

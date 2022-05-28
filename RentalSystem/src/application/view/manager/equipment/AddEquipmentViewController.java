@@ -1,4 +1,4 @@
-package application.view.manager;
+package application.view.manager.equipment;
 
 import application.view.ViewHandler;
 import application.viewmodel.manager.equipment.AddEquipmentViewModel;

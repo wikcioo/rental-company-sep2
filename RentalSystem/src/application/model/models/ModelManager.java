@@ -1,4 +1,4 @@
-package application.model;
+package application.model.models;
 
 import application.client.RentalSystemClient;
 import application.client.RentalSystemClientImplementation;
@@ -17,7 +17,7 @@ import java.rmi.registry.Registry;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public class ModelManager implements Model, PropertyChangeListener {
+public class ModelManager implements Model, UserModel, RenteeModel, ManagerModel, PropertyChangeListener {
     private User currentlyLoggedInUser;
     private RentalSystemClient client;
     private final EquipmentList equipmentList;

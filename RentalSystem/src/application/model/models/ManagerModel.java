@@ -1,4 +1,4 @@
-package application.model;
+package application.model.models;
 
 import application.model.equipment.Equipment;
 import application.model.reservations.*;
@@ -6,10 +6,9 @@ import application.model.users.User;
 import application.util.NamedPropertyChangeSubject;
 
 import java.rmi.RemoteException;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public interface Model extends NamedPropertyChangeSubject {
+public interface ManagerModel extends NamedPropertyChangeSubject {
     /**
      * Adds new equipment with given parameters to the database and to the equipmentList field.
      * Fires property change on EQUIPMENT_LIST_CHANGED event.
@@ -26,14 +25,9 @@ public interface Model extends NamedPropertyChangeSubject {
      * Gets all stored equipment from the equipmentList.
      * Delegates to {@link application.model.equipment.EquipmentList#getAllEquipment() getAllEquipment} method.
      *
-     * @return {@link ArrayList<Equipment>} of all stored equipment
+     * @return {@link ArrayList < Equipment >} of all stored equipment
      */
     ArrayList<Equipment> getAllEquipment();
-
-    //TODO: [Aivaras] JavaDoc for method
-    ArrayList<Reservation> getCurrentUserReservations();
-    //TODO: [Aivaras] JavaDoc for method
-    int getCurrentUserOverDueEquipmentAmount();
 
     /**
      * Gets all available equipment from the equipmentList.
@@ -53,14 +47,6 @@ public interface Model extends NamedPropertyChangeSubject {
     void retrieveAllEquipment() throws RemoteException;
 
     /**
-     * Clears equipmentList and populates it by calling {@link application.client.RentalSystemClient#getAllUnreservedEquipment() getAllUnreservedEquipment} method.
-     * Fires property change on EQUIPMENT_LIST_CHANGED event.
-     *
-     * @throws RemoteException indicates connection issues
-     */
-    void retrieveAllUnreservedEquipment() throws RemoteException;
-
-    /**
      * Adds new user to the database with given parameters.
      * Delegates to {@link application.client.RentalSystemClient#addUser(String, String, String, String, String, boolean) addUser} method.
      *
@@ -73,24 +59,6 @@ public interface Model extends NamedPropertyChangeSubject {
      * @throws RemoteException indicates connection issues
      */
     void addUser(String firstName, String lastName, String phoneNumber, String email, String password, boolean isManager) throws RemoteException;
-
-    /**
-     * Gets the user from the database by given email address.
-     * Delegates to {@link application.client.RentalSystemClient#getUser(String) getUser} method.
-     *
-     * @param email user's email
-     * @return {@link User} that has been added
-     * @throws RemoteException indicates connection issues
-     */
-    User getUser(String email) throws RemoteException;
-
-    /**
-     * Clears userList and populates it by calling {@link application.client.RentalSystemClient#getAllUsers() getAllUsers} method.
-     * Fires property change on USER_LIST_CHANGED event.
-     *
-     * @throws RemoteException indicates connection issues
-     */
-    void retrieveAllUsers() throws RemoteException;
 
     /**
      * Returns a list of all registered users.
@@ -109,18 +77,6 @@ public interface Model extends NamedPropertyChangeSubject {
     void deleteUser(String email) throws RemoteException;
 
     /**
-     * Returns a String indicating who the user should be treated as (Manager, Rentee or Invalid)
-     * Calls {@link application.client.RentalSystemClient#isValidUser(String, String) isValidUser} method to check if the user is valid.
-     * Calls {@link application.client.RentalSystemClient#isUserAManager(String) isUserAManager} method to check if the user is a manager, otherwise, rentee.
-     *
-     * @param email    user's email address
-     * @param password user's password
-     * @return String(Manager, Rentee or Invalid) indicating user's role or invalid
-     * @throws RemoteException indicates connection issues
-     */
-    String logIn(String email, String password) throws RemoteException;
-
-    /**
      * Toggles the availability of the given equipment.
      * Calls {@link application.client.RentalSystemClient#setAvailability(int, boolean) setAvailability} method with an appropriate boolean value.
      * Fires property change on EQUIPMENT_LIST_CHANGED event.
@@ -133,7 +89,7 @@ public interface Model extends NamedPropertyChangeSubject {
     /**
      * Delegates to {@link application.model.reservations.ReservationList#getUnapprovedReservations() getUnapprovedReservations} method.
      *
-     * @return {@link ArrayList<Reservation>} of unapproved reservations
+     * @return {@link ArrayList< Reservation >} of unapproved reservations
      */
     ArrayList<Unapproved> getUnapprovedReservations();
 
@@ -196,17 +152,6 @@ public interface Model extends NamedPropertyChangeSubject {
     void returnReservation(int id) throws RemoteException;
 
     /**
-     * Reserves the equipment with given id, by rentee with given id until certain end date
-     * Delegates to {@link application.client.RentalSystemClient#reserveEquipment(int, String, LocalDateTime) reserveEquipment} method.
-     *
-     * @param equipment_id equipment's id
-     * @param rentee_id    rentee's id
-     * @param rentedFor    expiration date of the reserved equipment
-     * @throws RemoteException indicates connection issues
-     */
-    void reserveEquipment(int equipment_id, String rentee_id, LocalDateTime rentedFor) throws RemoteException;
-
-    /**
      * Returns current expiration timeout of reservations.
      * Delegates to {@link application.client.RentalSystemClient#getExpirationTimeout() getExpirationTimeout} method.
      *
@@ -229,34 +174,4 @@ public interface Model extends NamedPropertyChangeSubject {
      * @return user object
      */
     User getCurrentlyLoggedInUser();
-
-    /**
-     * Sets a new logged-in user.
-     *
-     * @param newUser user to be set as logged-in
-     */
-    void setCurrentlyLoggedInUser(User newUser);
-
-    /**
-     * Refreshes reservationList by setting it with a call to
-     * {@link application.client.RentalSystemClient#retrieveReservations() retrieveReservations} method.
-     * Fires property change on RESERVATION_LIST_CHANGED event.
-     */
-    void refreshReservations() throws RemoteException;
-
-    /**
-     * Returns true if successfully reconnected the client to the server.
-     * Otherwise, returns false.
-     *
-     * @return result of trying to reconnect the client to the server
-     */
-    boolean tryToReconnectClient();
-
-    /**
-     * Checks if there is connectivity with the server. Throws exception if it cannot connect.
-     * Calls {@link application.client.RentalSystemClient#pingServer() pingServer} method.
-     *
-     * @throws RemoteException indicates connection failure
-     */
-    void pingServer() throws RemoteException;
 }

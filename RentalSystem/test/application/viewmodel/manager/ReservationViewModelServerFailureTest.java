@@ -1,8 +1,9 @@
 package application.viewmodel.manager;
 
 import application.client.FailingRentalSystemClient;
-import application.model.Model;
-import application.model.ModelManager;
+import application.model.models.ManagerModel;
+import application.model.models.Model;
+import application.model.models.ModelManager;
 import application.model.reservations.Unapproved;
 import application.model.users.User;
 import javafx.beans.property.SimpleStringProperty;
@@ -22,7 +23,7 @@ public class ReservationViewModelServerFailureTest {
         Model model = new ModelManager(new FailingRentalSystemClient());
         User user = new User("d", "e", "f", "abc@gmail.com", "def");
         model.setCurrentlyLoggedInUser(user);
-        viewModel = new ReservationViewModel(model);
+        viewModel = new ReservationViewModel((ManagerModel) model);
         error = new SimpleStringProperty();
         viewModel.bindErrorLabel(error);
     }

@@ -1,8 +1,9 @@
 package application.viewmodel.manager;
 
 import application.client.FakeRentalSystemClient;
-import application.model.Model;
-import application.model.ModelManager;
+import application.model.models.ManagerModel;
+import application.model.models.Model;
+import application.model.models.ModelManager;
 import application.model.equipment.Equipment;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -24,7 +25,7 @@ public class ManagerEquipmentViewModelTest {
     @BeforeEach
     public void setUp() throws RemoteException {
         Model model = new ModelManager(new FakeRentalSystemClient());
-        viewModel = new ManagerEquipmentViewModel(model);
+        viewModel = new ManagerEquipmentViewModel((ManagerModel) model);
         selectedEquipment = new SimpleObjectProperty<>(new Equipment(0, "", "", true));
         loggedUser = new SimpleStringProperty();
         error = new SimpleStringProperty();

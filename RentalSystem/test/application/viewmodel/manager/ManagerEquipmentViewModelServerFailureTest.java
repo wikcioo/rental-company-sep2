@@ -1,8 +1,9 @@
 package application.viewmodel.manager;
 
 import application.client.FailingRentalSystemClient;
-import application.model.Model;
-import application.model.ModelManager;
+import application.model.models.ManagerModel;
+import application.model.models.Model;
+import application.model.models.ModelManager;
 import application.model.equipment.Equipment;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -22,7 +23,7 @@ public class ManagerEquipmentViewModelServerFailureTest {
     public void setUp() {
         Model model = new ModelManager(new FailingRentalSystemClient());
 
-        viewModel = new ManagerEquipmentViewModel(model);
+        viewModel = new ManagerEquipmentViewModel((ManagerModel) model);
         error = new SimpleStringProperty();
         viewModel.bindErrorLabel(error);
         selectedEquipmentProperty = new SimpleObjectProperty<>();

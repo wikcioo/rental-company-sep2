@@ -1,7 +1,8 @@
 package application.viewmodel.manager;
 
-import application.model.Model;
-import application.model.ModelManager;
+import application.model.models.ManagerModel;
+import application.model.models.Model;
+import application.model.models.ModelManager;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,7 +19,7 @@ public class AddUserViewModelServerFailureTest {
     @BeforeEach
     public void setUp() {
         Model model = new ModelManager(new FailingRentalSystemClient());
-        viewModel = new AddUserViewModel(model);
+        viewModel = new AddUserViewModel((ManagerModel) model);
         error = new SimpleStringProperty();
         viewModel.bindError(error);
     }

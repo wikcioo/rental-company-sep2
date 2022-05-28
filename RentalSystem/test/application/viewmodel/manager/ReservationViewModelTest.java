@@ -1,8 +1,9 @@
 package application.viewmodel.manager;
 
 import application.client.FakeRentalSystemClient;
-import application.model.Model;
-import application.model.ModelManager;
+import application.model.models.ManagerModel;
+import application.model.models.Model;
+import application.model.models.ModelManager;
 import application.model.reservations.Reservation;
 import application.model.reservations.Unapproved;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,7 +21,7 @@ public class ReservationViewModelTest {
     @BeforeEach
     void setUp() throws RemoteException {
         model = new ModelManager(new FakeRentalSystemClient());
-        viewModel = new ReservationViewModel(model);
+        viewModel = new ReservationViewModel((ManagerModel) model);
         model.setCurrentlyLoggedInUser(model.getUser("john@gmail.com"));
     }
 

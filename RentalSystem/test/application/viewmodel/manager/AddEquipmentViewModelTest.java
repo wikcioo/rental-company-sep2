@@ -1,7 +1,8 @@
 package application.viewmodel.manager;
 
-import application.model.Model;
-import application.model.ModelManager;
+import application.model.models.ManagerModel;
+import application.model.models.Model;
+import application.model.models.ModelManager;
 import application.model.equipment.Equipment;
 import application.model.users.User;
 import javafx.beans.property.SimpleStringProperty;
@@ -24,7 +25,7 @@ public class AddEquipmentViewModelTest {
         User user = new User("d", "e", "f", "abc@gmail.com", "def");
         user.setManager(true);
         model.setCurrentlyLoggedInUser(user);
-        viewModel = new AddEquipmentViewModel(model);
+        viewModel = new AddEquipmentViewModel((ManagerModel) model);
         equipmentModel = new SimpleStringProperty();
         category = new SimpleStringProperty();
         viewModel.bindEquipmentModel(equipmentModel);

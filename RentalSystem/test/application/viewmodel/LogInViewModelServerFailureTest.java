@@ -1,7 +1,7 @@
 package application.viewmodel;
 
-import application.model.Model;
-import application.model.ModelManager;
+import application.model.models.ModelManager;
+import application.model.models.UserModel;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,7 +17,7 @@ public class LogInViewModelServerFailureTest {
 
     @BeforeEach
     void setUp() {
-        Model model = new ModelManager(new FailingRentalSystemClient());
+        UserModel model = new ModelManager(new FailingRentalSystemClient());
         viewModel = new LogInViewModel(model);
         email = new SimpleStringProperty();
         password = new SimpleStringProperty();

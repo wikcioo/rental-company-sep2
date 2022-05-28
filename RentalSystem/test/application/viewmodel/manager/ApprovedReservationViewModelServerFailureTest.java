@@ -1,8 +1,9 @@
 package application.viewmodel.manager;
 
 import application.client.FailingRentalSystemClient;
-import application.model.Model;
-import application.model.ModelManager;
+import application.model.models.ManagerModel;
+import application.model.models.Model;
+import application.model.models.ModelManager;
 import application.model.reservations.Unapproved;
 import javafx.beans.property.SimpleStringProperty;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,7 +19,7 @@ public class ApprovedReservationViewModelServerFailureTest {
     @BeforeEach
     public void setUp() {
         Model model = new ModelManager(new FailingRentalSystemClient());
-        viewModel = new ApprovedReservationViewModel(model);
+        viewModel = new ApprovedReservationViewModel((ManagerModel) model);
         error = new SimpleStringProperty();
         viewModel.bindErrorLabel(error);
     }

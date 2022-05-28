@@ -2,6 +2,8 @@ package application.model;
 
 import application.client.FakeRentalSystemClient;
 import application.model.equipment.Equipment;
+import application.model.models.Model;
+import application.model.models.ModelManager;
 import application.model.reservations.*;
 import application.model.users.User;
 import org.junit.jupiter.api.BeforeEach;

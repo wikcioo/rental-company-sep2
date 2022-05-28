@@ -1,7 +1,8 @@
 package application.viewmodel.rentee;
 
-import application.model.Model;
-import application.model.ModelManager;
+import application.model.models.Model;
+import application.model.models.ModelManager;
+import application.model.models.RenteeModel;
 import application.model.equipment.Equipment;
 import application.model.reservations.Unapproved;
 import javafx.beans.property.SimpleObjectProperty;
@@ -23,7 +24,7 @@ public class RenteeEquipmentViewModelTest {
     @BeforeEach
     void setUp() throws RemoteException {
         model = new ModelManager(new FakeRentalSystemClient());
-        viewModel = new RenteeEquipmentViewModel(model);
+        viewModel = new RenteeEquipmentViewModel((RenteeModel) model);
 //        loggedUserProperty = new SimpleStringProperty();
         model.setCurrentlyLoggedInUser(model.getUser("john@gmail.com"));
 

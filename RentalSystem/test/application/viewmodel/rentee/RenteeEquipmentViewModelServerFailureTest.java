@@ -1,7 +1,8 @@
 package application.viewmodel.rentee;
 
-import application.model.Model;
-import application.model.ModelManager;
+import application.model.models.Model;
+import application.model.models.ModelManager;
+import application.model.models.RenteeModel;
 import application.model.equipment.Equipment;
 import application.model.users.User;
 import javafx.beans.property.SimpleObjectProperty;
@@ -24,7 +25,7 @@ public class RenteeEquipmentViewModelServerFailureTest {
       Model model = new ModelManager(new FailingRentalSystemClient());
       User user = new User("d", "e", "f", "abc@gmail.com", "def");
       model.setCurrentlyLoggedInUser(user);
-      viewModel = new RenteeEquipmentViewModel(model);
+      viewModel = new RenteeEquipmentViewModel((RenteeModel) model);
       reservationError = new SimpleStringProperty();
       equipmentError = new SimpleStringProperty();
       viewModel.bindEquipmentErrorLabel(equipmentError);

@@ -1,6 +1,8 @@
 package application.viewmodel;
 
-import application.model.Model;
+import application.model.models.ManagerModel;
+import application.model.models.RenteeModel;
+import application.model.models.UserModel;
 import application.viewmodel.manager.*;
 import application.viewmodel.rentee.RenteeEquipmentViewModel;
 import application.viewmodel.rentee.RenteeMainMenuViewModel;
@@ -22,21 +24,21 @@ public class ViewModelFactory {
     private final ReturnedReservationViewModel returnedReservationViewModel;
     private final RenteeMainMenuViewModel renteeMainMenuViewModel;
 
-    public ViewModelFactory(Model model) {
-        this.addEquipmentViewModel = new AddEquipmentViewModel(model);
-        this.renteeEquipmentViewModel = new RenteeEquipmentViewModel(model);
-        this.logInViewModel = new LogInViewModel(model);
-        this.reservationViewModel = new ReservationViewModel(model);
-        this.managerEquipmentViewModel = new ManagerEquipmentViewModel(model);
-        this.addUserViewModel = new AddUserViewModel(model);
-        this.approvedReservationViewModel = new ApprovedReservationViewModel(model);
-        this.rejectedReservationViewModel = new RejectedReservationViewModel(model);
-        this.expiredReservationViewModel = new ExpiredReservationViewModel(model);
-        this.registeredUserViewModel = new RegisteredUserViewModel(model);
-        this.renteeReservationViewModel = new RenteeReservationViewModel(model);
-        this.managerMainMenuViewModel = new ManagerMainMenuViewModel(model);
-        this.returnedReservationViewModel = new ReturnedReservationViewModel(model);
-        this.renteeMainMenuViewModel = new RenteeMainMenuViewModel(model);
+    public ViewModelFactory(UserModel userModel, RenteeModel renteeModel, ManagerModel managerModel) {
+        this.addEquipmentViewModel = new AddEquipmentViewModel(managerModel);
+        this.renteeEquipmentViewModel = new RenteeEquipmentViewModel(renteeModel);
+        this.logInViewModel = new LogInViewModel(userModel);
+        this.reservationViewModel = new ReservationViewModel(managerModel);
+        this.managerEquipmentViewModel = new ManagerEquipmentViewModel(managerModel);
+        this.addUserViewModel = new AddUserViewModel(managerModel);
+        this.approvedReservationViewModel = new ApprovedReservationViewModel(managerModel);
+        this.rejectedReservationViewModel = new RejectedReservationViewModel(managerModel);
+        this.expiredReservationViewModel = new ExpiredReservationViewModel(managerModel);
+        this.registeredUserViewModel = new RegisteredUserViewModel(managerModel);
+        this.renteeReservationViewModel = new RenteeReservationViewModel(renteeModel);
+        this.managerMainMenuViewModel = new ManagerMainMenuViewModel(managerModel);
+        this.returnedReservationViewModel = new ReturnedReservationViewModel(managerModel);
+        this.renteeMainMenuViewModel = new RenteeMainMenuViewModel(renteeModel);
     }
 
     public AddEquipmentViewModel getAddEquipmentViewModel() {

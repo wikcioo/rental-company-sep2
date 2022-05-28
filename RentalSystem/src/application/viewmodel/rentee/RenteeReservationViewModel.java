@@ -1,7 +1,7 @@
 package application.viewmodel.rentee;
 
-import application.model.Model;
-import application.model.ModelManager;
+import application.model.models.ModelManager;
+import application.model.models.RenteeModel;
 import application.model.reservations.Reservation;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -14,11 +14,11 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 public class RenteeReservationViewModel implements PropertyChangeListener {
-    private final Model model;
+    private final RenteeModel model;
     private final ObjectProperty<ObservableList<Reservation>> listObjectProperty;
     private final StringProperty errorProperty;
 
-    public RenteeReservationViewModel(Model model) {
+    public RenteeReservationViewModel(RenteeModel model) {
         this.model = model;
         listObjectProperty = new SimpleObjectProperty<>();
         listObjectProperty.setValue(FXCollections.observableList(model.getCurrentUserReservations()));

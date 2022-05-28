@@ -1,7 +1,7 @@
 package application.viewmodel.manager;
 
-import application.model.Model;
-import application.model.ModelManager;
+import application.model.models.ManagerModel;
+import application.model.models.ModelManager;
 import application.model.reservations.Rejected;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -12,13 +12,12 @@ import javafx.collections.ObservableList;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-
 public class RejectedReservationViewModel implements PropertyChangeListener {
-    private final Model model;
+    private final ManagerModel model;
     private final ObjectProperty<ObservableList<Rejected>> listObjectProperty;
     private final StringProperty errorProperty;
 
-    public RejectedReservationViewModel(Model model) {
+    public RejectedReservationViewModel(ManagerModel model) {
       this.model = model;
       listObjectProperty = new SimpleObjectProperty<>();
       listObjectProperty.setValue(FXCollections.observableList(model.getRejectedReservations()));

@@ -1,15 +1,15 @@
 package application.viewmodel.manager;
 
-import application.model.Model;
+import application.model.models.ManagerModel;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import java.rmi.RemoteException;
 
 public class ManagerMainMenuViewModel {
-    private final Model model;
+    private final ManagerModel model;
     private final StringProperty loggedUserProperty;
 
-    public ManagerMainMenuViewModel(Model model) {
+    public ManagerMainMenuViewModel(ManagerModel model) {
         this.model = model;
         this.loggedUserProperty = new SimpleStringProperty();
     }

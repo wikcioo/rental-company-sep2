@@ -1,7 +1,7 @@
 package application.viewmodel.manager;
 
-import application.model.Model;
-import application.model.ModelManager;
+import application.model.models.ManagerModel;
+import application.model.models.ModelManager;
 import application.model.users.User;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -15,11 +15,11 @@ import java.beans.PropertyChangeListener;
 import java.rmi.RemoteException;
 
 public class RegisteredUserViewModel implements PropertyChangeListener {
-    private final Model model;
+    private final ManagerModel model;
     private final ObjectProperty<ObservableList<User>> listObjectProperty;
     private final StringProperty errorProperty;
 
-    public RegisteredUserViewModel(Model model) {
+    public RegisteredUserViewModel(ManagerModel model) {
         this.model = model;
         this.listObjectProperty = new SimpleObjectProperty<>();
         this.errorProperty = new SimpleStringProperty();

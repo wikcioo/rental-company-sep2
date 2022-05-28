@@ -1,6 +1,6 @@
 package application.viewmodel.manager;
 
-import application.model.*;
+import application.model.models.ManagerModel;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -13,9 +13,9 @@ public class AddUserViewModel {
     private final StringProperty email;
     private final StringProperty password;
     private final StringProperty error;
-    private final Model model;
+    private final ManagerModel model;
 
-    public AddUserViewModel(Model model) {
+    public AddUserViewModel(ManagerModel model) {
         this.model = model;
         this.firstName = new SimpleStringProperty("");
         this.lastName = new SimpleStringProperty("");

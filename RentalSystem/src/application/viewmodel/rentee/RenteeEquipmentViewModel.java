@@ -1,8 +1,8 @@
 package application.viewmodel.rentee;
 
+import application.model.models.RenteeModel;
 import application.model.equipment.Equipment;
-import application.model.Model;
-import application.model.ModelManager;
+import application.model.models.ModelManager;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -18,7 +18,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class RenteeEquipmentViewModel implements PropertyChangeListener {
-    private final Model model;
+    private final RenteeModel model;
     private final ObjectProperty<ObservableList<Equipment>> listObjectProperty;
     private final ObjectProperty<Equipment> selectedEquipmentProperty;
     private final ObjectProperty<LocalDateTime> reservationEndDate;
@@ -28,7 +28,7 @@ public class RenteeEquipmentViewModel implements PropertyChangeListener {
     public static final LocalDate MIN_DATE = LocalDate.now().plusDays(1);
     public static final LocalDate MAX_DATE = MIN_DATE.plusWeeks(4);
 
-    public RenteeEquipmentViewModel(Model model) {
+    public RenteeEquipmentViewModel(RenteeModel model) {
         this.model = model;
         this.model.addListener(ModelManager.EQUIPMENT_LIST_CHANGED, this);
         this.model.addListener(ModelManager.RESERVATION_ID_RECEIVED, this);

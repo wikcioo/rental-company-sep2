@@ -1,7 +1,8 @@
 package application.viewmodel.manager;
 
-import application.model.*;
 import application.model.equipment.Equipment;
+import application.model.models.ManagerModel;
+import application.model.models.ModelManager;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -15,13 +16,13 @@ import java.rmi.RemoteException;
 import java.util.List;
 
 public class ManagerEquipmentViewModel implements PropertyChangeListener {
-    private final Model model;
+    private final ManagerModel model;
     private final ObjectProperty<ObservableList<Equipment>> listObjectProperty;
     private final ObjectProperty<Equipment> selectedEquipmentProperty;
     private final StringProperty errorProperty;
     private final StringProperty loggedUserProperty;
 
-    public ManagerEquipmentViewModel(Model model) {
+    public ManagerEquipmentViewModel(ManagerModel model) {
         this.model = model;
         this.listObjectProperty = new SimpleObjectProperty<>();
         this.selectedEquipmentProperty = new SimpleObjectProperty<>();

@@ -1,7 +1,7 @@
 package application.viewmodel.manager;
 
-import application.model.Model;
-import application.model.ModelManager;
+import application.model.models.ManagerModel;
+import application.model.models.ModelManager;
 import application.model.reservations.Returned;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -14,11 +14,11 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 public class ReturnedReservationViewModel implements PropertyChangeListener {
-    private final Model model;
+    private final ManagerModel model;
     private final ObjectProperty<ObservableList<Returned>> listObjectProperty;
     private final StringProperty errorProperty;
 
-    public ReturnedReservationViewModel(Model model) {
+    public ReturnedReservationViewModel(ManagerModel model) {
       this.model = model;
       listObjectProperty = new SimpleObjectProperty<>();
       listObjectProperty.setValue(FXCollections.observableList(model.getReturnedReservations()));

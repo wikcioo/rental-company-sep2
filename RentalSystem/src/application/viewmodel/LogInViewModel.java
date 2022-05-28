@@ -1,6 +1,6 @@
 package application.viewmodel;
 
-import application.model.Model;
+import application.model.models.UserModel;
 import application.model.users.User;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -10,9 +10,9 @@ import java.rmi.RemoteException;
 public class LogInViewModel {
     private final StringProperty email;
     private final StringProperty password;
-    private final Model model;
+    private final UserModel model;
 
-    public LogInViewModel(Model model) {
+    public LogInViewModel(UserModel model) {
         this.model = model;
         email = new SimpleStringProperty("");
         password = new SimpleStringProperty("");

@@ -1,6 +1,6 @@
 package application.viewmodel.manager;
 
-import application.model.Model;
+import application.model.models.ManagerModel;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -12,10 +12,10 @@ public class AddEquipmentViewModel {
     private final StringProperty equipmentModel;
     private final StringProperty category;
     private final BooleanProperty isAvailable;
-    private final Model model;
+    private final ManagerModel model;
     private final StringProperty errorProperty;
 
-    public AddEquipmentViewModel(Model model) {
+    public AddEquipmentViewModel(ManagerModel model) {
         this.model = model;
         category = new SimpleStringProperty("");
         equipmentModel = new SimpleStringProperty("");

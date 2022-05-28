@@ -1,15 +1,15 @@
 package application.viewmodel.rentee;
 
-import application.model.Model;
+import application.model.models.RenteeModel;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class RenteeMainMenuViewModel {
-    private final Model model;
+    private final RenteeModel model;
     private final StringProperty errorProperty;
     private final StringProperty loggedUserProperty;
 
-    public RenteeMainMenuViewModel(Model model) {
+    public RenteeMainMenuViewModel(RenteeModel model) {
         this.model = model;
         this.errorProperty = new SimpleStringProperty();
         this.loggedUserProperty = new SimpleStringProperty();

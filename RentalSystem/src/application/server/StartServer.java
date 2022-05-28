@@ -1,5 +1,7 @@
 package application.server;
 
+import application.util.ConsoleLogger;
+
 import java.io.IOException;
 import java.rmi.AlreadyBoundException;
 import java.rmi.registry.LocateRegistry;
@@ -10,6 +12,6 @@ public class StartServer {
         RentalSystemServer server = new RentalSystemServerImplementation();
         Registry registry = LocateRegistry.createRegistry(Registry.REGISTRY_PORT);
         registry.bind("Server", server);
-        System.out.println("Registry opened. Server ready to connect");
+        ConsoleLogger.getInstance().success("Registry opened. Server ready to connect");
     }
 }

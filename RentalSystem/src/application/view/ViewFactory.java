@@ -1,5 +1,7 @@
 package application.view;
 
+import application.util.ConsoleLogger;
+import application.util.Logger;
 import application.view.manager.*;
 import application.view.rentee.RenteeEquipmentViewController;
 import application.view.rentee.RenteeMainMenuViewController;
@@ -8,11 +10,10 @@ import application.viewmodel.ViewModelFactory;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.Region;
 
-import java.io.IOException;
-
 public class ViewFactory {
     private final ViewHandler viewHandler;
     private final ViewModelFactory viewModelFactory;
+    private final Logger logger;
     private AddEquipmentViewController addEquipmentViewController;
     private RenteeEquipmentViewController renteeEquipmentViewController;
     private LogInViewController logInViewController;
@@ -27,9 +28,11 @@ public class ViewFactory {
     private ManagerMainMenuViewController managerMainMenuViewController;
     private ReturnedReservationViewController returnedReservationViewController;
     private RenteeMainMenuViewController renteeMainMenuViewController;
+
     public ViewFactory(ViewHandler viewHandler, ViewModelFactory viewModelFactory) {
         this.viewHandler = viewHandler;
         this.viewModelFactory = viewModelFactory;
+        this.logger = ConsoleLogger.getInstance();
     }
 
     public Region loadAddEquipmentView() {
@@ -41,8 +44,8 @@ public class ViewFactory {
                 addEquipmentViewController = loader.getController();
                 addEquipmentViewController.init(viewHandler,
                         viewModelFactory.getAddEquipmentViewModel(), root);
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
+            } catch (Exception e) {
+                logger.error(e.getMessage());
             }
         }
         addEquipmentViewController.reset();
@@ -58,8 +61,8 @@ public class ViewFactory {
                 renteeEquipmentViewController = loader.getController();
                 renteeEquipmentViewController.init(viewHandler,
                         viewModelFactory.getEquipmentViewModel(), root);
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
+            } catch (Exception e) {
+                logger.error(e.getMessage());
             }
         }
         renteeEquipmentViewController.reset();
@@ -75,8 +78,8 @@ public class ViewFactory {
                 logInViewController = loader.getController();
                 logInViewController.init(viewHandler,
                         viewModelFactory.getLogInViewModel(), root);
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
+            } catch (Exception e) {
+                logger.error(e.getMessage());
             }
         }
         logInViewController.reset();
@@ -93,8 +96,8 @@ public class ViewFactory {
                 managerEquipmentViewController = loader.getController();
                 managerEquipmentViewController.init(viewHandler,
                         viewModelFactory.getManagerEquipmentViewModel(), root);
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
+            } catch (Exception e) {
+                logger.error(e.getMessage());
             }
         }
         managerEquipmentViewController.reset();
@@ -110,8 +113,8 @@ public class ViewFactory {
                 reservationViewController = loader.getController();
                 reservationViewController.init(viewHandler,
                         viewModelFactory.getReservationViewModel(), root);
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
+            } catch (Exception e) {
+                logger.error(e.getMessage());
             }
         }
         reservationViewController.reset();
@@ -127,8 +130,8 @@ public class ViewFactory {
                 addUserViewController = loader.getController();
                 addUserViewController.init(viewHandler,
                         viewModelFactory.getAddUserViewModel(), root);
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
+            } catch (Exception e) {
+                logger.error(e.getMessage());
             }
         }
         addUserViewController.reset();
@@ -144,8 +147,8 @@ public class ViewFactory {
                 approvedReservationViewController = loader.getController();
                 approvedReservationViewController.init(viewHandler,
                         viewModelFactory.getApprovedReservationViewModel(), root);
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
+            } catch (Exception e) {
+                logger.error(e.getMessage());
             }
         }
         approvedReservationViewController.reset();
@@ -161,8 +164,8 @@ public class ViewFactory {
                 rejectedReservationViewController = loader.getController();
                 rejectedReservationViewController.init(viewHandler,
                     viewModelFactory.getRejectedReservationViewModel(), root);
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
+            } catch (Exception e) {
+                logger.error(e.getMessage());
             }
         }
         rejectedReservationViewController.reset();
@@ -177,8 +180,8 @@ public class ViewFactory {
                 expiredReservationViewController = loader.getController();
                 expiredReservationViewController.init(viewHandler,
                     viewModelFactory.getExpiredReservationViewModel(), root);
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
+            } catch (Exception e) {
+                logger.error(e.getMessage());
             }
         }
         expiredReservationViewController.reset();
@@ -195,8 +198,8 @@ public class ViewFactory {
                 registeredUserViewController = loader.getController();
                 registeredUserViewController.init(viewHandler,
                         viewModelFactory.getRegisteredUserViewModel(), root);
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
+            } catch (Exception e) {
+                logger.error(e.getMessage());
             }
         }
         registeredUserViewController.reset();
@@ -212,8 +215,8 @@ public class ViewFactory {
                 renteeReservationViewController = loader.getController();
                 renteeReservationViewController.init(viewHandler,
                         viewModelFactory.getRenteeReservationViewModel(), root);
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
+            } catch (Exception e) {
+                logger.error(e.getMessage());
             }
         }
         renteeReservationViewController.reset();
@@ -229,8 +232,8 @@ public class ViewFactory {
                 managerMainMenuViewController = loader.getController();
                 managerMainMenuViewController.init(viewHandler,
                         viewModelFactory.getManagerMainMenuViewModel(), root);
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
+            } catch (Exception e) {
+                logger.error(e.getMessage());
             }
         }
         managerMainMenuViewController.reset();
@@ -246,8 +249,8 @@ public class ViewFactory {
                 returnedReservationViewController = loader.getController();
                 returnedReservationViewController.init(viewHandler,
                         viewModelFactory.getReturnedReservationViewModel(), root);
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
+            } catch (Exception e) {
+                logger.error(e.getMessage());
             }
         }
         returnedReservationViewController.reset();
@@ -263,12 +266,11 @@ public class ViewFactory {
                 renteeMainMenuViewController = loader.getController();
                 renteeMainMenuViewController.init(viewHandler,
                         viewModelFactory.getRenteeMainMenuViewModel(), root);
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
+            } catch (Exception e) {
+                logger.error(e.getMessage());
             }
         }
         renteeMainMenuViewController.reset();
         return renteeMainMenuViewController.getRoot();
     }
-
 }

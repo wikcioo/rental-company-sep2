@@ -3,6 +3,7 @@ package application.dao;
 import application.model.equipment.Equipment;
 import application.model.reservations.*;
 import application.model.users.User;
+import application.util.ConsoleLogger;
 
 import java.sql.*;
 import java.time.LocalDateTime;
@@ -93,7 +94,6 @@ public class SQLReservationDao implements ReservationDao {
             }
         }
 
-        System.out.println(reservationList);
         return reservationList;
     }
 

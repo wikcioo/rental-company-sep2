@@ -18,9 +18,18 @@ public interface RenteeModel extends NamedPropertyChangeSubject {
      */
     ArrayList<Equipment> getAllEquipment();
 
-    //TODO: [Aivaras] JavaDoc for method
+    /**
+     * Gets all stored reservations that were made by the current user
+     *
+     * @return {@link ArrayList < Reservation >} of all stored reservations
+     */
     ArrayList<Reservation> getCurrentUserReservations();
-    //TODO: [Aivaras] JavaDoc for method
+
+    /**
+     * Gets the amount of currently overdue equipment of the current user
+     *
+     * @return number of equipment overdue
+     */
     int getCurrentUserOverDueEquipmentAmount();
 
     /**

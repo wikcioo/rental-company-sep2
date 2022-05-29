@@ -34,15 +34,6 @@ public interface EquipmentDao {
     ArrayList<Equipment> getAllUnreserved() throws SQLException;
 
     /**
-     * Returns all equipment that matches a given category. Will return only the equipment that matches exactly the given category
-     *
-     * @param category The equipment's desired category
-     * @return {@link ArrayList} of the {@link Equipment} that has a matching category
-     * @throws SQLException
-     */
-    ArrayList<Equipment> getByCategory(String category) throws SQLException;
-
-    /**
      * Changes the availability of given equipment id in the database.
      *
      * @param equipment_id id of the equipment that will have its availability set
@@ -51,11 +42,4 @@ public interface EquipmentDao {
      */
     void setAvailability(int equipment_id, boolean available) throws SQLException;
 
-    /**
-     * Deletes the given equipment from the equipment relation.
-     *
-     * @param equipment_id id of the equipment to be removed from the equipment table
-     * @throws SQLException
-     */
-    void delete(int equipment_id) throws SQLException;
 }

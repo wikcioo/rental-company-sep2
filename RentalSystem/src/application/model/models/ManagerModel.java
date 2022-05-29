@@ -30,15 +30,6 @@ public interface ManagerModel extends NamedPropertyChangeSubject {
     ArrayList<Equipment> getAllEquipment();
 
     /**
-     * Gets all available equipment from the equipmentList.
-     * Delegates to {@link application.model.equipment.EquipmentList#getAllAvailableEquipment() getAllAvailableEquipment} method.
-     *
-     * @return {@link ArrayList<Equipment>} of all available equipment
-     * @throws RemoteException indicates connection issues
-     */
-    ArrayList<Equipment> getAllAvailableEquipment() throws RemoteException;
-
-    /**
      * Clears equipmentList and populates it by calling {@link application.client.RentalSystemClient#getAllEquipment() getAllEquipment} method.
      * Fires property change on EQUIPMENT_LIST_CHANGED event.
      *

@@ -85,12 +85,6 @@ public class SQLEquipmentDao implements EquipmentDao {
     }
 
     @Override
-    public ArrayList<Equipment> getByCategory(String category) throws SQLException {
-        // TODO
-        return null;
-    }
-
-    @Override
     public void setAvailability(int equipment_id, boolean available) throws SQLException {
         try (
                 Connection connection = getConnection();
@@ -102,14 +96,4 @@ public class SQLEquipmentDao implements EquipmentDao {
         }
     }
 
-    @Override
-    public void delete(int equipment_id) throws SQLException {
-        try (
-                Connection connection = getConnection();
-                PreparedStatement statement = connection.prepareStatement("DELETE FROM rentalsystemdbs.equipment WHERE equipment_id = ?")
-        ) {
-            statement.setInt(1, equipment_id);
-            statement.executeUpdate();
-        }
-    }
 }

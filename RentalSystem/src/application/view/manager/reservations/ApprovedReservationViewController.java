@@ -44,7 +44,7 @@ public class ApprovedReservationViewController {
             if (p.getValue() != null) {
                 return new SimpleStringProperty(Integer.toString(p.getValue().getId()));
             } else {
-                return new SimpleStringProperty("<no equipment>");
+                return new SimpleStringProperty("<no id>");
             }
         });
 
@@ -68,7 +68,7 @@ public class ApprovedReservationViewController {
             if (p.getValue() != null) {
                 return new SimpleStringProperty(p.getValue().getApprovedDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
             } else {
-                return new SimpleStringProperty("<no end date>");
+                return new SimpleStringProperty("<no approve date>");
             }
         });
 
@@ -84,7 +84,7 @@ public class ApprovedReservationViewController {
             if (p.getValue() != null && p.getValue().getRentedFor() != null) {
                 return new SimpleStringProperty(p.getValue().getDaysOverdueString());
             } else {
-                return new SimpleStringProperty("<no end date>");
+                return new SimpleStringProperty("<no overdue amount>");
             }
         });
 

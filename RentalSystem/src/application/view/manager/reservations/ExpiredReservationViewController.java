@@ -26,7 +26,9 @@ public class ExpiredReservationViewController {
     @FXML
     private TableColumn<Expired, String> equipmentColumn;
     @FXML
-    private TableColumn<Expired, String> reservationDateColumn;
+    private TableColumn<Expired, String> reservationStartDateColumn;
+    @FXML
+    private TableColumn<Expired, String> reservationEndDateColumn;
     @FXML
     private TableColumn<Expired, String> expirationDateColumn;
 
@@ -40,7 +42,7 @@ public class ExpiredReservationViewController {
             if (p.getValue() != null) {
                 return new SimpleStringProperty(Integer.toString(p.getValue().getId()));
             } else {
-                return new SimpleStringProperty("<no equipment>");
+                return new SimpleStringProperty("<no id>");
             }
         });
 
@@ -61,9 +63,17 @@ public class ExpiredReservationViewController {
             }
         });
 
-        reservationDateColumn.setCellValueFactory(p -> {
+        reservationStartDateColumn.setCellValueFactory(p -> {
             if (p.getValue() != null) {
                 return new SimpleStringProperty(p.getValue().getReservationDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+            } else {
+                return new SimpleStringProperty("<no start date>");
+            }
+        });
+
+        reservationEndDateColumn.setCellValueFactory(p -> {
+            if (p.getValue() != null) {
+                return new SimpleStringProperty(p.getValue().getRentedFor().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
             } else {
                 return new SimpleStringProperty("<no end date>");
             }
@@ -73,7 +83,7 @@ public class ExpiredReservationViewController {
             if (p.getValue() != null) {
                 return new SimpleStringProperty(p.getValue().getExpirationDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
             } else {
-                return new SimpleStringProperty("<no end date>");
+                return new SimpleStringProperty("<no expiration date>");
             }
         });
 

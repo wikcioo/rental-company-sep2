@@ -47,7 +47,7 @@ public class UnapprovedReservationViewController {
             if (p.getValue() != null) {
                 return new SimpleStringProperty(Integer.toString(p.getValue().getId()));
             } else {
-                return new SimpleStringProperty("<no equipment>");
+                return new SimpleStringProperty("<no id>");
             }
         });
 

@@ -29,12 +29,12 @@
                         <Font name="System Bold" size="25.0" />
                     </font>
                 </Label>
-                <Button layoutX="60.0" layoutY="90.0" mnemonicParsing="false" onAction="#onViewEquipment" prefHeight="60.0" prefWidth="100.0" text="Equipment" textAlignment="CENTER" wrapText="true" />
+                <Button layoutX="60.0" layoutY="90.0" mnemonicParsing="false" onAction="#onViewEquipment" prefHeight="60.0" prefWidth="100.0" text="Reserve Equipment" textAlignment="CENTER" wrapText="true" />
             </children>
         </Pane>
         <Pane layoutX="320.0" layoutY="40.0" prefHeight="200.0" prefWidth="240.0" style="-fx-background-color: E3E3E3;">
             <children>
-                <Button layoutX="60.0" layoutY="90.0" mnemonicParsing="false" onAction="#onViewReservations" prefHeight="60.0" prefWidth="100.0" text="Reservations" textAlignment="CENTER" wrapText="true" />
+                <Button layoutX="60.0" layoutY="90.0" mnemonicParsing="false" onAction="#onViewReservations" prefHeight="60.0" prefWidth="100.0" text="Check Reservations" textAlignment="CENTER" wrapText="true" />
                 <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="40.0" prefWidth="240.0" text="Reservations">
                     <font>
                         <Font name="System Bold" size="25.0" />

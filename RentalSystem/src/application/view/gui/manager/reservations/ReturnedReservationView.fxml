@@ -20,8 +20,9 @@
                 <TableColumn fx:id="reservationIdColumn" prefWidth="50.0" text="Id" />
                 <TableColumn fx:id="renteeColumn" prefWidth="194.0" text="Rentee" />
                 <TableColumn fx:id="equipmentColumn" prefWidth="216.0" text="Equipment" />
-                <TableColumn fx:id="reservationDateColumn" prefWidth="204.0" text="Reservation date" />
-                <TableColumn fx:id="returnDateColumn" prefWidth="224.0" text="Return Date" />
+                <TableColumn fx:id="reservationStartDateColumn" prefWidth="145.0" text="Reservation start date" />
+                <TableColumn fx:id="reservationEndDateColumn" prefWidth="153.0" text="Reservation end date" />
+                <TableColumn fx:id="returnDateColumn" prefWidth="137.0" text="Return Date" />
             </columns>
         </TableView>
         <Label fx:id="error" alignment="CENTER" contentDisplay="CENTER" layoutX="29.0" layoutY="357.0" prefHeight="22.0" prefWidth="310.0" />

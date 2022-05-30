@@ -27,7 +27,9 @@ public class RejectedReservationViewController {
     @FXML
     private TableColumn<Rejected, String> equipmentColumn;
     @FXML
-    private TableColumn<Rejected, String> reservationDateColumn;
+    private TableColumn<Rejected, String> reservationStartDateColumn;
+    @FXML
+    private TableColumn<Rejected, String> reservationEndDateColumn;
     @FXML
     private TableColumn<Rejected, String> rejectionDateColumn;
     @FXML
@@ -42,7 +44,7 @@ public class RejectedReservationViewController {
             if (p.getValue() != null) {
                 return new SimpleStringProperty(Integer.toString(p.getValue().getId()));
             } else {
-                return new SimpleStringProperty("<no equipment>");
+                return new SimpleStringProperty("<no id>");
             }
         });
 
@@ -63,12 +65,21 @@ public class RejectedReservationViewController {
             }
         });
 
-        reservationDateColumn.setCellValueFactory(p -> {
+        reservationStartDateColumn.setCellValueFactory(p -> {
             if (p.getValue() != null) {
                 return new SimpleStringProperty(p.getValue().getReservationDate().format(
                         DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
             } else {
-                return new SimpleStringProperty("<no reservation date>");
+                return new SimpleStringProperty("<no start date>");
+            }
+        });
+
+        reservationEndDateColumn.setCellValueFactory(p -> {
+            if (p.getValue() != null) {
+                return new SimpleStringProperty(p.getValue().getRentedFor().format(
+                        DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+            } else {
+                return new SimpleStringProperty("<no end date>");
             }
         });
 

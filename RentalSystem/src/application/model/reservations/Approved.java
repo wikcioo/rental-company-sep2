@@ -9,7 +9,7 @@ import java.util.Objects;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 
-public class Approved extends Reservation {
+public class Approved extends Unapproved {
     private final LocalDateTime approvedDate;
     private final String approvedBy;
     public static final String status = "Approved";

@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
-public class Expired extends Reservation {
+public class Expired extends Unapproved {
     private final LocalDateTime dateTime;
     public static final String status = "Expired";
 

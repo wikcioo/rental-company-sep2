@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
-public class Rejected extends Reservation {
+public class Rejected extends Unapproved {
     private final LocalDateTime rejectionDate;
     private final String reason;
     private final String rejectedBy;

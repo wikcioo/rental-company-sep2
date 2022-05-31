@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class FailingRentalSystemClient implements RentalSystemClient {
     private final EquipmentManager equipmentManager;
-    private final ReservationList reservationList;
+    private final ReservationManager reservationManager;
     private final ArrayList<User> userList;
     private int equipmentIndex;
     private int reservationIndex;
@@ -22,7 +22,7 @@ public class FailingRentalSystemClient implements RentalSystemClient {
         this.userList = new ArrayList<>();
         this.equipmentIndex = 0;
         this.reservationIndex = 0;
-        this.reservationList = new ReservationList();
+        this.reservationManager = new ReservationManager();
     }
 
     @Override

@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class FakeRentalSystemClient implements RentalSystemClient {
     private final PropertyChangeSupport support;
     private final EquipmentManager equipmentManager;
-    private final ReservationList reservationList;
+    private final ReservationManager reservationManager;
     private final ArrayList<User> userList;
     private int equipmentIndex;
     private int reservationIndex;
@@ -30,7 +30,7 @@ public class FakeRentalSystemClient implements RentalSystemClient {
         userList.add(new Rentee("a", "b", "c", "tomas@gmail.com", "abc"));
         this.equipmentIndex = 0;
         this.reservationIndex = 0;
-        this.reservationList = new ReservationList();
+        this.reservationManager = new ReservationManager();
     }
 
     @Override
@@ -117,55 +117,55 @@ public class FakeRentalSystemClient implements RentalSystemClient {
 
     @Override
     public ArrayList<Reservation> retrieveReservations() throws RemoteException {
-        return new ArrayList<>(reservationList.getAll());
+        return new ArrayList<>(reservationManager.getAll());
     }
 
     @Override
     public void approveReservation(int id, String manager_id) throws RemoteException {
-        ArrayList<Reservation> reservations = new ArrayList<>(reservationList.getAll());
-        for (Reservation r : reservationList.getUnapprovedReservations()) {
+        ArrayList<Reservation> reservations = new ArrayList<>(reservationManager.getAll());
+        for (Reservation r : reservationManager.getUnapprovedReservations()) {
             if (r.getId() == id) {
                 reservations.set(reservations.indexOf(r), new Approved(r.getId(), r.getRentee(), r.getEquipment(), r.getRentedFor(), LocalDateTime.now(), manager_id));
                 break;
             }
         }
-        reservationList.setReservationList(reservations);
+        reservationManager.setReservationList(reservations);
         support.firePropertyChange("reservations", null, reservations);
     }
 
     //TODO: rejectReservation requires a reason but the method to reject one does not have a reason field
     @Override
     public void rejectReservation(int id, String manager_id, String reason) throws RemoteException {
-        ArrayList<Reservation> reservations = new ArrayList<>(reservationList.getAll());
-        for (Reservation r : reservationList.getUnapprovedReservations()) {
+        ArrayList<Reservation> reservations = new ArrayList<>(reservationManager.getAll());
+        for (Reservation r : reservationManager.getUnapprovedReservations()) {
             if (r.getId() == id) {
                 reservations.set(reservations.indexOf(r), new Rejected(r.getId(), r.getRentee(), r.getEquipment(), r.getRentedFor(), LocalDateTime.now(), "reason", manager_id));
                 break;
             }
         }
-        reservationList.setReservationList(reservations);
+        reservationManager.setReservationList(reservations);
         support.firePropertyChange("reservations", null, reservations);
     }
 
     @Override
     public void returnReservation(int id) throws RemoteException {
-        ArrayList<Reservation> reservations = new ArrayList<>(reservationList.getAll());
-        for (Approved a : reservationList.getApprovedReservations()) {
+        ArrayList<Reservation> reservations = new ArrayList<>(reservationManager.getAll());
+        for (Approved a : reservationManager.getApprovedReservations()) {
             if (a.getId() == id) {
                 reservations.set(reservations.indexOf(a), new Returned(a.getId(), a.getRentee(), a.getEquipment(), a.getRentedFor(), a.getApprovedDate(), a.getApprovedBy(), LocalDateTime.now()));
                 break;
             }
         }
-        reservationList.setReservationList(reservations);
+        reservationManager.setReservationList(reservations);
         support.firePropertyChange("reservations", null, reservations);
     }
 
     //Reserving will create new equipment with given id
     @Override
     public void reserveEquipment(int equipment_id, String rentee_id, LocalDateTime rentedFor) throws RemoteException {
-        ArrayList<Reservation> reservations = new ArrayList<>(reservationList.getAll());
+        ArrayList<Reservation> reservations = new ArrayList<>(reservationManager.getAll());
         reservations.add(new Unapproved(reservationIndex, getUser(rentee_id), LocalDateTime.now(), rentedFor, new Equipment(equipment_id, "application/model", "category", true)));
-        reservationList.setReservationList(reservations);
+        reservationManager.setReservationList(reservations);
         reservationIndex++;
         ArrayList<Equipment> allEquipment = getAllEquipment();
         ArrayList<Equipment> unreservedEquipment = getAllUnreservedEquipment();

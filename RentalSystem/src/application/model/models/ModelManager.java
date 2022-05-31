@@ -21,7 +21,7 @@ public class ModelManager implements Model, UserModel, RenteeModel, ManagerModel
     private User currentlyLoggedInUser;
     private RentalSystemClient client;
     private final EquipmentManager equipmentManager;
-    private final ReservationList reservationList;
+    private final ReservationManager reservationManager;
     private final UserList userList;
     private final PropertyChangeSupport support;
     public static final String EQUIPMENT_LIST_CHANGED = "equipment_list_changed";
@@ -38,7 +38,7 @@ public class ModelManager implements Model, UserModel, RenteeModel, ManagerModel
             throw new RuntimeException(e);
         }
         this.equipmentManager = new EquipmentManager();
-        this.reservationList = new ReservationList();
+        this.reservationManager = new ReservationManager();
         this.userList = new UserList();
         this.support = new PropertyChangeSupport(this);
     }
@@ -57,7 +57,7 @@ public class ModelManager implements Model, UserModel, RenteeModel, ManagerModel
     public ArrayList<Reservation> getCurrentUserReservations() {
         ArrayList<Reservation> userReservations = new ArrayList<>();
         if (currentlyLoggedInUser != null) {
-            for (Reservation r : reservationList.getAll()) {
+            for (Reservation r : reservationManager.getAll()) {
                 if (currentlyLoggedInUser.getEmail().equals(r.getRentee().getEmail())) {
                     userReservations.add(r);
                 }
@@ -70,7 +70,7 @@ public class ModelManager implements Model, UserModel, RenteeModel, ManagerModel
     public int getCurrentUserOverDueEquipmentAmount() {
        int amount = 0;
         if (currentlyLoggedInUser != null) {
-            for (Approved r : reservationList.getApprovedReservations()) {
+            for (Approved r : reservationManager.getApprovedReservations()) {
                 if (currentlyLoggedInUser.getEmail().equals(r.getRentee().getEmail())) {
                     if (r.getRentedFor().isBefore(LocalDateTime.now())) {
                         amount++;
@@ -156,28 +156,28 @@ public class ModelManager implements Model, UserModel, RenteeModel, ManagerModel
     }
 
     public ArrayList<Unapproved> getUnapprovedReservations() {
-        return reservationList.getUnapprovedReservations();
+        return reservationManager.getUnapprovedReservations();
     }
 
     public ArrayList<Approved> getApprovedReservations() {
-        return reservationList.getApprovedReservations();
+        return reservationManager.getApprovedReservations();
     }
 
     public ArrayList<Rejected> getRejectedReservations() {
-        return reservationList.getRejectedReservations();
+        return reservationManager.getRejectedReservations();
     }
 
     public ArrayList<Returned> getReturnedReservations() {
-        return reservationList.getReturnedReservations();
+        return reservationManager.getReturnedReservations();
     }
 
     public ArrayList<Expired> getExpiredReservations() {
-        return reservationList.getExpiredReservations();
+        return reservationManager.getExpiredReservations();
     }
 
     public void refreshReservations() throws RemoteException {
-        reservationList.setReservationList(client.retrieveReservations());
-        support.firePropertyChange(RESERVATION_LIST_CHANGED, null, reservationList.getAll());
+        reservationManager.setReservationList(client.retrieveReservations());
+        support.firePropertyChange(RESERVATION_LIST_CHANGED, null, reservationManager.getAll());
     }
 
     @Override
@@ -200,7 +200,7 @@ public class ModelManager implements Model, UserModel, RenteeModel, ManagerModel
     @Override
     public void approveReservation(int id, String manager_id) throws RemoteException {
         client.approveReservation(id, manager_id);
-        support.firePropertyChange(RESERVATION_LIST_CHANGED, null, reservationList);
+        support.firePropertyChange(RESERVATION_LIST_CHANGED, null, reservationManager);
     }
 
     @Override
@@ -242,8 +242,8 @@ public class ModelManager implements Model, UserModel, RenteeModel, ManagerModel
     public void propertyChange(PropertyChangeEvent evt) {
         switch (evt.getPropertyName()) {
             case "reservations" -> {
-                reservationList.setReservationList((ArrayList<Reservation>) evt.getNewValue());
-                support.firePropertyChange(RESERVATION_LIST_CHANGED, null, reservationList.getAll());
+                reservationManager.setReservationList((ArrayList<Reservation>) evt.getNewValue());
+                support.firePropertyChange(RESERVATION_LIST_CHANGED, null, reservationManager.getAll());
             }
             case "reservation_id" -> {
                 support.firePropertyChange(RESERVATION_ID_RECEIVED, null, evt.getNewValue());

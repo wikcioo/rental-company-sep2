@@ -2,7 +2,7 @@ package application.model.reservations;
 
 import java.util.ArrayList;
 
-public class ReservationList {
+public class ReservationManager {
     private ArrayList<Reservation> reservations = new ArrayList<>();
 
     public ArrayList<Reservation> getAll() {

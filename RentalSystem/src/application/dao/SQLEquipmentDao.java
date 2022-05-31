@@ -28,11 +28,13 @@ public class SQLEquipmentDao implements EquipmentDao {
     public Equipment add(String model, String category, boolean available) throws SQLException {
         try (
                 Connection connection = getConnection();
-                PreparedStatement statement = connection.prepareStatement("INSERT INTO rentalsystemdbs.equipment VALUES (DEFAULT, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS)
+                PreparedStatement statement = connection.prepareStatement("INSERT INTO category VALUES (?) ON CONFLICT DO NOTHING;" +
+                        "INSERT INTO rentalsystemdbs.equipment VALUES (DEFAULT, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS)
         ) {
-            statement.setString(1, model);
-            statement.setString(2, category);
-            statement.setBoolean(3, available);
+            statement.setString(1, category);
+            statement.setString(2, model);
+            statement.setString(3, category);
+            statement.setBoolean(4, available);
             statement.executeUpdate();
             ResultSet rs = statement.getGeneratedKeys();
             long pk = 0;
@@ -71,7 +73,9 @@ public class SQLEquipmentDao implements EquipmentDao {
                 Connection connection = getConnection();
                 Statement statement = connection.createStatement()
         ) {
-            ResultSet rs = statement.executeQuery("SELECT id,model,category,availability FROM unreserved UNION SELECT id,model,category,availability FROM unavailable;");
+            ResultSet rs = statement.executeQuery(
+                    "SELECT id,model,category,availability FROM unreserved " +
+                    "UNION SELECT id,model,category,availability FROM unavailable;");
             while (rs.next()) {
                 int id = rs.getInt("id");
                 String model = rs.getString("model");

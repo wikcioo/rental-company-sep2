@@ -101,7 +101,8 @@ public class SQLReservationDao implements ReservationDao {
     public void approveReservation(int id, String manager_id) throws SQLException {
         try (
                 Connection connection = getConnection();
-                PreparedStatement statement = connection.prepareStatement("INSERT INTO approved(reservation_id, date, approved_by)" +
+                PreparedStatement statement = connection.prepareStatement(
+                        "INSERT INTO approved(reservation_id, date, approved_by)" +
                         " SELECT ?,now(), ?" +
                         " WHERE NOT EXISTS (SELECT reservation_id FROM rejected WHERE reservation_id = ?)" +
                         " AND NOT EXISTS (SELECT reservation_id FROM expired WHERE reservation_id = ?);")

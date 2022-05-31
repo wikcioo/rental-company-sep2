@@ -6,7 +6,7 @@ import application.model.users.User;
 import java.time.LocalDateTime;
 
 public class Unapproved extends Reservation {
-    public static final String type = "Unapproved";
+    public static final String status = "Unapproved";
 
     public Unapproved(int id, User rentee, LocalDateTime reservationDate, LocalDateTime rentedFor, Equipment equipment) {
         super(id, rentee, reservationDate, rentedFor, equipment);
@@ -18,6 +18,6 @@ public class Unapproved extends Reservation {
 
     @Override
     public String status() {
-        return type;
+        return status;
     }
 }

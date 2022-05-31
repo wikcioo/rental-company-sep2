@@ -9,7 +9,7 @@ import java.util.Objects;
 
 public class Expired extends Reservation {
     private final LocalDateTime dateTime;
-    public static final String type = "Expired";
+    public static final String status = "Expired";
 
     public Expired(int id, User rentee, Equipment equipment, LocalDateTime reservationEndDate, LocalDateTime dateTime) {
         super(id, rentee, equipment, reservationEndDate);
@@ -23,7 +23,7 @@ public class Expired extends Reservation {
 
     @Override
     public String status() {
-        return type;
+        return status;
     }
 
     public LocalDateTime getExpirationDate() {

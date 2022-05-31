@@ -40,7 +40,7 @@ public class ExpiringReservationTimerImplementation implements ExpiringReservati
 
     @Override
     public void addReservationToExpire(Reservation reservation) {
-        if(!reservation.status().equals(Unapproved.type))
+        if(!reservation.status().equals(Unapproved.status))
             throw new IllegalArgumentException("Only unapproved reservation can expire");
 
         if(isExpiring(reservation))

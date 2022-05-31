@@ -26,7 +26,7 @@ public class ReservationManager {
     public ArrayList<Unapproved> getUnapprovedReservations() {
         ArrayList<Unapproved> result = new ArrayList<>();
         for (Reservation reservation : reservations) {
-            if (reservation.status().equals(Unapproved.type)) {
+            if (reservation.status().equals(Unapproved.status)) {
                 result.add((Unapproved) reservation);
             }
         }
@@ -36,7 +36,7 @@ public class ReservationManager {
     public ArrayList<Approved> getApprovedReservations() {
         ArrayList<Approved> result = new ArrayList<>();
         for (Reservation reservation : reservations) {
-            if (reservation.status().equals(Approved.type)) {
+            if (reservation.status().equals(Approved.status)) {
                 result.add((Approved) reservation);
             }
         }
@@ -46,7 +46,7 @@ public class ReservationManager {
     public ArrayList<Rejected> getRejectedReservations() {
         ArrayList<Rejected> result = new ArrayList<>();
         for (Reservation reservation : reservations) {
-            if (reservation.status().equals(Rejected.type)) {
+            if (reservation.status().equals(Rejected.status)) {
                 result.add((Rejected) reservation);
             }
         }
@@ -56,7 +56,7 @@ public class ReservationManager {
     public ArrayList<Returned> getReturnedReservations() {
         ArrayList<Returned> result = new ArrayList<>();
         for (Reservation reservation : reservations) {
-            if (reservation.status().equals(Returned.type)) {
+            if (reservation.status().equals(Returned.status)) {
                 result.add((Returned) reservation);
             }
         }
@@ -66,7 +66,7 @@ public class ReservationManager {
     public ArrayList<Expired> getExpiredReservations() {
         ArrayList<Expired> result = new ArrayList<>();
         for (Reservation reservation : reservations) {
-            if (reservation.status().equals(Expired.type)) {
+            if (reservation.status().equals(Expired.status)) {
                 result.add((Expired) reservation);
             }
         }

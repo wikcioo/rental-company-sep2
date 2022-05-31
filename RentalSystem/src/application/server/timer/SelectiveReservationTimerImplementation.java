@@ -52,7 +52,7 @@ public class SelectiveReservationTimerImplementation implements SelectiveReserva
     public void setAllUnapprovedReservations(ArrayList<Reservation> reservations) {
         cancelAll();
         for(Reservation reservation : reservations) {
-            if(!reservation.status().equals(Unapproved.type))
+            if(!reservation.status().equals(Unapproved.status))
                 continue;
             addReservationToExpire(reservation);
         }

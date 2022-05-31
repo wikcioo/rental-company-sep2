@@ -5,6 +5,7 @@ import application.client.RentalSystemClientImplementation;
 import application.model.equipment.Equipment;
 import application.model.equipment.EquipmentManager;
 import application.model.reservations.*;
+import application.model.users.CurrentUserManager;
 import application.model.users.User;
 import application.model.users.UserManager;
 
@@ -18,11 +19,11 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class ModelManager implements Model, UserModel, RenteeModel, ManagerModel, PropertyChangeListener {
-    private User currentlyLoggedInUser;
     private RentalSystemClient client;
     private final EquipmentManager equipmentManager;
     private final ReservationManager reservationManager;
     private final UserManager userManager;
+    private final CurrentUserManager currentUserManager;
     private final PropertyChangeSupport support;
     public static final String EQUIPMENT_LIST_CHANGED = "equipment_list_changed";
     public static final String RESERVATION_LIST_CHANGED = "reservation_list_changed";
@@ -30,7 +31,6 @@ public class ModelManager implements Model, UserModel, RenteeModel, ManagerModel
     public static final String USER_LIST_CHANGED = "user_list_changed";
 
     public ModelManager(RentalSystemClient client) {
-        this.currentlyLoggedInUser = null;
         this.client = client;
         try {
             this.client.addListener(this);
@@ -38,6 +38,7 @@ public class ModelManager implements Model, UserModel, RenteeModel, ManagerModel
             throw new RuntimeException(e);
         }
         this.equipmentManager = new EquipmentManager();
+        this.currentUserManager = new CurrentUserManager();
         this.reservationManager = new ReservationManager();
         this.userManager = new UserManager();
         this.support = new PropertyChangeSupport(this);
@@ -55,30 +56,12 @@ public class ModelManager implements Model, UserModel, RenteeModel, ManagerModel
 
     @Override
     public ArrayList<Reservation> getCurrentUserReservations() {
-        ArrayList<Reservation> userReservations = new ArrayList<>();
-        if (currentlyLoggedInUser != null) {
-            for (Reservation r : reservationManager.getAll()) {
-                if (currentlyLoggedInUser.getEmail().equals(r.getRentee().getEmail())) {
-                    userReservations.add(r);
-                }
-            }
-        }
-        return userReservations;
+        return currentUserManager.getCurrentUserReservations(reservationManager.getAll());
     }
 
     @Override
     public int getCurrentUserOverDueEquipmentAmount() {
-       int amount = 0;
-        if (currentlyLoggedInUser != null) {
-            for (Approved r : reservationManager.getApprovedReservations()) {
-                if (currentlyLoggedInUser.getEmail().equals(r.getRentee().getEmail())) {
-                    if (r.getRentedFor().isBefore(LocalDateTime.now())) {
-                        amount++;
-                    }
-                }
-            }
-        }
-        return amount;
+        return currentUserManager.getCurrentUserOverDueEquipmentAmount(reservationManager.getApprovedReservations());
     }
 
     @Override
@@ -183,8 +166,8 @@ public class ModelManager implements Model, UserModel, RenteeModel, ManagerModel
     @Override
     public boolean tryToReconnectClient() {
         try {
-            client = new RentalSystemClientImplementation("localhost", Registry.REGISTRY_PORT);
             client.removeListener(this);
+            client = new RentalSystemClientImplementation("localhost", Registry.REGISTRY_PORT);
             client.addListener(this);
             return true;
         } catch (RemoteException | NotBoundException e) {
@@ -230,12 +213,12 @@ public class ModelManager implements Model, UserModel, RenteeModel, ManagerModel
 
     @Override
     public User getCurrentlyLoggedInUser() {
-        return currentlyLoggedInUser;
+        return currentUserManager.getCurrentlyLoggedInUser();
     }
 
     @Override
     public void setCurrentlyLoggedInUser(User newUser) {
-        this.currentlyLoggedInUser = newUser;
+        this.currentUserManager.setCurrentlyLoggedInUser(newUser);
     }
 
     @Override
@@ -253,14 +236,14 @@ public class ModelManager implements Model, UserModel, RenteeModel, ManagerModel
                 support.firePropertyChange(USER_LIST_CHANGED, null, userManager.getUsers());
             }
             case "equipmentManager" -> {
-                if (currentlyLoggedInUser.isManager()) {
+                if (currentUserManager.currentUserIsManger()) {
                     equipmentManager.clear();
                     equipmentManager.addEquipmentList((ArrayList<Equipment>) evt.getNewValue());
                     support.firePropertyChange(EQUIPMENT_LIST_CHANGED, null, equipmentManager.getAllEquipment());
                 }
             }
             case "equipmentRentee" -> {
-                if (!currentlyLoggedInUser.isManager()) {
+                if (!currentUserManager.currentUserIsManger()) {
                     equipmentManager.clear();
                     equipmentManager.addEquipmentList((ArrayList<Equipment>) evt.getNewValue());
                     support.firePropertyChange(EQUIPMENT_LIST_CHANGED, null, equipmentManager.getAllAvailableEquipment());

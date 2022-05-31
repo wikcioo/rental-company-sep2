@@ -102,7 +102,6 @@ public class ManagerEquipmentViewController {
     }
 
     public void reset() {
-        viewModel.displayLoggedUser();
         error.setText("");
     }
 

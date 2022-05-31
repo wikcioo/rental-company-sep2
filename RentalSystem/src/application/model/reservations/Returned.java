@@ -9,7 +9,7 @@ import java.util.Objects;
 
 public class Returned extends Approved {
     private final LocalDateTime returnDate;
-    public static final String type = "Returned";
+    public static final String status = "Returned";
 
     public Returned(int id, User rentee, Equipment equipment, LocalDateTime reservationEndDate, LocalDateTime approvedDate, String approvedBy, LocalDateTime returnDate) {
         super(id, rentee, equipment, reservationEndDate, approvedDate, approvedBy);
@@ -23,7 +23,7 @@ public class Returned extends Approved {
 
     @Override
     public String status() {
-        return type;
+        return status;
     }
 
     public LocalDateTime getReturnDate() {

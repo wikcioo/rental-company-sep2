@@ -9,10 +9,10 @@ import java.util.Objects;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 
-public class Approved extends Reservation {
+public class Approved extends Unapproved {
     private final LocalDateTime approvedDate;
     private final String approvedBy;
-    public static final String type = "Approved";
+    public static final String status = "Approved";
 
     public Approved(int id, User rentee, Equipment equipment, LocalDateTime reservationEndDate, LocalDateTime approvedDate, String approvedBy) {
         super(id, rentee, equipment, reservationEndDate);
@@ -28,7 +28,7 @@ public class Approved extends Reservation {
 
     @Override
     public String status() {
-        return type;
+        return status;
     }
 
     public LocalDateTime getApprovedDate() {

@@ -7,11 +7,11 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
-public class Rejected extends Reservation {
+public class Rejected extends Unapproved {
     private final LocalDateTime rejectionDate;
     private final String reason;
     private final String rejectedBy;
-    public static final String type = "Rejected";
+    public static final String status = "Rejected";
 
     public Rejected(int id, User rentee, Equipment equipment, LocalDateTime reservationEndDate, LocalDateTime rejectionDate, String reason, String rejectedBy) {
         super(id, rentee, equipment, reservationEndDate);
@@ -29,7 +29,7 @@ public class Rejected extends Reservation {
 
     @Override
     public String status() {
-        return type;
+        return status;
     }
 
     public LocalDateTime getRejectionDate() {

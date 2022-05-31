@@ -2,10 +2,10 @@ package application.model.equipment;
 
 import java.util.ArrayList;
 
-public class EquipmentList {
+public class EquipmentManager {
     private final ArrayList<Equipment> equipmentList;
 
-    public EquipmentList() {
+    public EquipmentManager() {
         equipmentList = new ArrayList<>();
     }
 

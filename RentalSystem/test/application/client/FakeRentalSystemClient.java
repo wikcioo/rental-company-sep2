@@ -1,7 +1,7 @@
 package application.client;
 
 import application.model.equipment.Equipment;
-import application.model.equipment.EquipmentList;
+import application.model.equipment.EquipmentManager;
 import application.model.reservations.*;
 import application.model.users.Manager;
 import application.model.users.Rentee;
@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 public class FakeRentalSystemClient implements RentalSystemClient {
     private final PropertyChangeSupport support;
-    private final EquipmentList equipmentList;
+    private final EquipmentManager equipmentManager;
     private final ReservationList reservationList;
     private final ArrayList<User> userList;
     private int equipmentIndex;
@@ -24,7 +24,7 @@ public class FakeRentalSystemClient implements RentalSystemClient {
 
     public FakeRentalSystemClient() {
         this.support = new PropertyChangeSupport(this);
-        this.equipmentList = new EquipmentList();
+        this.equipmentManager = new EquipmentManager();
         this.userList = new ArrayList<>();
         userList.add(new Manager("a", "b", "c", "john@gmail.com", "123"));
         userList.add(new Rentee("a", "b", "c", "tomas@gmail.com", "abc"));
@@ -37,7 +37,7 @@ public class FakeRentalSystemClient implements RentalSystemClient {
     public void addEquipment(String model, String category, boolean available) throws RemoteException {
         Equipment equipment = new Equipment(equipmentIndex, model, category, available);
         equipmentIndex++;
-        equipmentList.addEquipment(equipment);
+        equipmentManager.addEquipment(equipment);
         ArrayList<Equipment> allEquipment = getAllEquipment();
         ArrayList<Equipment> unreservedEquipment = getAllUnreservedEquipment();
         support.firePropertyChange("equipmentManager", null, allEquipment);
@@ -50,17 +50,17 @@ public class FakeRentalSystemClient implements RentalSystemClient {
 
     @Override
     public ArrayList<Equipment> getAllEquipment() throws RemoteException {
-        return equipmentList.getAllEquipment();
+        return equipmentManager.getAllEquipment();
     }
 
     @Override
     public ArrayList<Equipment> getAllUnreservedEquipment() throws RemoteException {
-        return equipmentList.getAllAvailableEquipment();
+        return equipmentManager.getAllAvailableEquipment();
     }
 
     @Override
     public void setAvailability(int equipment_id, boolean available) throws RemoteException {
-        for (Equipment e : equipmentList.getAllEquipment()) {
+        for (Equipment e : equipmentManager.getAllEquipment()) {
             if (e.getEquipmentId() == equipment_id) {
                 e.setAvailable(available);
             }

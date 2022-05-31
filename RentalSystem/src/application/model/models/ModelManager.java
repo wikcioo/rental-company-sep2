@@ -3,7 +3,7 @@ package application.model.models;
 import application.client.RentalSystemClient;
 import application.client.RentalSystemClientImplementation;
 import application.model.equipment.Equipment;
-import application.model.equipment.EquipmentList;
+import application.model.equipment.EquipmentManager;
 import application.model.reservations.*;
 import application.model.users.User;
 import application.model.users.UserList;
@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class ModelManager implements Model, UserModel, RenteeModel, ManagerModel, PropertyChangeListener {
     private User currentlyLoggedInUser;
     private RentalSystemClient client;
-    private final EquipmentList equipmentList;
+    private final EquipmentManager equipmentManager;
     private final ReservationList reservationList;
     private final UserList userList;
     private final PropertyChangeSupport support;
@@ -37,7 +37,7 @@ public class ModelManager implements Model, UserModel, RenteeModel, ManagerModel
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
-        this.equipmentList = new EquipmentList();
+        this.equipmentManager = new EquipmentManager();
         this.reservationList = new ReservationList();
         this.userList = new UserList();
         this.support = new PropertyChangeSupport(this);
@@ -50,7 +50,7 @@ public class ModelManager implements Model, UserModel, RenteeModel, ManagerModel
 
     @Override
     public ArrayList<Equipment> getAllEquipment() {
-        return equipmentList.getAllEquipment();
+        return equipmentManager.getAllEquipment();
     }
 
     @Override
@@ -83,28 +83,28 @@ public class ModelManager implements Model, UserModel, RenteeModel, ManagerModel
 
     @Override
     public ArrayList<Equipment> getAllAvailableEquipment() {
-        return equipmentList.getAllAvailableEquipment();
+        return equipmentManager.getAllAvailableEquipment();
     }
 
     @Override
     public void retrieveAllEquipment() throws RemoteException {
-        equipmentList.clear();
-        equipmentList.addEquipmentList(client.getAllEquipment());
-        support.firePropertyChange(EQUIPMENT_LIST_CHANGED, null, equipmentList.getAllEquipment());
+        equipmentManager.clear();
+        equipmentManager.addEquipmentList(client.getAllEquipment());
+        support.firePropertyChange(EQUIPMENT_LIST_CHANGED, null, equipmentManager.getAllEquipment());
     }
 
     @Override
     public void retrieveAllUnreservedEquipment() throws RemoteException {
-        equipmentList.clear();
-        equipmentList.addEquipmentList(client.getAllUnreservedEquipment());
-        support.firePropertyChange(EQUIPMENT_LIST_CHANGED, null, equipmentList.getAllEquipment());
+        equipmentManager.clear();
+        equipmentManager.addEquipmentList(client.getAllUnreservedEquipment());
+        support.firePropertyChange(EQUIPMENT_LIST_CHANGED, null, equipmentManager.getAllEquipment());
     }
 
     @Override
     public void toggleAvailability(Equipment equipment) throws RemoteException {
         equipment.toggleAvailability();
         client.setAvailability(equipment.getEquipmentId(), equipment.isAvailable());
-        support.firePropertyChange(EQUIPMENT_LIST_CHANGED, null, equipmentList.getAllEquipment());
+        support.firePropertyChange(EQUIPMENT_LIST_CHANGED, null, equipmentManager.getAllEquipment());
     }
 
     @Override
@@ -254,16 +254,16 @@ public class ModelManager implements Model, UserModel, RenteeModel, ManagerModel
             }
             case "equipmentManager" -> {
                 if (currentlyLoggedInUser.isManager()) {
-                    equipmentList.clear();
-                    equipmentList.addEquipmentList((ArrayList<Equipment>) evt.getNewValue());
-                    support.firePropertyChange(EQUIPMENT_LIST_CHANGED, null, equipmentList.getAllEquipment());
+                    equipmentManager.clear();
+                    equipmentManager.addEquipmentList((ArrayList<Equipment>) evt.getNewValue());
+                    support.firePropertyChange(EQUIPMENT_LIST_CHANGED, null, equipmentManager.getAllEquipment());
                 }
             }
             case "equipmentRentee" -> {
                 if (!currentlyLoggedInUser.isManager()) {
-                    equipmentList.clear();
-                    equipmentList.addEquipmentList((ArrayList<Equipment>) evt.getNewValue());
-                    support.firePropertyChange(EQUIPMENT_LIST_CHANGED, null, equipmentList.getAllAvailableEquipment());
+                    equipmentManager.clear();
+                    equipmentManager.addEquipmentList((ArrayList<Equipment>) evt.getNewValue());
+                    support.firePropertyChange(EQUIPMENT_LIST_CHANGED, null, equipmentManager.getAllAvailableEquipment());
                 }
             }
         }

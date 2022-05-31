@@ -1,6 +1,7 @@
 package application.model.models;
 
 import application.model.equipment.Equipment;
+import application.model.equipment.EquipmentManager;
 import application.model.reservations.*;
 import application.model.users.User;
 import application.util.NamedPropertyChangeSubject;
@@ -24,7 +25,7 @@ public interface Model extends NamedPropertyChangeSubject {
 
     /**
      * Gets all stored equipment from the equipmentList.
-     * Delegates to {@link application.model.equipment.EquipmentList#getAllEquipment() getAllEquipment} method.
+     * Delegates to {@link EquipmentManager#getAllEquipment() getAllEquipment} method.
      *
      * @return {@link ArrayList<Equipment>} of all stored equipment
      */
@@ -45,7 +46,7 @@ public interface Model extends NamedPropertyChangeSubject {
 
     /**
      * Gets all available equipment from the equipmentList.
-     * Delegates to {@link application.model.equipment.EquipmentList#getAllAvailableEquipment() getAllAvailableEquipment} method.
+     * Delegates to {@link EquipmentManager#getAllAvailableEquipment() getAllAvailableEquipment} method.
      *
      * @return {@link ArrayList<Equipment>} of all available equipment
      * @throws RemoteException indicates connection issues

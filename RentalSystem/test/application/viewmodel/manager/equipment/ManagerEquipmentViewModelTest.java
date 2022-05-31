@@ -19,12 +19,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ManagerEquipmentViewModelTest {
     private ManagerEquipmentViewModel viewModel;
+    private SimpleObjectProperty<Equipment> selectedEquipment;
 
     @BeforeEach
     public void setUp() throws RemoteException {
         Model model = new ModelManager(new FakeRentalSystemClient());
         viewModel = new ManagerEquipmentViewModel((ManagerModel) model);
+        selectedEquipment = new SimpleObjectProperty<>(new Equipment(0, "", "", true));
         model.setCurrentlyLoggedInUser(model.getUser("john@gmail.com"));
+        viewModel.bindSelectedEquipment(selectedEquipment);
     }
 
     @Test

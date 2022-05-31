@@ -6,7 +6,7 @@ import application.model.equipment.Equipment;
 import application.model.equipment.EquipmentManager;
 import application.model.reservations.*;
 import application.model.users.User;
-import application.model.users.UserList;
+import application.model.users.UserManager;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -22,7 +22,7 @@ public class ModelManager implements Model, UserModel, RenteeModel, ManagerModel
     private RentalSystemClient client;
     private final EquipmentManager equipmentManager;
     private final ReservationManager reservationManager;
-    private final UserList userList;
+    private final UserManager userManager;
     private final PropertyChangeSupport support;
     public static final String EQUIPMENT_LIST_CHANGED = "equipment_list_changed";
     public static final String RESERVATION_LIST_CHANGED = "reservation_list_changed";
@@ -39,7 +39,7 @@ public class ModelManager implements Model, UserModel, RenteeModel, ManagerModel
         }
         this.equipmentManager = new EquipmentManager();
         this.reservationManager = new ReservationManager();
-        this.userList = new UserList();
+        this.userManager = new UserManager();
         this.support = new PropertyChangeSupport(this);
     }
 
@@ -110,7 +110,7 @@ public class ModelManager implements Model, UserModel, RenteeModel, ManagerModel
     @Override
     public void addUser(String firstName, String lastName, String phoneNumber, String email, String password, boolean isManager) throws RemoteException {
         client.addUser(firstName, lastName, phoneNumber, email, password, isManager);
-        support.firePropertyChange(USER_LIST_CHANGED, null, userList.getUsers());
+        support.firePropertyChange(USER_LIST_CHANGED, null, userManager.getUsers());
     }
 
     @Override
@@ -120,20 +120,20 @@ public class ModelManager implements Model, UserModel, RenteeModel, ManagerModel
 
     @Override
     public void retrieveAllUsers() throws RemoteException {
-        userList.clear();
-        userList.setUsers(client.getAllUsers());
-        support.firePropertyChange(USER_LIST_CHANGED, null, userList.getUsers());
+        userManager.clear();
+        userManager.setUsers(client.getAllUsers());
+        support.firePropertyChange(USER_LIST_CHANGED, null, userManager.getUsers());
     }
 
     @Override
     public ArrayList<User> getAllUsers() {
-        return userList.getUsers();
+        return userManager.getUsers();
     }
 
     @Override
     public void deleteUser(String email) throws RemoteException {
         client.deleteUser(email);
-        support.firePropertyChange(USER_LIST_CHANGED, null, userList.getUsers());
+        support.firePropertyChange(USER_LIST_CHANGED, null, userManager.getUsers());
     }
 
     @Override
@@ -249,8 +249,8 @@ public class ModelManager implements Model, UserModel, RenteeModel, ManagerModel
                 support.firePropertyChange(RESERVATION_ID_RECEIVED, null, evt.getNewValue());
             }
             case "users" -> {
-                userList.setUsers((ArrayList<User>) evt.getNewValue());
-                support.firePropertyChange(USER_LIST_CHANGED, null, userList.getUsers());
+                userManager.setUsers((ArrayList<User>) evt.getNewValue());
+                support.firePropertyChange(USER_LIST_CHANGED, null, userManager.getUsers());
             }
             case "equipmentManager" -> {
                 if (currentlyLoggedInUser.isManager()) {

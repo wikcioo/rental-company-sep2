@@ -62,7 +62,7 @@ public class RenteeEquipmentViewController {
             if (p.getValue() != null) {
                 return new SimpleStringProperty(Integer.toString(p.getValue().getEquipmentId()));
             } else {
-                return new SimpleStringProperty("<no model>");
+                return new SimpleStringProperty("<no id>");
             }
         });
 

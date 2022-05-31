@@ -1,4 +1,4 @@
-package application.viewmodel.manager;
+package application.viewmodel.manager.users;
 
 import application.model.models.ManagerModel;
 import application.model.models.Model;
@@ -8,33 +8,27 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import application.client.FakeRentalSystemClient;
+import application.client.FailingRentalSystemClient;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
-public class AddUserViewModelTest {
+public class AddUserViewModelServerFailureTest {
     private AddUserViewModel viewModel;
     private StringProperty error;
 
     @BeforeEach
     public void setUp() {
-        Model model = new ModelManager(new FakeRentalSystemClient());
+        Model model = new ModelManager(new FailingRentalSystemClient());
         viewModel = new AddUserViewModel((ManagerModel) model);
         error = new SimpleStringProperty();
         viewModel.bindError(error);
     }
 
     @Test
-    public void returns_true_and_empty_label_when_successfully_added_the_manager() {
+    public void server_failure_during_adding_new_user() {
         boolean result = viewModel.addUser("Manager");
-        assertTrue(result);
-        assertTrue(error.isEmpty().get());
-    }
-
-    @Test
-    public void returns_true_and_empty_label_when_successfully_added_the_rentee() {
-        boolean result = viewModel.addUser("Rentee");
-        assertTrue(result);
-        assertTrue(error.isEmpty().get());
+        assertEquals("Failed to add user to the database", error.get());
+        assertFalse(result);
     }
 }

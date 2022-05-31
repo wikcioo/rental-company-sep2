@@ -1,4 +1,4 @@
-package application.viewmodel.manager;
+package application.viewmodel.manager.equipment;
 
 import application.model.models.ManagerModel;
 import application.model.models.Model;

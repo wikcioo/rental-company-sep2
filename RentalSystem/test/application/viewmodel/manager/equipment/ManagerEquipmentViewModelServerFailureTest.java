@@ -1,4 +1,4 @@
-package application.viewmodel.manager;
+package application.viewmodel.manager.equipment;
 
 import application.client.FailingRentalSystemClient;
 import application.model.models.ManagerModel;

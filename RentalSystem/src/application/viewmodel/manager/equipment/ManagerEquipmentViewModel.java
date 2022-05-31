@@ -20,7 +20,6 @@ public class ManagerEquipmentViewModel implements PropertyChangeListener {
     private final ObjectProperty<ObservableList<Equipment>> listObjectProperty;
     private final ObjectProperty<Equipment> selectedEquipmentProperty;
     private final StringProperty errorProperty;
-    private final StringProperty loggedUserProperty;
 
     public ManagerEquipmentViewModel(ManagerModel model) {
         this.model = model;
@@ -28,7 +27,6 @@ public class ManagerEquipmentViewModel implements PropertyChangeListener {
         this.selectedEquipmentProperty = new SimpleObjectProperty<>();
         model.addListener(ModelManager.EQUIPMENT_LIST_CHANGED, this);
         this.errorProperty = new SimpleStringProperty();
-        this.loggedUserProperty = new SimpleStringProperty();
     }
 
     public void bindEquipmentList(ObjectProperty<ObservableList<Equipment>> property) {
@@ -41,10 +39,6 @@ public class ManagerEquipmentViewModel implements PropertyChangeListener {
 
     public void bindErrorLabel(StringProperty property) {
         property.bindBidirectional(errorProperty);
-    }
-
-    public void bindLoggedUser(StringProperty property) {
-        loggedUserProperty.bindBidirectional(property);
     }
 
     public void toggleAvailability() {
@@ -74,7 +68,4 @@ public class ManagerEquipmentViewModel implements PropertyChangeListener {
         }
     }
 
-    public void displayLoggedUser() {
-        loggedUserProperty.set("Logged as: " + model.getCurrentlyLoggedInUser().getEmail());
-    }
 }

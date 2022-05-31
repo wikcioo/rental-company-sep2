@@ -2,10 +2,10 @@ package application.model.users;
 
 import java.util.ArrayList;
 
-public class UserList {
+public class UserManager {
     private ArrayList<User> users;
 
-    public UserList() {
+    public UserManager() {
         this.users = new ArrayList<>();
     }
 

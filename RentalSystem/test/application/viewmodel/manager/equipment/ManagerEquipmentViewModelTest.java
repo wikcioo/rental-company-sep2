@@ -1,4 +1,4 @@
-package application.viewmodel.manager;
+package application.viewmodel.manager.equipment;
 
 import application.client.FakeRentalSystemClient;
 import application.model.models.ManagerModel;
@@ -20,26 +20,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class ManagerEquipmentViewModelTest {
     private ManagerEquipmentViewModel viewModel;
     private SimpleObjectProperty<Equipment> selectedEquipment;
-    private StringProperty loggedUser;
-    private StringProperty error;
 
     @BeforeEach
     public void setUp() throws RemoteException {
         Model model = new ModelManager(new FakeRentalSystemClient());
         viewModel = new ManagerEquipmentViewModel((ManagerModel) model);
         selectedEquipment = new SimpleObjectProperty<>(new Equipment(0, "", "", true));
-        loggedUser = new SimpleStringProperty();
-        error = new SimpleStringProperty();
-        viewModel.bindSelectedEquipment(selectedEquipment);
-        viewModel.bindLoggedUser(loggedUser);
-        viewModel.bindErrorLabel(error);
         model.setCurrentlyLoggedInUser(model.getUser("john@gmail.com"));
-    }
-
-    @Test
-    public void when_logged_in_display_user_email() {
-        viewModel.displayLoggedUser();
-        assertEquals("Logged as: john@gmail.com", loggedUser.get());
+        viewModel.bindSelectedEquipment(selectedEquipment);
     }
 
     @Test

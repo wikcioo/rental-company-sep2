@@ -3,10 +3,11 @@ package application.model.models;
 import application.client.RentalSystemClient;
 import application.client.RentalSystemClientImplementation;
 import application.model.equipment.Equipment;
-import application.model.equipment.EquipmentList;
+import application.model.equipment.EquipmentManager;
 import application.model.reservations.*;
+import application.model.users.CurrentUserManager;
 import application.model.users.User;
-import application.model.users.UserList;
+import application.model.users.UserManager;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -18,11 +19,11 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class ModelManager implements Model, UserModel, RenteeModel, ManagerModel, PropertyChangeListener {
-    private User currentlyLoggedInUser;
     private RentalSystemClient client;
-    private final EquipmentList equipmentList;
-    private final ReservationList reservationList;
-    private final UserList userList;
+    private final EquipmentManager equipmentManager;
+    private final ReservationManager reservationManager;
+    private final UserManager userManager;
+    private final CurrentUserManager currentUserManager;
     private final PropertyChangeSupport support;
     public static final String EQUIPMENT_LIST_CHANGED = "equipment_list_changed";
     public static final String RESERVATION_LIST_CHANGED = "reservation_list_changed";
@@ -30,16 +31,16 @@ public class ModelManager implements Model, UserModel, RenteeModel, ManagerModel
     public static final String USER_LIST_CHANGED = "user_list_changed";
 
     public ModelManager(RentalSystemClient client) {
-        this.currentlyLoggedInUser = null;
         this.client = client;
         try {
             this.client.addListener(this);
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
-        this.equipmentList = new EquipmentList();
-        this.reservationList = new ReservationList();
-        this.userList = new UserList();
+        this.equipmentManager = new EquipmentManager();
+        this.currentUserManager = new CurrentUserManager();
+        this.reservationManager = new ReservationManager();
+        this.userManager = new UserManager();
         this.support = new PropertyChangeSupport(this);
     }
 
@@ -50,67 +51,49 @@ public class ModelManager implements Model, UserModel, RenteeModel, ManagerModel
 
     @Override
     public ArrayList<Equipment> getAllEquipment() {
-        return equipmentList.getAllEquipment();
+        return equipmentManager.getAllEquipment();
     }
 
     @Override
     public ArrayList<Reservation> getCurrentUserReservations() {
-        ArrayList<Reservation> userReservations = new ArrayList<>();
-        if (currentlyLoggedInUser != null) {
-            for (Reservation r : reservationList.getAll()) {
-                if (currentlyLoggedInUser.getEmail().equals(r.getRentee().getEmail())) {
-                    userReservations.add(r);
-                }
-            }
-        }
-        return userReservations;
+        return currentUserManager.getCurrentUserReservations(reservationManager.getAll());
     }
 
     @Override
     public int getCurrentUserOverDueEquipmentAmount() {
-       int amount = 0;
-        if (currentlyLoggedInUser != null) {
-            for (Approved r : reservationList.getApprovedReservations()) {
-                if (currentlyLoggedInUser.getEmail().equals(r.getRentee().getEmail())) {
-                    if (r.getRentedFor().isBefore(LocalDateTime.now())) {
-                        amount++;
-                    }
-                }
-            }
-        }
-        return amount;
+        return currentUserManager.getCurrentUserOverDueEquipmentAmount(reservationManager.getApprovedReservations());
     }
 
     @Override
     public ArrayList<Equipment> getAllAvailableEquipment() {
-        return equipmentList.getAllAvailableEquipment();
+        return equipmentManager.getAllAvailableEquipment();
     }
 
     @Override
     public void retrieveAllEquipment() throws RemoteException {
-        equipmentList.clear();
-        equipmentList.addEquipmentList(client.getAllEquipment());
-        support.firePropertyChange(EQUIPMENT_LIST_CHANGED, null, equipmentList.getAllEquipment());
+        equipmentManager.clear();
+        equipmentManager.addEquipmentList(client.getAllEquipment());
+        support.firePropertyChange(EQUIPMENT_LIST_CHANGED, null, equipmentManager.getAllEquipment());
     }
 
     @Override
     public void retrieveAllUnreservedEquipment() throws RemoteException {
-        equipmentList.clear();
-        equipmentList.addEquipmentList(client.getAllUnreservedEquipment());
-        support.firePropertyChange(EQUIPMENT_LIST_CHANGED, null, equipmentList.getAllEquipment());
+        equipmentManager.clear();
+        equipmentManager.addEquipmentList(client.getAllUnreservedEquipment());
+        support.firePropertyChange(EQUIPMENT_LIST_CHANGED, null, equipmentManager.getAllEquipment());
     }
 
     @Override
     public void toggleAvailability(Equipment equipment) throws RemoteException {
         equipment.toggleAvailability();
         client.setAvailability(equipment.getEquipmentId(), equipment.isAvailable());
-        support.firePropertyChange(EQUIPMENT_LIST_CHANGED, null, equipmentList.getAllEquipment());
+        support.firePropertyChange(EQUIPMENT_LIST_CHANGED, null, equipmentManager.getAllEquipment());
     }
 
     @Override
     public void addUser(String firstName, String lastName, String phoneNumber, String email, String password, boolean isManager) throws RemoteException {
         client.addUser(firstName, lastName, phoneNumber, email, password, isManager);
-        support.firePropertyChange(USER_LIST_CHANGED, null, userList.getUsers());
+        support.firePropertyChange(USER_LIST_CHANGED, null, userManager.getUsers());
     }
 
     @Override
@@ -120,20 +103,20 @@ public class ModelManager implements Model, UserModel, RenteeModel, ManagerModel
 
     @Override
     public void retrieveAllUsers() throws RemoteException {
-        userList.clear();
-        userList.setUsers(client.getAllUsers());
-        support.firePropertyChange(USER_LIST_CHANGED, null, userList.getUsers());
+        userManager.clear();
+        userManager.setUsers(client.getAllUsers());
+        support.firePropertyChange(USER_LIST_CHANGED, null, userManager.getUsers());
     }
 
     @Override
     public ArrayList<User> getAllUsers() {
-        return userList.getUsers();
+        return userManager.getUsers();
     }
 
     @Override
     public void deleteUser(String email) throws RemoteException {
         client.deleteUser(email);
-        support.firePropertyChange(USER_LIST_CHANGED, null, userList.getUsers());
+        support.firePropertyChange(USER_LIST_CHANGED, null, userManager.getUsers());
     }
 
     @Override
@@ -156,35 +139,35 @@ public class ModelManager implements Model, UserModel, RenteeModel, ManagerModel
     }
 
     public ArrayList<Unapproved> getUnapprovedReservations() {
-        return reservationList.getUnapprovedReservations();
+        return reservationManager.getUnapprovedReservations();
     }
 
     public ArrayList<Approved> getApprovedReservations() {
-        return reservationList.getApprovedReservations();
+        return reservationManager.getApprovedReservations();
     }
 
     public ArrayList<Rejected> getRejectedReservations() {
-        return reservationList.getRejectedReservations();
+        return reservationManager.getRejectedReservations();
     }
 
     public ArrayList<Returned> getReturnedReservations() {
-        return reservationList.getReturnedReservations();
+        return reservationManager.getReturnedReservations();
     }
 
     public ArrayList<Expired> getExpiredReservations() {
-        return reservationList.getExpiredReservations();
+        return reservationManager.getExpiredReservations();
     }
 
     public void refreshReservations() throws RemoteException {
-        reservationList.setReservationList(client.retrieveReservations());
-        support.firePropertyChange(RESERVATION_LIST_CHANGED, null, reservationList.getAll());
+        reservationManager.setReservationList(client.retrieveReservations());
+        support.firePropertyChange(RESERVATION_LIST_CHANGED, null, reservationManager.getAll());
     }
 
     @Override
     public boolean tryToReconnectClient() {
         try {
-            client = new RentalSystemClientImplementation("localhost", Registry.REGISTRY_PORT);
             client.removeListener(this);
+            client = new RentalSystemClientImplementation("localhost", Registry.REGISTRY_PORT);
             client.addListener(this);
             return true;
         } catch (RemoteException | NotBoundException e) {
@@ -200,7 +183,7 @@ public class ModelManager implements Model, UserModel, RenteeModel, ManagerModel
     @Override
     public void approveReservation(int id, String manager_id) throws RemoteException {
         client.approveReservation(id, manager_id);
-        support.firePropertyChange(RESERVATION_LIST_CHANGED, null, reservationList);
+        support.firePropertyChange(RESERVATION_LIST_CHANGED, null, reservationManager);
     }
 
     @Override
@@ -230,40 +213,40 @@ public class ModelManager implements Model, UserModel, RenteeModel, ManagerModel
 
     @Override
     public User getCurrentlyLoggedInUser() {
-        return currentlyLoggedInUser;
+        return currentUserManager.getCurrentlyLoggedInUser();
     }
 
     @Override
     public void setCurrentlyLoggedInUser(User newUser) {
-        this.currentlyLoggedInUser = newUser;
+        this.currentUserManager.setCurrentlyLoggedInUser(newUser);
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         switch (evt.getPropertyName()) {
             case "reservations" -> {
-                reservationList.setReservationList((ArrayList<Reservation>) evt.getNewValue());
-                support.firePropertyChange(RESERVATION_LIST_CHANGED, null, reservationList.getAll());
+                reservationManager.setReservationList((ArrayList<Reservation>) evt.getNewValue());
+                support.firePropertyChange(RESERVATION_LIST_CHANGED, null, reservationManager.getAll());
             }
             case "reservation_id" -> {
                 support.firePropertyChange(RESERVATION_ID_RECEIVED, null, evt.getNewValue());
             }
             case "users" -> {
-                userList.setUsers((ArrayList<User>) evt.getNewValue());
-                support.firePropertyChange(USER_LIST_CHANGED, null, userList.getUsers());
+                userManager.setUsers((ArrayList<User>) evt.getNewValue());
+                support.firePropertyChange(USER_LIST_CHANGED, null, userManager.getUsers());
             }
             case "equipmentManager" -> {
-                if (currentlyLoggedInUser.isManager()) {
-                    equipmentList.clear();
-                    equipmentList.addEquipmentList((ArrayList<Equipment>) evt.getNewValue());
-                    support.firePropertyChange(EQUIPMENT_LIST_CHANGED, null, equipmentList.getAllEquipment());
+                if (currentUserManager.currentUserIsManger()) {
+                    equipmentManager.clear();
+                    equipmentManager.addEquipmentList((ArrayList<Equipment>) evt.getNewValue());
+                    support.firePropertyChange(EQUIPMENT_LIST_CHANGED, null, equipmentManager.getAllEquipment());
                 }
             }
             case "equipmentRentee" -> {
-                if (!currentlyLoggedInUser.isManager()) {
-                    equipmentList.clear();
-                    equipmentList.addEquipmentList((ArrayList<Equipment>) evt.getNewValue());
-                    support.firePropertyChange(EQUIPMENT_LIST_CHANGED, null, equipmentList.getAllAvailableEquipment());
+                if (!currentUserManager.currentUserIsManger()) {
+                    equipmentManager.clear();
+                    equipmentManager.addEquipmentList((ArrayList<Equipment>) evt.getNewValue());
+                    support.firePropertyChange(EQUIPMENT_LIST_CHANGED, null, equipmentManager.getAllAvailableEquipment());
                 }
             }
         }

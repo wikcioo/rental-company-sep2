@@ -58,7 +58,7 @@ public class RenteeReservationViewController {
             if (p.getValue() != null) {
                 return new SimpleStringProperty(p.getValue().status());
             } else {
-                return new SimpleStringProperty("<no equipment>");
+                return new SimpleStringProperty("<no status>");
             }
         });
 

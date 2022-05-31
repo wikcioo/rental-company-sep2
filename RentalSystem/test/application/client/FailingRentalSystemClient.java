@@ -1,7 +1,7 @@
 package application.client;
 
 import application.model.equipment.Equipment;
-import application.model.equipment.EquipmentList;
+import application.model.equipment.EquipmentManager;
 import application.model.reservations.*;
 import application.model.users.User;
 
@@ -11,18 +11,18 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class FailingRentalSystemClient implements RentalSystemClient {
-    private final EquipmentList equipmentList;
-    private final ReservationList reservationList;
+    private final EquipmentManager equipmentManager;
+    private final ReservationManager reservationManager;
     private final ArrayList<User> userList;
     private int equipmentIndex;
     private int reservationIndex;
 
     public FailingRentalSystemClient() {
-        this.equipmentList = new EquipmentList();
+        this.equipmentManager = new EquipmentManager();
         this.userList = new ArrayList<>();
         this.equipmentIndex = 0;
         this.reservationIndex = 0;
-        this.reservationList = new ReservationList();
+        this.reservationManager = new ReservationManager();
     }
 
     @Override

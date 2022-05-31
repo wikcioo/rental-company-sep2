@@ -39,7 +39,7 @@ public class ManagerEquipmentViewController {
             if (p.getValue() != null) {
                 return new SimpleStringProperty(Integer.toString(p.getValue().getEquipmentId()));
             } else {
-                return new SimpleStringProperty("<no model>");
+                return new SimpleStringProperty("<no id>");
             }
         });
 
@@ -64,7 +64,7 @@ public class ManagerEquipmentViewController {
                 return new SimpleStringProperty(
                         Boolean.toString(p.getValue().isAvailable()));
             } else {
-                return new SimpleStringProperty("<no category>");
+                return new SimpleStringProperty("<no availability>");
             }
         });
 
@@ -102,7 +102,6 @@ public class ManagerEquipmentViewController {
     }
 
     public void reset() {
-        viewModel.displayLoggedUser();
         error.setText("");
     }
 

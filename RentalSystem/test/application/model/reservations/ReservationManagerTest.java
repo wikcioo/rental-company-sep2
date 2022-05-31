@@ -7,13 +7,13 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class ReservationListTest {
-    private ReservationList reservationList;
+public class ReservationManagerTest {
+    private ReservationManager reservationManager;
     private ArrayList<Reservation> reservations;
 
     @BeforeEach
     public void setUp() {
-        reservationList = new ReservationList();
+        reservationManager = new ReservationManager();
         reservations = new ArrayList<>();
         // parameters of all inserted reservation objects are irrelevant
         reservations.add(new Returned(0, null, null, null, null, null, null));
@@ -25,47 +25,47 @@ public class ReservationListTest {
         reservations.add(new Expired(6, null, null, null, null));
         reservations.add(new Returned(7, null, null, null, null, null, null));
         reservations.add(new Expired(8, null, null, null, null));
-        reservationList.setReservationList(reservations);
+        reservationManager.setReservationList(reservations);
     }
 
     @Test
     public void new_reservation_list_has_size_0() {
-        reservationList = new ReservationList();
-        assertEquals(0, reservationList.getAll().size());
+        reservationManager = new ReservationManager();
+        assertEquals(0, reservationManager.getAll().size());
     }
 
     @Test
     public void setting_reservation_list_puts_all_elements_into_reservation_list() {
-        assertEquals(reservations, reservationList.getAll());
+        assertEquals(reservations, reservationManager.getAll());
     }
 
     @Test
     public void reservation_list_correctly_returns_unapproved_reservations() {
-        ArrayList<Unapproved> unapprovedReservations = reservationList.getUnapprovedReservations();
+        ArrayList<Unapproved> unapprovedReservations = reservationManager.getUnapprovedReservations();
         assertEquals(3, unapprovedReservations.size());
     }
 
     @Test
     public void reservation_list_correctly_returns_approved_reservations() {
-        ArrayList<Approved> approvedReservations = reservationList.getApprovedReservations();
+        ArrayList<Approved> approvedReservations = reservationManager.getApprovedReservations();
         assertEquals(1, approvedReservations.size());
     }
 
     @Test
     public void reservation_list_correctly_returns_rejected_reservations() {
-        ArrayList<Rejected> rejectedReservations = reservationList.getRejectedReservations();
+        ArrayList<Rejected> rejectedReservations = reservationManager.getRejectedReservations();
         assertEquals(1, rejectedReservations.size());
     }
 
     @Test
     public void reservation_list_correctly_returns_returned_reservations() {
-        ArrayList<Returned> returnedReservations = reservationList.getReturnedReservations();
+        ArrayList<Returned> returnedReservations = reservationManager.getReturnedReservations();
         assertEquals(2, returnedReservations.size());
     }
 
     @Test
     public void reservation_list_correctly_returns_expired_reservations() {
-        ArrayList<Expired> expiredReservations = reservationList.getExpiredReservations();
+        ArrayList<Expired> expiredReservations = reservationManager.getExpiredReservations();
         assertEquals(2, expiredReservations.size());
     }
 }

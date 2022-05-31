@@ -1,4 +1,4 @@
-package application.viewmodel.manager;
+package application.viewmodel.manager.equipment;
 
 import application.client.FailingRentalSystemClient;
 import application.model.models.ManagerModel;
@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class ManagerEquipmentViewModelServerFailureTest {
     private ManagerEquipmentViewModel viewModel;
     private StringProperty error;
-    private ObjectProperty<Equipment> selectedEquipmentProperty;
+    private SimpleObjectProperty<Equipment> selectedEquipmentProperty;
 
     @BeforeEach
     public void setUp() {
@@ -32,7 +32,8 @@ public class ManagerEquipmentViewModelServerFailureTest {
 
     @Test
     public void server_failure_during_toggling_availability_throws_RuntimeException() {
-        viewModel.bindSelectedEquipment(new SimpleObjectProperty<>(new Equipment(0, null, null, true)));
+        selectedEquipmentProperty = new SimpleObjectProperty<>(new Equipment(0, null, null, true));
+        viewModel.bindSelectedEquipment(selectedEquipmentProperty);
         viewModel.toggleAvailability();
         assertEquals("Server communication error", error.get());
     }

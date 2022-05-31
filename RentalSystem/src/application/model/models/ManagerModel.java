@@ -1,6 +1,7 @@
 package application.model.models;
 
 import application.model.equipment.Equipment;
+import application.model.equipment.EquipmentManager;
 import application.model.reservations.*;
 import application.model.users.User;
 import application.util.NamedPropertyChangeSubject;
@@ -23,7 +24,7 @@ public interface ManagerModel extends NamedPropertyChangeSubject {
 
     /**
      * Gets all stored equipment from the equipmentList.
-     * Delegates to {@link application.model.equipment.EquipmentList#getAllEquipment() getAllEquipment} method.
+     * Delegates to {@link EquipmentManager#getAllEquipment() getAllEquipment} method.
      *
      * @return {@link ArrayList < Equipment >} of all stored equipment
      */
@@ -78,35 +79,35 @@ public interface ManagerModel extends NamedPropertyChangeSubject {
     void toggleAvailability(Equipment equipment) throws RemoteException;
 
     /**
-     * Delegates to {@link application.model.reservations.ReservationList#getUnapprovedReservations() getUnapprovedReservations} method.
+     * Delegates to {@link ReservationManager#getUnapprovedReservations() getUnapprovedReservations} method.
      *
      * @return {@link ArrayList< Reservation >} of unapproved reservations
      */
     ArrayList<Unapproved> getUnapprovedReservations();
 
     /**
-     * Delegates to {@link application.model.reservations.ReservationList#getApprovedReservations() getApprovedReservations} method.
+     * Delegates to {@link ReservationManager#getApprovedReservations() getApprovedReservations} method.
      *
      * @return {@link ArrayList<Reservation>} of approved reservations
      */
     ArrayList<Approved> getApprovedReservations();
 
     /**
-     * Delegates to {@link application.model.reservations.ReservationList#getRejectedReservations() getRejectedReservations} method.
+     * Delegates to {@link ReservationManager#getRejectedReservations() getRejectedReservations} method.
      *
      * @return {@link ArrayList<Reservation>} of rejected reservations
      */
     ArrayList<Rejected> getRejectedReservations();
 
     /**
-     * Delegates to {@link application.model.reservations.ReservationList#getReturnedReservations() getReturnedReservations} method.
+     * Delegates to {@link ReservationManager#getReturnedReservations() getReturnedReservations} method.
      *
      * @return {@link ArrayList<Reservation>} of returned reservations
      */
     ArrayList<Returned> getReturnedReservations();
 
     /**
-     * Delegates to {@link application.model.reservations.ReservationList#getExpiredReservations() getExpiredReservations} method.
+     * Delegates to {@link ReservationManager#getExpiredReservations() getExpiredReservations} method.
      *
      * @return {@link ArrayList<Reservation>} of expired reservations
      */

@@ -46,11 +46,4 @@ public class RenteeMainMenuViewController {
         viewHandler.openView(ViewHandler.RENTEE_RESERVATION_LIST_VIEW);
     }
 
-    public void showOverdueAlert(int amountOverdue) {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Alert");
-        alert.setHeaderText("Overdue equipment");
-        alert.setContentText("You have " + amountOverdue + " overdue equipment, which need to be returned");
-        alert.showAndWait();
-    }
 }

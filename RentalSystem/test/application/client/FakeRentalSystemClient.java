@@ -133,7 +133,6 @@ public class FakeRentalSystemClient implements RentalSystemClient {
         support.firePropertyChange("reservations", null, reservations);
     }
 
-    //TODO: rejectReservation requires a reason but the method to reject one does not have a reason field
     @Override
     public void rejectReservation(int id, String manager_id, String reason) throws RemoteException {
         ArrayList<Reservation> reservations = new ArrayList<>(reservationManager.getAll());

@@ -40,8 +40,6 @@ public class Approved extends Unapproved {
     }
     public Long getDaysOverdue() {
         return DAYS.between(super.getRentedFor(), LocalDateTime.now());
-//        TODO: [Aivaras] remove testing for overdue
-//        return DAYS.between(super.getRentedFor().minusDays(2), LocalDateTime.now());
     }
 
     public String getDaysOverdueString(){

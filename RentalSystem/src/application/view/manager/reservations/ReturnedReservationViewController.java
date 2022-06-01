@@ -49,7 +49,6 @@ public class ReturnedReservationViewController {
 
         renteeColumn.setCellValueFactory(p -> {
             if (p.getValue() != null) {
-                User u = p.getValue().getRentee();
                 return new SimpleStringProperty(p.getValue().getRentee().toString());
             } else {
                 return new SimpleStringProperty("<no rentee>");

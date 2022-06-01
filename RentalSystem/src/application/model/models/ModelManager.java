@@ -87,13 +87,11 @@ public class ModelManager implements Model, UserModel, RenteeModel, ManagerModel
     public void toggleAvailability(Equipment equipment) throws RemoteException {
         equipment.toggleAvailability();
         client.setAvailability(equipment.getEquipmentId(), equipment.isAvailable());
-        support.firePropertyChange(EQUIPMENT_LIST_CHANGED, null, equipmentManager.getAllEquipment());
     }
 
     @Override
     public void addUser(String firstName, String lastName, String phoneNumber, String email, String password, boolean isManager) throws RemoteException {
         client.addUser(firstName, lastName, phoneNumber, email, password, isManager);
-        support.firePropertyChange(USER_LIST_CHANGED, null, userManager.getUsers());
     }
 
     @Override
@@ -116,7 +114,6 @@ public class ModelManager implements Model, UserModel, RenteeModel, ManagerModel
     @Override
     public void deleteUser(String email) throws RemoteException {
         client.deleteUser(email);
-        support.firePropertyChange(USER_LIST_CHANGED, null, userManager.getUsers());
     }
 
     @Override

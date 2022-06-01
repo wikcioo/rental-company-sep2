@@ -25,24 +25,17 @@ public class SQLEquipmentDao implements EquipmentDao {
     }
 
     @Override
-    public Equipment add(String model, String category, boolean available) throws SQLException {
+    public void add(String model, String category, boolean available) throws SQLException {
         try (
                 Connection connection = getConnection();
                 PreparedStatement statement = connection.prepareStatement("INSERT INTO category VALUES (?) ON CONFLICT DO NOTHING;" +
-                        "INSERT INTO rentalsystemdbs.equipment VALUES (DEFAULT, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS)
+                        "INSERT INTO rentalsystemdbs.equipment VALUES (DEFAULT, ?, ?, ?)")
         ) {
             statement.setString(1, category);
             statement.setString(2, model);
             statement.setString(3, category);
             statement.setBoolean(4, available);
             statement.executeUpdate();
-            ResultSet rs = statement.getGeneratedKeys();
-            long pk = 0;
-            if (rs.next()) {
-                pk = rs.getLong(1);
-            }
-
-            return new Equipment((int) pk, model, category, available);
         }
     }
 

@@ -12,10 +12,9 @@ public interface EquipmentDao {
      * @param model     the equipment's model
      * @param category  the equipment's category
      * @param available the equipment's availability
-     * @return the {@link Equipment} with an id that points to the row in a relation.
      * @throws SQLException
      */
-    Equipment add(String model, String category, boolean available) throws SQLException;
+    void add(String model, String category, boolean available) throws SQLException;
 
     /**
      * Returns all the equipment from Equipment relation.

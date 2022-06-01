@@ -50,7 +50,7 @@ public class LogInViewController {
     }
 
     @FXML
-    public synchronized void onLogIn() {
+    public void onLogIn() {
         class LogInValueRetriever implements Runnable {
             private volatile String value;
 
@@ -69,7 +69,7 @@ public class LogInViewController {
             return;
         }
 
-        new Thread(() -> Platform.runLater(() -> constructOverlayWithMessage(""))).start();
+        constructOverlayWithMessage("");
 
         if (!viewModel.isClientConnected()) {
             viewModel.tryToReconnectClient();

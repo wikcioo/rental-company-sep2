@@ -4,8 +4,8 @@ import java.io.Serializable;
 
 public class Equipment implements Serializable {
     private final int equipmentId;
-    private String model;
-    private String category;
+    private final String model;
+    private final String category;
     private boolean isAvailable;
 
     public Equipment(int equipmentId, String model, String category, boolean isAvailable) {
@@ -23,16 +23,8 @@ public class Equipment implements Serializable {
         return model;
     }
 
-    public void setModel(String model) {
-        this.model = model;
-    }
-
     public String getCategory() {
         return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
     }
 
     public boolean isAvailable() {

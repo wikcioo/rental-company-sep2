@@ -13,7 +13,7 @@ import java.rmi.registry.Registry;
 public class RentalSystemApplication extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
-        RentalSystemClient client = new RentalSystemClientImplementation("localhost", Registry.REGISTRY_PORT);
+        RentalSystemClient client = new RentalSystemClientImplementation("10.154.204.106", Registry.REGISTRY_PORT+1);
         ModelManager modelManager = new ModelManager(client);
         ViewModelFactory viewModelFactory = new ViewModelFactory(modelManager, modelManager, modelManager);
         ViewHandler viewHandler = new ViewHandler(viewModelFactory);

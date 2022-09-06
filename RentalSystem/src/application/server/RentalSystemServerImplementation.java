@@ -14,23 +14,23 @@ import dk.via.remote.observer.RemotePropertyChangeSupport;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
 import java.rmi.server.UnicastRemoteObject;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class RentalSystemServerImplementation extends UnicastRemoteObject implements RentalSystemServer, PropertyChangeListener {
-    private final EquipmentDao equipmentDao;
-    private final UserDao userDao;
-    private final ReservationDao reservationDao;
+
+    private final daoRMI dao;
     private final SelectiveReservationTimer expirationTimer;
     private final RemotePropertyChangeSupport<ArrayList> support;
 
-    public RentalSystemServerImplementation() throws RemoteException {
-        this.equipmentDao = SQLEquipmentDao.getInstance();
-        this.userDao = SQLUserDao.getInstance();
-        this.reservationDao = SQLReservationDao.getInstance();
+    public RentalSystemServerImplementation(String host, int port) throws RemoteException, NotBoundException {
+
+        this.dao = (daoRMI) LocateRegistry.getRegistry(host, port).lookup("DAO");
         this.expirationTimer = new SelectiveReservationTimerImplementation(1800);
         this.expirationTimer.addListener(ExpiringReservationTimer.RESERVATION_EXPIRED,this);
         this.support = new RemotePropertyChangeSupport<>(this);
@@ -51,185 +51,121 @@ public class RentalSystemServerImplementation extends UnicastRemoteObject implem
 
     @Override
     public void addEquipment(String model, String category, boolean available) throws RemoteException {
-        try {
-            equipmentDao.add(model, category, available);
-            ArrayList<Equipment> allEquipment = getAllEquipment();
-            ArrayList<Equipment> unreservedEquipment = getAllUnreservedEquipment();
-            support.firePropertyChange("equipmentManager", null, allEquipment);
-            support.firePropertyChange("equipmentRentee", null, unreservedEquipment);
-        } catch (SQLException e) {
-            throw new RemoteException(e.getMessage(), e);
-        }
+        dao.add(model, category, available);
+        ArrayList<Equipment> allEquipment = getAllEquipment();
+        ArrayList<Equipment> unreservedEquipment = getAllUnreservedEquipment();
+        support.firePropertyChange("equipmentManager", null, allEquipment);
+        support.firePropertyChange("equipmentRentee", null, unreservedEquipment);
     }
 
     @Override
     public ArrayList<Equipment> getAllEquipment() throws RemoteException {
-        try {
-            return equipmentDao.getAll();
-        } catch (SQLException e) {
-            throw new RemoteException(e.getMessage(), e);
-        }
+        return dao.getAll();
     }
 
     @Override
     public ArrayList<Equipment> getAllUnreservedEquipment() throws RemoteException {
-        try {
-            return equipmentDao.getAllUnreserved();
-        } catch (SQLException e) {
-            throw new RemoteException(e.getMessage(), e);
-        }
+        return dao.getAllUnreserved();
     }
 
     @Override
     public void setAvailability(int equipment_id, boolean available) throws RemoteException {
-        try {
-            equipmentDao.setAvailability(equipment_id, available);
-            ArrayList<Equipment> allEquipment = getAllEquipment();
-            ArrayList<Equipment> unreservedEquipment = getAllUnreservedEquipment();
-            support.firePropertyChange("equipmentManager", null, allEquipment);
-            support.firePropertyChange("equipmentRentee", null, unreservedEquipment);
-        } catch (SQLException e) {
-            throw new RuntimeException(e.getMessage(), e);
-        }
+        dao.setAvailability(equipment_id, available);
+        ArrayList<Equipment> allEquipment = getAllEquipment();
+        ArrayList<Equipment> unreservedEquipment = getAllUnreservedEquipment();
+        support.firePropertyChange("equipmentManager", null, allEquipment);
+        support.firePropertyChange("equipmentRentee", null, unreservedEquipment);
     }
 
     @Override
     public void addUser(String firstName, String lastName, String phoneNumber, String email, String password, boolean isManager) throws RemoteException {
-        try {
-            if (isManager) {
-                userDao.createManager(firstName, lastName, phoneNumber, email, password);
-            } else {
-                userDao.createRentee(firstName, lastName, phoneNumber, email, password);
-            }
-
-            ArrayList<User> users = getAllUsers();
-            support.firePropertyChange("users", null, users);
-        } catch (SQLException e) {
-            throw new RemoteException(e.getMessage(), e);
+        if (isManager) {
+            dao.createManager(firstName, lastName, phoneNumber, email, password);
+        } else {
+            dao.createRentee(firstName, lastName, phoneNumber, email, password);
         }
+
+        ArrayList<User> users = getAllUsers();
+        support.firePropertyChange("users", null, users);
     }
 
     @Override
     public User getUser(String email) throws RemoteException {
-        try {
-            return userDao.get(email);
-        } catch (SQLException e) {
-            throw new RemoteException(e.getMessage(), e);
-        }
+        return dao.get(email);
     }
 
     @Override
     public ArrayList<User> getAllUsers() throws RemoteException {
-        try {
-            return userDao.getAllUsers();
-        } catch (SQLException e) {
-            throw new RemoteException(e.getMessage(), e);
-        }
+        return dao.getAllUsers();
     }
 
     @Override
     public void deleteUser(String email) throws RemoteException {
-        try {
-            userDao.delete(email);
-            ArrayList<User> users = getAllUsers();
-            support.firePropertyChange("users", null, users);
-        } catch (SQLException e) {
-            throw new RemoteException(e.getMessage(), e);
-        }
+        dao.delete(email);
+        ArrayList<User> users = getAllUsers();
+        support.firePropertyChange("users", null, users);
     }
 
     @Override
     public boolean isValidUser(String email, String password) throws RemoteException {
-        try {
-            return userDao.isValidUser(email, password);
-        } catch (SQLException e) {
-            throw new RemoteException(e.getMessage(), e);
-        }
+        return dao.isValidUser(email, password);
     }
 
     @Override
     public boolean isUserAManager(String email) throws RemoteException {
-        try {
-            return userDao.isUserAManager(email);
-        } catch (SQLException e) {
-            throw new RemoteException(e.getMessage(), e);
-        }
+        return dao.isUserAManager(email);
     }
 
     @Override
     public ArrayList<Reservation> retrieveReservations() throws RemoteException {
-        try {
-            ArrayList<Reservation> reservations = reservationDao.retrieveReservations();
-            expirationTimer.setAllUnapprovedReservations(reservations);
-            return reservations;
-        } catch (SQLException e) {
-            throw new RemoteException(e.getMessage(), e);
-        }
+        ArrayList<Reservation> reservations = dao.retrieveReservations();
+        expirationTimer.setAllUnapprovedReservations(reservations);
+        return reservations;
     }
 
     @Override
     public void approveReservation(int id, String manager_id) throws RemoteException {
-        try {
-            reservationDao.approveReservation(id, manager_id);
-            ArrayList<Reservation> reservations = retrieveReservations();
-            support.firePropertyChange("reservations", null, reservations);
-        } catch (SQLException e) {
-            throw new RemoteException(e.getMessage(), e);
-        }
+        dao.approveReservation(id, manager_id);
+        ArrayList<Reservation> reservations = retrieveReservations();
+        support.firePropertyChange("reservations", null, reservations);
     }
 
     @Override
     public void rejectReservation(int id, String manager_id, String reason) throws RemoteException {
-        try {
-            reservationDao.rejectReservation(id, manager_id, reason);
-            ArrayList<Reservation> reservations = retrieveReservations();
-            support.firePropertyChange("reservations", null, reservations);
-            ArrayList<Equipment> unreservedEquipment = getAllUnreservedEquipment();
-            support.firePropertyChange("equipmentRentee", null, unreservedEquipment);
-        } catch (SQLException e) {
-            throw new RemoteException(e.getMessage(), e);
-        }
+        dao.rejectReservation(id, manager_id, reason);
+        ArrayList<Reservation> reservations = retrieveReservations();
+        support.firePropertyChange("reservations", null, reservations);
+        ArrayList<Equipment> unreservedEquipment = getAllUnreservedEquipment();
+        support.firePropertyChange("equipmentRentee", null, unreservedEquipment);
     }
 
     @Override
     public void expireReservation(int id) throws RemoteException {
-        try {
-            reservationDao.expireReservation(id);
-            ArrayList<Reservation> reservations = retrieveReservations();
-            support.firePropertyChange("reservations", null, reservations);
-            ArrayList<Equipment> unreservedEquipment = getAllUnreservedEquipment();
-            support.firePropertyChange("equipmentRentee", null, unreservedEquipment);
-        } catch (SQLException e) {
-            throw new RemoteException(e.getMessage(), e);
-        }
+        dao.expireReservation(id);
+        ArrayList<Reservation> reservations = retrieveReservations();
+        support.firePropertyChange("reservations", null, reservations);
+        ArrayList<Equipment> unreservedEquipment = getAllUnreservedEquipment();
+        support.firePropertyChange("equipmentRentee", null, unreservedEquipment);
     }
 
     @Override
     public void returnReservation(int id) throws RemoteException {
-        try {
-            reservationDao.returnReservation(id);
-            ArrayList<Reservation> reservations = retrieveReservations();
-            support.firePropertyChange("reservations", null, reservations);
-            ArrayList<Equipment> unreservedEquipment = getAllUnreservedEquipment();
-            support.firePropertyChange("equipmentRentee", null, unreservedEquipment);
-        } catch (SQLException e) {
-            throw new RemoteException(e.getMessage(), e);
-        }
+        dao.returnReservation(id);
+        ArrayList<Reservation> reservations = retrieveReservations();
+        support.firePropertyChange("reservations", null, reservations);
+        ArrayList<Equipment> unreservedEquipment = getAllUnreservedEquipment();
+        support.firePropertyChange("equipmentRentee", null, unreservedEquipment);
     }
 
     @Override
     public void reserveEquipment(int equipment_id, String rentee_id, LocalDateTime rentedFor, RentalSystemClient sender) throws RemoteException {
-        try {
-            sender.replyReservationId(reservationDao.reserveEquipment(equipment_id, rentee_id, rentedFor));
-            ArrayList<Reservation> reservations = retrieveReservations();
-            ArrayList<Equipment> allEquipment = getAllEquipment();
-            ArrayList<Equipment> unreservedEquipment = getAllUnreservedEquipment();
-            support.firePropertyChange("reservations", null, reservations);
-            support.firePropertyChange("equipmentManager", null, allEquipment);
-            support.firePropertyChange("equipmentRentee", null, unreservedEquipment);
-        } catch (SQLException e) {
-            throw new RemoteException(e.getMessage(), e);
-        }
+        sender.replyReservationId(dao.reserveEquipment(equipment_id, rentee_id, rentedFor));
+        ArrayList<Reservation> reservations = retrieveReservations();
+        ArrayList<Equipment> allEquipment = getAllEquipment();
+        ArrayList<Equipment> unreservedEquipment = getAllUnreservedEquipment();
+        support.firePropertyChange("reservations", null, reservations);
+        support.firePropertyChange("equipmentManager", null, allEquipment);
+        support.firePropertyChange("equipmentRentee", null, unreservedEquipment);
     }
 
     @Override
